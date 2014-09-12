@@ -1,4 +1,6 @@
 //Zane Laughlin- runs standard gamemode and window
+//Thomas Sparks was Here!
+
 import java.awt.*; 
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
