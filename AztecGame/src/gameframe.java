@@ -17,7 +17,7 @@ import java.awt.Polygon;
 public class gameframe extends JFrame 
 {        
 	private boolean isRunning = true;
-	private mouseinput input;
+	private InputManager input;
 	private Insets insets;
 	private BufferedImage backBuffer;
 	private int fps = 30;
@@ -68,6 +68,7 @@ public class gameframe extends JFrame
                         
                         //what the heck is even going on here man I mean seriously
                         //Somethin' 'bout a thread runnin' fer the frame I 'reckon
+                        //It's limiting the framerate to fps... I think.
                         if (time > 0) 
                         { 
                                 try 
@@ -96,7 +97,7 @@ public class gameframe extends JFrame
         	images[5] = ImageIO.read(new File("assets/unknown.png"));
         	
         	//sets up mouse input stuff
-        	input = new mouseinput(this); 
+        	input = new InputManager(this); 
         	//what do insets do again? well anyway they're important
         	insets = getInsets(); 
         	//sets size of frame
@@ -105,14 +106,14 @@ public class gameframe extends JFrame
         	backBuffer = new BufferedImage(windowWidth, windowHeight, BufferedImage.TYPE_INT_RGB); 
         	//sets title on top of game window
         	setTitle("King Solomon's Mines"); 
-        	//sets window height again?
+        	//sets window height again, just for funzies.
             setSize(windowWidth, windowHeight); 
             //sets if the window can be resized
             setResizable(false); 
-            //sets default close operation- exit on close is best option- kills frame and thread I think
+            //Exit the program when the windows is closed.
             setDefaultCloseOperation(EXIT_ON_CLOSE); 
             //we want to see the frame, no?
-            setVisible(true);  
+            setVisible(true);  //false for hard mode
             System.out.println("what's up");									//CHECKPOINT
             
             //sets up initial tile selectangles- they are moved later
@@ -128,7 +129,7 @@ public class gameframe extends JFrame
             	}
             }
             
-            System.out.println("hello?????????????????????????????");			//CHECKPOINT
+            System.out.println("hello?????????????????????????????");	//hi		//CHECKPOINT
         } 
         
         /** 
@@ -141,42 +142,8 @@ public class gameframe extends JFrame
         //"check map," and "menu" mode
         void update() 
         { 
-        
         	checkscroll();
-        	
-        	//checks to see if something clickable was clicked on- may become its own function at some point maybe maybe not
-        	if (input.isDown(MouseEvent.BUTTON1)) 
-        	{ 
-        		int x = input.getX();
-    	        int y = input.getY();
-    	        
-    	        //checks to see if any of the tiles neighboring player were clicked- this can probably be reduced to loop
-        		if(player1.getNeighbortile(0).checkcontains(x,y)){
-        	        player1.move(player1.getNeighbortile(0), themap);
-        	        System.out.println("moved");
-        	        this.checksight();
-        		} 
-        		
-        		else if(player1.getNeighbortile(1).checkcontains(x,y)){
-        			player1.move(player1.getNeighbortile(1), themap);
-        			System.out.println("moved");
-        			this.checksight();
-    			}
-        		
-        		else if(player1.getNeighbortile(2).checkcontains(x,y)){
-        			player1.move(player1.getNeighbortile(2), themap);
-        			System.out.println("moved");
-        			this.checksight();
-				}
-        		
-        		else if(player1.getNeighbortile(3).checkcontains(x,y)){
-        			player1.move(player1.getNeighbortile(3), themap);
-        			System.out.println("moved");
-        			this.checksight();
-				}
-				
-			}
-			
+        	checkInput();	
         }
         
         /** 
@@ -245,9 +212,9 @@ public class gameframe extends JFrame
         public void checkscroll(){
         	
         	//checks to see if mouse is at the edge of the frame
-        	if (input.checkmouseinwindow()){
-        		int x = input.getX();
-        		int y = input.getY();
+        	if (input.mouseInWindow()){
+        		int x = input.getMouseLoc().x;
+        		int y = input.getMouseLoc().y;
         	
         		if (x < 100){
         			xcoor += 20;
@@ -286,6 +253,42 @@ public class gameframe extends JFrame
         	}
         }
         
+        public void checkInput() {
+        	//checks to see if something clickable was clicked on- may become its own function at some point maybe maybe not
+        	if (input.mouseDown(MouseEvent.BUTTON1)) 
+        	{ 
+        		int x = input.getMouseLoc().x;
+    	        int y = input.getMouseLoc().y;
+    	        
+    	        //checks to see if any of the tiles neighboring player were clicked- this can probably be reduced to loop
+        		if(player1.getNeighbortile(0).checkcontains(x,y)){
+        	        player1.move(player1.getNeighbortile(0), themap);
+        	        System.out.println("moved");
+        	        this.checksight();
+        		} 
+        		
+        		else if(player1.getNeighbortile(1).checkcontains(x,y)){
+        			player1.move(player1.getNeighbortile(1), themap);
+        			System.out.println("moved");
+        			this.checksight();
+    			}
+        		
+        		else if(player1.getNeighbortile(2).checkcontains(x,y)){
+        			player1.move(player1.getNeighbortile(2), themap);
+        			System.out.println("moved");
+        			this.checksight();
+				}
+        		
+        		else if(player1.getNeighbortile(3).checkcontains(x,y)){
+        			player1.move(player1.getNeighbortile(3), themap);
+        			System.out.println("moved");
+        			this.checksight();
+				}
+				
+			}
+		
+        }
+        
         public void checksight(){
         	int x = 0;
         	int y = 0;
@@ -296,9 +299,8 @@ public class gameframe extends JFrame
         			themap.getTile(x, y).reveal();
         		}
         	}
-        	
-        
         }
         
         //world record speed run- explored all of Africa- Chris Earman- like 5 minutes
+        //such pro
 } 
