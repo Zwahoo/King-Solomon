@@ -49,6 +49,7 @@ public class mouseinput implements MouseListener, MouseMotionListener
 		
 		@Override
 		public void mouseMoved(MouseEvent m) { 
+			System.out.println("In mouse moved");
 			xpos = m.getX();
 			ypos = m.getY();
         }
