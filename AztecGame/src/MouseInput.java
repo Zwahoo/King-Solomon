@@ -4,7 +4,7 @@ import java.awt.event.*;
 /** 
  * Makes handling input a lot simpler 
  */ 
-public class mouseinput implements MouseListener, MouseMotionListener 
+public class MouseInput implements MouseListener, MouseMotionListener 
 
 {        
 	private boolean[] mbutton = new boolean[4];
@@ -15,7 +15,7 @@ public class mouseinput implements MouseListener, MouseMotionListener
          * Assigns the newly created InputHandler to a Component 
          * @param c Component to get input from 
          */ 
-        public mouseinput(Component c) 
+        public MouseInput(Component c) 
         { 
                 c.addMouseListener(this); 
                 c.addMouseMotionListener(this);

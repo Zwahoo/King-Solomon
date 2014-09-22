@@ -1,14 +1,14 @@
 //Zane Laughlin- map class- holds bunch of tiles
 // hello
 
-public class map {
+public class Map {
 
-	private tile[][] tiles = new tile[40][40];
+	private Tile[][] tiles = new Tile[40][40];
 	
 	//random map generator
-	public map(){
+	public Map(){
 		String a = null;
-		tile t;
+		Tile t;
 		for (int x = 0; x < 40; x++){
 			for (int y = 0; y < 40; y++){
 				int i = (int) ((Math.random()) * 3);
@@ -21,7 +21,7 @@ public class map {
 				else if (i == 2){
 					a = "mountain";
 				}
-				t = new tile(a, x, y);
+				t = new Tile(a, x, y);
 				tiles[x][y] = t;
 				//System.out.println(x + ", " + y);
 			}
@@ -39,7 +39,7 @@ public class map {
 	//	
 	//}
 	
-	public tile getTile(int x, int y){
+	public Tile getTile(int x, int y){
 		return tiles[x][y];
 	}
     

@@ -4,19 +4,19 @@ import java.awt.*;
 public class PlayerMovementHandler extends InputListener {
 	
 	gameframe mainFrame;
-	map theMap;
-	player thePlayer;
-	private tile dummy; //dummy tile
+	Map map;
+	Player player;
+	private Tile dummy; //dummy tile
 	
-	public PlayerMovementHandler(gameframe mainFrame, map theMap, player thePlayer, InputManager input) {
+	public PlayerMovementHandler(gameframe mainFrame, Map theMap, Player thePlayer, InputManager input) {
 		this.setInputManager(input);
 		input.addInputListener(this);
 		
 		this.mainFrame = mainFrame;
-		this.theMap = theMap;
-		this.thePlayer = thePlayer;
+		this.map = theMap;
+		this.player = thePlayer;
 		
-		dummy = new tile("dummy", -1,-1);
+		dummy = new Tile("dummy", -1,-1);
 		dummy.setSelectangle(-2, -3, -4, -5, -6, -7, -8, -9, -2, -3, -4, -5, -6, -7, -8, -9);
 		setNeighbors();
 		checkSight();
@@ -29,23 +29,23 @@ public class PlayerMovementHandler extends InputListener {
         int yRelBoard = mouseLoc.y - mainFrame.getViewLoc().y;
         
         //checks to see if any of the tiles neighboring player were clicked- this can probably be reduced to loop
-		if(thePlayer.getNeighbortile(0).checkcontains(xRelBoard, yRelBoard)){
-			move(thePlayer.getNeighbortile(0));
+		if(player.getNeighbortile(0).checkcontains(xRelBoard, yRelBoard)){
+			move(player.getNeighbortile(0));
 			checkSight();
 		} 
 		
-		else if(thePlayer.getNeighbortile(1).checkcontains(xRelBoard, yRelBoard)){
-			move(thePlayer.getNeighbortile(1));
+		else if(player.getNeighbortile(1).checkcontains(xRelBoard, yRelBoard)){
+			move(player.getNeighbortile(1));
 			checkSight();
 		}
 		
-		else if(thePlayer.getNeighbortile(2).checkcontains(xRelBoard, yRelBoard)){
-			move(thePlayer.getNeighbortile(2));
+		else if(player.getNeighbortile(2).checkcontains(xRelBoard, yRelBoard)){
+			move(player.getNeighbortile(2));
 			checkSight();
 		}
 		
-		else if(thePlayer.getNeighbortile(3).checkcontains(xRelBoard, yRelBoard)){
-			move(thePlayer.getNeighbortile(3));
+		else if(player.getNeighbortile(3).checkcontains(xRelBoard, yRelBoard)){
+			move(player.getNeighbortile(3));
 			checkSight();
 		}
 		
@@ -53,37 +53,37 @@ public class PlayerMovementHandler extends InputListener {
 	
 	//sets the 4 neighbors or sets the neighbor to a dummy tile if no neighbor available
 	public void setNeighbors(){
-		if(thePlayer.getX() != 0){
-			thePlayer.setNeighborTile(0,  theMap.getTile(thePlayer.getX()-1, thePlayer.getY()));
+		if(player.getX() != 0){
+			player.setNeighborTile(0,  map.getTile(player.getX()-1, player.getY()));
 		}
-		else if(thePlayer.getX() == 0){
-			thePlayer.setNeighborTile(0,  dummy);
+		else if(player.getX() == 0){
+			player.setNeighborTile(0,  dummy);
 		}
-		if(thePlayer.getY() != 0){
-			thePlayer.setNeighborTile(1, theMap.getTile(thePlayer.getX(), thePlayer.getY()-1));
+		if(player.getY() != 0){
+			player.setNeighborTile(1, map.getTile(player.getX(), player.getY()-1));
 		}
-		else if(thePlayer.getY() == 0){
-			thePlayer.setNeighborTile(1, dummy);
+		else if(player.getY() == 0){
+			player.setNeighborTile(1, dummy);
 		}
-		if(thePlayer.getX() != 39){
-			thePlayer.setNeighborTile(2, theMap.getTile(thePlayer.getX()+1, thePlayer.getY()));
+		if(player.getX() != 39){
+			player.setNeighborTile(2, map.getTile(player.getX()+1, player.getY()));
 		}
-		else if(thePlayer.getX() == 39){
-			thePlayer.setNeighborTile(2, dummy);
+		else if(player.getX() == 39){
+			player.setNeighborTile(2, dummy);
 		}
-		if(thePlayer.getY() != 39){
-			thePlayer.setNeighborTile(3, theMap.getTile(thePlayer.getX(), thePlayer.getY()+1));
+		if(player.getY() != 39){
+			player.setNeighborTile(3, map.getTile(player.getX(), player.getY()+1));
 		}
-		else if(thePlayer.getY() == 39){
-			thePlayer.setNeighborTile(3, dummy);
+		else if(player.getY() == 39){
+			player.setNeighborTile(3, dummy);
 		}
 		
 	}
 
 	//changes the tile the player is on and sets the neighbors as well
-	public void move(tile t){
-		thePlayer.setLoc(t.getX(), t.getY());
-		thePlayer.setCurrentTile(t);
+	public void move(Tile t){
+		player.setLoc(t.getX(), t.getY());
+		player.setCurrentTile(t);
 		setNeighbors();
 		t.runEvent();
 	}
@@ -94,10 +94,10 @@ public class PlayerMovementHandler extends InputListener {
     	int x = 0;
     	int y = 0;
     	for(int i = 0; i < 4; i++){
-    		x = thePlayer.getNeighbortile(i).getX();
-    		y = thePlayer.getNeighbortile(i).getY();
-    		if(!thePlayer.getNeighbortile(i).getType().equals("dummy")){
-    			theMap.getTile(x, y).reveal();
+    		x = player.getNeighbortile(i).getX();
+    		y = player.getNeighbortile(i).getY();
+    		if(!player.getNeighbortile(i).getType().equals("dummy")){
+    			map.getTile(x, y).reveal();
     		}
     	}
     }

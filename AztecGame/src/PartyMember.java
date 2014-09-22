@@ -1,6 +1,6 @@
 //holds attributes of each party member
 
-public class partymember {
+public class PartyMember {
 
 	private String name;
 	private String type;

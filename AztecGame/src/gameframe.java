@@ -25,9 +25,9 @@ public class gameframe extends JFrame
 	private int windowHeight = 800;
 	private BufferedImage loadedimage;
 	private BufferedImage[] images = new BufferedImage[10];
-	private map themap = new map();
+	private Map map = new Map();
 	private String tiletype;
-	private player player1;
+	private Player player1;
 	private PlayerMovementHandler playerMovHandler;
 	private View view;
 
@@ -95,11 +95,11 @@ public class gameframe extends JFrame
     	//sets up mouse input stuff
     	input = new InputManager(this);
     	//Creates the player
-    	player1 = new player(themap);
+    	player1 = new Player(map);
     	//Handles the movement of the player
-    	playerMovHandler = new PlayerMovementHandler(this, themap, player1, input);
+    	playerMovHandler = new PlayerMovementHandler(this, map, player1, input);
     	//Creates a view
-    	view = new View(input);
+    	view = new View(input, windowWidth, windowHeight);
     	//what do insets do again? well anyway they're important
     	insets = getInsets(); 
     	//sets size of frame
@@ -125,7 +125,7 @@ public class gameframe extends JFrame
         	newx = (i * 64);
     		newy = (i * 32);
         	for(int b = 0; b < 40; b++){
-        		themap.getTile(i, b).setSelectangle(newx, newx, newx + 62, newx+63,  newx+125,  newx+125,  newx+63,  newx+62, newy+32, newy+31, newy, newy, newy+31, newy+32, newy+63, newy+63);
+        		map.getTile(i, b).setSelectangle(newx, newx, newx + 62, newx+63,  newx+125,  newx+125,  newx+63,  newx+62, newy+32, newy+31, newy, newy, newy+31, newy+32, newy+63, newy+63);
         		newx += 64;
 				newy -= 32;
         	}
@@ -146,7 +146,6 @@ public class gameframe extends JFrame
     { 
     	view.update();
     	input.update();
-    	checkInput();	
     }
     
     /** 
@@ -165,8 +164,6 @@ public class gameframe extends JFrame
     	bbg.setColor(Color.BLACK); 
     	//background height and width
     	bbg.fillRect(0, 0, windowWidth, windowHeight); 
-    	//don't know why this 
-    	//bbg.setColor(Color.BLACK); 
     	
     	//loop for drawing each tile
     	for (int i = 0; i < 40; i++)
@@ -175,24 +172,14 @@ public class gameframe extends JFrame
     		newy = view.getLocation().y + (i * 32);
     		for (int b = 0; b < 40; b++)
         	{
-    			tiletype = themap.getTile(i,b).getType();
+    			Tile tile = map.getTile(i,b);
     			
-    			//this circuit determines which tile is to 
-        		if (!themap.getTile(i,b).getRevealed()){
-        			loadedimage = images[5];
-        		}
-        		else if (tiletype.equals("jungle")){
-    				loadedimage = images[1];
-        		}
-        		else if (tiletype.equals("mountain")){
-    				loadedimage = images[2];
-				}
-        		else if (tiletype.equals("water")){
-    				loadedimage = images[0];
-				}
-        		
+    			//if(!view.polygonIsInView(tile.selectangle)) continue; //Skip if it isn't in view
+    			
+    			tiletype = tile.getType();
+    			
         		//draws the tile
-				bbg.drawImage(loadedimage, newx, newy, null);
+				bbg.drawImage(images[tile.getImageIndex()], newx, newy, null);
 				
 				//draws player marker
 				if(i == player1.getX() && b == player1.getY()){
@@ -210,14 +197,6 @@ public class gameframe extends JFrame
     	//actually draws the images and stuff on screen
     	g.drawImage(backBuffer, insets.left, insets.top, this); 
     } 
-    
-    public void checkInput() {
-    	//checks to see if something clickable was clicked on- may become its own function at some point maybe maybe not
-    	if (input.mouseDown(MouseEvent.BUTTON1)) 
-    	{ 
-    		
-		}
-    }
     
     public Point getViewLoc() {
     	return view.getLocation();

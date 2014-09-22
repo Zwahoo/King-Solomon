@@ -8,7 +8,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 
-public class tile {
+public class Tile {
 	
 	private String type;
 	public Polygon selectangle;
@@ -17,10 +17,11 @@ public class tile {
 	private int[] yar = new int[8];
 	private int xp;
 	private int yp;
-	private event e;
+	private int imageIndex = 5;
+	private Event e;
 	
 	//constructor
-	public tile(String t, int  x, int y){
+	public Tile(String t, int  x, int y){
 		
 		this.type = t;
 		xp = x;
@@ -38,6 +39,16 @@ public class tile {
 	//reveals tile
 	public void reveal(){
 		revealed = true;
+
+		if (getType().equals("jungle")){
+			imageIndex = 1;
+		}
+		else if (getType().equals("mountain")){
+			imageIndex = 2;
+		}
+		else if (getType().equals("water")){
+			imageIndex = 0;
+		}
 	}
 	
 	public void setSelectangle(int x1, int x2, int x3, int x4, int x5, int x6, int x7, int x8, int y1, int y2, int y3, int y4, int y5, int y6, int y7, int y8){
@@ -84,6 +95,10 @@ public class tile {
 	
 	public int getY(){
 		return yp;
+	}
+	
+	public int getImageIndex() {
+		return imageIndex;
 	}
 	
 	public void runEvent(){

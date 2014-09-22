@@ -2,22 +2,22 @@ import java.awt.*;
 //Zane Laughlin
 //player class- manages supplies, player location, etc.
 
-public class player{
+public class Player{
 
-	private tile currenttile;
-	private tile[] neighbortiles = new tile[4];
+	private Tile currenttile;
+	private Tile[] neighbortiles = new Tile[4];
 	private String name;
 	private Point loc;
-	private partymember[] partymembers  = new partymember[10];
+	private PartyMember[] partymembers  = new PartyMember[10];
 	
 	//attaches player to map
-	public player(map m){
+	public Player(Map m){
 		currenttile = m.getTile(0,0);
 		loc = new Point(1, 1);
 	}
 	
 	//gets one of the neighbor tiles
-	public tile getNeighbortile(int b){
+	public Tile getNeighbortile(int b){
 		//System.out.println("ch1");
 		return neighbortiles[b];
 		
@@ -33,7 +33,7 @@ public class player{
 	public Point getLoc() {
 		return loc;
 	}
-	public tile getCurrentTile() {
+	public Tile getCurrentTile() {
 		return currenttile;
 	}
 	//Setters
@@ -49,10 +49,10 @@ public class player{
 	public void setLoc(Point p) {
 		loc = p;
 	}
-	public void setCurrentTile(tile newTile) {
+	public void setCurrentTile(Tile newTile) {
 		currenttile = newTile;
 	}
-	public void setNeighborTile(int tileNum, tile newTile) {
+	public void setNeighborTile(int tileNum, Tile newTile) {
 		neighbortiles[tileNum % neighbortiles.length] = newTile;
 	}
 	

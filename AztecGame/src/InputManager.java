@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 public class InputManager {
 	
-	private mouseinput mouseInput;
+	private MouseInput mouseInput;
 	private ArrayList<InputListener> inputListeners = new ArrayList<InputListener>();
 	
 	public InputManager(Component c) {
-		mouseInput = new mouseinput(c);
+		mouseInput = new MouseInput(c);
 	}
 	
 	public void update() {
