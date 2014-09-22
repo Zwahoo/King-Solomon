@@ -16,7 +16,7 @@ public class InputManager {
 		if (mouseDown(MouseEvent.BUTTON1)) 
     	{
 			for(InputListener listener : inputListeners) {
-				listener.mouseDown(MouseEvent.BUTTON1);
+				listener.mouseDown(MouseEvent.BUTTON1, getMouseLoc());
 			}
     	}
 	}

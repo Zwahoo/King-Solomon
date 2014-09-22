@@ -3,7 +3,7 @@ import java.awt.*;
 public abstract class InputListener {
 	private InputManager inputManager;
 	
-	abstract void mouseDown(int mouseButton);
+	public void mouseDown(int mouseButton, Point mouseLoc) {};
 	
 	protected void setInputManager(InputManager inputManager) {
 		this.inputManager = inputManager;

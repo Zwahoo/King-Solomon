@@ -40,11 +40,7 @@ public class map {
 	//}
 	
 	public tile getTile(int x, int y){
-		//System.out.println("wat");
 		return tiles[x][y];
 	}
-	
-	//public static void main(String[] args){
-	//	map t = new map();
-	//}
+    
 }

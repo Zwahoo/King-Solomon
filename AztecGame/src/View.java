@@ -14,12 +14,6 @@ public class View extends InputListener{
 		setInputManager(input);
 	}
 	
-	@Override
-	void mouseDown(int mouseButton) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	public void update() {
 		checkScroll();
 	}
