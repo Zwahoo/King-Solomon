@@ -26,14 +26,12 @@ public class gameframe extends JFrame
 	private int x = 0;
 	private BufferedImage loadedimage;
 	private BufferedImage[] images = new BufferedImage[10];
-	private map themap= new map();
-	private int xcoor = 0;
-	private int ycoor = 0;
+	private map themap = new map();
 	private String tiletype;
 	private player player1 = new player(themap);
 	private boolean menued;
 	private String mode;
-	
+	private View view;
 		//MAIN
         public static void main(String[] args) throws IOException 
         { 
@@ -63,7 +61,7 @@ public class gameframe extends JFrame
                         
                         //runs an update 30 times a second
                         update(); 
-                       
+                        draw();
                         time = (1000 / fps) - (System.currentTimeMillis() - time); 
                         
                         //what the heck is even going on here man I mean seriously
@@ -98,6 +96,8 @@ public class gameframe extends JFrame
         	
         	//sets up mouse input stuff
         	input = new InputManager(this); 
+        	//Creates a view
+        	view = new View(input);
         	//what do insets do again? well anyway they're important
         	insets = getInsets(); 
         	//sets size of frame
@@ -142,7 +142,8 @@ public class gameframe extends JFrame
         //"check map," and "menu" mode
         void update() 
         { 
-        	checkscroll();
+        	view.update();
+        	input.update();
         	checkInput();	
         }
         
@@ -168,8 +169,8 @@ public class gameframe extends JFrame
         	//loop for drawing each tile
         	for (int i = 0; i < 40; i++)
         	{
-        		newx = xcoor + (i * 64);
-        		newy = ycoor + (i * 32);
+        		newx = view.getLocation().x + (i * 64);
+        		newy = view.getLocation().y + (i * 32);
         		for (int b = 0; b < 40; b++)
             	{
         			tiletype = themap.getTile(i,b).getType();
@@ -208,51 +209,6 @@ public class gameframe extends JFrame
         	g.drawImage(backBuffer, insets.left, insets.top, this); 
         } 
         
-        //checks to see if the player activated the scrolling function
-        public void checkscroll(){
-        	
-        	//checks to see if mouse is at the edge of the frame
-        	if (input.mouseInWindow()){
-        		int x = input.getMouseLoc().x;
-        		int y = input.getMouseLoc().y;
-        	
-        		if (x < 100){
-        			xcoor += 20;
-        			for(int i = 0; i < 40; i++){
-        				for(int b = 0; b < 40; b++){
-            				themap.getTile(i,b).moveSelectangle(20,0);
-            			}
-        			}
-        		}
-        		if (x > 900){
-        			xcoor -= 20;
-        			for(int i = 0; i < 40; i++){
-        				for(int b = 0; b < 40; b++){
-            				themap.getTile(i,b).moveSelectangle(-20,0);
-            			}
-        			}
-        		}
-        		if (y < 100){
-        			ycoor += 20;
-        			for(int i = 0; i < 40; i++){
-        				for(int b = 0; b < 40; b++){
-            				themap.getTile(i,b).moveSelectangle(0,20);
-            			}
-        			}
-        		}
-        		if (y > 700){
-        			ycoor -= 20;
-        			for(int i = 0; i < 40; i++){
-        				for(int b = 0; b < 40; b++){
-            				themap.getTile(i,b).moveSelectangle(0,-20);
-            			}
-        			}
-        		}
-        		//redraws 
-        		draw();
-        	}
-        }
-        
         public void checkInput() {
         	//checks to see if something clickable was clicked on- may become its own function at some point maybe maybe not
         	if (input.mouseDown(MouseEvent.BUTTON1)) 
@@ -260,33 +216,35 @@ public class gameframe extends JFrame
         		int x = input.getMouseLoc().x;
     	        int y = input.getMouseLoc().y;
     	        
+    	        int xRelBoard = x - view.getLocation().x;
+    	        int yRelBoard = y - view.getLocation().y;
+    	        
     	        //checks to see if any of the tiles neighboring player were clicked- this can probably be reduced to loop
-        		if(player1.getNeighbortile(0).checkcontains(x,y)){
+        		if(player1.getNeighbortile(0).checkcontains(xRelBoard, yRelBoard)){
         	        player1.move(player1.getNeighbortile(0), themap);
         	        System.out.println("moved");
         	        this.checksight();
         		} 
         		
-        		else if(player1.getNeighbortile(1).checkcontains(x,y)){
+        		else if(player1.getNeighbortile(1).checkcontains(xRelBoard, yRelBoard)){
         			player1.move(player1.getNeighbortile(1), themap);
         			System.out.println("moved");
         			this.checksight();
     			}
         		
-        		else if(player1.getNeighbortile(2).checkcontains(x,y)){
+        		else if(player1.getNeighbortile(2).checkcontains(xRelBoard, yRelBoard)){
         			player1.move(player1.getNeighbortile(2), themap);
         			System.out.println("moved");
         			this.checksight();
 				}
         		
-        		else if(player1.getNeighbortile(3).checkcontains(x,y)){
+        		else if(player1.getNeighbortile(3).checkcontains(xRelBoard, yRelBoard)){
         			player1.move(player1.getNeighbortile(3), themap);
         			System.out.println("moved");
         			this.checksight();
 				}
 				
 			}
-		
         }
         
         public void checksight(){
