@@ -3,16 +3,16 @@ import java.awt.*;
 //Handles any player movement that occurs
 public class PlayerMovementHandler extends InputListener {
 	
-	gameframe mainFrame;
+	MainGame mainGame;
 	Map map;
 	Player player;
 	private Tile dummy; //dummy tile
 	
-	public PlayerMovementHandler(gameframe mainFrame, Map theMap, Player thePlayer, InputManager input) {
+	public PlayerMovementHandler(MainGame mainGame, Map theMap, Player thePlayer, InputManager input) {
 		this.setInputManager(input);
 		input.addInputListener(this);
 		
-		this.mainFrame = mainFrame;
+		this.mainGame = mainGame;
 		this.map = theMap;
 		this.player = thePlayer;
 		
@@ -25,8 +25,8 @@ public class PlayerMovementHandler extends InputListener {
 	@Override
 	public void mouseDown(int mouseButton, Point mouseLoc) {
         
-        int xRelBoard = mouseLoc.x - mainFrame.getViewLoc().x;
-        int yRelBoard = mouseLoc.y - mainFrame.getViewLoc().y;
+        int xRelBoard = mouseLoc.x - mainGame.getViewLoc().x;
+        int yRelBoard = mouseLoc.y - mainGame.getViewLoc().y;
         
         //checks to see if any of the tiles neighboring player were clicked- this can probably be reduced to loop
 		if(player.getNeighbortile(0).checkcontains(xRelBoard, yRelBoard)){

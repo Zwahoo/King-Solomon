@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class View extends InputListener{
+public class View extends InputListener {
 	
 	private Point loc;
 	int width;
