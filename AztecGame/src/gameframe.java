@@ -15,9 +15,10 @@ import java.awt.Polygon;
  * Main class for the game 
  */ 
 public class gameframe extends JFrame 
-{        
+{      
+	
 	private boolean isRunning = true;
-	private InputManager input;
+	private InputManager input; //This registers all the mouse and keyboard input, and notifies input listeners
 	private Insets insets;
 	private BufferedImage backBuffer;
 	private int fps = 30;
