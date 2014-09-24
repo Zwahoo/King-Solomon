@@ -2,15 +2,20 @@
 // hello
 
 public class Map {
-
-	private Tile[][] tiles = new Tile[40][40];
+	
+	int width;
+	int height;
+	private Tile[][] tiles;
 	
 	//random map generator
-	public Map(){
+	public Map(int width, int height) {
+		this.width = width;
+		this.height = height;
+		tiles = new Tile[width][height];
 		String a = null;
 		Tile t;
-		for (int x = 0; x < 40; x++){
-			for (int y = 0; y < 40; y++){
+		for (int x = 0; x < width; x++){
+			for (int y = 0; y < height; y++){
 				int i = (int) ((Math.random()) * 3);
 				if (i == 0){
 					a = "water";
@@ -26,7 +31,6 @@ public class Map {
 				//System.out.println(x + ", " + y);
 			}
 		}
-		
 	}
 	
 	//map which is created from image?

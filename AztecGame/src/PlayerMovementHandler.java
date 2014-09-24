@@ -53,29 +53,31 @@ public class PlayerMovementHandler extends InputListener {
 	
 	//sets the 4 neighbors or sets the neighbor to a dummy tile if no neighbor available
 	public void setNeighbors(){
-		if(player.getX() != 0){
-			player.setNeighborTile(0,  map.getTile(player.getX()-1, player.getY()));
-		}
-		else if(player.getX() == 0){
+		if(player.getX() <= 0){
 			player.setNeighborTile(0,  dummy);
 		}
-		if(player.getY() != 0){
-			player.setNeighborTile(1, map.getTile(player.getX(), player.getY()-1));
+		else {
+			player.setNeighborTile(0,  map.getTile(player.getX()-1, player.getY()));
 		}
-		else if(player.getY() == 0){
+		
+		 if(player.getY() <= 0){
 			player.setNeighborTile(1, dummy);
 		}
-		if(player.getX() != 39){
+		else{
+			player.setNeighborTile(1, map.getTile(player.getX(), player.getY()-1));
+		}
+		 
+		if(player.getX() >= (map.width - 1)){
+			player.setNeighborTile(2, dummy);
+		} else {
 			player.setNeighborTile(2, map.getTile(player.getX()+1, player.getY()));
 		}
-		else if(player.getX() == 39){
-			player.setNeighborTile(2, dummy);
-		}
-		if(player.getY() != 39){
-			player.setNeighborTile(3, map.getTile(player.getX(), player.getY()+1));
-		}
-		else if(player.getY() == 39){
+		 
+		if(player.getY() >= (map.height - 1)){
 			player.setNeighborTile(3, dummy);
+		}
+		else {
+			player.setNeighborTile(3, map.getTile(player.getX(), player.getY()+1));
 		}
 		
 	}
@@ -94,9 +96,9 @@ public class PlayerMovementHandler extends InputListener {
     	int x = 0;
     	int y = 0;
     	for(int i = 0; i < 4; i++){
-    		x = player.getNeighbortile(i).getX();
-    		y = player.getNeighbortile(i).getY();
     		if(!player.getNeighbortile(i).getType().equals("dummy")){
+        		x = player.getNeighbortile(i).getX();
+    		y = player.getNeighbortile(i).getY();
     			map.getTile(x, y).reveal();
     		}
     	}

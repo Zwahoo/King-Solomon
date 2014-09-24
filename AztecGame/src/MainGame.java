@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 
 public class MainGame {
 
-	private Map map = new Map();
+	private Map map;
 	private Player player1;
 	private PlayerMovementHandler playerMovHandler;
 	private View view;
@@ -23,6 +23,8 @@ public class MainGame {
 	
 	//Starts the game, takes in the window frame, width, and height.
 	public MainGame(gameframe frame, int width, int height) {
+		//Create map
+		map = new Map(10, 10);
 		// sets up mouse input stuff
 		input = new InputManager(frame);
 		// Creates the player
@@ -54,10 +56,10 @@ public class MainGame {
 		// sets up initial tile selectangles
 		int newx = 0;
 		int newy = 0;
-		for (int i = 0; i < 40; i++) {
+		for (int i = 0; i < map.width; i++) {
 			newx = (i * 64);
 			newy = (i * 32);
-			for (int b = 0; b < 40; b++) {
+			for (int b = 0; b < map.height; b++) {
 				map.getTile(i, b).setSelectangle(newx, newx, newx + 62,
 						newx + 63, newx + 125, newx + 125, newx + 63,
 						newx + 62, newy + 32, newy + 31, newy, newy, newy + 31,
@@ -77,10 +79,10 @@ public class MainGame {
 		int newx;
 		int newy;
 		// loop for drawing each tile
-		for (int i = 0; i < 40; i++) {
+		for (int i = 0; i < map.width; i++) {
 			newx = view.getLocation().x + (i * 64);
 			newy = view.getLocation().y + (i * 32);
-			for (int b = 0; b < 40; b++) {
+			for (int b = 0; b < map.height; b++) {
 				Tile tile = map.getTile(i, b);
 
 				// if(!view.polygonIsInView(tile.selectangle)) continue; //Skip
