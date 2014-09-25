@@ -72,7 +72,7 @@ public class Tile {
 		yar[6] = y7;
 		yar[7] = y8;
 		selectangle = new Polygon(xar, yar, 8);
-		System.out.println(selectangle);
+		//System.out.println(selectangle);
 		
 	}
 	

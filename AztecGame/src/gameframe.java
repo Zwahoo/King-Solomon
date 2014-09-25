@@ -41,7 +41,7 @@ public class gameframe extends JFrame {
 
 		this.initialize(); // initializes things which need initializing before
 							// the game can run
-		System.out.println("what is going on here"); // CHECKPOINT
+		//System.out.println("what is going on here"); // CHECKPOINT
 		// initially draws everything
 		draw();
 		// loop which handles fps
@@ -95,9 +95,9 @@ public class gameframe extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		// we want to see the frame, no?
 		setVisible(true); // false for hard mode
-		System.out.println("what's up"); // CHECKPOINT
+		//System.out.println("what's up"); // CHECKPOINT
 
-		System.out.println("hello?????????????????????????????"); // hi
+		//System.out.println("hello?????????????????????????????"); // hi
 																	// //CHECKPOINT
 	}
 
