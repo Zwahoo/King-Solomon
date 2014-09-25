@@ -9,15 +9,12 @@ import javax.imageio.ImageIO;
 
 public class MainGame {
 
-	private Map map;
-	private Player player1;
-	private PlayerMovementHandler playerMovHandler;
-	private View view;
+	private Map map; //The map containing all the tiles making up the world
+	private Player player1; //The player
+	private View view; //The "camera." What the player is seeing. Has a location, can move around.
 	private InputManager input; // This registers all the mouse and keyboard
-	// input, and notifies input listeners
-	
 
-	//Death Row
+	//Death Row (To Be Deleted)
 	private BufferedImage loadedimage;
 	private BufferedImage[] images = new BufferedImage[10];
 	
@@ -25,14 +22,12 @@ public class MainGame {
 	public MainGame(gameframe frame, int width, int height) {
 		//Create map
 		map = new Map(10, 10);
-		// sets up mouse input stuff
-		input = new InputManager(frame);
 		// Creates the player
 		player1 = new Player(map);
-		// Handles the movement of the player
-		playerMovHandler = new PlayerMovementHandler(this, map, player1, input);
 		// Creates a view
-		view = new View(input, width, height);
+		view = new View(width, height);
+		// sets up mouse input stuff (INPUT MUST BE INSTANTIATED LAST)
+		input = new InputManager(frame, this);
 		
 		
 		// preloads images used for drawing dem sweet sweet grayfixs
@@ -70,11 +65,12 @@ public class MainGame {
 		}
 	}
 	
+	//Update all the various bits and pieces of the game world.
 	public void update() {
-		view.update();
 		input.update();
 	}
 	
+	//Draw any drawable objects in the game world.
 	public void draw(Graphics g) {
 		int newx;
 		int newy;
@@ -108,8 +104,10 @@ public class MainGame {
 
 	}
 	
-	public Point getViewLoc() {
-		return view.getLocation();
-	}
+	//Returns the location of the view.
+	public Point getViewLoc() { return view.getLocation();	}
+	public Map getMap() { return map; }
+	public Player getPlayer() { return player1; }
+	public View getView() { return view; }
 	
 }

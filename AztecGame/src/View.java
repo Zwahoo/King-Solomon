@@ -1,49 +1,21 @@
 import java.awt.*;
 
-public class View extends InputListener {
+public class View {
 	
 	private Point loc;
 	int width;
 	int height;
 	
 	
-	public View(InputManager input, int width, int height) {
-		this(input, new Point(0, 0), width, height);
+	public View(int width, int height) {
+		this(new Point(0, 0), width, height);
 	}
 	
-	public View(InputManager input, Point loc, int width, int height) {
+	public View(Point loc, int width, int height) {
 		this.loc = loc;
 		this.width = width;
 		this.height = height;
-		setInputManager(input);
 	}
-	
-	public void update() {
-		checkScroll();
-	}
-	
-	//checks to see if the player activated the scrolling function
-    public void checkScroll(){
-    	
-    	//checks to see if mouse is at the edge of the frame
-    	if (mouseInWindow()){
-    		int x = getMouseLoc().x;
-    		int y = getMouseLoc().y;
-    	
-    		if (x < 100){
-    			loc.x += 20;
-    		}
-    		else if (x > 900){
-    			loc.x -= 20;
-    		}
-    		if (y < 100){
-    			loc.y += 20;
-    		}
-    		if (y > 700){
-    			loc.y -= 20;
-    		}
-    	}
-    }
     
 	public Point getLocation() {
 		return loc;

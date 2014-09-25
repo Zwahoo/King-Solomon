@@ -8,17 +8,26 @@ public class InputManager {
 	private MouseInput mouseInput;
 	private ArrayList<InputListener> inputListeners = new ArrayList<InputListener>();
 	
-	public InputManager(Component c) {
+	//Movement Handlers
+	private PlayerMovementHandler playerMovHandler; //Moves the player around based on input
+	private ViewMovementHandler viewMovHandler; //Moves the view around based on input.
+	
+	public InputManager(Component c, MainGame mainGame) {
 		mouseInput = new MouseInput(c);
+		playerMovHandler = new PlayerMovementHandler(mainGame, mainGame.getMap(), mainGame.getPlayer(), this);
+		viewMovHandler = new ViewMovementHandler(mainGame.getView(), this);
 	}
 	
 	public void update() {
-		if (mouseDown(MouseEvent.BUTTON1)) 
-    	{
+		if (mouseDown(MouseEvent.BUTTON1)) {
 			for(InputListener listener : inputListeners) {
 				listener.mouseDown(MouseEvent.BUTTON1, getMouseLoc());
 			}
     	}
+		
+		for(InputListener listener : inputListeners) {
+			listener.update();
+		}
 	}
 	
 	public void addInputListener(InputListener toAdd) {

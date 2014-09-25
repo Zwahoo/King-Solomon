@@ -1,3 +1,4 @@
+
 import java.awt.*;
 
 //Handles any player movement that occurs
@@ -10,7 +11,6 @@ public class PlayerMovementHandler extends InputListener {
 	
 	public PlayerMovementHandler(MainGame mainGame, Map theMap, Player thePlayer, InputManager input) {
 		this.setInputManager(input);
-		input.addInputListener(this);
 		
 		this.mainGame = mainGame;
 		this.map = theMap;
