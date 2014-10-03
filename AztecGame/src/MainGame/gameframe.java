@@ -1,3 +1,4 @@
+package MainGame;
 //Zane Laughlin- runs standard gamemode and window
 //Thomas Sparks was Here!
 

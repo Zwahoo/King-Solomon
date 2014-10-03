@@ -1,3 +1,4 @@
+package MainGame;
 import java.awt.*;
 
 public abstract class InputListener {
@@ -10,8 +11,6 @@ public abstract class InputListener {
 		this.inputManager = inputManager;
 		inputManager.addInputListener(this);
 	}
-	//Called when the mouse is first pressed down.
-	public void mouseDown(int mouseButton, Point mouseLoc) {};
 	
 	//Returns the location of the mouse
 	protected Point getMouseLoc() {
@@ -29,4 +28,14 @@ public abstract class InputListener {
 	protected boolean mouseInWindow() {
 		return inputManager.mouseInWindow();
 	}
+	
+	//Mouse Methods
+	//Called when the mouse is first pressed down.
+	public void mouseDown(int mouseButton, Point mouseLoc) {}
+	public void mousePressed(int button, Point mouseLoc) {}
+	public void mouseReleased(int button, Point mouseLoc) {}
+	public void mouseDragged() {}
+	public void mouseExited() {}
+	public void mouseEntered() {}
+	public void mouseMoved(Point point) {}
 }

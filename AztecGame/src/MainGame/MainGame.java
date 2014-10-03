@@ -1,3 +1,4 @@
+package MainGame;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -6,6 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import Components.*;
 
 public class MainGame {
 
@@ -14,6 +16,8 @@ public class MainGame {
 	private View view; //The "camera." What the player is seeing. Has a location, can move around.
 	private InputManager input; // This registers all the mouse and keyboard
 
+	Button testButton;
+	
 	//Death Row (To Be Deleted)
 	private BufferedImage loadedimage;
 	private BufferedImage[] images = new BufferedImage[10];
@@ -29,6 +33,12 @@ public class MainGame {
 		// sets up mouse input stuff (INPUT MUST BE INSTANTIATED LAST)
 		input = new InputManager(frame, this);
 		
+		testButton = new Button(width - 200, height - 150, 100, 50, "Test Button!", input){
+			@Override
+			public void onClick() {
+				System.out.println("Click!");
+			}
+		};
 		
 		// preloads images used for drawing dem sweet sweet grayfixs
 		try {
@@ -68,6 +78,7 @@ public class MainGame {
 	//Update all the various bits and pieces of the game world.
 	public void update() {
 		input.update();
+		testButton.update();
 	}
 	
 	//Draw any drawable objects in the game world.
@@ -84,8 +95,6 @@ public class MainGame {
 				// if(!view.polygonIsInView(tile.selectangle)) continue; //Skip
 				// if it isn't in view
 
-				String tiletype = tile.getType();
-
 				// draws the tile
 				g.drawImage(images[tile.getImageIndex()], newx, newy, null);
 
@@ -101,6 +110,7 @@ public class MainGame {
 			}
 
 		}
+		testButton.draw(g);
 
 	}
 	

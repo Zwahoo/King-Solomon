@@ -1,3 +1,4 @@
+package MainGame;
 
 import java.awt.*;
 

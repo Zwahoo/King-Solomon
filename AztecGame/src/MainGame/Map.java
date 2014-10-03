@@ -1,3 +1,4 @@
+package MainGame;
 //Zane Laughlin- map class- holds bunch of tiles
 // hello
 

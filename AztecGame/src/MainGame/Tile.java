@@ -1,3 +1,4 @@
+package MainGame;
 //Zane Laughlin- Tile Class: Holds tile info
 
 import java.awt.Polygon;

@@ -1,4 +1,6 @@
+package MainGame;
 import java.awt.Component; 
+import java.awt.Point;
 import java.awt.event.*; 
 
 /** 
@@ -11,14 +13,17 @@ public class MouseInput implements MouseListener, MouseMotionListener
 	private boolean inwindow = false;
 	private int xpos;
 	private int ypos;
+	InputManager input;
+	
         /** 
          * Assigns the newly created InputHandler to a Component 
          * @param c Component to get input from 
          */ 
-        public MouseInput(Component c) 
+        public MouseInput(Component c, InputManager input) 
         { 
                 c.addMouseListener(this); 
                 c.addMouseMotionListener(this);
+                this.input = input;
         } 
 
         /** 
@@ -44,27 +49,29 @@ public class MouseInput implements MouseListener, MouseMotionListener
         
 		@Override
 		public void mouseClicked(MouseEvent m) { 
-			
+            input.mouseClicked(m.getButton());
         } 
 		
 		@Override
 		public void mouseMoved(MouseEvent m) { 
 			xpos = m.getX();
 			ypos = m.getY();
+            input.mouseMoved(new Point(m.getX(), m.getY()));
         }
-		
 
 		@Override
 		public void mouseEntered(MouseEvent m) {
 			inwindow = true;
 			xpos = m.getX();
 			ypos = m.getY();
+            input.mouseEntered();
 		}
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
 			// TODO Auto-generated method stub
 			inwindow = false;
+            input.mouseExited();
 		}
 
 		@Override
@@ -74,6 +81,7 @@ public class MouseInput implements MouseListener, MouseMotionListener
             { 
                     mbutton[m.getButton()] = true; 
             } 
+            input.mousePressed(m.getButton());
 		}
 
 		@Override
@@ -84,16 +92,18 @@ public class MouseInput implements MouseListener, MouseMotionListener
             { 
                     mbutton[m.getButton()] = false; 
             } 
-		} 
-		public boolean checkmouseinwindow(){
-			return inwindow;
+	        input.mouseReleased(m.getButton());
 		}
 
 		@Override
-		public void mouseDragged(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
+		public void mouseDragged(MouseEvent m) {
+			xpos = m.getX();
+			ypos = m.getY();
+            input.mouseDragged();
 		}
 		
-		
+		 
+		public boolean checkmouseinwindow(){
+			return inwindow;
+		}
 } 

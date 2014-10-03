@@ -1,3 +1,4 @@
+package MainGame;
 //holds attributes of each party member
 
 public class PartyMember {
