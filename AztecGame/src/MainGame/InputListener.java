@@ -1,5 +1,6 @@
 package MainGame;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public abstract class InputListener {
 	
@@ -38,4 +39,10 @@ public abstract class InputListener {
 	public void mouseExited() {}
 	public void mouseEntered() {}
 	public void mouseMoved(Point point) {}
+	
+	//Keyboard Methods
+	public void keyTyped(KeyEvent e) {}
+	public void keyReleased(KeyEvent e) {}
+	public void keyPressed(KeyEvent e) {}
+	public boolean isKeyDown(int keyCode) { return inputManager.keyIsDown(keyCode); }
 }

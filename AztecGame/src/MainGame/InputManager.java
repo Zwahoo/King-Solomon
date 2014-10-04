@@ -1,12 +1,14 @@
 package MainGame;
 import java.awt.Component;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class InputManager {
 	
 	private MouseInput mouseInput;
+	private KeyboardInput keyInput;
 	private ArrayList<InputListener> inputListeners = new ArrayList<InputListener>();
 	
 	//Movement Handlers
@@ -15,6 +17,7 @@ public class InputManager {
 	
 	public InputManager(Component c, MainGame mainGame) {
 		mouseInput = new MouseInput(c, this);
+		keyInput = new KeyboardInput(c, this);
 		playerMovHandler = new PlayerMovementHandler(mainGame, mainGame.getMap(), mainGame.getPlayer(), this);
 		viewMovHandler = new ViewMovementHandler(mainGame.getView(), this);
 	}
@@ -81,5 +84,26 @@ public class InputManager {
 		for(InputListener listener : inputListeners) {
 			listener.mouseDragged();
 		}
+	}
+
+	
+	//Keyboard Events
+	public void keyTyped(KeyEvent e) {
+		for(InputListener listener : inputListeners) {
+			listener.keyTyped(e);
+		}
+	}
+	public void keyReleased(KeyEvent e) {
+		for(InputListener listener : inputListeners) {
+			listener.keyReleased(e);
+		}	
+	}
+	public void keyPressed(KeyEvent e) {
+		for(InputListener listener : inputListeners) {
+			listener.keyPressed(e);
+		}
+	}
+	public boolean keyIsDown(int keyCode) {
+		return keyInput.keyIsDown(keyCode);
 	}
 }

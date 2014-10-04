@@ -14,9 +14,9 @@ public class ViewMovementHandler extends InputListener {
 	}
 
 	//checks to see if the player activated the scrolling function
-    public void checkScroll(){
+    public void checkScroll() {
     	//checks to see if mouse is at the edge of the frame
-    	if (mouseInWindow()){
+    	if (mouseInWindow()) {
     		int x = getMouseLoc().x;
     		int y = getMouseLoc().y;
     	
