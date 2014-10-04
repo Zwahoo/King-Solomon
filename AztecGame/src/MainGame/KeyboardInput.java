@@ -9,6 +9,7 @@ public class KeyboardInput implements KeyListener {
 
 	InputManager input;
 	
+	//A list of keys that are being held down.
 	ArrayList<Integer> downKeys = new ArrayList<Integer>();
 	
 	public KeyboardInput(Component c, InputManager input) {

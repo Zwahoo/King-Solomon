@@ -8,25 +8,28 @@ import MainGame.*;
 
 public class Button extends InputListener {
 	
-	public static final int MODE_NORMAL = 0;
-	public static final int MODE_HOVER = 1;
-	public static final int MODE_PRESSED = 2;
+	public static final int MODE_NORMAL = 0; //Default button "mode"
+	public static final int MODE_HOVER = 1; //The mouse is hovering over the button, but not pressed
+	public static final int MODE_PRESSED = 2; //The mouse has been clicked on the button, but not released yet.
 	
-	private String myText;
-	private Rectangle2D myRect;
-	private int borderSize = 2;
-	private boolean mouseOnButton = false;
-	private Font myFont;
+	private String myText; //Text on the button.
+	private Rectangle2D myRect; //Location and size of the button
+	private int borderSize = 2; //Size of the button's border
+	private boolean mouseOnButton = false; //Is the mouse currently hovering over the button?
+	private Font myFont; //Font used in the button's text
 	
-	Color drawCol;
-	Color borderCol;
-	Color offCol = new Color(210, 150, 50);
-	Color hoverCol = new Color(210, 150, 50);
-	Color pressCol = new Color(180, 130, 30);
-	Color offBor = new Color(80, 50, 50);
-	Color hoverBor = new Color(100, 70, 70);
-	Color pressBor = new Color(100, 70, 70);
-	Color fontCol = new Color(0, 0, 0);
+	Color bkgCol; //The backdrop color for the button (switches between off, hover, and press Col)
+	Color borderCol; //The border color for the button (switches between off, hover, and press Bor)
+	
+	Color normCol = new Color(210, 150, 50); //Back color for normal mode
+	Color hoverCol = new Color(210, 150, 50); //Back color for hover mode
+	Color pressCol = new Color(180, 130, 30); //Back color for press mode
+	Color normBor = new Color(80, 50, 50); //Border color for normal mode
+	Color hoverBor = new Color(100, 70, 70); //Border color for hover mode
+	Color pressBor = new Color(100, 70, 70); //Border color for press mode
+	Color fontCol = new Color(0, 0, 0); //Color of the text
+	
+	Point stringLoc = null;
 	
 	//Constructors
 	public Button(int x, int y, int width, int height, String str, InputManager inputManager) {
@@ -36,7 +39,8 @@ public class Button extends InputListener {
 		this(new Rectangle(loc.x, loc.y, size.x, size.y), str, inputManager);
 	}
 	public Button(Rectangle rect, String str, InputManager inputManager) {
-		setInputManager(inputManager);
+		setInputManager(inputManager); //Required for handling input
+		
 		this.myRect = new Rectangle(rect);
 		this.myText = str;
 		
@@ -45,26 +49,32 @@ public class Button extends InputListener {
 		setMode(MODE_NORMAL);
 	}
 	
-	
+	//Should be override when the button is created.
 	public void onClick() {}
 	
+	//Draw the button
 	public void draw(Graphics g) {
-		//Button border
+		//Draw the border
 		g.setColor(borderCol);
 		g.fillRect(getX(), getY(), getWidth(), getHeight());
 		
-		//Main Backdrop for the button
-		g.setColor(drawCol);
+		//Draw the Backdrop
+		g.setColor(bkgCol);
 		g.fillRect(getX() + borderSize, getY() + borderSize, getWidth() - (2*borderSize), getHeight() - (2*borderSize));
 		
 		//Draw the text
 		g.setFont(myFont);
 		g.setColor(fontCol);
-		Point stringLoc = getStringDrawLoc(g, myFont, myText);
+		
+		//Calculate the string location if it's not known
+		if(stringLoc == null) {
+			stringLoc = getStringDrawLoc(g, myFont, myText);
+		}
 		
 		g.drawString(myText, stringLoc.x, stringLoc.y);
 	}
 	
+	//Sets the mode if mouse exits/exits the button.
 	public void update() {
 		boolean mouseOn = pointIntersectsButton(getMouseLoc());
 		if(mouseOn != mouseOnButton) {
@@ -76,6 +86,8 @@ public class Button extends InputListener {
 		}
 	}
 	
+	//Returns the location to draw the given string.
+	//The location will be centered in the button.
 	private Point getStringDrawLoc(Graphics g, Font f, String str) {
 		Rectangle2D stringBounds = f.getStringBounds(str, g.getFontMetrics().getFontRenderContext());
 		
@@ -85,6 +97,7 @@ public class Button extends InputListener {
 		return new Point(newX, newY);	
 	}
 	
+	//Set the mouseOnButton variable.
 	public void setMouseOnButton(boolean on) {
 		if(on) {
 			mouseOnButton = true;
@@ -93,21 +106,22 @@ public class Button extends InputListener {
 		}
 	}
 	
+	//Changes the button mode, and modifies the colors.
 	public void setMode(int mode) {
 		if(mode == MODE_NORMAL) {
 			setMouseOnButton(false);
-			drawCol = offCol;
-			borderCol = offBor;
+			bkgCol = normCol;
+			borderCol = normBor;
 		}
 		else if (mode == MODE_HOVER) {
 			setMouseOnButton(true);
-			drawCol = hoverCol;
+			bkgCol = hoverCol;
 			borderCol = hoverBor;
 			
 		}
 		else if (mode == MODE_PRESSED) {
 			setMouseOnButton(true);
-			drawCol = pressCol;
+			bkgCol = pressCol;
 			borderCol = pressBor;
 		} else {
 			System.out.println("Unknown Mode Request in Button.");
@@ -115,12 +129,15 @@ public class Button extends InputListener {
 	}
 	
 	@Override
+	//When the mouse is pressed (but not yet released)
 	public void mousePressed(int mouseButton, Point mouseLoc) {
 		if(mouseOnButton) {
 			setMode(MODE_PRESSED);
 		}
 	}
+	
 	@Override
+	//When the mouse as been released over the button, call the onClick method.
 	public void mouseReleased(int mouseButton, Point mouseLoc) {
 		if(mouseOnButton) {
 			onClick();
@@ -133,6 +150,8 @@ public class Button extends InputListener {
 	public boolean pointIntersectsButton(Point pnt) {
 		return myRect.contains(pnt);
 	}
+	
+	//Getters
 	public int getX() {
 		return (int)Math.round(myRect.getX());
 	}
@@ -146,8 +165,10 @@ public class Button extends InputListener {
 		return (int)Math.round(myRect.getHeight());
 	}
 	
+	//Setters
 	public void setX(int x) {
 		setLocation(x, getY());
+		stringLoc = null; //Need to recalculate the string's draw location.
 	}
 	public void setY(int y) {
 		setLocation(getX(), y);

@@ -6,8 +6,8 @@ public class ViewMovementHandler extends InputListener {
 	
 	View view;
 	
-	public boolean viewKeyMovement = true;
-	public boolean viewMouseMovement = false;
+	public boolean viewKeyMovement = true; //Can the view be moved via the mouse?
+	public boolean viewMouseMovement = false; //Can the view be moved via the keyboard?
 	
 	int movSpeed = 20;
 	
