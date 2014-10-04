@@ -2,15 +2,14 @@ package MainGame;
 //Zane Laughlin- runs standard gamemode and window
 //Thomas Sparks was Here!
 
-import java.awt.*;
-import java.awt.event.MouseEvent;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import javax.imageio.ImageIO;
+import java.util.HashMap;
+
 import javax.swing.JFrame;
-import java.awt.Point;
-import java.awt.Polygon;
 
 /**
  * Main class for the game
@@ -43,6 +42,8 @@ public class gameframe extends JFrame {
 		this.initialize(); // initializes things which need initializing before
 							// the game can run
 		//System.out.println("what is going on here"); // CHECKPOINT
+		
+		
 		// initially draws everything
 		draw();
 		// loop which handles fps
@@ -76,6 +77,20 @@ public class gameframe extends JFrame {
 	 * @throws IOException
 	 */
 	void initialize() throws IOException {
+		
+		//set stats
+				MainGame.partyStats = new HashMap<String, Integer>();
+				MainGame.partyStats.put("Food", 0);
+				MainGame.partyStats.put("Water", 0);
+				MainGame.partyStats.put("Ammo", 0);
+		MainGame.partyStats.put("Medicine", 0);
+		MainGame.partyStats.put("Valuables", 0);
+		MainGame.partyStats.put("Pack Animals", 0);
+		MainGame.partyStats.put("Morale", 0);
+		MainGame.partyStats.put("Hunger", 0);
+		MainGame.partyStats.put("Thirst", 0);
+		MainGame.partyStats.put("Stamina", 0);
+				
 		mainGame = new MainGame(this, windowWidth, windowHeight);
 
 		// what do insets do again? well anyway they're important
@@ -100,6 +115,8 @@ public class gameframe extends JFrame {
 
 		//System.out.println("hello?????????????????????????????"); // hi
 																	// //CHECKPOINT
+		
+		
 	}
 
 	/**

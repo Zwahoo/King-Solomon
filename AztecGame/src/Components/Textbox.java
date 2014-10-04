@@ -60,7 +60,7 @@ public class Textbox {
 	
 	//Splits the given string into lines that will fit in the text box.
 	//Returns the lines as an array list of strings.
-	private ArrayList<String> fitStr(String orig) {
+	protected ArrayList<String> fitStr(String orig) {
 		//The list to fill with the separate lines.
 		ArrayList<String> ret = new ArrayList<String>();
 		
@@ -103,7 +103,7 @@ public class Textbox {
 	//Calculates and sets the line height, and full height of the text.
 	//Also sets the number of lines to show at any one time in the text box.
 	//TODO: This method does too many things. Split into multiple methods.
-	private void calculateFullHeight() {
+	protected void calculateFullHeight() {
 		Component c = new JTextField();
 		lineHeight = c.getFontMetrics(myFont).getHeight() + 3;
 		fullHeight = lines.size() * lineHeight;
@@ -112,7 +112,7 @@ public class Textbox {
 
 	//Checks if the form needs a scroll bar.
 	//Adds one if it does.
-	private void checkNeedScroll() {
+	protected void checkNeedScroll() {
 		if(lines.size() > numLinesToShow) {
 			hasScroll = true;
 			

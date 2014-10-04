@@ -1,13 +1,18 @@
 package MainGame;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
-import Components.*;
+import Components.Button;
+import Components.StatsBar;
+import Components.Textbox;
 
 public class MainGame {
 
@@ -18,6 +23,13 @@ public class MainGame {
 
 	Button testButton;
 	Textbox testText;
+	Rectangle drawRect;
+	
+	StatsBar statsBar;
+	
+	//Dummy stats
+	public static HashMap <String, Integer> partyStats;
+	
 	
 	//Death Row (To Be Deleted)
 	private BufferedImage loadedimage;
@@ -31,9 +43,14 @@ public class MainGame {
 		player1 = new Player(map);
 		// Creates a view
 		view = new View(width, height);
+		
+		
 		// sets up mouse input stuff (INPUT MUST BE INSTANTIATED LAST)
 		input = new InputManager(frame, this);
 		
+		
+		statsBar = new StatsBar(getStatString(), 0, 20, width, height/15, input);
+		//System.out.println(statsBar);
 		
 		testButton = new Button(width - 150, 100, 100, 50, "Test Button!", input){
 			@Override
@@ -136,8 +153,20 @@ public class MainGame {
 		}
 		testButton.draw(g);
 		testText.draw(g);
-
+		//statsBar.setText(getStatString());
+        statsBar.draw(g);
 	}
+	
+	private static String getStatString() {
+		System.out.println("testestsets");
+		Set <String> statNames = partyStats.keySet();
+		String retVal = "";
+		for( String s : statNames) {
+			retVal += s + ": " + partyStats.get(s) + " ";
+		}
+		return retVal;
+	}
+	
 	
 	//Returns the location of the view.
 	public Point getViewLoc() { return view.getLocation();	}
