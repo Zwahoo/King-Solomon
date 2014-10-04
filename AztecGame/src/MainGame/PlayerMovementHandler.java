@@ -41,23 +41,19 @@ public class PlayerMovementHandler extends InputListener {
         
         //checks to see if any of the tiles neighboring player were clicked- this can probably be reduced to loop
 		if(player.getNeighbortile(NW_TILE).checkcontains(xRelBoard, yRelBoard)){
-			move(player.getNeighbortile(NW_TILE));
-			checkSight();
+			moveToTile(NW_TILE);
 		} 
 		
 		else if(player.getNeighbortile(SW_TILE).checkcontains(xRelBoard, yRelBoard)){
-			move(player.getNeighbortile(SW_TILE));
-			checkSight();
+			moveToTile(SW_TILE);
 		}
 		
 		else if(player.getNeighbortile(SE_TILE).checkcontains(xRelBoard, yRelBoard)){
-			move(player.getNeighbortile(SE_TILE));
-			checkSight();
+			moveToTile(SE_TILE);
 		}
 		
 		else if(player.getNeighbortile(NE_TILE).checkcontains(xRelBoard, yRelBoard)){
-			move(player.getNeighbortile(NE_TILE));
-			checkSight();
+			moveToTile(NE_TILE);
 		}
 		
 	}
@@ -97,7 +93,6 @@ public class PlayerMovementHandler extends InputListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(!playerKeyMovement) return;
-		
 		int keyCode = e.getKeyCode();
 		if(keyCode == Controls.NORTH_EAST_KEY) {
 			moveToTile(NE_TILE);

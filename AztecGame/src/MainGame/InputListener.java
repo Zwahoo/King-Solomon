@@ -44,5 +44,5 @@ public abstract class InputListener {
 	public void keyTyped(KeyEvent e) {}
 	public void keyReleased(KeyEvent e) {}
 	public void keyPressed(KeyEvent e) {}
-	public boolean isKeyDown(int keyCode) { return inputManager.keyIsDown(keyCode); }
+	public boolean keyIsDown(int keyCode) { return inputManager.keyIsDown(keyCode); }
 }

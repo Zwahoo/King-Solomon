@@ -18,7 +18,9 @@ public class KeyboardInput implements KeyListener {
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
-		downKeys.add(e.getKeyCode());
+		if(!downKeys.contains(e.getKeyCode())) {
+			downKeys.add(e.getKeyCode());
+		}
 		input.keyPressed(e);
 	}
 
