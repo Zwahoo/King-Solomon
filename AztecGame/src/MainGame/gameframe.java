@@ -78,11 +78,11 @@ public class gameframe extends JFrame {
 	 */
 	void initialize() throws IOException {
 		
-		//set stats
-				MainGame.partyStats = new HashMap<String, Integer>();
-				MainGame.partyStats.put("Food", 0);
-				MainGame.partyStats.put("Water", 0);
-				MainGame.partyStats.put("Ammo", 0);
+		//Sets the stats of the party
+		MainGame.partyStats = new HashMap<String, Integer>();
+		MainGame.partyStats.put("Food", 0);
+		MainGame.partyStats.put("Water", 0);
+		MainGame.partyStats.put("Ammo", 0);
 		MainGame.partyStats.put("Medicine", 0);
 		MainGame.partyStats.put("Valuables", 0);
 		MainGame.partyStats.put("Pack Animals", 0);

@@ -60,6 +60,7 @@ public class MainGame {
 		};
 		testText = new Textbox("An Excerpt:\n----------------------------------\nThe creature impressed Oscar with his knowledge,"
 				+ " and Oscar politely asked for his name."
+				
 				+ " “My name is Alan,” stated the alligator, “and it may surprise"
 				+ " you to know that, in contrast to the disseminated rumors, us alligators are quite"
 				+ " friendly creatures.” Oscar inspected Alan and silently agreed; the alligator looked rather gluttonous, but he"
@@ -154,15 +155,18 @@ public class MainGame {
 		testButton.draw(g);
 		testText.draw(g);
 		//statsBar.setText(getStatString());
+		//Should make it so that the stats are updated only if something has updated them
+		//i.e. make a boolean hasUpdated, and if true, do statsBar.setText(getStatString())
         statsBar.draw(g);
 	}
 	
+	//Converts the HashMap of Stats and Values into a set and then into a string
 	private static String getStatString() {
-		System.out.println("testestsets");
+		//System.out.println("testestsets");
 		Set <String> statNames = partyStats.keySet();
 		String retVal = "";
 		for( String s : statNames) {
-			retVal += s + ": " + partyStats.get(s) + " ";
+			retVal += s + ": " + partyStats.get(s) + " | ";
 		}
 		return retVal;
 	}
