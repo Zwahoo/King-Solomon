@@ -14,18 +14,18 @@ public class Button extends InputListener {
 	
 	private String myText;
 	private Rectangle2D myRect;
-	private int borderSize = 3;
+	private int borderSize = 2;
 	private boolean mouseOnButton = false;
 	private Font myFont;
 	
 	Color drawCol;
 	Color borderCol;
 	Color offCol = new Color(210, 150, 50);
-	Color onCol = new Color(210, 150, 50);
+	Color hoverCol = new Color(210, 150, 50);
 	Color pressCol = new Color(180, 130, 30);
 	Color offBor = new Color(80, 50, 50);
-	Color onBor = new Color(180, 70, 70);
-	Color pressBor = new Color(180, 70, 70);
+	Color hoverBor = new Color(100, 70, 70);
+	Color pressBor = new Color(100, 70, 70);
 	Color fontCol = new Color(0, 0, 0);
 	
 	//Constructors
@@ -40,7 +40,7 @@ public class Button extends InputListener {
 		this.myRect = new Rectangle(rect);
 		this.myText = str;
 		
-		myFont = new Font("Cooper", Font.PLAIN, 12);
+		myFont = new Font("Georgia", Font.PLAIN, 14);
 		
 		setMode(MODE_NORMAL);
 	}
@@ -101,8 +101,8 @@ public class Button extends InputListener {
 		}
 		else if (mode == MODE_HOVER) {
 			setMouseOnButton(true);
-			drawCol = onCol;
-			borderCol = onBor;
+			drawCol = hoverCol;
+			borderCol = hoverBor;
 			
 		}
 		else if (mode == MODE_PRESSED) {

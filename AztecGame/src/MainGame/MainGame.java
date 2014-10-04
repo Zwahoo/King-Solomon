@@ -17,6 +17,7 @@ public class MainGame {
 	private InputManager input; // This registers all the mouse and keyboard
 
 	Button testButton;
+	Textbox testText;
 	
 	//Death Row (To Be Deleted)
 	private BufferedImage loadedimage;
@@ -33,12 +34,34 @@ public class MainGame {
 		// sets up mouse input stuff (INPUT MUST BE INSTANTIATED LAST)
 		input = new InputManager(frame, this);
 		
-		testButton = new Button(width - 200, height - 150, 100, 50, "Test Button!", input){
+		
+		testButton = new Button(width - 150, 100, 100, 50, "Test Button!", input){
 			@Override
 			public void onClick() {
 				System.out.println("Click!");
 			}
 		};
+		testText = new Textbox("An Excerpt:\n----------------------------------\nThe creature impressed Oscar with his knowledge,"
+				+ " and Oscar politely asked for his name."
+				+ " “My name is Alan,” stated the alligator, “and it may surprise"
+				+ " you to know that, in contrast to the disseminated rumors, us alligators are quite"
+				+ " friendly creatures.” Oscar inspected Alan and silently agreed; the alligator looked rather gluttonous, but he"
+				+ " seemed more accustomed to eating plants, not animals. Just as Alan and Oscar finished their"
+				+ " conversation, a small serval approached them and tried to coerce the alligator into"
+				+ " catching a rodent or two for lunch. Alan seemed offended, took a large leap, and snapped"
+				+ " at the sorry, scared serval before anyone had a chance to ameliorate the situation.\nOscar quickly"
+				+ " learned that the Alligator held a very non-pliable view"
+				+ " towards unnecessary carnivorism; any animal that could, without hindering the greater good, remain uneaten"
+				+ " should remain uneaten. At first Oscar felt it was rather hypocritical of Alan to try and bite the"
+				+ " elusive serval, but it was quickly made apparent that Alan intentionally missed. The porcupine was pleased that Alan refrained"
+				+ " from eating meat, and extolled his restraint. Oscar remembered what Alan said in regards to the serval during the"
+				+ " overview of jungle creatures; it was a furtive animal - sneaky, and scary. It enjoyed scheming, and was not to be"
+				+ " trusted under any circumstances. Clearly, Alan felt it was worth belaboring the point: it wasn’t safe"
+				+ " to trust the creature, and one should always remain cautious of his devious ways, “Especially,”"
+				+ " he added “with that particular serval. His name is Sylvester, Sergeant Sylvester Scott,"
+				+ " the sly, sneaky, serval dressed in sleek, silver fur, spotted with small gray specks.",
+				50, height - 200, width - 100, 150, input);
+		
 		
 		// preloads images used for drawing dem sweet sweet grayfixs
 		try {
@@ -79,6 +102,7 @@ public class MainGame {
 	public void update() {
 		input.update();
 		testButton.update();
+		testText.update();
 	}
 	
 	//Draw any drawable objects in the game world.
@@ -111,6 +135,7 @@ public class MainGame {
 
 		}
 		testButton.draw(g);
+		testText.draw(g);
 
 	}
 	
