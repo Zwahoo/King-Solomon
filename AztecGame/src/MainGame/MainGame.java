@@ -29,6 +29,8 @@ public class MainGame {
 	
 	//Dummy stats
 	public static HashMap <String, Integer> partyStats;
+	public static String partyStatsString = "";
+	private static boolean partyStatsChanged = false; // set this whenever the stats change
 	
 	
 	//Death Row (To Be Deleted)
@@ -48,8 +50,8 @@ public class MainGame {
 		// sets up mouse input stuff (INPUT MUST BE INSTANTIATED LAST)
 		input = new InputManager(frame, this);
 		
-		
-		statsBar = new StatsBar(getStatString(), 0, 20, width, height/15, input);
+		partyStatsString = getStatString(); // initialize stats bar text
+		statsBar = new StatsBar(partyStatsString, input); // create stats bar
 		//System.out.println(statsBar);
 		
 		testButton = new Button(width - 150, 100, 100, 50, "Test Button!", input){
@@ -121,6 +123,11 @@ public class MainGame {
 		input.update();
 		testButton.update();
 		testText.update();
+		if (partyStatsChanged) {
+			partyStatsString = getStatString();
+			statsBar.setText(partyStatsString);
+			partyStatsChanged = false;
+		}
 	}
 	
 	//Draw any drawable objects in the game world.
@@ -155,12 +162,12 @@ public class MainGame {
 		testButton.draw(g);
 		testText.draw(g);
 		//statsBar.setText(getStatString());
-		//Should make it so that the stats are updated only if something has updated them
-		//i.e. make a boolean hasUpdated, and if true, do statsBar.setText(getStatString())
+		//See logic in update() method for when stats bar text gets updates
         statsBar.draw(g);
 	}
 	
 	//Converts the HashMap of Stats and Values into a set and then into a string
+	//Edit this to change what gets printed in the stat bar
 	private static String getStatString() {
 		//System.out.println("testestsets");
 		Set <String> statNames = partyStats.keySet();
