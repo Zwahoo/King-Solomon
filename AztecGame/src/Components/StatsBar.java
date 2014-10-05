@@ -8,7 +8,7 @@ import MainGame.InputManager;
 public class StatsBar extends Textbox {
 
 	public static final int x = 0;
-	public static final int y = 20;
+	public static final int y = 0;
 	public static final int width = 1000; // see gameframe
 	public static final int height = 54; // see gameframe
 	
