@@ -138,7 +138,14 @@ public class gameframe extends JFrame {
 		// actually draws the images and stuff on screen
 		g.drawImage(backBuffer, insets.left, insets.top, this);
 	}
-
+	
+	
+	public int getWidth() {
+		return windowWidth;
+	}
+	public int getHeight(){
+		return windowHeight;
+	}
 	// world record speed run- explored all of Africa- Chris Earman- like 5
 	// minutes
 	// such pro

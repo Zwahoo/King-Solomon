@@ -24,10 +24,11 @@ public class MainGame {
 	Rectangle drawRect;
 	
 	StatsBar statsBar;
+	int statBarWidth;
+	int statBarHeight;
 	
 	//Dummy stats
 	public static HashMap <String, Integer> partyStats;
-	public static String partyStatsString = "";
 	private static boolean partyStatsChanged = false; // set this whenever the stats change
 	
 	
@@ -44,11 +45,32 @@ public class MainGame {
 		// Creates a view
 		view = new View(width, height);
 		
-		
 		// sets up mouse input stuff (INPUT MUST BE INSTANTIATED LAST)
 		input = new InputManager(frame, this);
 
 		//Sets the stats of the party
+		initStats();
+		
+		statBarWidth = frame.getWidth();
+		statBarHeight = 40;
+		statsBar = new StatsBar(getStatString(), statBarWidth, statBarHeight, input); // create stats bar
+		
+		// preloads images used for drawing dem sweet sweet grayfixs
+		try {
+			images[0] = ImageIO.read(new File("assets/water.png"));
+			images[1] = ImageIO.read(new File("assets/jungle.png"));
+			images[2] = ImageIO.read(new File("assets/mountain.png"));
+			images[3] = ImageIO.read(new File("assets/marker.png"));
+			images[4] = ImageIO.read(new File("assets/statusbar.png"));
+			images[5] = ImageIO.read(new File("assets/unknown.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		initSelectangles();
+	}
+	
+	private void initStats() {
 		partyStats = new HashMap<String, Integer>();
 		partyStats.put("Food", 0);
 		partyStats.put("Water", 0);
@@ -60,24 +82,6 @@ public class MainGame {
 		partyStats.put("Hunger", 0);
 		partyStats.put("Thirst", 0);
 		partyStats.put("Stamina", 0);
-		
-		partyStatsString = getStatString(); // initialize stats bar text
-		statsBar = new StatsBar(partyStatsString, input); // create stats bar
-		
-		// preloads images used for drawing dem sweet sweet grayfixs
-		try {
-			images[0] = ImageIO.read(new File("assets/water.png"));
-			images[1] = ImageIO.read(new File("assets/jungle.png"));
-			images[2] = ImageIO.read(new File("assets/mountain.png"));
-			images[3] = ImageIO.read(new File("assets/marker.png"));
-			images[4] = ImageIO.read(new File("assets/statusbar.png"));
-			images[5] = ImageIO.read(new File("assets/unknown.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		initSelectangles();
 	}
 	
 	//Sets up the selectangles for the map.
@@ -103,8 +107,7 @@ public class MainGame {
 	public void update() {
 		input.update();
 		if (partyStatsChanged) {
-			partyStatsString = getStatString();
-			statsBar.setText(partyStatsString);
+			statsBar.setText(getStatString());
 			partyStatsChanged = false;
 		}
 	}
@@ -146,12 +149,11 @@ public class MainGame {
 	//Converts the HashMap of Stats and Values into a set and then into a string
 	//Edit this to change what gets printed in the stat bar
 	private static String getStatString() {
-		//System.out.println("testestsets");
-		Set <String> statNames = partyStats.keySet();
 		String retVal = "";
-		for( String s : statNames) {
+		for( String s : partyStats.keySet()) {
 			retVal += s + ": " + partyStats.get(s) + " | ";
 		}
+		retVal = retVal.substring(0, retVal.length() - 3); //Remove the last bar.
 		return retVal;
 	}
 	
