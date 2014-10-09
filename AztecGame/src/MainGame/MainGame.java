@@ -27,10 +27,20 @@ public class MainGame {
 	int statBarWidth;
 	int statBarHeight;
 	
-	//Dummy stats
+	//Stats
 	public static HashMap <String, Integer> partyStats;
 	private static boolean partyStatsChanged = false; // set this whenever the stats change
 	
+	public static final String FOOD_KEY = "Food";
+	public static final String WATER_KEY = "Water";
+	public static final String VALUABLES_KEY = "Valuables";
+	public static final String AMMO_KEY = "Ammo";
+	public static final String MEDICINE_KEY = "Medicine";
+	public static final String MORALE_KEY = "Morale";
+	public static final String HUNGER_KEY = "Hunger";
+	public static final String THIRST_KEY = "Thirst";
+	public static final String STAMINA_KEY = "Stamina";
+	public static final String PACK_ANIMALS_KEY = "Pack Animals";
 	
 	//Death Row (To Be Deleted)
 	private BufferedImage loadedimage;
@@ -72,16 +82,16 @@ public class MainGame {
 	
 	private void initStats() {
 		partyStats = new HashMap<String, Integer>();
-		partyStats.put("Food", 0);
-		partyStats.put("Water", 0);
-		partyStats.put("Ammo", 0);
-		partyStats.put("Medicine", 0);
-		partyStats.put("Valuables", 0);
-		partyStats.put("Pack Animals", 0);
-		partyStats.put("Morale", 0);
-		partyStats.put("Hunger", 0);
-		partyStats.put("Thirst", 0);
-		partyStats.put("Stamina", 0);
+		partyStats.put(FOOD_KEY, 0);
+		partyStats.put(WATER_KEY, 0);
+		partyStats.put(AMMO_KEY, 0);
+		partyStats.put(MEDICINE_KEY, 0);
+		partyStats.put(VALUABLES_KEY, 0);
+		partyStats.put(PACK_ANIMALS_KEY, 0);
+		partyStats.put(MORALE_KEY, 0);
+		partyStats.put(HUNGER_KEY, 0);
+		partyStats.put(THIRST_KEY, 0);
+		partyStats.put(STAMINA_KEY, 0);
 	}
 	
 	//Sets up the selectangles for the map.

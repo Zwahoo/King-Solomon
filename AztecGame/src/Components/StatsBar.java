@@ -27,8 +27,7 @@ public class StatsBar extends Textbox {
 		this(str, 0, 0, width, height, input);
 	}
 	
-	public StatsBar(String str, int x, int y, int width, int height,
-			InputManager input) {
+	public StatsBar(String str, int x, int y, int width, int height, InputManager input) {
 		super(str, x, y, width, height, input);
 		this.width = width;
 		this.height = height;
