@@ -14,8 +14,6 @@ public class PartyMember {
 	public static final String DIPLOMACY_KEY = "Diplomacy";
 	public static final String KNOWLEDGE_KEY = "Knowledge";
 	
-	
-	
 	private String name;
 	private String type;
 	private int pay;
@@ -24,8 +22,57 @@ public class PartyMember {
 	boolean diseased = false;
 	boolean injured = false;
 	
-	HashMap<String, Integer> stats;
+	private HashMap<String, Integer> stats;
 	
 	
 	
+	private int getStat(String key) {
+		if(!stats.containsKey(key)) {
+			System.out.println("Trying to obtain unknown stat: " + key + " for party member: " + name);
+			return -1;
+		}
+		return stats.get(key);
+	}	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public int getPay() {
+		return pay;
+	}
+	public void setPay(int pay) {
+		this.pay = pay;
+	}
+	public String getBackgroundInfo() {
+		return backgroundInfo;
+	}
+	public void setBackgroundInfo(String backgroundInfo) {
+		this.backgroundInfo = backgroundInfo;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public boolean isDiseased() {
+		return diseased;
+	}
+	public void setDiseased(boolean diseased) {
+		this.diseased = diseased;
+	}
+	public boolean isInjured() {
+		return injured;
+	}
+	public void setInjured(boolean injured) {
+		this.injured = injured;
+	}	
 }
