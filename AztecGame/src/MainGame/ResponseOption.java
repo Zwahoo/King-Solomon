@@ -10,8 +10,8 @@ public class ResponseOption {
 	private ArrayList<Integer> partyStatRequirement;
 	
 	//Needed for determining win/lose
-	ArrayList<String> resourceModifiers;
-	ArrayList<String> partyStatModifiers;
+	private ArrayList<String> resourceModifiers;
+	private ArrayList<String> partyStatModifiers;
 	
 	//Pass Info
 	private String passText;

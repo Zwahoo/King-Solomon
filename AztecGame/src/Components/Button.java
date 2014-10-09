@@ -184,9 +184,15 @@ public class Button extends InputListener {
 	}
 	public void setLocation(Point p) {
 		myRect.setRect(p.x, p.y, getWidth(), getHeight());
+		stringLoc = null;
 	}
 	public void setSize(int width, int height) {
 		myRect.setRect(getX(), getY(), width, height);
+		stringLoc = null;
+	}
+	public void setText(String text) {
+		this.myText = text;
+		stringLoc = null;
 	}
 	
 }
