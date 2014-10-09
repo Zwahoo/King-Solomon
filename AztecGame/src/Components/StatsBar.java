@@ -3,6 +3,7 @@ package Components;
 import java.awt.Graphics;
 
 import MainGame.InputManager;
+import MainGame.MainGame;
 
 //A bar that displays the current stats of the party.
 //Can be updated by using setText and passing it the parsed HashMap of stats 

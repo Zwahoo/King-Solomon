@@ -28,7 +28,7 @@ public class MainGame {
 	int statBarHeight;
 	
 	//Stats
-	public static HashMap <String, Integer> partyStats;
+	private static HashMap <String, Integer> partyStats;
 	private static boolean partyStatsChanged = false; // set this whenever the stats change
 	
 	public static final String FOOD_KEY = "Food";
@@ -82,16 +82,16 @@ public class MainGame {
 	
 	private void initStats() {
 		partyStats = new HashMap<String, Integer>();
-		partyStats.put(FOOD_KEY, 0);
-		partyStats.put(WATER_KEY, 0);
-		partyStats.put(AMMO_KEY, 0);
-		partyStats.put(MEDICINE_KEY, 0);
-		partyStats.put(VALUABLES_KEY, 0);
-		partyStats.put(PACK_ANIMALS_KEY, 0);
-		partyStats.put(MORALE_KEY, 0);
-		partyStats.put(HUNGER_KEY, 0);
-		partyStats.put(THIRST_KEY, 0);
-		partyStats.put(STAMINA_KEY, 0);
+		setPartyStat(FOOD_KEY, 0);
+		setPartyStat(WATER_KEY, 0);
+		setPartyStat(AMMO_KEY, 0);
+		setPartyStat(MEDICINE_KEY, 0);
+		setPartyStat(VALUABLES_KEY, 0);
+		setPartyStat(PACK_ANIMALS_KEY, 0);
+		setPartyStat(MORALE_KEY, 0);
+		setPartyStat(HUNGER_KEY, 0);
+		setPartyStat(THIRST_KEY, 0);
+		setPartyStat(STAMINA_KEY, 0);
 	}
 	
 	//Sets up the selectangles for the map.
@@ -173,5 +173,24 @@ public class MainGame {
 	public Map getMap() { return map; }
 	public Player getPlayer() { return player1; }
 	public View getView() { return view; }
+	//Returns a clone, so the stats can't be modified using the get method.
+	public HashMap<String, Integer> getStats() {
+		return (HashMap<String, Integer>) partyStats.clone();
+	}
+	//Sets the stat, and raises the partyStatsChanged flag.
+	public static void setPartyStat(String statName, int val) {
+		partyStats.put(statName, val);
+		partyStatsChanged = true;
+	}
+	//Sets the stat, and raises the partyStatsChanged flag.
+		public static void incPartyStat(String statName, int val) {
+			if(!partyStats.containsKey(statName)) {
+				System.out.println("Couldn't find stat " + statName + " to increment!");
+				return;
+			}
+			partyStats.put(statName, partyStats.get(statName) + val);
+			partyStatsChanged = true;
+		}
+	
 	
 }
