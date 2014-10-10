@@ -2,6 +2,7 @@ package MainGame;
 
 import java.util.HashMap;
 
+//This class just contains a bunch of stat sets, one for each of the characters.
 public final class PartyMemberStats {
 	
 	

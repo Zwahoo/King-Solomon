@@ -19,20 +19,49 @@ public class PartyMember {
 	private int pay;
 	private String backgroundInfo;
 	private String status;
-	boolean diseased = false;
-	boolean injured = false;
+	boolean diseased;
+	boolean injured;
 	
 	private HashMap<String, Integer> stats;
 	
+	public PartyMember(String name, String type, int pay, String backgroundInfo, HashMap<String, Integer> stats) {
+		this.name = name;
+		this.type = type;
+		this.pay = pay;
+		this.backgroundInfo = backgroundInfo;
+		this.stats = stats;
+		
+		status = "Healthy";
+		diseased = false;
+		injured = false;
+	}
+	
+	public String generateInfoString(String between) {
+		String toRet = name;
+		toRet += between;
+		toRet += generateStatsString(between);
+		return toRet;
+	}
+	public String generateStatsString(String between) {
+		String toRet = "";
+		for(String stat : stats.keySet()) {
+			toRet += (stat + ": " + stats.get(stat) + "" + between);
+		}
+		//Remove last between
+		toRet = toRet.substring(0, toRet.length() - between.length());
+		return toRet;
+	}
 	
 	
+	
+	//Getters and Setters
 	private int getStat(String key) {
 		if(!stats.containsKey(key)) {
 			System.out.println("Trying to obtain unknown stat: " + key + " for party member: " + name);
 			return -1;
 		}
 		return stats.get(key);
-	}	
+	}		
 	public String getName() {
 		return name;
 	}
