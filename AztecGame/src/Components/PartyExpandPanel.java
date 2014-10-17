@@ -14,9 +14,11 @@ import MainGame.*;
 public class PartyExpandPanel {
 	
 	Rectangle myRect;
-	static final int defaultWidth = 550;
-	static final int defaultHeight = 480;
-
+	int rightX, upperY;
+	public int numCols = 0;
+	public int numRows = 0;
+	private int numPartyMembers;
+	
 	Color backColor = new Color(210, 150, 50);
 	Color borderColor = new Color(80, 50, 50);
 	private int borderSize = 5;
@@ -31,15 +33,35 @@ public class PartyExpandPanel {
 	int memberInfoPanelVertSep = 40;
 	int lineHeight;
 	
-	public PartyExpandPanel(int x, int y) {
-		myRect = new Rectangle(x, y, defaultWidth, defaultHeight);
+	public PartyExpandPanel(int rightX, int upperY) {
+		this.rightX = rightX;
+		this.upperY = upperY;
+		setRowsAndCols();
 		memberNameFont = new Font("Georgia", Font.BOLD, 14);
 		memberGeneralFont = new Font("Georgia", Font.PLAIN, 12);
 		lineHeight = getLineHeight();
 	}
 	
-	public void update() {
+	public void setRowsAndCols() {
+		numPartyMembers = MainGame.party.size();
 		
+		numRows = (int) Math.floor(Math.sqrt(numPartyMembers));
+		numCols = (int) Math.ceil((double)numPartyMembers/(double)numRows);
+		
+		myRect = new Rectangle(rightX - calcWidth(), upperY, calcWidth(), calcHeight());	
+	}
+	
+	private int calcWidth() {
+		return ((memberInfoPanelWidth * numCols) + (memberInfoPanelHorizSep * (numCols + 1)) + (2*borderSize));
+	}
+	private int calcHeight() {
+		return ((memberInfoPanelHeight * numRows) + (memberInfoPanelVertSep * (numRows + 1)) + (2*borderSize));
+	}
+	
+	public void update() {
+		if(MainGame.party.size() != numPartyMembers) {
+			setRowsAndCols();
+		}
 	}
 	
 	public void draw(Graphics g) {
@@ -55,21 +77,7 @@ public class PartyExpandPanel {
 		
 		for(PartyMember member : MainGame.party) {
 			
-			//Draw Name
-			g.setColor(memberInfoPanelTextCol);
-			g.setFont(memberNameFont);
-			g.drawString(member.getName(), xLoc, yLoc);
-			
-			//Draw Stats
-			//Graphics doesn't handle new lines, so we have to do that manually
-			g.setFont(memberGeneralFont);
-			String toWrite = member.generateStatsString("\n");
-			String[] lines = toWrite.split("\n");
-			int tmpY = lineHeight; //Skip one line because we already wrote the name
-			for(String line : lines) {
-				g.drawString(line, xLoc, yLoc + tmpY);
-				tmpY += lineHeight;
-			}
+			drawPartyMemberInfo(g, member, xLoc, yLoc);
 			
 			xLoc += memberInfoPanelWidth + memberInfoPanelHorizSep;
 			if( (xLoc + memberInfoPanelWidth) > myRect.x + myRect.width - borderSize * 2) {
@@ -78,6 +86,23 @@ public class PartyExpandPanel {
 			}
 		}
 		
+	}
+	
+	private void drawPartyMemberInfo(Graphics g, PartyMember member, int xLoc, int yLoc) {
+
+		//Draw Name
+		g.setColor(memberInfoPanelTextCol);
+		g.setFont(memberNameFont);
+		g.drawString(member.getName(), xLoc, yLoc);
+		
+		g.setFont(memberGeneralFont);
+		String toWrite = member.generateStatsString("\n");
+		String[] lines = toWrite.split("\n");
+		int tmpY = lineHeight; //Skip one line because we already wrote the name
+		for(String line : lines) {
+			g.drawString(line, xLoc, yLoc + tmpY);
+			tmpY += lineHeight;
+		}
 	}
 	
 	private int getLineHeight() {

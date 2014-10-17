@@ -52,7 +52,7 @@ public class StatsBar extends Textbox {
 	}
 	
 	public void showExpandPanel() {
-		expandPanel = new PartyExpandPanel(width - expandPanel.defaultWidth, height);
+		expandPanel = new PartyExpandPanel(x + width, y + height);
 		expandButton.setText(expandedText);
 	}
 	

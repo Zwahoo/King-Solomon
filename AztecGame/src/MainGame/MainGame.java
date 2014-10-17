@@ -66,18 +66,20 @@ public class MainGame {
 		initStats();
 		
 		party = new ArrayList<PartyMember>();
+		party.add(new PartyMember("The Gentleman", "Gentleman", 0,
+				"Quite.", PartyMemberStats.AVERAGE_ABE_STATS));
 		party.add(new PartyMember("Happy Hunter", "Hunter", 100,
 				"Likes cooking meat and long walks on the savannah.", PartyMemberStats.HAPPY_HUNTER_STATS));
-		party.add(new PartyMember("Merry Mercenary", "Hunter", 100,
+		party.add(new PartyMember("Merry Mercenary", "Mercenary", 100,
 				"Was once payed $100,000 to kill the Queen. Married her instead.", PartyMemberStats.MERRY_MERCENARY_STATS));
 		party.add(new PartyMember("Nifty Naturalist", "Naturalist", 100,
-				"It is said that he once saved six men using only a single leaf of poison ivy, and three blades of grass.", PartyMemberStats.NIFTY_NATURALIST_STATS));
+				"Once saved six men using only a single leaf of poison ivy, and three blades of grass.", PartyMemberStats.NIFTY_NATURALIST_STATS));
 		party.add(new PartyMember("Marvelous Missionary", "Missionary", 100,
-				"Holds the current leading Convert-to-Failure ratio in the entire South African Pro Missionary League (SAPML).", PartyMemberStats.MARVELOUS_MISSIONARY_STATS));
+				"Holds the current leading Convert-to-Failure ratio in the entire South African Pro Missionary League.", PartyMemberStats.MARVELOUS_MISSIONARY_STATS));
 		party.add(new PartyMember("Exuberant Explorer", "Explorer", 100,
-				"Made the world's first Atlas at age 6. Then burned it, saying \"Maps are for the weak. The strong need nothing more than instinct.\"", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
+				"Made the world's first Atlas at age 6.", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
 		party.add(new PartyMember("Giddy Guide", "Guide", 100,
-				"To purchase his best-selling guide book \"How to Survive a Volcanic Eruption Without Leaving the Volcano,\" please contact your local bookstore.", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
+				"He's Giddy!", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
 		
 		
 		statBarWidth = frame.getWidth();
