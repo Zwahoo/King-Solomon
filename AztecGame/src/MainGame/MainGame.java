@@ -23,7 +23,7 @@ public class MainGame {
 	private InputManager input; // This registers all the mouse and keyboard
 
 	Rectangle drawRect;
-	
+		
 	StatsBar statsBar;
 	int statBarWidth;
 	int statBarHeight;
@@ -99,6 +99,9 @@ public class MainGame {
 		}
 		
 		initSelectangles();
+		
+		// //CHECKPOINT
+		
 	}
 	
 	private void initStats() {

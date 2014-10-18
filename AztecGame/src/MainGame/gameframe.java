@@ -23,7 +23,12 @@ public class gameframe extends JFrame {
 	private int windowWidth = 1000;
 	private int windowHeight = 800;
 	private MainGame mainGame;
-
+	
+	public static int topinset = 22;
+	public static int bottominset = 0;
+	public static int leftinset = 0;
+	public static int rightinset = 0;
+	
 	// MAIN
 	public static void main(String[] args) throws IOException {
 		gameframe game = new gameframe();
@@ -80,8 +85,9 @@ public class gameframe extends JFrame {
 				
 		mainGame = new MainGame(this, windowWidth, windowHeight);
 
-		// what do insets do again? well anyway they're important
+		// offsets the frame to account for the top bar, border, etc.
 		insets = getInsets();
+		insets.set(topinset, leftinset, bottominset, rightinset);
 		// sets size of frame
 		setSize(insets.left + windowWidth + insets.right, insets.top
 				+ windowHeight + insets.bottom);
@@ -101,8 +107,6 @@ public class gameframe extends JFrame {
 		//System.out.println("what's up"); // CHECKPOINT
 
 		//System.out.println("hello?????????????????????????????"); // hi
-																	// //CHECKPOINT
-		
 		
 	}
 
