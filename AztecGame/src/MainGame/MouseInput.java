@@ -50,20 +50,23 @@ public class MouseInput implements MouseListener, MouseMotionListener
 		@Override
 		public void mouseClicked(MouseEvent m) { 
             input.mouseClicked(m.getButton());
-        } 
+        }
+		
+		public void setXYPos(int xLoc, int yLoc) {
+			xpos = xLoc - gameframe.rightinset + gameframe.leftinset;
+			ypos = yLoc - gameframe.topinset + gameframe.bottominset;
+		}
 		
 		@Override
 		public void mouseMoved(MouseEvent m) { 
-			xpos = m.getX();
-			ypos = m.getY();
+			setXYPos(m.getX(), m.getY());
             input.mouseMoved(new Point(m.getX(), m.getY()));
         }
-
+		
 		@Override
 		public void mouseEntered(MouseEvent m) {
 			inwindow = true;
-			xpos = m.getX();
-			ypos = m.getY();
+			setXYPos(m.getX(), m.getY());
             input.mouseEntered();
 		}
 
@@ -97,8 +100,7 @@ public class MouseInput implements MouseListener, MouseMotionListener
 
 		@Override
 		public void mouseDragged(MouseEvent m) {
-			xpos = m.getX();
-			ypos = m.getY();
+			setXYPos(m.getX(), m.getY());
             input.mouseDragged();
 		}
 		
