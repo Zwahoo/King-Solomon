@@ -26,7 +26,9 @@ public class ResponseOption {
 	private ArrayList<Integer> loseResourceChange;
 	private ArrayList<Integer> losePartyStatChange;
 	
-	
+	public ResponseOption(){
+		
+	}
 	
 	
 	//Get and Set ALL the things!

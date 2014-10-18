@@ -8,18 +8,18 @@ public class Event {
 	//General Info
 	private String eventID;
 	private String eventType;
-	private ArrayList<String> possibleLocations;
-	private ArrayList<String> reqParty;
+	private ArrayList<String> possibleLocations = new ArrayList<String>();
+	private ArrayList<String> reqParty = new ArrayList<String>();
 	
 	private String introText;
-	private ArrayList<ResponseOption> responseOptions;
-	private HashMap<String, String> advice;
+	private ArrayList<ResponseOption> responseOptions = new ArrayList<ResponseOption>();
+	private HashMap<String, String> advice = new HashMap<String,String>();
 	private String fleePassText;
 	private String fleeFailText;
 	
 	
 	public Event(String eventID, String eventType, 
-			ArrayList<String>possibleLocations, ArrayList<String> reqParty, 
+			ArrayList<String> possibleLocations, ArrayList<String> reqParty, 
 			String introText, ArrayList<ResponseOption> responseOptions, 
 			HashMap<String, String> advice, String fleePassText, 
 			String fleeFailText){
@@ -88,5 +88,9 @@ public class Event {
 	}
 	public void setFleeFailText(String fleeFailText) {
 		this.fleeFailText = fleeFailText;
+	}
+	
+	public void testMe(){
+		System.out.println("This works!");
 	}
 }

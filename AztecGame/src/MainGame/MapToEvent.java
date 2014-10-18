@@ -13,28 +13,27 @@ import java.util.HashMap;
 
 public class MapToEvent {
 	//Conventions
-	private static String eventIDKey = "eventID";
-	private static String eventTypeKey = "eventType";
-	private static String possibleLocationsKey = "possibleLocations";
-	private static String reqPartyKey = "reqParty";
+	public static String eventIDKey = "eventID";
+	public static String eventTypeKey = "eventType";
+	public static String possibleLocationsKey = "possibleLocations";
+	public static String reqPartyKey = "reqParty";
 	
-	private static String introTextKey = "introText";
-	private static String responseOptionsKey = "responseOptions";
-	private static String adviceKey = "advice";
-	private static String fleePassTextKey = "fleePassText";
-	private static String fleeFailTextKey = "fleeFailText";
+	public static String introTextKey = "introText";
+	public static String responseOptionsKey = "responseOptions";
+	public static String adviceKey = "advice";
+	public static String fleePassTextKey = "fleePassText";
+	public static String fleeFailTextKey = "fleeFailText";
 	
 	
 	/**
-	 * Takes in the values of the imported map
-	 * and maps them to their respective values.
-	 * These values can then be retrieved by
-	 * various getter methods to be input
-	 * into Event objects when they are
-	 * constructed.
+	 * Takes in a HashMap full of the values any growing Event needs.
+	 * Casts all of the individual parts of the HashMap into
+	 * variables that are then used to construct
+	 * an Event that is returned to wherever this method
+	 * is called. It basically turns a HashMap into an Event.
 	 */
 	@SuppressWarnings("unchecked")
-	public static Event createConventions(HashMap<String, Object> importedMap){
+	public static Event createEvent(HashMap<String, Object> importedMap){
 		String eventID = (String)importedMap.get(eventIDKey);
 		
 		String eventType = (String)importedMap.get(eventTypeKey);
