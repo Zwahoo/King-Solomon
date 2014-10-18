@@ -18,8 +18,22 @@ public class Event {
 	private String fleeFailText;
 	
 	
-	
-	
+	public Event(String eventID, String eventType, 
+			ArrayList<String>possibleLocations, ArrayList<String> reqParty, 
+			String introText, ArrayList<ResponseOption> responseOptions, 
+			HashMap<String, String> advice, String fleePassText, 
+			String fleeFailText){
+		this.eventID = eventID;
+		this.eventType = eventType;
+		this.possibleLocations.addAll(possibleLocations);
+		this.reqParty.addAll(reqParty);
+		this.introText = introText;
+		this.responseOptions.addAll(responseOptions);
+		this.advice.putAll(advice);
+		this.fleePassText = fleePassText;
+		this.fleeFailText = fleeFailText;
+	}
+
 	//ALL the getters and setters!
 	public String getEventID() {
 		return eventID;
