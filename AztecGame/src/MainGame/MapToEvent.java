@@ -13,16 +13,16 @@ import java.util.HashMap;
 
 public class MapToEvent {
 	//Conventions
-	public static String eventIDKey = "eventID";
-	public static String eventTypeKey = "eventType";
-	public static String possibleLocationsKey = "possibleLocations";
-	public static String reqPartyKey = "reqParty";
+	public static final String EVENT_ID_KEY = "eventID";
+	public static final String EVENT_TYPE_KEY = "eventType";
+	public static final String POSSIBLE_LOCATIONS_KEY = "possibleLocations";
+	public static final String REQ_PARTY_KEY = "reqParty";
 	
-	public static String introTextKey = "introText";
-	public static String responseOptionsKey = "responseOptions";
-	public static String adviceKey = "advice";
-	public static String fleePassTextKey = "fleePassText";
-	public static String fleeFailTextKey = "fleeFailText";
+	public static final String INTRO_TEXT_KEY = "introText";
+	public static final String RESPONSE_OPTIONS_KEY = "responseOptions";
+	public static final String ADVICE_KEY = "advice";
+	public static final String FLEE_PASS_TEXT_KEY = "fleePassText";
+	public static final String FLEE_FAIL_TEXT_KEY = "fleeFailText";
 	
 	
 	/**
@@ -34,27 +34,27 @@ public class MapToEvent {
 	 */
 	@SuppressWarnings("unchecked")
 	public static Event createEvent(HashMap<String, Object> importedMap){
-		String eventID = (String)importedMap.get(eventIDKey);
+		String eventID = (String)importedMap.get(EVENT_ID_KEY);
 		
-		String eventType = (String)importedMap.get(eventTypeKey);
+		String eventType = (String)importedMap.get(EVENT_TYPE_KEY);
 		
 		ArrayList<String> possibleLocations = new ArrayList<String>();
-		possibleLocations.addAll((ArrayList<String>)importedMap.get(possibleLocationsKey));
+		possibleLocations.addAll((ArrayList<String>)importedMap.get(POSSIBLE_LOCATIONS_KEY));
 		
 		ArrayList<String> reqParty = new ArrayList<String>();
-		reqParty.addAll((ArrayList<String>)importedMap.get(reqPartyKey));
+		reqParty.addAll((ArrayList<String>)importedMap.get(REQ_PARTY_KEY));
 		
-		String introText = (String)importedMap.get(introTextKey);
+		String introText = (String)importedMap.get(INTRO_TEXT_KEY);
 		
 		ArrayList<ResponseOption> responseOptions = new ArrayList<ResponseOption>();
-		responseOptions.addAll((ArrayList<ResponseOption>)importedMap.get(responseOptionsKey));
+		responseOptions.addAll((ArrayList<ResponseOption>)importedMap.get(RESPONSE_OPTIONS_KEY));
 		
 		HashMap<String,String> advice = new HashMap<String,String>();
-		advice.putAll((HashMap<String,String>)importedMap.get(adviceKey));
+		advice.putAll((HashMap<String,String>)importedMap.get(ADVICE_KEY));
 		
-		String fleePassText = (String)importedMap.get(fleePassTextKey);
+		String fleePassText = (String)importedMap.get(FLEE_PASS_TEXT_KEY);
 		
-		String fleeFailText = (String)importedMap.get(fleeFailTextKey);
+		String fleeFailText = (String)importedMap.get(FLEE_FAIL_TEXT_KEY);
 		
 		Event newEvent = new Event(eventID, eventType, possibleLocations, reqParty, introText, responseOptions, advice, fleePassText, fleeFailText);
 		return newEvent;
