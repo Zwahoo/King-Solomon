@@ -6,28 +6,44 @@ public class ResponseOption {
 	
 	//General Response Info
 	private String text;
-	private ArrayList<Integer> resourceStatCost;
-	private ArrayList<Integer> partyStatRequirement;
+	private ArrayList<Integer> resourceStatCost = new ArrayList<Integer>();
+	private ArrayList<Integer> partyStatRequirement = new ArrayList<Integer>();
 	
 	//Needed for determining win/lose
-	private ArrayList<String> resourceModifiers;
-	private ArrayList<String> partyStatModifiers;
+	private ArrayList<String> resourceModifiers = new ArrayList<String>();
+	private ArrayList<String> partyStatModifiers = new ArrayList<String>();
 	
 	//Pass Info
 	private String passText;
 	
 	//Victory Info
 	private String winText;
-	private ArrayList<Integer> winResourceChange;
-	private ArrayList<Integer> winPartyStatChange;
+	private ArrayList<Integer> winResourceChange = new ArrayList<Integer>();
+	private ArrayList<Integer> winPartyStatChange = new ArrayList<Integer>();
 
 	//Lose Info
 	private String loseText;
-	private ArrayList<Integer> loseResourceChange;
-	private ArrayList<Integer> losePartyStatChange;
+	private ArrayList<Integer> loseResourceChange = new ArrayList<Integer>();
+	private ArrayList<Integer> losePartyStatChange = new ArrayList<Integer>();
 	
-	public ResponseOption(){
-		
+	public ResponseOption(String text, ArrayList<Integer> resourceStatCost, 
+			ArrayList<Integer> partyStatRequirement, 
+			ArrayList<String> resourceModifiers, ArrayList<String> partyStatModifiers,
+			String passText, String winText, ArrayList<Integer> winResourceChange,
+			ArrayList<Integer> winPartyStatChange, String loseText, 
+			ArrayList<Integer> loseResourceChange, ArrayList<Integer> losePartyStatChange){
+		this.text = text;
+		this.resourceStatCost.addAll(resourceStatCost);
+		this.partyStatRequirement.addAll(partyStatRequirement);
+		this.resourceModifiers.addAll(resourceModifiers);
+		this.partyStatModifiers.addAll(partyStatModifiers);
+		this.passText = passText;
+		this.winText = winText;
+		this.winResourceChange.addAll(winResourceChange);
+		this.winPartyStatChange.addAll(winPartyStatChange);
+		this.loseText = loseText;
+		this.loseResourceChange.addAll(loseResourceChange);
+		this.losePartyStatChange.addAll(losePartyStatChange);
 	}
 	
 	
@@ -103,5 +119,9 @@ public class ResponseOption {
 	}
 	public void setLosePartyStatChange(ArrayList<Integer> losePartyStatChange) {
 		this.losePartyStatChange = losePartyStatChange;
+	}
+	
+	public void testMe(){
+		System.out.println("This worked!!");
 	}
 }

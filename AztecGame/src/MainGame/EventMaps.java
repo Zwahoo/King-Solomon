@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public final class EventMaps {
+	//Testing purposes only
 	public static final HashMap<String, Object> EVENT_MAP_1;
 	static
 	{
@@ -25,10 +26,7 @@ public final class EventMaps {
 		
 		EVENT_MAP_1.put(MapToEvent.INTRO_TEXT_KEY, "A wild lion attacked you!");
 		
-		ArrayList<ResponseOption> responseOptions = new ArrayList<ResponseOption>();
-		responseOptions.add(new ResponseOption());
-		responseOptions.add(new ResponseOption());
-		EVENT_MAP_1.put(MapToEvent.RESPONSE_OPTIONS_KEY, responseOptions);
+		EVENT_MAP_1.put(MapToEvent.RESPONSE_OPTIONS_KEY, ResponseOptionMaps.RESPONSE_OPTIONS_1);
 		
 		HashMap<String,String> advice = new HashMap<String,String>();
 		advice.put("Johnny", "NRun!");

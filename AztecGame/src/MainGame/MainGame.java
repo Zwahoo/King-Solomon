@@ -101,7 +101,6 @@ public class MainGame {
 		initSelectangles();
 		
 		// //CHECKPOINT
-		
 	}
 	
 	private void initStats() {

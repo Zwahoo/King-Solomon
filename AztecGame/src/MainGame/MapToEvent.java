@@ -31,6 +31,9 @@ public class MapToEvent {
 	 * variables that are then used to construct
 	 * an Event that is returned to wherever this method
 	 * is called. It basically turns a HashMap into an Event.
+	 * 
+	 * @param importedMap A map that comes from the FileToMap class.
+	 * @return newEvent A new event created using the extracted parts from the imported Map.
 	 */
 	@SuppressWarnings("unchecked")
 	public static Event createEvent(HashMap<String, Object> importedMap){
@@ -47,7 +50,7 @@ public class MapToEvent {
 		String introText = (String)importedMap.get(INTRO_TEXT_KEY);
 		
 		ArrayList<ResponseOption> responseOptions = new ArrayList<ResponseOption>();
-		responseOptions.addAll((ArrayList<ResponseOption>)importedMap.get(RESPONSE_OPTIONS_KEY));
+		responseOptions.addAll(MapToResponseOption.createResponseOptions(importedMap));
 		
 		HashMap<String,String> advice = new HashMap<String,String>();
 		advice.putAll((HashMap<String,String>)importedMap.get(ADVICE_KEY));
