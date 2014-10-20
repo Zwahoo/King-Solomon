@@ -32,6 +32,9 @@ public class MainGame {
 	private static HashMap <String, Integer> partyStats;
 	private static boolean partyStatsChanged = false; // set this whenever the stats change
 	
+	//Event stuff
+	public ArrayList<Event> events;
+	
 	public static final String FOOD_KEY = "Food";
 	public static final String WATER_KEY = "Water";
 	public static final String VALUABLES_KEY = "Valuables";
@@ -100,7 +103,10 @@ public class MainGame {
 		
 		initSelectangles();
 		
+		events = new ArrayList<Event>();
+		loadEvents();
 		// //CHECKPOINT
+		
 	}
 	
 	private void initStats() {
@@ -214,6 +220,12 @@ public class MainGame {
 			partyStats.put(statName, partyStats.get(statName) + val);
 			partyStatsChanged = true;
 		}
+	public void loadEvents(){
+		Event newEvent1 = MapToEvent.createEvent(EventMaps.EVENT_MAP_1);
+		Event newEvent2 = MapToEvent.createEvent(EventMaps.EVENT_MAP_2);
+		events.add(newEvent1);
+		events.add(newEvent2);
+	}
 	
 	
 }

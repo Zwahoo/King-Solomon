@@ -5,6 +5,9 @@ import java.util.HashMap;
 
 public final class EventMaps {
 	//Testing purposes only
+	//Make sure this number is equal to the number of event maps.
+	public static final int EVENT_MAP_NUM = 2;
+	
 	public static final HashMap<String, Object> EVENT_MAP_1;
 	static
 	{
@@ -37,5 +40,37 @@ public final class EventMaps {
 		EVENT_MAP_1.put(MapToEvent.FLEE_PASS_TEXT_KEY, "You successfully fled!");
 		
 		EVENT_MAP_1.put(MapToEvent.FLEE_FAIL_TEXT_KEY, "You failed to flee!");
+	}
+	
+	public static final HashMap<String, Object> EVENT_MAP_2;
+	static
+	{
+		EVENT_MAP_2 = new HashMap<String, Object>();
+		EVENT_MAP_2.put(MapToEvent.EVENT_ID_KEY, "TribeAttack");
+		EVENT_MAP_2.put(MapToEvent.EVENT_TYPE_KEY, "OneChoice");
+		
+		ArrayList<String> possibleLocations = new ArrayList<String>();
+		possibleLocations.add("Jungle");
+		EVENT_MAP_2.put(MapToEvent.POSSIBLE_LOCATIONS_KEY, possibleLocations);
+		
+		ArrayList<String> reqParty = new ArrayList<String>();
+		reqParty.add("Missionary");
+		reqParty.add("Guide");
+		reqParty.add("Mercenary");
+		EVENT_MAP_2.put(MapToEvent.REQ_PARTY_KEY, reqParty);
+		
+		EVENT_MAP_2.put(MapToEvent.INTRO_TEXT_KEY, "A tribe attacks!");
+		
+		EVENT_MAP_2.put(MapToEvent.RESPONSE_OPTIONS_KEY, ResponseOptionMaps.RESPONSE_OPTIONS_1);
+		
+		HashMap<String, String> advice = new HashMap<String, String>();
+		advice.put("Johnny", "UMaybe we should try talking to them...");
+		advice.put("Adams", "UKILL THEM ALL!!");
+		advice.put("Bob", "NAhh! Natives!");
+		EVENT_MAP_2.put(MapToEvent.ADVICE_KEY, advice);
+		
+		EVENT_MAP_2.put(MapToEvent.FLEE_PASS_TEXT_KEY, "You successfully evaded the tribe!");
+		
+		EVENT_MAP_2.put(MapToEvent.FLEE_FAIL_TEXT_KEY, "The tribe caught up to you! You must fight for your life!");
 	}
 }
