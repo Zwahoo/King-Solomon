@@ -5,6 +5,7 @@ import java.awt.Polygon;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -22,12 +23,13 @@ public class Tile {
 	private Event e;
 	
 	//constructor
-	public Tile(String t, int  x, int y){
+	public Tile(String t, int  x, int y, Event e){
 		
 		this.type = t;
 		xp = x;
 		yp = y;
 		revealed = false;
+		this.e = e;
 		
 	}
 	
@@ -102,8 +104,9 @@ public class Tile {
 		return imageIndex;
 	}
 	
-	public void runEvent(){
-		
+	public void runEvent(ArrayList<PartyMember> presMembers){
+		if(e == null) return;
+		EventLauncher.launchEvent(e, presMembers);
 	}
 	
 }

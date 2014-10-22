@@ -7,9 +7,9 @@ public class Map {
 	int width;
 	int height;
 	private Tile[][] tiles;
-	
+		
 	//random map generator
-	public Map(int width, int height) {
+	public Map(int width, int height, MainGame mainGame) {
 		this.width = width;
 		this.height = height;
 		tiles = new Tile[width][height];
@@ -27,13 +27,13 @@ public class Map {
 				else if (i == 2){
 					a = "mountain";
 				}
-				t = new Tile(a, x, y);
+				t = new Tile(a, x, y, mainGame.getRandomEvent(a));
 				tiles[x][y] = t;
 				//System.out.println(x + ", " + y);
 			}
 		}
 	}
-	
+
 	//map which is created from image?
 	//public map(image i){
 	//	

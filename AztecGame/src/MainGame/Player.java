@@ -13,7 +13,7 @@ public class Player{
 	
 	//attaches player to map
 	public Player(Map m){
-		currenttile = m.getTile(0,0);
+		currenttile = m.getTile(1,1);
 		loc = new Point(1, 1);
 	}
 	

@@ -26,7 +26,7 @@ public class PlayerMovementHandler extends InputListener {
 		this.map = theMap;
 		this.player = thePlayer;
 		
-		dummy = new Tile("dummy", -1,-1);
+		dummy = new Tile("dummy", -1,-1, null);
 		dummy.setSelectangle(-2, -3, -4, -5, -6, -7, -8, -9, -2, -3, -4, -5, -6, -7, -8, -9);
 		setNeighbors();
 		checkSight();
@@ -118,7 +118,8 @@ public class PlayerMovementHandler extends InputListener {
 		player.setLoc(t.getX(), t.getY());
 		player.setCurrentTile(t);
 		setNeighbors();
-		t.runEvent();
+		t.runEvent(mainGame.party);
+		mainGame.handleMoveStatChanges();
 	}
 	
 	public boolean isValidTile(Tile t) {

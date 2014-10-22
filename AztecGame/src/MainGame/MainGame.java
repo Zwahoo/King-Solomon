@@ -55,10 +55,16 @@ public class MainGame {
 	
 	//Starts the game, takes in the window frame, width, and height.
 	public MainGame(gameframe frame, int width, int height) {
+		//Load in the events
+		events = new ArrayList<Event>();
+		loadEvents();
+		
 		//Create map
-		map = new Map(10, 10);
+		map = new Map(10, 10, this);
 		// Creates the player
 		player1 = new Player(map);
+		player1.getCurrentTile().reveal();
+		
 		// Creates a view
 		view = new View(width, height);
 		
@@ -102,25 +108,23 @@ public class MainGame {
 		}
 		
 		initSelectangles();
-		
-		events = new ArrayList<Event>();
-		loadEvents();
+
 		// //CHECKPOINT
 		
 	}
 	
 	private void initStats() {
 		partyStats = new HashMap<String, Integer>();
-		setPartyStat(FOOD_KEY, 0);
-		setPartyStat(WATER_KEY, 0);
-		setPartyStat(AMMO_KEY, 0);
-		setPartyStat(MEDICINE_KEY, 0);
+		setPartyStat(FOOD_KEY, 20);
+		setPartyStat(WATER_KEY, 20);
+		setPartyStat(AMMO_KEY, 10);
+		setPartyStat(MEDICINE_KEY, 10);
 		setPartyStat(VALUABLES_KEY, 0);
 		setPartyStat(PACK_ANIMALS_KEY, 0);
-		setPartyStat(MORALE_KEY, 0);
-		setPartyStat(HUNGER_KEY, 0);
-		setPartyStat(THIRST_KEY, 0);
-		setPartyStat(STAMINA_KEY, 0);
+		setPartyStat(MORALE_KEY, 100);
+		setPartyStat(HUNGER_KEY, 100);
+		setPartyStat(THIRST_KEY, 100);
+		setPartyStat(STAMINA_KEY, 100);
 	}
 	
 	//Sets up the selectangles for the map.
@@ -197,6 +201,15 @@ public class MainGame {
 	}
 	
 	
+	public void handleMoveStatChanges() {
+		incPartyStat(FOOD_KEY, -1);
+		incPartyStat(WATER_KEY, -1);
+		incPartyStat(HUNGER_KEY, 5);
+		incPartyStat(THIRST_KEY, 5);
+		incPartyStat(STAMINA_KEY, -10);
+	}
+	
+	
 	//Returns the location of the view.
 	public Point getViewLoc() { return view.getLocation();	}
 	public Map getMap() { return map; }
@@ -225,6 +238,12 @@ public class MainGame {
 		Event newEvent2 = MapToEvent.createEvent(EventMaps.EVENT_MAP_2);
 		events.add(newEvent1);
 		events.add(newEvent2);
+	}
+
+	public Event getRandomEvent(String loc) {
+		int rand = (int)Math.floor(Math.random() * events.size());
+		if(rand == events.size()) rand--;
+		return events.get(rand);
 	}
 	
 	
