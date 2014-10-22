@@ -252,6 +252,10 @@ public class MainGame {
 	public static void launchEvent(Event e, ArrayList<PartyMember> presMembers) {
 		eventDrawer = new EventDrawer(e, presMembers);
 	}
+
+	public static void closeEvent() {
+		eventDrawer = null;
+	}
 	
 	
 }

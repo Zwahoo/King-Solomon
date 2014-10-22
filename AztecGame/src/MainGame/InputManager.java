@@ -51,7 +51,8 @@ public class InputManager {
 
 	//Mouse Override Methods
 	public void mouseClicked(int button) {
-		for(InputListener listener : inputListeners) {
+		ArrayList<InputListener> temp = new ArrayList<InputListener>(inputListeners);
+		for(InputListener listener : temp) {
 			listener.mouseDown(button, getMouseLoc());
 		}
 	}

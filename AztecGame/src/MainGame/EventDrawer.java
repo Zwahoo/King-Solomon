@@ -1,13 +1,23 @@
 package MainGame;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+
+import javax.imageio.ImageIO;
 
 import Components.Button;
 import Components.Textbox;
 
 public class EventDrawer {
+	
+	BufferedImage image;
+	int imageBorderSize = 5;
+	Color imageBorderCol = new Color(80, 50, 50);
 	
 	Textbox info;
 	Textbox partyMembers;
@@ -18,12 +28,13 @@ public class EventDrawer {
 	double partyMembersHMult = .30;
 	double imageWMult = .8;
 	double imageHMult = .35;
-	double buttonWMult = .50;
-	double buttonHMult = .06;
+	double buttonWMult = .53;
 	double spacer = .02;
-	double buttonSpacer = .01;
 	double sideSpacer = .1;
-		
+	
+	int buttonHeight;
+	int buttonSpace;
+	
 	int infoTextboxX;
 	int infoTextboxY;
 	int partyMembersX;
@@ -35,6 +46,15 @@ public class EventDrawer {
 	
 	
 	public EventDrawer(Event toLaunch, ArrayList<PartyMember> presMembers) {
+		
+		String imageLoc = "assets/Africa.bmp";
+		
+		try {
+			image = ImageIO.read(new File(imageLoc));
+		} catch (IOException e) {
+			System.out.println("Couldn't find image: " + imageLoc + " for event. Breaking everything.");
+			image = null;
+		}
 		setLocations();
 		launchEvent(toLaunch, presMembers);
 
@@ -47,26 +67,39 @@ public class EventDrawer {
 		partyMembers  = new Textbox(getPresentPartyMembers(presMembers), partyMembersX, partyMembersY, (int)(gameframe.windowWidth*partyMembersWMult), (int)(gameframe.windowHeight*partyMembersHMult), MainGame.input);
 		int totalY = upperButtonY;
 		for (ResponseOption ro : toLaunch.getResponseOptions()) {
-			Button temp = new Button(buttonX, totalY, (int)(gameframe.windowWidth * buttonWMult), (int)(gameframe.windowHeight * buttonHMult), ro.getText(), MainGame.input) {
+			Button temp = new Button(buttonX, totalY, (int)(gameframe.windowWidth * buttonWMult), buttonHeight, ro.getText(), MainGame.input) {
 				@Override
 				public void onClick() {
 					handleResponseSelect();
 				}
 			};
 			buttons.add(temp);			
-			totalY += (int)(gameframe.windowHeight * (buttonSpacer + buttonHMult));
+			totalY += (buttonSpace + buttonHeight);
 		}
 	}
 	
 	public void handleResponseSelect() {
-		System.out.println("Clicked!!1 \n");
+		MainGame.closeEvent();
 	}
 	
 	public void draw(Graphics g) {
+		drawImage(g);
 		info.draw(g);
 		partyMembers.draw(g);
 		for (Button b : buttons)
 			b.draw(g);
+	}
+	
+	public void drawImage(Graphics g) {
+		int borderWidth = (int) (gameframe.windowWidth * imageWMult);
+		int borderHeight = (int) (gameframe.windowHeight * imageHMult);
+		int imageWidth = borderWidth - imageBorderSize * 2;
+		int imageHeight = borderHeight - imageBorderSize * 2;
+		
+		g.setColor(imageBorderCol);
+		g.fillRect(imageX, imageY, borderWidth, borderHeight);
+		g.drawImage(image, imageX + imageBorderSize, imageY + imageBorderSize, imageWidth, imageHeight, null);
+		
 	}
 	
 	public void update() {
@@ -77,6 +110,11 @@ public class EventDrawer {
 	}
 	
 	public void setLocations() {
+		
+		int partyInfoHeight = (int)(gameframe.windowHeight * partyMembersHMult);
+		buttonHeight = partyInfoHeight/6;
+		buttonSpace = buttonHeight/4;
+		
 		int totalHeight = (int) (gameframe.windowHeight * spacer + MainGame.statBarHeight);
 		
 		imageX = (int) (gameframe.windowWidth * sideSpacer);
@@ -101,8 +139,7 @@ public class EventDrawer {
 			intro += partyMember.getName() + "\n";
 		}
 		
-		return intro;
-		
+		return intro;	
 	}
 	
 	
