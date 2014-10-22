@@ -20,8 +20,8 @@ public class gameframe extends JFrame {
 	private Insets insets;
 	private BufferedImage backBuffer;
 	private int fps = 30;
-	private int windowWidth = 1000;
-	private int windowHeight = 800;
+	public static int windowWidth = 1000;
+	public static int windowHeight = 800;
 	private MainGame mainGame;
 	
 	public static int topinset = 22;

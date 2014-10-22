@@ -106,7 +106,8 @@ public class Tile {
 	
 	public void runEvent(ArrayList<PartyMember> presMembers){
 		if(e == null) return;
-		EventLauncher.launchEvent(e, presMembers);
+		MainGame.launchEvent(e, presMembers);
+	
 	}
 	
 }

@@ -7,26 +7,23 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
 import javax.imageio.ImageIO;
 
-import Components.Button;
 import Components.StatsBar;
-import Components.Textbox;
 
 public class MainGame {
 
 	private Map map; //The map containing all the tiles making up the world
 	private Player player1; //The player
 	private View view; //The "camera." What the player is seeing. Has a location, can move around.
-	private InputManager input; // This registers all the mouse and keyboard
+	public static InputManager input; // This registers all the mouse and keyboard
 
 	Rectangle drawRect;
 		
 	StatsBar statsBar;
 	int statBarWidth;
-	int statBarHeight;
+	static int statBarHeight;
 	
 	//Stats
 	private static HashMap <String, Integer> partyStats;
@@ -52,6 +49,8 @@ public class MainGame {
 	//Death Row (To Be Deleted)
 	private BufferedImage loadedimage;
 	private BufferedImage[] images = new BufferedImage[10];
+	
+	public static EventDrawer eventDrawer = null;
 	
 	//Starts the game, takes in the window frame, width, and height.
 	public MainGame(gameframe frame, int width, int height) {
@@ -92,7 +91,7 @@ public class MainGame {
 		
 		
 		statBarWidth = frame.getWidth();
-		statBarHeight = 40;
+		statBarHeight = (int) ((gameframe.windowHeight)*.05);
 		statsBar = new StatsBar(getStatString(), statBarWidth, statBarHeight, input); // create stats bar
 		
 		// preloads images used for drawing dem sweet sweet grayfixs
@@ -153,6 +152,8 @@ public class MainGame {
 			statsBar.setText(getStatString());
 			partyStatsChanged = false;
 		}
+		if (eventDrawer!=null)
+			eventDrawer.update();
 	}
 	
 	//Draw any drawable objects in the game world.
@@ -185,6 +186,8 @@ public class MainGame {
 
 		}
 		//statsBar.setText(getStatString());
+		if (eventDrawer!=null)
+			eventDrawer.draw(g);
 		//See logic in update() method for when stats bar text gets updates
         statsBar.draw(g);
 	}
@@ -244,6 +247,10 @@ public class MainGame {
 		int rand = (int)Math.floor(Math.random() * events.size());
 		if(rand == events.size()) rand--;
 		return events.get(rand);
+	}
+
+	public static void launchEvent(Event e, ArrayList<PartyMember> presMembers) {
+		eventDrawer = new EventDrawer(e, presMembers);
 	}
 	
 	
