@@ -56,7 +56,7 @@ public class EventDrawer {
 	double imageWMult = .8;
 	double imageHMult = .35;
 	double buttonWMult = .53;
-	double adviceButtonWMult = .25;
+	double adviceButtonWMult = .21;
 	double adviceButtonHMult = .05;
 	double spacer = .02;				//standard spacing between most parts of event menu
 	double sideSpacer = .1;				//vertical spacing between edge of window and event menu (left and right side)
@@ -188,7 +188,8 @@ public class EventDrawer {
 		upperButtonY = totalHeight;
 		
 		adviceButtonX = (int) (partyMembersX + gameframe.windowWidth * spacer);
-		adviceButtonY = (int) (partyMembersY + ((gameframe.windowHeight * partyMembersHMult) - (gameframe.windowHeight * adviceButtonHMult)));
+		adviceButtonY = (int) ((partyMembersY + ((gameframe.windowHeight * partyMembersHMult) - (gameframe.windowHeight * adviceButtonHMult))) - 
+				(gameframe.windowHeight * spacer));
 	}
 	
 	//prints all present party members to party members section
