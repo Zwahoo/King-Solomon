@@ -121,8 +121,8 @@ public class MainGame {
 		setPartyStat(VALUABLES_KEY, 0);
 		setPartyStat(PACK_ANIMALS_KEY, 0);
 		setPartyStat(MORALE_KEY, 100);
-		setPartyStat(HUNGER_KEY, 100);
-		setPartyStat(THIRST_KEY, 100);
+		setPartyStat(HUNGER_KEY, 0);
+		setPartyStat(THIRST_KEY, 0);
 		setPartyStat(STAMINA_KEY, 100);
 	}
 	
@@ -224,6 +224,7 @@ public class MainGame {
 	}
 	//Sets the stat, and raises the partyStatsChanged flag.
 	public static void setPartyStat(String statName, int val) {
+		if(val < 0) return; //No negative stats
 		partyStats.put(statName, val);
 		partyStatsChanged = true;
 	}
@@ -233,8 +234,7 @@ public class MainGame {
 				System.out.println("Couldn't find stat " + statName + " to increment!");
 				return;
 			}
-			partyStats.put(statName, partyStats.get(statName) + val);
-			partyStatsChanged = true;
+			setPartyStat(statName, partyStats.get(statName) + val);
 		}
 	public void loadEvents(){
 		Event newEvent1 = MapToEvent.createEvent(EventMaps.EVENT_MAP_1);
