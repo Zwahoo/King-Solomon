@@ -37,6 +37,8 @@ public class Textbox {
 	Color textCol = new Color(0, 0, 0); //The color of the text in the text box.
 	private Font myFont; //The font to use for the text in the text box.
 	
+	boolean visible = false;
+	
 	//Constructors
 	public Textbox(String str, int x, int y, int width, int height, InputManager input) {
 		this(str, new Point(x, y), width, height, input);
@@ -177,4 +179,11 @@ public class Textbox {
 		}
 	}
 	
+	public boolean getVisibility() {
+		return visible;
+	}
+	
+	public void setVisibility(boolean visibility) {
+		visible = visibility;
+	}
 }

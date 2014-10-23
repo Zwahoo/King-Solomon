@@ -6,9 +6,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 import Components.Button;
 import Components.Textbox;
@@ -41,6 +45,7 @@ public class EventDrawer {
 	//other 3 parts
 	Textbox info;
 	Textbox partyMembers;
+	Textbox adviceBox;
 	ArrayList<Button> buttons = new ArrayList<Button>();
 	Button advice;
 	
@@ -102,6 +107,9 @@ public class EventDrawer {
 	public void launchEvent(Event toLaunch, ArrayList<PartyMember> presMembers) {
 		info = new Textbox(toLaunch.getIntroText(), infoTextboxX, infoTextboxY, (int)(gameframe.windowWidth*infoTextboxWMult), (int)(gameframe.windowHeight*infoTextboxHMult), MainGame.input);
 		partyMembers  = new Textbox(getPresentPartyMembers(presMembers), partyMembersX, partyMembersY, (int)(gameframe.windowWidth*partyMembersWMult), (int)(gameframe.windowHeight*partyMembersHMult), MainGame.input);
+		adviceBox = new Textbox(parseAdvice(toLaunch.getAdvice(), presMembers), partyMembersX, partyMembersY, (int)(gameframe.windowWidth*partyMembersWMult), (int)(gameframe.windowHeight*partyMembersHMult), MainGame.input);
+		System.out.println(parseAdvice(toLaunch.getAdvice(), presMembers));
+		info.setVisibility(true); partyMembers.setVisibility(true);
 		int totalY = upperButtonY;	//variably keeps track of where the button should be drawn based on #buttons already drawn
 		//create a button for each response option for this specific event (max is 5)
 		for (ResponseOption ro : toLaunch.getResponseOptions()) {
@@ -130,15 +138,27 @@ public class EventDrawer {
 		MainGame.closeEvent();
 	}
 	
-	//currently closes program as well
+	//toggles between party members screen and advice screen
 	public void handleAdviceResponseSelect() {
-		MainGame.closeEvent();
+		if (partyMembers.getVisibility()) {
+			partyMembers.setVisibility(false);
+			adviceBox.setVisibility(true);
+			advice.setText("Return");
+		}
+		else {
+			partyMembers.setVisibility(true);
+			adviceBox.setVisibility(false);
+		}
+		//MainGame.closeEvent();
 	}
 	
 	public void draw(Graphics g) {
 		drawImage(g);
 		info.draw(g);
-		partyMembers.draw(g);
+		if (partyMembers.getVisibility())
+			partyMembers.draw(g);
+		if (adviceBox.getVisibility())
+			adviceBox.draw(g);
 		for (Button b : buttons)
 			b.draw(g);
 	}
@@ -159,6 +179,7 @@ public class EventDrawer {
 	public void update() {
 		info.update();
 		partyMembers.update();
+		adviceBox.update();
 		for (Button b : buttons)
 			b.update();
 	}
@@ -202,5 +223,13 @@ public class EventDrawer {
 		return intro;	
 	}
 	
+	//method that checks which party members are in the pres party and then printing their respective advice
+	public String parseAdvice(HashMap<String, String> advice, ArrayList<PartyMember> presMembers) {
+		String ret = "";
+		ret += "Run\n";
+		ret += "Hide\n";
+		ret += "Set up a system of organized trade\n";
+		return ret;
+	}
 	
 }
