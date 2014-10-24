@@ -38,8 +38,6 @@ public class MainGame {
 	public static final String AMMO_KEY = "Ammo";
 	public static final String MEDICINE_KEY = "Medicine";
 	public static final String MORALE_KEY = "Morale";
-	public static final String HUNGER_KEY = "Hunger";
-	public static final String THIRST_KEY = "Thirst";
 	public static final String STAMINA_KEY = "Stamina";
 	public static final String PACK_ANIMALS_KEY = "Pack Animals";
 	
@@ -121,8 +119,6 @@ public class MainGame {
 		setPartyStat(VALUABLES_KEY, 0);
 		setPartyStat(PACK_ANIMALS_KEY, 0);
 		setPartyStat(MORALE_KEY, 100);
-		setPartyStat(HUNGER_KEY, 0);
-		setPartyStat(THIRST_KEY, 0);
 		setPartyStat(STAMINA_KEY, 100);
 	}
 	
@@ -207,8 +203,6 @@ public class MainGame {
 	public void handleMoveStatChanges() {
 		incPartyStat(FOOD_KEY, -1);
 		incPartyStat(WATER_KEY, -1);
-		incPartyStat(HUNGER_KEY, 5);
-		incPartyStat(THIRST_KEY, 5);
 		incPartyStat(STAMINA_KEY, -10);
 	}
 	
