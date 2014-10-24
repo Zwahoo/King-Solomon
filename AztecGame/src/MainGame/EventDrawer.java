@@ -148,6 +148,7 @@ public class EventDrawer {
 		else {
 			partyMembers.setVisibility(true);
 			adviceBox.setVisibility(false);
+			advice.setText("Advice");
 		}
 		//MainGame.closeEvent();
 	}
