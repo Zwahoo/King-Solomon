@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import javax.imageio.ImageIO;
 
@@ -26,7 +27,7 @@ public class MainGame {
 	static int statBarHeight;
 	
 	//Stats
-	private static HashMap <String, Integer> partyStats;
+	private static LinkedHashMap <String, Integer> partyStats;
 	private static boolean partyStatsChanged = false; // set this whenever the stats change
 	
 	//Event stuff
@@ -111,15 +112,15 @@ public class MainGame {
 	}
 	
 	private void initStats() {
-		partyStats = new HashMap<String, Integer>();
+		partyStats = new LinkedHashMap<String, Integer>();
+		setPartyStat(MORALE_KEY, 100);
+		setPartyStat(STAMINA_KEY, 100);
 		setPartyStat(FOOD_KEY, 20);
 		setPartyStat(WATER_KEY, 20);
 		setPartyStat(AMMO_KEY, 10);
 		setPartyStat(MEDICINE_KEY, 10);
 		setPartyStat(VALUABLES_KEY, 0);
 		setPartyStat(PACK_ANIMALS_KEY, 0);
-		setPartyStat(MORALE_KEY, 100);
-		setPartyStat(STAMINA_KEY, 100);
 	}
 	
 	//Sets up the selectangles for the map.
@@ -214,7 +215,7 @@ public class MainGame {
 	public View getView() { return view; }
 	//Returns a clone, so the stats can't be modified using the get method.
 	public HashMap<String, Integer> getStats() {
-		return (HashMap<String, Integer>) partyStats.clone();
+		return (LinkedHashMap<String, Integer>) partyStats.clone();
 	}
 	//Sets the stat, and raises the partyStatsChanged flag.
 	public static void setPartyStat(String statName, int val) {
