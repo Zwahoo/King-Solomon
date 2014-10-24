@@ -91,7 +91,7 @@ public class EventDrawer {
 		/*currently just for testing will eventually be a parameter to the event? Not sure and don't want to change
 		*MapToEvent method without consulting Jackson
 		*/
-		String imageLoc = "assets/Africa.bmp";
+		String imageLoc = "assets/sunset.png";
 		
 		try {
 			image = ImageIO.read(new File(imageLoc));
@@ -109,7 +109,6 @@ public class EventDrawer {
 		info = new Textbox(toLaunch.getIntroText(), infoTextboxX, infoTextboxY, (int)(gameframe.windowWidth*infoTextboxWMult), (int)(gameframe.windowHeight*infoTextboxHMult), MainGame.input);
 		partyMembers  = new Textbox(getPresentPartyMembers(presMembers), partyMembersX, partyMembersY, (int)(gameframe.windowWidth*partyMembersWMult), (int)(gameframe.windowHeight*partyMembersHMult), MainGame.input);
 		adviceBox = new Textbox(parseAdvice(toLaunch.getAdvice(), presMembers), partyMembersX, partyMembersY, (int)(gameframe.windowWidth*partyMembersWMult), (int)(gameframe.windowHeight*partyMembersHMult), MainGame.input);
-		System.out.println(parseAdvice(toLaunch.getAdvice(), presMembers));
 		info.setVisibility(true); partyMembers.setVisibility(true);
 		int totalY = upperButtonY;	//variably keeps track of where the button should be drawn based on #buttons already drawn
 		//create a button for each response option for this specific event (max is 5)

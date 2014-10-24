@@ -96,7 +96,7 @@ public class MainGame {
 		// preloads images used for drawing dem sweet sweet grayfixs
 		try {
 			images[0] = ImageIO.read(new File("assets/water.png"));
-			images[1] = ImageIO.read(new File("assets/jungle.png"));
+			images[1] = ImageIO.read(new File("assets/newJungle.png"));
 			images[2] = ImageIO.read(new File("assets/mountain.png"));
 			images[3] = ImageIO.read(new File("assets/marker.png"));
 			images[4] = ImageIO.read(new File("assets/statusbar.png"));
