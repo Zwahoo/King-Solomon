@@ -32,9 +32,9 @@ public final class EventMaps {
 		EVENT_MAP_1.put(MapToEvent.RESPONSE_OPTIONS_KEY, ResponseOptionMaps.RESPONSE_OPTIONS_1);
 		
 		HashMap<String,String> advice = new HashMap<String,String>();
-		advice.put("Johnny", "NRun!");
-		advice.put("Adams", "ULions are fast, we shouldn't run.");
-		advice.put("Bob", "NAhh!");
+		advice.put("Nifty Naturalist", "NRun!");
+		advice.put("Merry Mercenary", "ULions are fast, we shouldn't run.");
+		advice.put("Giddy Guide", "NAhh!");
 		EVENT_MAP_1.put(MapToEvent.ADVICE_KEY, advice);
 		
 		EVENT_MAP_1.put(MapToEvent.FLEE_PASS_TEXT_KEY, "You successfully fled!");
@@ -64,9 +64,9 @@ public final class EventMaps {
 		EVENT_MAP_2.put(MapToEvent.RESPONSE_OPTIONS_KEY, ResponseOptionMaps.RESPONSE_OPTIONS_1);
 		
 		HashMap<String, String> advice = new HashMap<String, String>();
-		advice.put("Johnny", "UMaybe we should try talking to them...");
-		advice.put("Adams", "UKILL THEM ALL!!");
-		advice.put("Bob", "NAhh! Natives!");
+		advice.put("Nifty Naturalist", "UMaybe we should try talking to them...");
+		advice.put("Merry Mercenary", "UKILL THEM ALL!!");
+		advice.put("Marvelous Missionary", "NAhh! Natives!");
 		EVENT_MAP_2.put(MapToEvent.ADVICE_KEY, advice);
 		
 		EVENT_MAP_2.put(MapToEvent.FLEE_PASS_TEXT_KEY, "You successfully evaded the tribe!");

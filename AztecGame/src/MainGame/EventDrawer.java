@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
@@ -122,7 +123,6 @@ public class EventDrawer {
 			buttons.add(temp);			
 			totalY += (buttonSpace + buttonHeight);
 		}
-		//I will/someone can tweak this later so that the button shows up in the right spot! Just wanted to get it out there
 		advice = new Button(adviceButtonX, adviceButtonY, (int)(gameframe.windowWidth * adviceButtonWMult), (int)(gameframe.windowHeight * adviceButtonHMult), "Advice", MainGame.input) {
 			@Override
 			public void onClick() {
@@ -226,11 +226,38 @@ public class EventDrawer {
 	
 	//method that checks which party members are in the pres party and then printing their respective advice
 	public String parseAdvice(HashMap<String, String> advice, ArrayList<PartyMember> presMembers) {
-		String ret = "";
+		/*String ret = "";
 		ret += "Run\n";
 		ret += "Hide\n";
 		ret += "Set up a system of organized trade\n";
-		return ret;
+		return ret; */
+		
+		ArrayList<String> useful = new ArrayList<String>();
+		ArrayList<String> notUseful = new ArrayList<String>();
+		String currAdvice = "";
+		
+		for (int i = 0; i < presMembers.size(); i++) {
+			if (advice.containsKey(presMembers.get(i).getName())) {
+				currAdvice = advice.get(presMembers.get(i).getName());
+				if (currAdvice.charAt(0) == 'U') 
+					useful.add(presMembers.get(i).getName() + " says: \"" + currAdvice.substring(1) + "\"");
+				else
+					notUseful.add(currAdvice.substring(1));
+			}
+		}
+		
+		Random r = new Random();
+		int selection;
+		if (useful.size() != 0) {
+			selection = r.nextInt(useful.size());
+			return useful.get(selection);
+		}
+		else {
+			selection = r.nextInt(notUseful.size());
+			return notUseful.get(selection);
+		}
+			
+			
 	}
 	
 }
