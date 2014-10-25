@@ -72,7 +72,8 @@ public class InputManager {
 		}
 	}
 	public void mouseMoved(Point point) {
-		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
+		ArrayList<InputListener> temp = new ArrayList<InputListener>(inputListenersMap.get(MainGame.currentMode));
+		for(InputListener listener : temp) {
 			listener.mouseMoved(point);
 		}
 	}
@@ -92,7 +93,8 @@ public class InputManager {
 		}
 	}
 	public void mouseReleased(int button) {
-		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
+		ArrayList<InputListener> temp = new ArrayList<InputListener>(inputListenersMap.get(MainGame.currentMode));
+		for(InputListener listener : temp) {
 			listener.mouseReleased(button, getMouseLoc());
 		}
 	}
