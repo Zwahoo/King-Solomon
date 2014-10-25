@@ -132,7 +132,7 @@ public final class ResponseOptionMaps {
 		
 
 		HashMap<String,Object> responseOption4 = new HashMap<String,Object>();
-		responseOption4.put(MapToResponseOption.TEXT_KEY,"Set up a system of organinzed trade.");		
+		responseOption4.put(MapToResponseOption.TEXT_KEY,"Set up a system of organized trade.");		
 		responseOption4.put(MapToResponseOption.RESOURCE_STAT_COST_KEY, resourceStatCost);
 		responseOption4.put(MapToResponseOption.PARTY_STAT_REQUIREMENT_KEY, partyStatRequirement);
 		responseOption4.put(MapToResponseOption.RESOURCE_MODIFIERS_KEY, resourceModifiers);
