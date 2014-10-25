@@ -1,6 +1,7 @@
 package MainGame;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class ViewMovementHandler extends InputListener {
 	
@@ -13,7 +14,12 @@ public class ViewMovementHandler extends InputListener {
 	
 	public ViewMovementHandler(View view, InputManager input) {
 		this.view = view;
-		setInputManager(input);
+		
+		ArrayList<Integer> temp = new ArrayList<Integer>();
+		temp.add(MainGame.BEGIN_DAY_MODE);
+		temp.add(MainGame.MOVEMENT_MODE);
+		
+		setInputManager(input, temp);
 	}
 	
 	public void update() {
@@ -32,7 +38,8 @@ public class ViewMovementHandler extends InputListener {
     
     public void checkMouseMovement() {
     	//checks to see if mouse is at the edge of the frame
-    	if (viewMouseMovement && mouseInWindow()) {
+    	if (viewMouseMovement && mouseInWindow() 
+    			&& MainGame.currentMode != MainGame.EVENT_MODE) {
     		int x = getMouseLoc().x;
     		int y = getMouseLoc().y;
     	
@@ -56,7 +63,8 @@ public class ViewMovementHandler extends InputListener {
     }
     
 	public void checkKeyMovement() {
-		if(!viewKeyMovement) return;
+		if(!viewKeyMovement 
+				|| MainGame.currentMode == MainGame.EVENT_MODE) return;
 		
 		int xChange = 0;
 		int yChange = 0;

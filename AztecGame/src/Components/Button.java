@@ -3,6 +3,7 @@ package Components;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
 import MainGame.*;
 
@@ -39,7 +40,9 @@ public class Button extends InputListener {
 		this(new Rectangle(loc.x, loc.y, size.x, size.y), str, inputManager);
 	}
 	public Button(Rectangle rect, String str, InputManager inputManager) {
-		setInputManager(inputManager); //Required for handling input
+		ArrayList<Integer> temp = new ArrayList<Integer>();
+		temp.add(MainGame.BEGIN_DAY_MODE); temp.add(MainGame.MOVEMENT_MODE); temp.add(MainGame.EVENT_MODE);
+		setInputManager(inputManager, temp); //Required for handling input
 		
 		this.myRect = new Rectangle(rect);
 		this.myText = str;

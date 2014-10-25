@@ -19,6 +19,11 @@ public class MainGame {
 	private Player player1; //The player
 	private View view; //The "camera." What the player is seeing. Has a location, can move around.
 	public static InputManager input; // This registers all the mouse and keyboard
+	public static Integer currentMode;
+	
+	public static final Integer BEGIN_DAY_MODE = 0; // choose move, investigate, or rest
+	public static final Integer MOVEMENT_MODE = 1; // movement on map
+	public static final Integer EVENT_MODE = 2; // investigation or resting
 
 	Rectangle drawRect;
 		
@@ -56,6 +61,8 @@ public class MainGame {
 		//Load in the events
 		events = new ArrayList<Event>();
 		loadEvents();
+		
+		currentMode = MOVEMENT_MODE; // temporary, should be BEGIN_DAY_MODE
 		
 		//Create map
 		map = new Map(10, 10, this);
@@ -245,10 +252,12 @@ public class MainGame {
 	}
 
 	public static void launchEvent(Event e, ArrayList<PartyMember> presMembers) {
+		currentMode = EVENT_MODE;
 		eventDrawer = new EventDrawer(e, presMembers);
 	}
 
 	public static void closeEvent() {
+		currentMode = MOVEMENT_MODE;
 		eventDrawer = null;
 	}
 	

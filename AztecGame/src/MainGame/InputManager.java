@@ -4,12 +4,14 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class InputManager {
 	
 	private MouseInput mouseInput;
 	private KeyboardInput keyInput;
-	private ArrayList<InputListener> inputListeners = new ArrayList<InputListener>();
+	//private ArrayList<InputListener> inputListeners = new ArrayList<InputListener>();
+	private HashMap<Integer, ArrayList<InputListener>> inputListenersMap = new HashMap<Integer, ArrayList<InputListener>>();
 	
 	//Movement Handlers
 	private PlayerMovementHandler playerMovHandler; //Moves the player around based on input
@@ -23,18 +25,31 @@ public class InputManager {
 	}
 	
 	public void update() {
-		
-		for(InputListener listener : inputListeners) {
-			listener.update();
+		// update everything regardless of mode
+		for (ArrayList<InputListener> temp : inputListenersMap.values())
+		  for(InputListener listener : temp) {
+		  	listener.update();
+		  }
+	} 
+	
+	/*public void addInputListener(InputListener toAdd) {
+		if(!inputListeners.contains(toAdd)) inputListeners.add(toAdd);
+	}*/
+	
+	public void addInputListener(InputListener toAdd, ArrayList<Integer> modes) {
+		for (Integer mode : modes) {
+			if (!inputListenersMap.containsKey(mode)) {
+				inputListenersMap.put(mode, new ArrayList<InputListener>());
+			}
+			if (!inputListenersMap.get(mode).contains(toAdd))
+				inputListenersMap.get(mode).add(toAdd);
 		}
 	}
 	
-	public void addInputListener(InputListener toAdd) {
-		if(!inputListeners.contains(toAdd)) inputListeners.add(toAdd);
-	}
-	
 	public void removeInputListener(InputListener toAdd) {
-		if(inputListeners.contains(toAdd)) inputListeners.remove(toAdd);
+		for (Integer mode : inputListenersMap.keySet()) {
+			inputListenersMap.get(mode).remove(toAdd);
+		}
 	}
 	
 	public boolean isMouseDown(int mouseCode) {
@@ -51,38 +66,38 @@ public class InputManager {
 
 	//Mouse Override Methods
 	public void mouseClicked(int button) {
-		ArrayList<InputListener> temp = new ArrayList<InputListener>(inputListeners);
+		ArrayList<InputListener> temp = new ArrayList<InputListener>(inputListenersMap.get(MainGame.currentMode));
 		for(InputListener listener : temp) {
 			listener.mouseDown(button, getMouseLoc());
 		}
 	}
 	public void mouseMoved(Point point) {
-		for(InputListener listener : inputListeners) {
+		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
 			listener.mouseMoved(point);
 		}
 	}
 	public void mouseEntered() {
-		for(InputListener listener : inputListeners) {
+		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
 			listener.mouseEntered();
 		}
 	}
 	public void mouseExited() {
-		for(InputListener listener : inputListeners) {
+		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
 			listener.mouseExited();
 		}
 	}
 	public void mousePressed(int button) {
-		for(InputListener listener : inputListeners) {
+		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
 			listener.mousePressed(button, getMouseLoc());
 		}
 	}
 	public void mouseReleased(int button) {
-		for(InputListener listener : inputListeners) {
+		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
 			listener.mouseReleased(button, getMouseLoc());
 		}
 	}
 	public void mouseDragged() {
-		for(InputListener listener : inputListeners) {
+		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
 			listener.mouseDragged();
 		}
 	}
@@ -90,17 +105,17 @@ public class InputManager {
 	
 	//Keyboard Events
 	public void keyTyped(KeyEvent e) {
-		for(InputListener listener : inputListeners) {
+		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
 			listener.keyTyped(e);
 		}
 	}
 	public void keyReleased(KeyEvent e) {
-		for(InputListener listener : inputListeners) {
+		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
 			listener.keyReleased(e);
 		}	
 	}
 	public void keyPressed(KeyEvent e) {
-		for(InputListener listener : inputListeners) {
+		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
 			listener.keyPressed(e);
 		}
 	}
