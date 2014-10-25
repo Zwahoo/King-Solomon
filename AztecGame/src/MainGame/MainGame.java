@@ -247,10 +247,8 @@ public class MainGame {
 			setPartyStat(statName, partyStats.get(statName) + val);
 		}
 	public void loadEvents(){
-		Event newEvent1 = MapToEvent.createEvent(EventMaps.EVENT_MAP_1);
-		Event newEvent2 = MapToEvent.createEvent(EventMaps.EVENT_MAP_2);
+		Event newEvent1 = MapToEvent.createEvent(FileToMap.createMap("assets/testEvent3.txt"));
 		events.add(newEvent1);
-		events.add(newEvent2);
 	}
 
 	public Event getRandomEvent(String loc) {

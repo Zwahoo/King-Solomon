@@ -23,7 +23,7 @@ public class FileToMap {
 	@SuppressWarnings("unchecked")
 	public static HashMap<String, Object> createMap(String filename){
 		JSONParser parser = new JSONParser();
-		String inputFile = filename + ".txt";
+		String inputFile = filename;
 		
 		String input = readFromFile(inputFile);
 		
