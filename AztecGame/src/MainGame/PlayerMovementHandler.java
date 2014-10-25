@@ -2,6 +2,7 @@ package MainGame;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 //Handles any player movement that occurs
 public class PlayerMovementHandler extends InputListener {
@@ -20,7 +21,9 @@ public class PlayerMovementHandler extends InputListener {
 	public boolean playerMouseMovement = true;
 	
 	public PlayerMovementHandler(MainGame mainGame, Map theMap, Player thePlayer, InputManager input) {
-		this.setInputManager(input);
+		ArrayList<Integer> temp = new ArrayList<Integer>();
+		temp.add(MainGame.MOVEMENT_MODE);
+		this.setInputManager(input, temp);
 		
 		this.mainGame = mainGame;
 		this.map = theMap;

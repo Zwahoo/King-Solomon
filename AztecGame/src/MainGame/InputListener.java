@@ -1,6 +1,7 @@
 package MainGame;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public abstract class InputListener {
 	
@@ -8,9 +9,9 @@ public abstract class InputListener {
 	private InputManager inputManager;
 
 	//Hooks the listener up to the input manager.
-	protected void setInputManager(InputManager inputManager) {
+	protected void setInputManager(InputManager inputManager, ArrayList<Integer> modes) {
 		this.inputManager = inputManager;
-		inputManager.addInputListener(this);
+		inputManager.addInputListener(this, modes);
 	}
 	
 	//Returns the location of the mouse
