@@ -21,7 +21,7 @@ public class MainGame {
 	public static InputManager input; // This registers all the mouse and keyboard
 	public static Integer currentMode;
 	
-	public static final Integer BEGIN_DAY_MODE = 0; // choose move, investigate, or rest
+	public static final Integer START_DAY_MODE = 0; // choose move, investigate, or rest
 	public static final Integer MOVEMENT_MODE = 1; // movement on map
 	public static final Integer EVENT_MODE = 2; // investigation or resting
 
@@ -55,14 +55,13 @@ public class MainGame {
 	private BufferedImage[] images = new BufferedImage[10];
 	
 	public static EventDrawer eventDrawer = null;
+	public static StartDayDrawer startDayDrawer = null;
 	
 	//Starts the game, takes in the window frame, width, and height.
 	public MainGame(gameframe frame, int width, int height) {
 		//Load in the events
 		events = new ArrayList<Event>();
 		loadEvents();
-		
-		currentMode = MOVEMENT_MODE; // temporary, should be BEGIN_DAY_MODE
 		
 		//Create map
 		map = new Map(10, 10, this);
@@ -113,6 +112,9 @@ public class MainGame {
 		}
 		
 		initSelectangles();
+		
+		currentMode = START_DAY_MODE; // temporary, should be BEGIN_DAY_MODE
+		startDayDrawer = new StartDayDrawer();
 
 		// //CHECKPOINT
 		for(Event e : events) {
@@ -161,6 +163,8 @@ public class MainGame {
 		}
 		if (eventDrawer!=null)
 			eventDrawer.update();
+		if (startDayDrawer!=null)
+			startDayDrawer.update();
 	}
 	
 	//Draw any drawable objects in the game world.
@@ -198,6 +202,8 @@ public class MainGame {
 		if (eventDrawer!=null)
 			eventDrawer.draw(g);
 		//See logic in update() method for when stats bar text gets updates
+		if (startDayDrawer!=null)
+			startDayDrawer.draw(g);
         statsBar.draw(g);
 	}
 	
@@ -266,8 +272,15 @@ public class MainGame {
 	}
 
 	public static void closeEvent() {
-		currentMode = MOVEMENT_MODE;
+		currentMode = START_DAY_MODE;
 		eventDrawer = null;
+		startDayDrawer = new StartDayDrawer();
+	}
+
+	public static void closeStartDay(Integer newmode) {
+		currentMode = newmode;
+		//also, launch event if necessary.
+		startDayDrawer = null;
 	}
 	
 	

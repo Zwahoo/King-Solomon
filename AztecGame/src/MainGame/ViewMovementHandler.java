@@ -16,7 +16,7 @@ public class ViewMovementHandler extends InputListener {
 		this.view = view;
 		
 		ArrayList<Integer> temp = new ArrayList<Integer>();
-		temp.add(MainGame.BEGIN_DAY_MODE);
+		temp.add(MainGame.START_DAY_MODE);
 		temp.add(MainGame.MOVEMENT_MODE);
 		
 		setInputManager(input, temp);
