@@ -44,6 +44,8 @@ public final class ResponseOptionMaps {
 		
 		responseOptionsMap1.put(MapToResponseOption.WIN_TEXT_KEY, "You won the challenge!");
 		
+		responseOptionsMap1.put(MapToResponseOption.WIN_FOLLOW_UP_KEY, "filename");
+		
 		ArrayList<Integer> winResourceChange = new ArrayList<Integer>();
 		winResourceChange.add(10); winResourceChange.add(10); winResourceChange.add(10); 
 		winResourceChange.add(10); winResourceChange.add(10); winResourceChange.add(10); 
@@ -58,6 +60,8 @@ public final class ResponseOptionMaps {
 		responseOptionsMap1.put(MapToResponseOption.WIN_PARTY_STAT_CHANGE_KEY, winPartyStatChange);
 		
 		responseOptionsMap1.put(MapToResponseOption.LOSE_TEXT_KEY, "You lost the challenge! You died.");
+		
+		responseOptionsMap1.put(MapToResponseOption.LOSE_FOLLOW_UP_KEY, "filename");
 		
 		ArrayList<Integer> loseResourceChange = new ArrayList<Integer>();
 		loseResourceChange.add(-10); loseResourceChange.add(-10); loseResourceChange.add(-10); 
@@ -82,9 +86,11 @@ public final class ResponseOptionMaps {
 		responseOptionsMap2.put(MapToResponseOption.PARTY_STAT_MODIFIERS_KEY, partyStatModifiers);
 		responseOptionsMap2.put(MapToResponseOption.PASS_TEXT_KEY, "You passed the test!");
 		responseOptionsMap2.put(MapToResponseOption.WIN_TEXT_KEY, "You won the challenge!");
+		responseOptionsMap2.put(MapToResponseOption.WIN_FOLLOW_UP_KEY, "filename");
 		responseOptionsMap2.put(MapToResponseOption.WIN_RESOURCE_CHANGE_KEY, winResourceChange);
 		responseOptionsMap2.put(MapToResponseOption.WIN_PARTY_STAT_CHANGE_KEY, winPartyStatChange);
 		responseOptionsMap2.put(MapToResponseOption.LOSE_TEXT_KEY, "You lost the challenge! You died.");
+		responseOptionsMap2.put(MapToResponseOption.LOSE_FOLLOW_UP_KEY, "filename");
 		responseOptionsMap2.put(MapToResponseOption.LOSE_RESOURCE_CHANGE_KEY, loseResourceChange);
 		responseOptionsMap2.put(MapToResponseOption.LOSE_PARTY_STAT_CHANGE_KEY, losePartyStatChange);
 		RESPONSE_OPTIONS_1.add(responseOptionsMap2);
@@ -115,9 +121,11 @@ public final class ResponseOptionMaps {
 		responseOptionMap3.put(MapToResponseOption.PARTY_STAT_MODIFIERS_KEY, partyStatModifiers);
 		responseOptionMap3.put(MapToResponseOption.PASS_TEXT_KEY, "You passed the test!");
 		responseOptionMap3.put(MapToResponseOption.WIN_TEXT_KEY, "You won the challenge!");
+		responseOptionMap3.put(MapToResponseOption.WIN_FOLLOW_UP_KEY, "filename");
 		responseOptionMap3.put(MapToResponseOption.WIN_RESOURCE_CHANGE_KEY, winResourceChange);
 		responseOptionMap3.put(MapToResponseOption.WIN_PARTY_STAT_CHANGE_KEY, winPartyStatChange);
 		responseOptionMap3.put(MapToResponseOption.LOSE_TEXT_KEY, "You lost the challenge! You died.");
+		responseOptionMap3.put(MapToResponseOption.LOSE_FOLLOW_UP_KEY, "filename");
 		responseOptionMap3.put(MapToResponseOption.LOSE_RESOURCE_CHANGE_KEY, loseResourceChange);
 		responseOptionMap3.put(MapToResponseOption.LOSE_PARTY_STAT_CHANGE_KEY, losePartyStatChange);
 		RESPONSE_OPTIONS_1.add(responseOptionMap3);
@@ -131,9 +139,11 @@ public final class ResponseOptionMaps {
 		responseOption4.put(MapToResponseOption.PARTY_STAT_MODIFIERS_KEY, partyStatModifiers);
 		responseOption4.put(MapToResponseOption.PASS_TEXT_KEY, "You passed the test!");
 		responseOption4.put(MapToResponseOption.WIN_TEXT_KEY, "You won the challenge!");
+		responseOption4.put(MapToResponseOption.WIN_FOLLOW_UP_KEY, "filename");
 		responseOption4.put(MapToResponseOption.WIN_RESOURCE_CHANGE_KEY, winResourceChange);
 		responseOption4.put(MapToResponseOption.WIN_PARTY_STAT_CHANGE_KEY, winPartyStatChange);
 		responseOption4.put(MapToResponseOption.LOSE_TEXT_KEY, "You lost the challenge! You died.");
+		responseOption4.put(MapToResponseOption.LOSE_FOLLOW_UP_KEY, "filename");
 		responseOption4.put(MapToResponseOption.LOSE_RESOURCE_CHANGE_KEY, loseResourceChange);
 		responseOption4.put(MapToResponseOption.LOSE_PARTY_STAT_CHANGE_KEY, losePartyStatChange);
 		RESPONSE_OPTIONS_1.add(responseOption4);
@@ -147,9 +157,11 @@ public final class ResponseOptionMaps {
 		renameTHIS.put(MapToResponseOption.PARTY_STAT_MODIFIERS_KEY, partyStatModifiers);
 		renameTHIS.put(MapToResponseOption.PASS_TEXT_KEY, "You passed the test!");
 		renameTHIS.put(MapToResponseOption.WIN_TEXT_KEY, "You won the challenge!");
+		renameTHIS.put(MapToResponseOption.WIN_FOLLOW_UP_KEY, "filename");
 		renameTHIS.put(MapToResponseOption.WIN_RESOURCE_CHANGE_KEY, winResourceChange);
 		renameTHIS.put(MapToResponseOption.WIN_PARTY_STAT_CHANGE_KEY, winPartyStatChange);
 		renameTHIS.put(MapToResponseOption.LOSE_TEXT_KEY, "You lost the challenge! You died.");
+		renameTHIS.put(MapToResponseOption.LOSE_FOLLOW_UP_KEY, "filename");
 		renameTHIS.put(MapToResponseOption.LOSE_RESOURCE_CHANGE_KEY, loseResourceChange);
 		renameTHIS.put(MapToResponseOption.LOSE_PARTY_STAT_CHANGE_KEY, losePartyStatChange);
 		RESPONSE_OPTIONS_1.add(renameTHIS);
