@@ -6,8 +6,8 @@ public class ResponseOption {
 	
 	//General Response Info
 	private String text;
-	private ArrayList<Integer> resourceStatCost = new ArrayList<Integer>();
-	private ArrayList<Integer> partyStatRequirement = new ArrayList<Integer>();
+	private ArrayList<Integer> cost = new ArrayList<Integer>();
+	private ArrayList<Integer> requirements = new ArrayList<Integer>();
 	
 	//Needed for determining win/lose
 	private ArrayList<String> resourceModifiers = new ArrayList<String>();
@@ -33,8 +33,8 @@ public class ResponseOption {
 			ArrayList<Integer> winPartyStatChange, String loseText, 
 			ArrayList<Integer> loseResourceChange, ArrayList<Integer> losePartyStatChange){
 		this.text = text;
-		this.resourceStatCost.addAll(resourceStatCost);
-		this.partyStatRequirement.addAll(partyStatRequirement);
+		this.cost.addAll(resourceStatCost);
+		this.requirements.addAll(partyStatRequirement);
 		this.resourceModifiers.addAll(resourceModifiers);
 		this.partyStatModifiers.addAll(partyStatModifiers);
 		this.passText = passText;
@@ -55,16 +55,16 @@ public class ResponseOption {
 		this.text = text;
 	}
 	public ArrayList<Integer> getResourceStatCost() {
-		return resourceStatCost;
+		return cost;
 	}
 	public void setResourceStatCost(ArrayList<Integer> resourceStatCost) {
-		this.resourceStatCost = resourceStatCost;
+		this.cost = resourceStatCost;
 	}
 	public ArrayList<Integer> getPartyStatRequirement() {
-		return partyStatRequirement;
+		return requirements;
 	}
 	public void setPartyStatRequirement(ArrayList<Integer> partyStatRequirement) {
-		this.partyStatRequirement = partyStatRequirement;
+		this.requirements = partyStatRequirement;
 	}
 	public ArrayList<String> getResourceModifiers() {
 		return resourceModifiers;

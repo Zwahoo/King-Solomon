@@ -161,8 +161,10 @@ public class MainGame {
 		for (int i = 0; i < map.width; i++) {
 			newx = view.getLocation().x + (i * 64);
 			newy = view.getLocation().y + (i * 32);
-			for (int b = 0; b < map.height; b++) {
-				Tile tile = map.getTile(i, b);
+			for (int b = map.height-1; b >=0; b--) {
+				int curTileX = i;
+				int curTileY = map.height - b - 1;
+				Tile tile = map.getTile(curTileX, curTileY);
 
 				// if(!view.polygonIsInView(tile.selectangle)) continue; //Skip
 				// if it isn't in view
@@ -171,7 +173,7 @@ public class MainGame {
 				g.drawImage(images[tile.getImageIndex()], newx, newy, null);
 
 				// draws player marker
-				if (i == player1.getX() && b == player1.getY()) {
+				if (curTileX == player1.getX() && curTileY == player1.getY()) {
 					loadedimage = images[3];
 					g.drawImage(loadedimage, newx + 43, newy + 12, null);
 				}
