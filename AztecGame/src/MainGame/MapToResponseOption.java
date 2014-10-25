@@ -32,6 +32,7 @@ public class MapToResponseOption {
 		//Victory Info
 		public static final String WIN_TEXT_KEY = "winText";
 		//ArrayList<Integer>
+		public static final String WIN_FOLLOW_UP_KEY = "winFollowUp";
 		public static final String WIN_RESOURCE_CHANGE_KEY = "winResourceChange";
 		//ArrayList<Integer>
 		public static final String WIN_PARTY_STAT_CHANGE_KEY = "winPartyStatChange";
@@ -39,6 +40,7 @@ public class MapToResponseOption {
 		//Lose Info
 		public static final String LOSE_TEXT_KEY = "loseText";
 		//ArrayList<Integer>
+		public static final String LOSE_FOLLOW_UP_KEY = "loseFollowUp";
 		public static final String LOSE_RESOURCE_CHANGE_KEY = "loseResourceChange";
 		//ArrayList<Integer>
 		public static final String LOSE_PARTY_STAT_CHANGE_KEY = "losePartyStatChange";
@@ -77,6 +79,8 @@ public class MapToResponseOption {
 				
 				String winText = (String)e.get(WIN_TEXT_KEY);
 				
+				String winFollowUp = (String)e.get(WIN_FOLLOW_UP_KEY);
+				
 				ArrayList<Integer> winResourceChange = new ArrayList<Integer>();
 				winResourceChange.addAll((ArrayList<Integer>)e.get(WIN_RESOURCE_CHANGE_KEY));
 				
@@ -85,6 +89,8 @@ public class MapToResponseOption {
 				
 				String loseText = (String)e.get(LOSE_TEXT_KEY);
 				
+				String loseFollowUp = (String)e.get(LOSE_FOLLOW_UP_KEY);
+				
 				ArrayList<Integer> loseResourceChange = new ArrayList<Integer>();
 				loseResourceChange.addAll((ArrayList<Integer>)e.get(LOSE_RESOURCE_CHANGE_KEY));
 				
@@ -92,8 +98,8 @@ public class MapToResponseOption {
 				losePartyStatChange.addAll((ArrayList<Integer>)e.get(LOSE_PARTY_STAT_CHANGE_KEY));
 				
 				ResponseOption newResponseOption = new ResponseOption(text, resourceStatCost, partyStatRequirement,
-						resourceModifiers, partyStatModifiers, passText, winText, winResourceChange, 
-						winPartyStatChange, loseText, loseResourceChange, losePartyStatChange);
+						resourceModifiers, partyStatModifiers, passText, winText, winFollowUp, winResourceChange, 
+						winPartyStatChange, loseText, loseFollowUp, loseResourceChange, losePartyStatChange);
 				
 				responseOptions.add(newResponseOption);
 			}

@@ -65,8 +65,8 @@ public final class EventMaps {
 		
 		HashMap<String, String> advice = new HashMap<String, String>();
 		advice.put("Nifty Naturalist", "UMaybe we should try talking to them...");
-		advice.put("Merry Mercenary", "UKILL THEM ALL!!");
-		advice.put("Marvelous Missionary", "NAhh! Natives!");
+		advice.put("Merry Mercenary", "UEradicate the savages!!");
+		advice.put("Marvelous Missionary", "NNatives! Perhaps we should try to convert them...");
 		EVENT_MAP_2.put(MapToEvent.ADVICE_KEY, advice);
 		
 		EVENT_MAP_2.put(MapToEvent.FLEE_PASS_TEXT_KEY, "You successfully evaded the tribe!");

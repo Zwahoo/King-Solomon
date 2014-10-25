@@ -18,19 +18,21 @@ public class ResponseOption {
 	
 	//Victory Info
 	private String winText;
+	public String winFollowUp;
 	private ArrayList<Integer> winResourceChange = new ArrayList<Integer>();
 	private ArrayList<Integer> winPartyStatChange = new ArrayList<Integer>();
 
 	//Lose Info
 	private String loseText;
+	public String loseFollowUp;
 	private ArrayList<Integer> loseResourceChange = new ArrayList<Integer>();
 	private ArrayList<Integer> losePartyStatChange = new ArrayList<Integer>();
 	
 	public ResponseOption(String text, ArrayList<Integer> resourceStatCost, 
 			ArrayList<Integer> partyStatRequirement, 
 			ArrayList<String> resourceModifiers, ArrayList<String> partyStatModifiers,
-			String passText, String winText, ArrayList<Integer> winResourceChange,
-			ArrayList<Integer> winPartyStatChange, String loseText, 
+			String passText, String winText, String winFollowUp, ArrayList<Integer> winResourceChange,
+			ArrayList<Integer> winPartyStatChange, String loseText, String loseFollowUp,
 			ArrayList<Integer> loseResourceChange, ArrayList<Integer> losePartyStatChange){
 		this.text = text;
 		this.cost.addAll(resourceStatCost);
@@ -39,9 +41,11 @@ public class ResponseOption {
 		this.partyStatModifiers.addAll(partyStatModifiers);
 		this.passText = passText;
 		this.winText = winText;
+		this.winFollowUp = winFollowUp;
 		this.winResourceChange.addAll(winResourceChange);
 		this.winPartyStatChange.addAll(winPartyStatChange);
 		this.loseText = loseText;
+		this.loseFollowUp = loseFollowUp;
 		this.loseResourceChange.addAll(loseResourceChange);
 		this.losePartyStatChange.addAll(losePartyStatChange);
 	}
