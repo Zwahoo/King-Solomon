@@ -117,9 +117,7 @@ public class MainGame {
 		startDayDrawer = new StartDayDrawer();
 
 		// //CHECKPOINT
-		for(Event e : events) {
-			e.testMe();
-		}
+		
 		
 	}
 	

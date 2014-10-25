@@ -92,6 +92,6 @@ public class Event {
 	}
 	
 	public void testMe(){
-		System.out.println("This works!");
+		System.out.println(eventID + " works!");
 	}
 }
