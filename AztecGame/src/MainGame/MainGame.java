@@ -115,6 +115,9 @@ public class MainGame {
 		initSelectangles();
 
 		// //CHECKPOINT
+		for(Event e : events) {
+			e.testMe();
+		}
 		
 	}
 	
@@ -241,8 +244,14 @@ public class MainGame {
 			setPartyStat(statName, partyStats.get(statName) + val);
 		}
 	public void loadEvents(){
-		Event newEvent1 = MapToEvent.createEvent(FileToMap.createMap("assets/testEvent3.txt"));
-		events.add(newEvent1);
+		File dir = new File("assets/events/");
+		  File[] directoryListing = dir.listFiles();
+		  if (directoryListing != null) {
+		    for (File child : directoryListing) {
+		      Event newEvent = MapToEvent.createEvent(FileToMap.createMap(child.getPath()));
+		      events.add(newEvent);
+		    }
+		  }
 	}
 
 	public Event getRandomEvent(String loc) {
