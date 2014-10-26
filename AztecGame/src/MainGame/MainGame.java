@@ -32,8 +32,8 @@ public class MainGame {
 	static int statBarHeight;
 	
 	//Stats
-	private static LinkedHashMap <String, Integer> partyStats;
-	private static boolean partyStatsChanged = false; // set this whenever the stats change
+	private static LinkedHashMap <String, Integer> stats;
+	private static boolean statsChanged = false; // set this whenever the stats change
 	
 	//Event stuff
 	public ArrayList<Event> events;
@@ -122,7 +122,7 @@ public class MainGame {
 	}
 	
 	private void initStats() {
-		partyStats = new LinkedHashMap<String, Integer>();
+		stats = new LinkedHashMap<String, Integer>();
 		setPartyStat(MORALE_KEY, 100);
 		setPartyStat(STAMINA_KEY, 100);
 		setPartyStat(FOOD_KEY, 20);
@@ -155,9 +155,9 @@ public class MainGame {
 	//Update all the various bits and pieces of the game world.
 	public void update() {
 		input.update();
-		if (partyStatsChanged) {
+		if (statsChanged) {
 			statsBar.setText(getStatString());
-			partyStatsChanged = false;
+			statsChanged = false;
 		}
 		if (eventDrawer!=null)
 			eventDrawer.update();
@@ -209,8 +209,8 @@ public class MainGame {
 	//Edit this to change what gets printed in the stat bar
 	private static String getStatString() {
 		String retVal = "";
-		for( String s : partyStats.keySet()) {
-			retVal += s + ": " + partyStats.get(s) + " | ";
+		for( String s : stats.keySet()) {
+			retVal += s + ": " + stats.get(s) + " | ";
 		}
 		retVal = retVal.substring(0, retVal.length() - 3); //Remove the last bar.
 		return retVal;
@@ -231,21 +231,21 @@ public class MainGame {
 	public View getView() { return view; }
 	//Returns a clone, so the stats can't be modified using the get method.
 	public HashMap<String, Integer> getStats() {
-		return (LinkedHashMap<String, Integer>) partyStats.clone();
+		return (LinkedHashMap<String, Integer>) stats.clone();
 	}
 	//Sets the stat, and raises the partyStatsChanged flag.
 	public static void setPartyStat(String statName, int val) {
 		if(val < 0) return; //No negative stats
-		partyStats.put(statName, val);
-		partyStatsChanged = true;
+		stats.put(statName, val);
+		statsChanged = true;
 	}
 	//Sets the stat, and raises the partyStatsChanged flag.
 		public static void incPartyStat(String statName, int val) {
-			if(!partyStats.containsKey(statName)) {
+			if(!stats.containsKey(statName)) {
 				System.out.println("Couldn't find stat " + statName + " to increment!");
 				return;
 			}
-			setPartyStat(statName, partyStats.get(statName) + val);
+			setPartyStat(statName, stats.get(statName) + val);
 		}
 	public void loadEvents(){
 		File dir = new File("assets/events/");
