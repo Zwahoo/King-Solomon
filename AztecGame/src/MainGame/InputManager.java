@@ -26,10 +26,13 @@ public class InputManager {
 	
 	public void update() {
 		// update everything regardless of mode
-		for (ArrayList<InputListener> temp : inputListenersMap.values())
-		  for(InputListener listener : temp) {
-		  	listener.update();
-		  }
+		ArrayList<ArrayList<InputListener>> copy = new ArrayList<ArrayList<InputListener>>(inputListenersMap.values());
+		for (ArrayList<InputListener> temp : copy) {
+			ArrayList<InputListener> copy2 = new ArrayList<InputListener>(temp);
+			for(InputListener listener : copy2) {
+				listener.update();
+			}
+		}
 	} 
 	
 	/*public void addInputListener(InputListener toAdd) {
