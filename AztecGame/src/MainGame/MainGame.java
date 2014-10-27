@@ -58,13 +58,14 @@ public class MainGame {
 	public static StartDayDrawer startDayDrawer = null;
 	
 	//Starts the game, takes in the window frame, width, and height.
-	public MainGame(gameframe frame, int width, int height) {
+	public MainGame(gameframe frame, int width, int height) throws IOException {
 		//Load in the events
 		events = new ArrayList<Event>();
 		loadEvents();
 		
 		//Create map
-		map = new Map(10, 10, this);
+		map = new Map("assets/testMap.png", this);
+//		map = new Map(10, 10, this);
 		// Creates the player
 		player1 = new Player(map);
 		player1.getCurrentTile().reveal();
