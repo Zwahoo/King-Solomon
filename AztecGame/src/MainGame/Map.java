@@ -84,7 +84,7 @@ public class Map {
                 	System.out.println("Pixel in map not recognized. Tile defaulting to jungle at " + x + ", " + y);
                 	a = "jungle";
                 }
-            	System.out.println(a + " " + x + " " + y);
+            	//System.out.println(a + " " + x + " " + y);
                 t = new Tile(a, x, y, mainGame.getRandomEvent(a));
                 tiles[x][y] = t;
             }
