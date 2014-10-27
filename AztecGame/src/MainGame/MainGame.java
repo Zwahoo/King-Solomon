@@ -231,9 +231,11 @@ public class MainGame {
 	public Player getPlayer() { return player1; }
 	public View getView() { return view; }
 	//Returns a clone, so the stats can't be modified using the get method.
-	public HashMap<String, Integer> getStats() {
+	@SuppressWarnings("unchecked")
+	public static HashMap<String, Integer> getStats() {
 		return (LinkedHashMap<String, Integer>) stats.clone();
 	}
+	public static ArrayList<PartyMember> getParty(){ return party; }
 	//Sets the stat, and raises the partyStatsChanged flag.
 	public static void setPartyStat(String statName, int val) {
 		if(val < 0) return; //No negative stats

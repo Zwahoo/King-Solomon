@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 /**
  * Main class for the game
  */
+@SuppressWarnings({ "serial", "unused" })
 public class gameframe extends JFrame {
 
 	private boolean isRunning = true;

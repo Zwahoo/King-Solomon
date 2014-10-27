@@ -3,6 +3,7 @@ import java.awt.*;
 //Zane Laughlin
 //player class- manages supplies, player location, etc.
 
+@SuppressWarnings("unused")
 public class Player{
 
 	private Tile currenttile;

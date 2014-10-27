@@ -58,16 +58,16 @@ public class ResponseOption {
 	public void setText(String text) {
 		this.text = text;
 	}
-	public ArrayList<Integer> getResourceStatCost() {
+	public ArrayList<Integer> getCost() {
 		return cost;
 	}
-	public void setResourceStatCost(ArrayList<Integer> resourceStatCost) {
+	public void setCost(ArrayList<Integer> resourceStatCost) {
 		this.cost = resourceStatCost;
 	}
-	public ArrayList<Integer> getPartyStatRequirement() {
+	public ArrayList<Integer> getRequirements() {
 		return requirements;
 	}
-	public void setPartyStatRequirement(ArrayList<Integer> partyStatRequirement) {
+	public void setRequirements(ArrayList<Integer> partyStatRequirement) {
 		this.requirements = partyStatRequirement;
 	}
 	public ArrayList<String> getResourceModifiers() {

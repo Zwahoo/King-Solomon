@@ -18,6 +18,7 @@ import javax.swing.text.html.HTMLDocument.Iterator;
 import Components.Button;
 import Components.Textbox;
 
+@SuppressWarnings("unused")
 public class EventDrawer {
 	
 	/*
@@ -112,11 +113,11 @@ public class EventDrawer {
 		info.setVisibility(true); partyMembers.setVisibility(true);
 		int totalY = upperButtonY;	//variably keeps track of where the button should be drawn based on #buttons already drawn
 		//create a button for each response option for this specific event (max is 5)
-		for (ResponseOption ro : toLaunch.getResponseOptions()) {
+		for (final ResponseOption ro : toLaunch.getResponseOptions()) {
 			Button temp = new Button(buttonX, totalY, (int)(gameframe.windowWidth * buttonWMult), buttonHeight, ro.getText(), MainGame.input) {
 				@Override
 				public void onClick() {
-					handleResponseSelect(); //custom method for handling button press, currently just closes program
+					handleResponseSelect(ro); //custom method for handling button press, currently just closes program
 				}
 			};
 			buttons.add(temp);			
@@ -133,7 +134,27 @@ public class EventDrawer {
 	
 	//currently closes program, but will eventually check which button was pressed then execute the proper result based on 
 	//that response option
-	public void handleResponseSelect() {
+	public void handleResponseSelect(ResponseOption r) {
+		ArrayList<Integer> totalPartyStats = new ArrayList<Integer>();
+		ArrayList<PartyMember> partyMembers = new ArrayList<PartyMember>();
+		
+		String[] keyArray = {
+				PartyMember.MARKSMANSHIP_KEY, PartyMember.PERCEPTION_KEY, 
+				PartyMember.TACTICS_KEY, PartyMember.LOYALTY_KEY, 
+				PartyMember.AGILITY_KEY, PartyMember.STRENGTH_KEY, 
+				PartyMember.DIPLOMACY_KEY, PartyMember.KNOWLEDGE_KEY, 
+		};
+		
+		partyMembers.addAll(MainGame.getParty());
+		for (int c = 0; c < 8; c++){
+			int stat = 0;
+			for (int i = 0; i < partyMembers.size(); i++){
+				stat += partyMembers.get(i).getStat(keyArray[c]);
+			}
+			totalPartyStats.add(stat);
+		}
+		
+		String result = EventHandler.checkResponse(r, MainGame.getStats(), totalPartyStats);
 		MainGame.closeEvent();
 	}
 	

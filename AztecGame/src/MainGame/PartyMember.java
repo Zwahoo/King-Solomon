@@ -55,7 +55,7 @@ public class PartyMember {
 	
 	
 	//Getters and Setters
-	private int getStat(String key) {
+	public int getStat(String key) {
 		if(!stats.containsKey(key)) {
 			System.out.println("Trying to obtain unknown stat: " + key + " for party member: " + name);
 			return -1;
