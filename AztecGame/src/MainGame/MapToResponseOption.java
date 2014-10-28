@@ -63,11 +63,11 @@ public class MapToResponseOption {
 			for (HashMap<String, Object> e : tempArray){
 				String text = (String)e.get(TEXT_KEY);
 				
-				ArrayList<Integer> resourceStatCost = new ArrayList<Integer>();
-				resourceStatCost.addAll((ArrayList<Integer>)e.get(RESOURCE_STAT_COST_KEY));
+				ArrayList<Long> resourceStatCost = new ArrayList<Long>();
+				resourceStatCost.addAll((ArrayList<Long>)e.get(RESOURCE_STAT_COST_KEY));
 				
-				ArrayList<Integer> partyStatRequirement = new ArrayList<Integer>();
-				partyStatRequirement.addAll((ArrayList<Integer>)e.get(PARTY_STAT_REQUIREMENT_KEY));
+				ArrayList<Long> partyStatRequirement = new ArrayList<Long>();
+				partyStatRequirement.addAll((ArrayList<Long>)e.get(PARTY_STAT_REQUIREMENT_KEY));
 				
 				ArrayList<String> resourceModifiers = new ArrayList<String>();
 				resourceModifiers.addAll((ArrayList<String>)e.get(RESOURCE_MODIFIERS_KEY));
@@ -81,21 +81,21 @@ public class MapToResponseOption {
 				
 				String winFollowUp = (String)e.get(WIN_FOLLOW_UP_KEY);
 				
-				ArrayList<Integer> winResourceChange = new ArrayList<Integer>();
-				winResourceChange.addAll((ArrayList<Integer>)e.get(WIN_RESOURCE_CHANGE_KEY));
+				ArrayList<Long> winResourceChange = new ArrayList<Long>();
+				winResourceChange.addAll((ArrayList<Long>)e.get(WIN_RESOURCE_CHANGE_KEY));
 				
-				ArrayList<Integer> winPartyStatChange = new ArrayList<Integer>();
-				winPartyStatChange.addAll((ArrayList<Integer>)e.get(WIN_PARTY_STAT_CHANGE_KEY));
+				ArrayList<Long> winPartyStatChange = new ArrayList<Long>();
+				winPartyStatChange.addAll((ArrayList<Long>)e.get(WIN_PARTY_STAT_CHANGE_KEY));
 				
 				String loseText = (String)e.get(LOSE_TEXT_KEY);
 				
 				String loseFollowUp = (String)e.get(LOSE_FOLLOW_UP_KEY);
 				
-				ArrayList<Integer> loseResourceChange = new ArrayList<Integer>();
-				loseResourceChange.addAll((ArrayList<Integer>)e.get(LOSE_RESOURCE_CHANGE_KEY));
+				ArrayList<Long> loseResourceChange = new ArrayList<Long>();
+				loseResourceChange.addAll((ArrayList<Long>)e.get(LOSE_RESOURCE_CHANGE_KEY));
 				
-				ArrayList<Integer> losePartyStatChange = new ArrayList<Integer>();
-				losePartyStatChange.addAll((ArrayList<Integer>)e.get(LOSE_PARTY_STAT_CHANGE_KEY));
+				ArrayList<Long> losePartyStatChange = new ArrayList<Long>();
+				losePartyStatChange.addAll((ArrayList<Long>)e.get(LOSE_PARTY_STAT_CHANGE_KEY));
 				
 				ResponseOption newResponseOption = new ResponseOption(text, resourceStatCost, partyStatRequirement,
 						resourceModifiers, partyStatModifiers, passText, winText, winFollowUp, winResourceChange, 

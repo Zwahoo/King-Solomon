@@ -6,8 +6,8 @@ public class ResponseOption {
 	
 	//General Response Info
 	private String text;
-	private ArrayList<Integer> cost = new ArrayList<Integer>();
-	private ArrayList<Integer> requirements = new ArrayList<Integer>();
+	private ArrayList<Long> cost = new ArrayList<Long>();
+	private ArrayList<Long> requirements = new ArrayList<Long>();
 	
 	//Needed for determining win/lose
 	private ArrayList<String> resourceModifiers = new ArrayList<String>();
@@ -19,21 +19,21 @@ public class ResponseOption {
 	//Victory Info
 	private String winText;
 	public String winFollowUp;
-	private ArrayList<Integer> winResourceChange = new ArrayList<Integer>();
-	private ArrayList<Integer> winPartyStatChange = new ArrayList<Integer>();
+	private ArrayList<Long> winResourceChange = new ArrayList<Long>();
+	private ArrayList<Long> winPartyStatChange = new ArrayList<Long>();
 
 	//Lose Info
 	private String loseText;
 	public String loseFollowUp;
-	private ArrayList<Integer> loseResourceChange = new ArrayList<Integer>();
-	private ArrayList<Integer> losePartyStatChange = new ArrayList<Integer>();
+	private ArrayList<Long> loseResourceChange = new ArrayList<Long>();
+	private ArrayList<Long> losePartyStatChange = new ArrayList<Long>();
 	
-	public ResponseOption(String text, ArrayList<Integer> resourceStatCost, 
-			ArrayList<Integer> partyStatRequirement, 
+	public ResponseOption(String text, ArrayList<Long> resourceStatCost, 
+			ArrayList<Long> partyStatRequirement, 
 			ArrayList<String> resourceModifiers, ArrayList<String> partyStatModifiers,
-			String passText, String winText, String winFollowUp, ArrayList<Integer> winResourceChange,
-			ArrayList<Integer> winPartyStatChange, String loseText, String loseFollowUp,
-			ArrayList<Integer> loseResourceChange, ArrayList<Integer> losePartyStatChange){
+			String passText, String winText, String winFollowUp, ArrayList<Long> winResourceChange,
+			ArrayList<Long> winPartyStatChange, String loseText, String loseFollowUp,
+			ArrayList<Long> loseResourceChange, ArrayList<Long> losePartyStatChange){
 		this.text = text;
 		this.cost.addAll(resourceStatCost);
 		this.requirements.addAll(partyStatRequirement);
@@ -58,16 +58,16 @@ public class ResponseOption {
 	public void setText(String text) {
 		this.text = text;
 	}
-	public ArrayList<Integer> getCost() {
+	public ArrayList<Long> getCost() {
 		return cost;
 	}
-	public void setCost(ArrayList<Integer> resourceStatCost) {
+	public void setCost(ArrayList<Long> resourceStatCost) {
 		this.cost = resourceStatCost;
 	}
-	public ArrayList<Integer> getRequirements() {
+	public ArrayList<Long> getRequirements() {
 		return requirements;
 	}
-	public void setRequirements(ArrayList<Integer> partyStatRequirement) {
+	public void setRequirements(ArrayList<Long> partyStatRequirement) {
 		this.requirements = partyStatRequirement;
 	}
 	public ArrayList<String> getResourceModifiers() {
@@ -94,16 +94,16 @@ public class ResponseOption {
 	public void setWinText(String winText) {
 		this.winText = winText;
 	}
-	public ArrayList<Integer> getWinResourceChange() {
+	public ArrayList<Long> getWinResourceChange() {
 		return winResourceChange;
 	}
-	public void setWinResourceChange(ArrayList<Integer> winResourceChange) {
+	public void setWinResourceChange(ArrayList<Long> winResourceChange) {
 		this.winResourceChange = winResourceChange;
 	}
-	public ArrayList<Integer> getWinPartyStatChange() {
+	public ArrayList<Long> getWinPartyStatChange() {
 		return winPartyStatChange;
 	}
-	public void setWinPartyStatChange(ArrayList<Integer> winPartyStatChange) {
+	public void setWinPartyStatChange(ArrayList<Long> winPartyStatChange) {
 		this.winPartyStatChange = winPartyStatChange;
 	}
 	public String getLoseText() {
@@ -112,16 +112,16 @@ public class ResponseOption {
 	public void setLoseText(String loseText) {
 		this.loseText = loseText;
 	}
-	public ArrayList<Integer> getLoseResourceChange() {
+	public ArrayList<Long> getLoseResourceChange() {
 		return loseResourceChange;
 	}
-	public void setLoseResourceChange(ArrayList<Integer> loseResourceChange) {
+	public void setLoseResourceChange(ArrayList<Long> loseResourceChange) {
 		this.loseResourceChange = loseResourceChange;
 	}
-	public ArrayList<Integer> getLosePartyStatChange() {
+	public ArrayList<Long> getLosePartyStatChange() {
 		return losePartyStatChange;
 	}
-	public void setLosePartyStatChange(ArrayList<Integer> losePartyStatChange) {
+	public void setLosePartyStatChange(ArrayList<Long> losePartyStatChange) {
 		this.losePartyStatChange = losePartyStatChange;
 	}
 	
