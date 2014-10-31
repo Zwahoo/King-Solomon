@@ -10,12 +10,19 @@ public class PlayerMovementHandler extends InputListener {
 	MainGame mainGame;
 	Map map;
 	Player player;
-	private Tile dummy; //dummy tile
 	
-	static final int NW_TILE = 0;
-	static final int SW_TILE = 1;
-	static final int SE_TILE = 2;
-	static final int NE_TILE = 3;
+	static final int NUM_TILES = 8;
+	static final int N_TILE = 0;
+	static final int NE_TILE = 1;
+	static final int E_TILE = 2;
+	static final int SE_TILE = 3;
+	static final int S_TILE = 4;
+	static final int SW_TILE = 5;
+	static final int W_TILE = 6;
+	static final int NW_TILE = 7;
+	
+	private ArrayList<Integer> validMoveTiles;
+	private ArrayList<Integer> toRevealTiles;
 	
 	public boolean playerKeyMovement = false;
 	public boolean playerMouseMovement = true;
@@ -29,9 +36,25 @@ public class PlayerMovementHandler extends InputListener {
 		this.map = theMap;
 		this.player = thePlayer;
 		
-		dummy = new Tile("dummy", -1,-1, null);
-		dummy.setSelectangle(-2, -3, -4, -5, -6, -7, -8, -9, -2, -3, -4, -5, -6, -7, -8, -9);
-		setNeighbors();
+		validMoveTiles = new ArrayList<Integer>();
+		//Can only move nw, ne, sw, se.
+		validMoveTiles.add(NW_TILE);
+		validMoveTiles.add(NE_TILE);
+		validMoveTiles.add(SW_TILE);
+		validMoveTiles.add(SE_TILE);
+		
+
+		toRevealTiles = new ArrayList<Integer>();
+		//Reveal all neighbors (or try to, at least).
+		toRevealTiles.add(N_TILE);
+		toRevealTiles.add(E_TILE);
+		toRevealTiles.add(S_TILE);
+		toRevealTiles.add(W_TILE);
+		toRevealTiles.add(NW_TILE);
+		toRevealTiles.add(NE_TILE);
+		toRevealTiles.add(SW_TILE);
+		toRevealTiles.add(SE_TILE);
+		
 		checkSight();
 	}
 	
@@ -43,55 +66,16 @@ public class PlayerMovementHandler extends InputListener {
         int yRelBoard = mouseLoc.y - mainGame.getViewLoc().y;
         
         //checks to see if any of the tiles neighboring player were clicked- this can probably be reduced to loop
-		if(player.getNeighbortile(NW_TILE).checkcontains(xRelBoard, yRelBoard)){
-			moveToTile(NW_TILE);
-		} 
-		
-		else if(player.getNeighbortile(SW_TILE).checkcontains(xRelBoard, yRelBoard)){
-			moveToTile(SW_TILE);
+		for(int tileNum : validMoveTiles) {
+			Tile tile = getNeighborTile(tileNum);
+			if(tile != null) {
+				if(tile.checkcontains(xRelBoard, yRelBoard)) {
+					moveToTile(tileNum);
+					break;
+				}
+			}
 		}
-		
-		else if(player.getNeighbortile(SE_TILE).checkcontains(xRelBoard, yRelBoard)){
-			moveToTile(SE_TILE);
-		}
-		
-		else if(player.getNeighbortile(NE_TILE).checkcontains(xRelBoard, yRelBoard)){
-			moveToTile(NE_TILE);
-		}
-		
 	}
-	
-	//sets the 4 neighbors or sets the neighbor to a dummy tile if no neighbor available
-	public void setNeighbors(){
-		if(player.getX() <= 0){
-			player.setNeighborTile(NW_TILE,  dummy);
-		}
-		else {
-			player.setNeighborTile(NW_TILE,  map.getTile(player.getX()-1, player.getY()));
-		}
-		
-		 if(player.getY() <= 0){
-			player.setNeighborTile(SW_TILE, dummy);
-		}
-		else{
-			player.setNeighborTile(SW_TILE, map.getTile(player.getX(), player.getY()-1));
-		}
-		 
-		if(player.getX() >= (map.width - 1)){
-			player.setNeighborTile(SE_TILE, dummy);
-		} else {
-			player.setNeighborTile(SE_TILE, map.getTile(player.getX()+1, player.getY()));
-		}
-		 
-		if(player.getY() >= (map.height - 1)){
-			player.setNeighborTile(NE_TILE, dummy);
-		}
-		else {
-			player.setNeighborTile(NE_TILE, map.getTile(player.getX(), player.getY()+1));
-		}
-		
-	}
-	
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -111,7 +95,7 @@ public class PlayerMovementHandler extends InputListener {
 	
 
 	public void moveToTile(int tile) {
-		move(player.getNeighbortile(tile));
+		move(getNeighborTile(tile));
 		checkSight();
 	}
 	
@@ -120,7 +104,6 @@ public class PlayerMovementHandler extends InputListener {
 		if(!isValidTile(t)) return;
 		player.setLoc(t.getX(), t.getY());
 		player.setCurrentTile(t);
-		setNeighbors();
 		t.runEvent(mainGame.party);
 		mainGame.handleMoveStatChanges();
 	}
@@ -133,12 +116,51 @@ public class PlayerMovementHandler extends InputListener {
     public void checkSight(){
     	int x = 0;
     	int y = 0;
-    	for(int i = 0; i < 4; i++){
-    		if(!player.getNeighbortile(i).getType().equals("dummy")){
-        		x = player.getNeighbortile(i).getX();
-    		y = player.getNeighbortile(i).getY();
-    			map.getTile(x, y).reveal();
+    	for(int i : toRevealTiles){
+    		Tile toReveal = getNeighborTile(i);
+    		if(toReveal != null){
+    			toReveal.reveal();
     		}
     	}
     }
+    
+	public Tile getNeighborTile(int tile) {
+		int x = player.getX();
+		int y = player.getY();
+		switch(tile) {
+		case(N_TILE):
+			if(!pointIsInMap(x - 1, y + 1)) return null;
+			return map.getTile(x - 1, y + 1);
+		case(NE_TILE):
+			if(!pointIsInMap(x, y + 1)) return null;
+			return map.getTile(x, y + 1);
+		case(E_TILE):
+			if(!pointIsInMap(x + 1, y + 1)) return null;
+			return map.getTile(x + 1, y + 1);
+		case(SE_TILE):
+			if(!pointIsInMap(x + 1, y)) return null;
+			return map.getTile(x + 1, y);
+		case(S_TILE):
+			if(!pointIsInMap(x + 1, y - 1)) return null;
+			return map.getTile(x + 1, y - 1);
+		case(SW_TILE):
+			if(!pointIsInMap(x, y - 1)) return null;
+			return map.getTile(x, y - 1);
+		case(W_TILE):
+			if(!pointIsInMap(x - 1, y - 1)) return null;
+			return map.getTile(x - 1, y - 1);
+		case(NW_TILE):
+			if(!pointIsInMap(x - 1, y)) return null;
+			return map.getTile(x-1, y);
+		default:
+			System.out.println("Unrecognized tile move request: " + tile);
+			return null;
+		}
+	}
+	
+	public boolean pointIsInMap(int x, int y){
+		if(x < 0 || y < 0) return false;
+		if(x >= map.width || y >= map.height) return false;
+		return true;
+	}
 }

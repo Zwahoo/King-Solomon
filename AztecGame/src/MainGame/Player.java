@@ -7,22 +7,13 @@ import java.awt.*;
 public class Player{
 
 	private Tile currenttile;
-	private Tile[] neighbortiles = new Tile[4];
 	private String name;
 	private Point loc;
-	private PartyMember[] partymembers  = new PartyMember[10];
 	
 	//attaches player to map
 	public Player(Map m){
 		currenttile = m.getTile(1,1);
 		loc = new Point(1, 1);
-	}
-	
-	//gets one of the neighbor tiles
-	public Tile getNeighbortile(int b){
-		//System.out.println("ch1");
-		return neighbortiles[b];
-		
 	}
 	
 	//Getters
@@ -54,8 +45,4 @@ public class Player{
 	public void setCurrentTile(Tile newTile) {
 		currenttile = newTile;
 	}
-	public void setNeighborTile(int tileNum, Tile newTile) {
-		neighbortiles[tileNum % neighbortiles.length] = newTile;
-	}
-	
 }
