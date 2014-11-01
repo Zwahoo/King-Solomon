@@ -154,7 +154,7 @@ public class EventDrawer {
 			totalPartyStats.add(stat);
 		}
 		
-		String result = EventHandler.checkResponse(r, MainGame.getStats(), totalPartyStats);
+		//String result = EventHandler.checkResponse(r, MainGame.getStats(), totalPartyStats);
 		MainGame.closeEvent();
 	}
 	
@@ -279,5 +279,11 @@ public class EventDrawer {
 			
 			
 	}
-	
+	public void destroyer() {
+		ArrayList<Integer> temp = new ArrayList<Integer>();
+		temp.add(MainGame.START_DAY_MODE); temp.add(MainGame.MOVEMENT_MODE); temp.add(MainGame.EVENT_MODE);
+		for(Button button : buttons) {
+			button.removeInputManager(MainGame.input, temp);
+		}
+	}
 }

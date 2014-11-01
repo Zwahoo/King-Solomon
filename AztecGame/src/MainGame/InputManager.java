@@ -50,9 +50,11 @@ public class InputManager {
 		}
 	}
 	
-	public void removeInputListener(InputListener toAdd) {
-		for (Integer mode : inputListenersMap.keySet()) {
-			inputListenersMap.get(mode).remove(toAdd);
+	public void removeInputListener(InputListener toAdd, ArrayList<Integer> modes) {
+		for (Integer mode : modes) {
+			if (inputListenersMap.containsKey(mode)){
+				inputListenersMap.get(mode).remove(toAdd);
+			}
 		}
 	}
 	

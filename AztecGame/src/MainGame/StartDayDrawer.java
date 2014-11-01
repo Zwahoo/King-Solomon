@@ -16,17 +16,13 @@ public class StartDayDrawer {
 	public final String INV_BUTTON_TEXT = "INVESTIGATE";
 	public final String REST_BUTTON_TEXT = "REST";
 	
-	private final double topspacer = 0.1;
-	private final double leftspacer = 0.05;
+	private final double topspacer = 0.05;
 	private final double buttonheight = 0.06;
-	private final double buttonspacer = 0.01;
-	private final double width = 0.3;
-	private final double totalheight = (3*buttonheight + 2*buttonspacer);
+	private final double width = 0.2;
+	private final double totalheight = 3*buttonheight;
 	
 	private int verticalinset;
-	private int horizontalinset;
 	private int buttonheighti;
-	private int buttonspaceri;
 	private int buttonwidth;
 	private int totalheighti;
 	
@@ -37,31 +33,29 @@ public class StartDayDrawer {
 	
 	private void setLocations() {
 		verticalinset = (int) (gameframe.windowHeight * topspacer);
-		horizontalinset = (int) (gameframe.windowWidth * leftspacer);
 		buttonheighti = (int) (gameframe.windowHeight * buttonheight);
-		buttonspaceri = (int) (gameframe.windowHeight * buttonspacer);
 		buttonwidth = (int) (gameframe.windowWidth * width);
 		totalheighti = (int) (gameframe.windowHeight * totalheight);
 	}
 	
 	public void launchStartDay() {
-		textbox = new Textbox("", horizontalinset, verticalinset, 
+		textbox = new Textbox("", 0, verticalinset, 
 				buttonwidth, totalheighti, MainGame.input);
-		moveButton = new Button(horizontalinset, verticalinset, buttonwidth, 
+		moveButton = new Button(0, verticalinset, buttonwidth, 
 				buttonheighti, MOVE_BUTTON_TEXT, MainGame.input) {
 			@Override
 			public void onClick() {
 				handleResponseSelect(MainGame.MOVEMENT_MODE);
 			}
 		};
-		investigateButton = new Button(horizontalinset, verticalinset + buttonheighti + buttonspaceri,
+		investigateButton = new Button(0, verticalinset + buttonheighti,
 				buttonwidth, buttonheighti, INV_BUTTON_TEXT, MainGame.input){
 			@Override
 			public void onClick() {
 				handleResponseSelect(MainGame.EVENT_MODE);
 			}
 		};
-		restButton = new Button(horizontalinset, verticalinset + 2*buttonheighti + 2*buttonspaceri,
+		restButton = new Button(0, verticalinset + 2*buttonheighti,
 				buttonwidth, buttonheighti, REST_BUTTON_TEXT, MainGame.input){
 			@Override
 			public void onClick() {

@@ -14,6 +14,10 @@ public abstract class InputListener {
 		inputManager.addInputListener(this, modes);
 	}
 	
+	public void removeInputManager(InputManager inputManager, ArrayList<Integer> modes) {
+		inputManager.removeInputListener(this, modes);
+	}
+	
 	//Returns the location of the mouse
 	protected Point getMouseLoc() {
 		if(inputManager != null) return inputManager.getMouseLoc();

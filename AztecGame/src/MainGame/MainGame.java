@@ -273,6 +273,8 @@ public class MainGame {
 	}
 
 	public static void closeEvent() {
+		System.out.println("Ran");
+		eventDrawer.destroyer();
 		currentMode = START_DAY_MODE;
 		eventDrawer = null;
 		startDayDrawer = new StartDayDrawer();
