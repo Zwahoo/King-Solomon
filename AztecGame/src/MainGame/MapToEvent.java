@@ -24,6 +24,8 @@ public class MapToEvent {
 	public static final String FLEE_PASS_TEXT_KEY = "fleePassText";
 	public static final String FLEE_FAIL_TEXT_KEY = "fleeFailText";
 	
+	public static final String PARTY_MEMBER_TARGETED_KEY = "partyMemberTargeted";
+	
 	
 	/**
 	 * Takes in a HashMap full of the values any growing Event needs.
@@ -59,7 +61,9 @@ public class MapToEvent {
 		
 		String fleeFailText = (String)importedMap.get(FLEE_FAIL_TEXT_KEY);
 		
-		Event newEvent = new Event(eventID, eventType, possibleLocations, reqParty, introText, responseOptions, advice, fleePassText, fleeFailText);
+		boolean partyMemberTargeted = (boolean)importedMap.get(PARTY_MEMBER_TARGETED_KEY);
+		
+		Event newEvent = new Event(eventID, eventType, possibleLocations, reqParty, introText, responseOptions, advice, fleePassText, fleeFailText, partyMemberTargeted);
 		return newEvent;
 	}
 }

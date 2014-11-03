@@ -1,4 +1,5 @@
 package MainGame;
+
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -59,6 +60,23 @@ public class MainGame {
 	
 	//Starts the game, takes in the window frame, width, and height.
 	public MainGame(gameframe frame, int width, int height) throws IOException {
+		
+		party = new ArrayList<PartyMember>();
+		party.add(new PartyMember("The Gentleman", "Gentleman", 0,
+				"Quite.", PartyMemberStats.AVERAGE_ABE_STATS));
+		party.add(new PartyMember("Happy Hunter", "Hunter", 100,
+				"Likes cooking meat and long walks on the savannah.", PartyMemberStats.HAPPY_HUNTER_STATS));
+		party.add(new PartyMember("Merry Mercenary", "Mercenary", 100,
+				"Was once payed $100,000 to kill the Queen. Married her instead.", PartyMemberStats.MERRY_MERCENARY_STATS));
+		party.add(new PartyMember("Nifty Naturalist", "Naturalist", 100,
+				"Once saved six men using only a single leaf of poison ivy, and three blades of grass.", PartyMemberStats.NIFTY_NATURALIST_STATS));
+		party.add(new PartyMember("Marvelous Missionary", "Missionary", 100,
+				"Holds the current leading Convert-to-Failure ratio in the entire South African Pro Missionary League.", PartyMemberStats.MARVELOUS_MISSIONARY_STATS));
+		party.add(new PartyMember("Exuberant Explorer", "Explorer", 100,
+				"Made the world's first Atlas at age 6.", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
+		party.add(new PartyMember("Giddy Guide", "Guide", 100,
+				"He's Giddy!", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
+		
 		//Load in the events
 		events = new ArrayList<Event>();
 		loadEvents();
@@ -79,21 +97,6 @@ public class MainGame {
 		//Sets the stats of the party
 		initStats();
 		
-		party = new ArrayList<PartyMember>();
-		party.add(new PartyMember("The Gentleman", "Gentleman", 0,
-				"Quite.", PartyMemberStats.AVERAGE_ABE_STATS));
-		party.add(new PartyMember("Happy Hunter", "Hunter", 100,
-				"Likes cooking meat and long walks on the savannah.", PartyMemberStats.HAPPY_HUNTER_STATS));
-		party.add(new PartyMember("Merry Mercenary", "Mercenary", 100,
-				"Was once payed $100,000 to kill the Queen. Married her instead.", PartyMemberStats.MERRY_MERCENARY_STATS));
-		party.add(new PartyMember("Nifty Naturalist", "Naturalist", 100,
-				"Once saved six men using only a single leaf of poison ivy, and three blades of grass.", PartyMemberStats.NIFTY_NATURALIST_STATS));
-		party.add(new PartyMember("Marvelous Missionary", "Missionary", 100,
-				"Holds the current leading Convert-to-Failure ratio in the entire South African Pro Missionary League.", PartyMemberStats.MARVELOUS_MISSIONARY_STATS));
-		party.add(new PartyMember("Exuberant Explorer", "Explorer", 100,
-				"Made the world's first Atlas at age 6.", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
-		party.add(new PartyMember("Giddy Guide", "Guide", 100,
-				"He's Giddy!", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
 		
 		
 		statBarWidth = frame.getWidth();
@@ -250,12 +253,24 @@ public class MainGame {
 			}
 			setPartyStat(statName, stats.get(statName) + val);
 		}
+		
+	public static void incRandomPersonStat(String statName, int val){
+		int ran1 = (int)(Math.random() * (party.size()));
+		party.get(ran1).incStat(statName, val);;
+	}
+	
 	public void loadEvents(){
 		File dir = new File("assets/events/");
-		  File[] directoryListing = dir.listFiles();
+		  ArrayList<File> directoryListing = new ArrayList<File>();
+		  for (File e : dir.listFiles()){
+			  if (!e.isHidden()){
+				  directoryListing.add(e);
+			  }
+		  }
 		  if (directoryListing != null) {
 		    for (File child : directoryListing) {
 		      Event newEvent = MapToEvent.createEvent(FileToMap.createMap(child.getPath()));
+		      newEvent.setAffectedPartyMemberRandomly(party);
 		      events.add(newEvent);
 		    }
 		  }
@@ -271,6 +286,50 @@ public class MainGame {
 		currentMode = EVENT_MODE;
 		eventDrawer = new EventDrawer(e, presMembers);
 	}
+
+	public static void closeEvent(String result, ResponseOption r) {
+		String[] resourceKeys = {
+				FOOD_KEY, WATER_KEY, VALUABLES_KEY,
+				AMMO_KEY, MEDICINE_KEY, MORALE_KEY,
+				STAMINA_KEY, PACK_ANIMALS_KEY
+		};
+		
+		PartyMember keyMan = party.get(0);
+		@SuppressWarnings("static-access")
+		String[] partyStatKeys = {
+				keyMan.MARKSMANSHIP_KEY, keyMan.PERCEPTION_KEY,
+				keyMan.TACTICS_KEY, keyMan.LOYALTY_KEY,
+				keyMan.AGILITY_KEY, keyMan.STRENGTH_KEY,
+				keyMan.DIPLOMACY_KEY, keyMan.KNOWLEDGE_KEY
+		};
+		
+		ArrayList<Long> resourceChange = new ArrayList<Long>();
+		ArrayList<Long> partyStatChange = new ArrayList<Long>();
+		
+		if (result.equals("fail")){
+			partyStatChange.addAll(r.getLosePartyStatChange());
+			resourceChange.addAll(r.getLoseResourceChange());
+		} else if (result.equals("pass")){
+			for (int i = 0; i < resourceKeys.length; i++){
+				resourceChange.add((long) 0);
+			}
+			for (int c = 0; c < partyStatKeys.length; c++){
+				partyStatChange.add((long) 0);
+			}
+		} else if (result.equals("success")){
+			partyStatChange.addAll(r.getWinPartyStatChange());
+			resourceChange.addAll(r.getWinResourceChange());
+		}
+		for (int i = 0; i < resourceKeys.length - 1; i++){
+			incPartyStat(resourceKeys[i], resourceChange.get(i).intValue());
+		}
+		for (int c = 0; c < partyStatKeys.length; c++){
+			incRandomPersonStat(partyStatKeys[c], partyStatChange.get(c).intValue());
+		}
+		
+		resourceChange.clear();
+		partyStatChange.clear();
+}
 
 	public static void closeEvent() {
 		eventDrawer.destroyer();

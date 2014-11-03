@@ -18,12 +18,15 @@ public class Event {
 	private String fleePassText;
 	private String fleeFailText;
 	
+	private boolean partyMemberTargeted;
+	private PartyMember affectedPartyMember;
+	
 	
 	public Event(String eventID, String eventType, 
 			ArrayList<String> possibleLocations, ArrayList<String> reqParty, 
 			String introText, ArrayList<ResponseOption> responseOptions, 
 			HashMap<String, String> advice, String fleePassText, 
-			String fleeFailText){
+			String fleeFailText, boolean partyMemberTargeted){
 		this.eventID = eventID;
 		this.eventType = eventType;
 		this.possibleLocations.addAll(possibleLocations);
@@ -33,6 +36,7 @@ public class Event {
 		this.advice.putAll(advice);
 		this.fleePassText = fleePassText;
 		this.fleeFailText = fleeFailText;
+		this.setPartyMemberTargeted(partyMemberTargeted);
 	}
 
 	//ALL the getters and setters!
@@ -91,6 +95,22 @@ public class Event {
 		this.fleeFailText = fleeFailText;
 	}
 	
+	public boolean isPartyMemberTargeted() {
+		return partyMemberTargeted;
+	}
+
+	public void setPartyMemberTargeted(boolean partyMemberTargeted) {
+		this.partyMemberTargeted = partyMemberTargeted;
+	}
+
+	public void setAffectedPartyMemberRandomly(ArrayList<PartyMember> partyMembers){
+		int ran1 = (int)(Math.random()*(partyMembers.size() + 1));
+		this.affectedPartyMember = partyMembers.get(ran1);
+	}
+	
+	public void setAffectedPartyMember(PartyMember partyMember){
+		this.affectedPartyMember = partyMember;
+	}
 	public void testMe(){
 		System.out.println(eventID + " works!");
 	}

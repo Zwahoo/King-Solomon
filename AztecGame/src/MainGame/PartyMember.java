@@ -62,6 +62,15 @@ public class PartyMember {
 		}
 		return stats.get(key);
 	}		
+	public void incStat(String key, int increase){
+		if(!stats.containsKey(key)) {
+			System.out.println("Trying to obtain unknown stat: " + key + " for party member: " + name);
+		}
+		else {
+			int currentValue = stats.get(key);
+			stats.put(key, currentValue + increase);
+		}
+	}
 	public String getName() {
 		return name;
 	}
