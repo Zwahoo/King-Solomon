@@ -270,7 +270,9 @@ public class MainGame {
 		  if (directoryListing != null) {
 		    for (File child : directoryListing) {
 		      Event newEvent = MapToEvent.createEvent(FileToMap.createMap(child.getPath()));
-		      newEvent.setAffectedPartyMemberRandomly(party);
+		      if (newEvent.isPartyMemberTargeted()){
+			      newEvent.setAffectedPartyMemberRandomly(party);
+		      }
 		      events.add(newEvent);
 		    }
 		  }
