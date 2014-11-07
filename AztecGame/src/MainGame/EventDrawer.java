@@ -262,7 +262,7 @@ public class EventDrawer {
 				if (currAdvice.charAt(0) == 'U') 
 					useful.add(presMembers.get(i).getName() + " says: \"" + currAdvice.substring(1) + "\"");
 				else
-					notUseful.add(currAdvice.substring(1));
+					notUseful.add(presMembers.get(i).getName() + " says: \"" + currAdvice.substring(1) + "\"");
 			}
 		}
 		
