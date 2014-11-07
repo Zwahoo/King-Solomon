@@ -256,26 +256,27 @@ public class EventDrawer {
 		ArrayList<String> notUseful = new ArrayList<String>();
 		String currAdvice = "";
 		
-		for (int i = 0; i < presMembers.size(); i++) {
-			if (advice.containsKey(presMembers.get(i).getName())) {
-				currAdvice = advice.get(presMembers.get(i).getName());
+		for(PartyMember member : presMembers) {
+			if (advice.containsKey(member.getName())) {
+				currAdvice = advice.get(member.getName());
 				if (currAdvice.charAt(0) == 'U') 
-					useful.add(presMembers.get(i).getName() + " says: \"" + currAdvice.substring(1) + "\"");
+					useful.add(member.getName() + " says: \"" + currAdvice.substring(1) + "\"");
 				else
-					notUseful.add(presMembers.get(i).getName() + " says: \"" + currAdvice.substring(1) + "\"");
+					notUseful.add(member.getName() + " says: \"" + currAdvice.substring(1) + "\"");
 			}
 		}
 		
 		Random r = new Random();
 		int selection;
-		if (useful.size() != 0) {
+		if (useful.size() > 0) {
 			selection = r.nextInt(useful.size());
 			return useful.get(selection);
 		}
-		else {
+		else if(useful.size() > 0){
 			selection = r.nextInt(notUseful.size());
 			return notUseful.get(selection);
 		}
+		return "No Advice Available";
 			
 			
 	}
