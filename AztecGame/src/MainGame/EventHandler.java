@@ -4,55 +4,57 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class EventHandler {
-	public static String checkResponse(ResponseOption r, HashMap<String, Integer> resources, ArrayList<Integer> partyStats){
-		ArrayList<Integer> currentResources = new ArrayList<Integer>();
-		ArrayList<Long> reqResources = new ArrayList<Long>();
-		reqResources.addAll(r.getCost());
+	public static int checkResponse(ResponseOption r, HashMap<String, Integer> resources, ArrayList<Integer> partyStats){
 		
-		currentResources.add(resources.get(MainGame.MORALE_KEY));
-		currentResources.add(resources.get(MainGame.STAMINA_KEY));
+		ArrayList<Integer> currentResources = new ArrayList<Integer>();
 		currentResources.add(resources.get(MainGame.FOOD_KEY));
 		currentResources.add(resources.get(MainGame.WATER_KEY));
+		currentResources.add(resources.get(MainGame.VALUABLES_KEY));
 		currentResources.add(resources.get(MainGame.AMMO_KEY));
 		currentResources.add(resources.get(MainGame.MEDICINE_KEY));
-		currentResources.add(resources.get(MainGame.VALUABLES_KEY));
+		currentResources.add(resources.get(MainGame.MORALE_KEY));
+		currentResources.add(resources.get(MainGame.STAMINA_KEY));
 		currentResources.add(resources.get(MainGame.PACK_ANIMALS_KEY));
+		
+		ArrayList<Long> resourceModifiers = new ArrayList<Long>();
+		resourceModifiers.addAll(r.getResourceModifiers());
+		
 		
 		ArrayList<Integer> currentPartyStats = new ArrayList<Integer>();
 		currentPartyStats.addAll(partyStats);
-		ArrayList<Long> reqPartyStats = new ArrayList<Long>();
-		reqPartyStats.addAll(r.getRequirements());
 		
-		ArrayList<Integer> resourceModifiers = new ArrayList<Integer>();
+		ArrayList<Long> partyStatModifiers = new ArrayList<Long>();
+		partyStatModifiers.addAll(r.getPartyStatModifiers());
+		
+		
+		int resourceModifier = 0;
 		for (int i = 0; i < currentResources.size(); i++){
 			int currentResource = currentResources.get(i);
-			int reqResource = reqResources.get(i).intValue();
-			resourceModifiers.add((int) (currentResource - reqResource));
+			int currentResourceModifier = resourceModifiers.get(i).intValue();
+			
+			resourceModifier += currentResource - currentResourceModifier;
 		}
 		
-		ArrayList<Integer> partyStatModifiers = new ArrayList<Integer>();
+		int partyStatModifier = 0;
 		for (int i = 0; i < currentPartyStats.size(); i++){
-			partyStatModifiers.add(reqPartyStats.get(i).intValue() - currentPartyStats.get(i));
+			int currentPartyStat = currentPartyStats.get(i);
+			int currentPartyStatModifier = partyStatModifiers.get(i).intValue();
+			
+			partyStatModifier += currentPartyStat - currentPartyStatModifier;
 		}
 		
-		int totalModifier = 0;
-		for (int e : resourceModifiers){
-			totalModifier += e/3;
-		}
-		for (int e : partyStatModifiers){
-			totalModifier += e;
-		}
+		int totalModifier = resourceModifier + partyStatModifier;
 		
 		double eventRoll = (Math.random() * 100) + totalModifier;
 		
-		String result = "";
+		int result = 0;
 		
 		if (eventRoll < 40){
-			result = "fail";
+			result = 0;
 		} else if (eventRoll >= 40 && eventRoll < 60){
-			result = "pass";
+			result = 1;
 		} else if (eventRoll >= 60){
-			result = "success";
+			result = 2;
 		}
 		
 		return result;

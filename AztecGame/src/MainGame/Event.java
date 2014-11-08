@@ -111,6 +111,9 @@ public class Event {
 	public void setAffectedPartyMember(PartyMember partyMember){
 		this.affectedPartyMember = partyMember;
 	}
+	public PartyMember getAffectedPartyMember(){
+		return affectedPartyMember;
+	}
 	public void testMe(){
 		System.out.println(eventID + " works!");
 	}
