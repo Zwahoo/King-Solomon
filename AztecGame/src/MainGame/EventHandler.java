@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class EventHandler {
+	
+	private static int invalidModifierNum = -1000;
+	
 	public static int checkResponse(ResponseOption r, HashMap<String, Integer> resources, ArrayList<Integer> partyStats){
 	
 		ArrayList<Integer> currentResources = new ArrayList<Integer>();
@@ -32,7 +35,9 @@ public class EventHandler {
 			int currentResource = currentResources.get(i);
 			int currentResourceModifier = resourceModifiers.get(i).intValue();
 			
-			resourceModifier += currentResource - currentResourceModifier;
+			if(currentResourceModifier != invalidModifierNum) {
+				resourceModifier += currentResource - currentResourceModifier;
+			}
 		}
 		
 		int partyStatModifier = 0;
@@ -40,7 +45,9 @@ public class EventHandler {
 			int currentPartyStat = currentPartyStats.get(i);
 			int currentPartyStatModifier = partyStatModifiers.get(i).intValue();
 			
-			partyStatModifier += currentPartyStat - currentPartyStatModifier;
+			if(currentPartyStatModifier != invalidModifierNum) {
+				partyStatModifier += currentPartyStat - currentPartyStatModifier;
+			}
 		}
 		
 		int totalModifier = resourceModifier + partyStatModifier;
