@@ -28,6 +28,7 @@ public class MapToResponseOption {
 		
 		//Pass Info
 		public static final String PASS_TEXT_KEY = "passText";
+		public static final String KILL_PERSON_PASS_KEY = "killPersonPass";
 		
 		//Victory Info
 		public static final String WIN_TEXT_KEY = "winText";
@@ -36,6 +37,8 @@ public class MapToResponseOption {
 		public static final String WIN_RESOURCE_CHANGE_KEY = "winResourceChange";
 		//ArrayList<Integer>
 		public static final String WIN_PARTY_STAT_CHANGE_KEY = "winPartyStatChange";
+		public static final String KILL_PERSON_WIN_KEY = "killPersonWin";
+		public static final String REWARD_DISPERSE_WIN_KEY = "rewardDisperseWin";
 
 		//Lose Info
 		public static final String LOSE_TEXT_KEY = "loseText";
@@ -44,6 +47,8 @@ public class MapToResponseOption {
 		public static final String LOSE_RESOURCE_CHANGE_KEY = "loseResourceChange";
 		//ArrayList<Integer>
 		public static final String LOSE_PARTY_STAT_CHANGE_KEY = "losePartyStatChange";
+		public static final String KILL_PERSON_LOSE_KEY = "killPersonLose";
+		public static final String REWARD_DISPERSE_LOSE_KEY = "rewardDisperseLose";
 		
 		/**
 		 * This method creates an ArrayList of response options using
@@ -69,13 +74,15 @@ public class MapToResponseOption {
 				ArrayList<Long> partyStatRequirement = new ArrayList<Long>();
 				partyStatRequirement.addAll((ArrayList<Long>)e.get(PARTY_STAT_REQUIREMENT_KEY));
 				
-				ArrayList<String> resourceModifiers = new ArrayList<String>();
-				resourceModifiers.addAll((ArrayList<String>)e.get(RESOURCE_MODIFIERS_KEY));
+				ArrayList<Long> resourceModifiers = new ArrayList<Long>();
+				resourceModifiers.addAll((ArrayList<Long>)e.get(RESOURCE_MODIFIERS_KEY));
 				
-				ArrayList<String> partyStatModifiers = new ArrayList<String>();
-				partyStatModifiers.addAll((ArrayList<String>)e.get(PARTY_STAT_MODIFIERS_KEY));
+				ArrayList<Long> partyStatModifiers = new ArrayList<Long>();
+				partyStatModifiers.addAll((ArrayList<Long>)e.get(PARTY_STAT_MODIFIERS_KEY));
 				
 				String passText = (String)e.get(PASS_TEXT_KEY);
+				
+				boolean killPersonPass = (boolean)e.get(KILL_PERSON_PASS_KEY);
 				
 				String winText = (String)e.get(WIN_TEXT_KEY);
 				
@@ -87,6 +94,11 @@ public class MapToResponseOption {
 				ArrayList<Long> winPartyStatChange = new ArrayList<Long>();
 				winPartyStatChange.addAll((ArrayList<Long>)e.get(WIN_PARTY_STAT_CHANGE_KEY));
 				
+				boolean killPersonWin = (boolean)e.get(KILL_PERSON_WIN_KEY);
+				
+				Long rewardDisperseWinLong = (Long)e.get(REWARD_DISPERSE_WIN_KEY);
+				int rewardDisperseWin = rewardDisperseWinLong.intValue();
+				
 				String loseText = (String)e.get(LOSE_TEXT_KEY);
 				
 				String loseFollowUp = (String)e.get(LOSE_FOLLOW_UP_KEY);
@@ -97,9 +109,15 @@ public class MapToResponseOption {
 				ArrayList<Long> losePartyStatChange = new ArrayList<Long>();
 				losePartyStatChange.addAll((ArrayList<Long>)e.get(LOSE_PARTY_STAT_CHANGE_KEY));
 				
+				boolean killPersonLose = (boolean)e.get(KILL_PERSON_LOSE_KEY);
+				
+				Long rewardDisperseLoseLong = (Long)e.get(REWARD_DISPERSE_LOSE_KEY);
+				int rewardDisperseLose = rewardDisperseLoseLong.intValue();
+				
 				ResponseOption newResponseOption = new ResponseOption(text, resourceStatCost, partyStatRequirement,
-						resourceModifiers, partyStatModifiers, passText, winText, winFollowUp, winResourceChange, 
-						winPartyStatChange, loseText, loseFollowUp, loseResourceChange, losePartyStatChange);
+						resourceModifiers, partyStatModifiers, passText, killPersonPass, winText, winFollowUp, winResourceChange, 
+						winPartyStatChange, killPersonWin, rewardDisperseWin, 
+						loseText, loseFollowUp, loseResourceChange, losePartyStatChange, killPersonLose, rewardDisperseLose);
 				
 				responseOptions.add(newResponseOption);
 			}
