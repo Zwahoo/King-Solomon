@@ -53,6 +53,13 @@ public class Textbox {
 		checkNeedScroll();
 	}
 	
+	public void setText(String newText) {
+		textOrig = newText;
+		lines = fitStr(newText);
+		calculateFullHeight();
+		checkNeedScroll();
+	}
+	
 	//Sets the size of the draw rectangle from the given values.
 	//Then calculates the size of the text rectangle.
 	private void sizeRectangles(int drawX, int drawY, int drawWidth, int drawHeight) {

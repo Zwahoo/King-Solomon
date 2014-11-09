@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class EventHandler {
-	public static String checkResponse(ResponseOption r, HashMap<String, Integer> resources, ArrayList<Integer> partyStats){
+	public static int checkResponse(ResponseOption r, HashMap<String, Integer> resources, ArrayList<Integer> partyStats){
 		ArrayList<Integer> currentResources = new ArrayList<Integer>();
 		ArrayList<Long> reqResources = new ArrayList<Long>();
 		reqResources.addAll(r.getCost());
@@ -45,14 +45,14 @@ public class EventHandler {
 		
 		double eventRoll = (Math.random() * 100) + totalModifier;
 		
-		String result = "";
+		int result = 0;
 		
 		if (eventRoll < 40){
-			result = "fail";
+			result = 0;
 		} else if (eventRoll >= 40 && eventRoll < 60){
-			result = "pass";
+			result = 1;
 		} else if (eventRoll >= 60){
-			result = "success";
+			result = 2;
 		}
 		
 		return result;

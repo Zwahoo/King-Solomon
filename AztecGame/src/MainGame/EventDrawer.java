@@ -46,10 +46,12 @@ public class EventDrawer {
 	
 	//other 3 parts
 	Textbox info;
-	Textbox partyMembers;
+	Textbox partyMembersTextbox;
 	Textbox adviceBox;
+	Textbox result;
 	ArrayList<Button> buttons = new ArrayList<Button>();
 	Button advice;
+	Button exit;
 	
 	/*
 	 * fractions that represent how much of the window's height and width each 
@@ -65,6 +67,10 @@ public class EventDrawer {
 	double buttonWMult = .53;
 	double adviceButtonWMult = .21;
 	double adviceButtonHMult = .05;
+	double resultTextboxWMult = 0.8;
+	double resultTextboxHMult = .49;
+	double exitButtonWMult = .21;
+	double exitButtonHMult = .05;
 	double spacer = .02;				//standard spacing between most parts of event menu
 	double sideSpacer = .1;				//vertical spacing between edge of window and event menu (left and right side)
 	
@@ -82,6 +88,10 @@ public class EventDrawer {
 	int upperButtonY;
 	int adviceButtonX;
 	int adviceButtonY;
+	int resultTextboxX;
+	int resultTextboxY;
+	int exitButtonX;
+	int exitButtonY;
 	
 	/*
 	 * @param	toLaunch: event being created
@@ -102,15 +112,16 @@ public class EventDrawer {
 		}
 		setLocations();
 		launchEvent(toLaunch, presMembers);
-
 	}
 	
 	//initializes all parts of the event menu
 	public void launchEvent(Event toLaunch, ArrayList<PartyMember> presMembers) {
 		info = new Textbox(toLaunch.getIntroText(), infoTextboxX, infoTextboxY, (int)(gameframe.windowWidth*infoTextboxWMult), (int)(gameframe.windowHeight*infoTextboxHMult), MainGame.input);
-		partyMembers  = new Textbox(getPresentPartyMembers(presMembers), partyMembersX, partyMembersY, (int)(gameframe.windowWidth*partyMembersWMult), (int)(gameframe.windowHeight*partyMembersHMult), MainGame.input);
+		partyMembersTextbox  = new Textbox(getPresentPartyMembers(presMembers), partyMembersX, partyMembersY, (int)(gameframe.windowWidth*partyMembersWMult), (int)(gameframe.windowHeight*partyMembersHMult), MainGame.input);
 		adviceBox = new Textbox(parseAdvice(toLaunch.getAdvice(), presMembers), partyMembersX, partyMembersY, (int)(gameframe.windowWidth*partyMembersWMult), (int)(gameframe.windowHeight*partyMembersHMult), MainGame.input);
-		info.setVisibility(true); partyMembers.setVisibility(true);
+		result = new Textbox("", resultTextboxX, resultTextboxY, (int) (gameframe.windowWidth*resultTextboxWMult), 
+				(int)(gameframe.windowHeight*resultTextboxHMult), MainGame.input);
+		info.setVisibility(true); partyMembersTextbox.setVisibility(true);
 		int totalY = upperButtonY;	//variably keeps track of where the button should be drawn based on #buttons already drawn
 		//create a button for each response option for this specific event (max is 5)
 		for (final ResponseOption ro : toLaunch.getResponseOptions()) {
@@ -129,7 +140,7 @@ public class EventDrawer {
 				handleAdviceResponseSelect();
 			}
 		};
-		buttons.add(advice);
+		buttons.add(advice);	
 	}
 	
 	//currently closes program, but will eventually check which button was pressed then execute the proper result based on 
@@ -154,19 +165,23 @@ public class EventDrawer {
 			totalPartyStats.add(stat);
 		}
 		
-		//String result = EventHandler.checkResponse(r, MainGame.getStats(), totalPartyStats);
-		MainGame.closeEvent();
+		int resultNumber = EventHandler.checkResponse(r, MainGame.getStats(), totalPartyStats);
+		adviceBox.setVisibility(false); partyMembersTextbox.setVisibility(false); info.setVisibility(false);
+		setResultText(r, resultNumber);
+		result.setVisibility(true);
+		
+		//MainGame.closeEvent();
 	}
 	
 	//toggles between party members screen and advice screen
 	public void handleAdviceResponseSelect() {
-		if (partyMembers.getVisibility()) {
-			partyMembers.setVisibility(false);
+		if (partyMembersTextbox.getVisibility()) {
+			partyMembersTextbox.setVisibility(false);
 			adviceBox.setVisibility(true);
 			advice.setText("Return");
 		}
 		else {
-			partyMembers.setVisibility(true);
+			partyMembersTextbox.setVisibility(true);
 			adviceBox.setVisibility(false);
 			advice.setText("Advice");
 		}
@@ -176,10 +191,12 @@ public class EventDrawer {
 	public void draw(Graphics g) {
 		drawImage(g);
 		info.draw(g);
-		if (partyMembers.getVisibility())
-			partyMembers.draw(g);
+		if (partyMembersTextbox.getVisibility())
+			partyMembersTextbox.draw(g);
 		if (adviceBox.getVisibility())
 			adviceBox.draw(g);
+		if (result.getVisibility())
+			result.draw(g);
 		for (Button b : buttons)
 			b.draw(g);
 	}
@@ -199,7 +216,7 @@ public class EventDrawer {
 	
 	public void update() {
 		info.update();
-		partyMembers.update();
+		partyMembersTextbox.update();
 		adviceBox.update();
 		for (Button b : buttons)
 			b.update();
@@ -220,6 +237,9 @@ public class EventDrawer {
 		
 		infoTextboxX = imageX;
 		infoTextboxY = totalHeight;
+		
+		resultTextboxX = imageX;
+		resultTextboxY = totalHeight;
 		totalHeight += gameframe.windowHeight * (infoTextboxHMult + spacer);
 		
 		partyMembersX = imageX;
@@ -232,6 +252,10 @@ public class EventDrawer {
 		adviceButtonX = (int) (partyMembersX + gameframe.windowWidth * spacer);
 		adviceButtonY = (int) ((partyMembersY + ((gameframe.windowHeight * partyMembersHMult) - (gameframe.windowHeight * adviceButtonHMult))) - 
 				(gameframe.windowHeight * spacer));
+		
+		exitButtonX = (int) (resultTextboxX + gameframe.windowWidth*spacer);
+		exitButtonY = (int) ((resultTextboxY + ((gameframe.windowHeight*resultTextboxHMult) - (gameframe.windowHeight*exitButtonHMult))) - 
+				(gameframe.windowHeight*spacer));
 	}
 	
 	//prints all present party members to party members section
@@ -280,11 +304,36 @@ public class EventDrawer {
 			
 			
 	}
-	public void destroyer() {
+	
+	public void setResultText(final ResponseOption ro, int resultNumber) {
+		if (resultNumber == 0) {
+			result.setText(ro.getLoseText());
+		} else if (resultNumber == 1) {
+			result.setText(ro.getPassText());
+		} else {
+			result.setText(ro.getWinText());
+		}
+		clearButtons();
+		buttons.clear();
+		exit = new Button(exitButtonX, exitButtonY, (int)(gameframe.windowWidth*exitButtonWMult), (int)(gameframe.windowHeight*exitButtonHMult), "Exit", MainGame.input) {
+			@Override
+			public void onClick() {
+				MainGame.closeEvent();
+			}
+		};
+		buttons.add(exit);
+	}
+	
+	public void clearButtons() {
 		ArrayList<Integer> temp = new ArrayList<Integer>();
 		temp.add(MainGame.START_DAY_MODE); temp.add(MainGame.MOVEMENT_MODE); temp.add(MainGame.EVENT_MODE);
 		for(Button button : buttons) {
 			button.removeInputManager(MainGame.input, temp);
 		}
+		
+	}
+	
+	public void destroyer() {
+		clearButtons();
 	}
 }
