@@ -25,6 +25,7 @@ public class MapToEvent {
 	public static final String FLEE_FAIL_TEXT_KEY = "fleeFailText";
 	
 	public static final String PARTY_MEMBER_TARGETED_KEY = "partyMemberTargeted";
+	public static final String EVENT_FREQUENCY_KEY = "frequency";
 	
 	
 	/**
@@ -63,7 +64,9 @@ public class MapToEvent {
 		
 		boolean partyMemberTargeted = (boolean)importedMap.get(PARTY_MEMBER_TARGETED_KEY);
 		
-		Event newEvent = new Event(eventID, eventType, possibleLocations, reqParty, introText, responseOptions, advice, fleePassText, fleeFailText, partyMemberTargeted);
+		String frequency = (String)importedMap.get(EVENT_FREQUENCY_KEY);
+		
+		Event newEvent = new Event(eventID, eventType, possibleLocations, reqParty, introText, responseOptions, advice, fleePassText, fleeFailText, partyMemberTargeted, frequency);
 		return newEvent;
 	}
 }

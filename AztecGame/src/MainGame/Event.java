@@ -20,13 +20,15 @@ public class Event {
 	
 	private boolean partyMemberTargeted;
 	private PartyMember affectedPartyMember;
+
+	private String frequency;
 	
 	
 	public Event(String eventID, String eventType, 
 			ArrayList<String> possibleLocations, ArrayList<String> reqParty, 
 			String introText, ArrayList<ResponseOption> responseOptions, 
 			HashMap<String, String> advice, String fleePassText, 
-			String fleeFailText, boolean partyMemberTargeted){
+			String fleeFailText, boolean partyMemberTargeted, String frequency){
 		this.eventID = eventID;
 		this.eventType = eventType;
 		this.possibleLocations.addAll(possibleLocations);
@@ -37,6 +39,7 @@ public class Event {
 		this.fleePassText = fleePassText;
 		this.fleeFailText = fleeFailText;
 		this.setPartyMemberTargeted(partyMemberTargeted);
+		this.frequency = frequency;
 	}
 
 	//ALL the getters and setters!

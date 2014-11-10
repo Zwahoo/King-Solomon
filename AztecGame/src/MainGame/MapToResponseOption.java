@@ -29,6 +29,7 @@ public class MapToResponseOption {
 		//Pass Info
 		public static final String PASS_TEXT_KEY = "passText";
 		public static final String KILL_PERSON_PASS_KEY = "killPersonPass";
+		public static final String PASS_FOLLOW_UP_KEY = "passFollowUp";
 		
 		//Victory Info
 		public static final String WIN_TEXT_KEY = "winText";
@@ -84,6 +85,8 @@ public class MapToResponseOption {
 				
 				boolean killPersonPass = (boolean)e.get(KILL_PERSON_PASS_KEY);
 				
+				String passFollowUp = (String)e.get(PASS_FOLLOW_UP_KEY);
+				
 				String winText = (String)e.get(WIN_TEXT_KEY);
 				
 				String winFollowUp = (String)e.get(WIN_FOLLOW_UP_KEY);
@@ -115,7 +118,7 @@ public class MapToResponseOption {
 				int rewardDisperseLose = rewardDisperseLoseLong.intValue();
 				
 				ResponseOption newResponseOption = new ResponseOption(text, resourceStatCost, partyStatRequirement,
-						resourceModifiers, partyStatModifiers, passText, killPersonPass, winText, winFollowUp, winResourceChange, 
+						resourceModifiers, partyStatModifiers, passText, killPersonPass, passFollowUp, winText, winFollowUp, winResourceChange, 
 						winPartyStatChange, killPersonWin, rewardDisperseWin, 
 						loseText, loseFollowUp, loseResourceChange, losePartyStatChange, killPersonLose, rewardDisperseLose);
 				

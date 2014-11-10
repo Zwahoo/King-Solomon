@@ -16,6 +16,7 @@ public class ResponseOption {
 	//Pass Info
 	private String passText;
 	private boolean killPersonPass;
+	private String passFollowUp;
 	
 	//Victory Info
 	private String winText;
@@ -36,7 +37,7 @@ public class ResponseOption {
 	public ResponseOption(String text, ArrayList<Long> resourceStatCost, 
 			ArrayList<Long> partyStatRequirement, 
 			ArrayList<Long> resourceModifiers, ArrayList<Long> partyStatModifiers,
-			String passText, boolean killPersonPass,
+			String passText, boolean killPersonPass, String passFollowUp,
 			String winText, String winFollowUp, ArrayList<Long> winResourceChange,
 			ArrayList<Long> winPartyStatChange, boolean killPersonWin, int rewardDisperseWin,
 			String loseText, String loseFollowUp, ArrayList<Long> loseResourceChange, 
@@ -49,6 +50,7 @@ public class ResponseOption {
 		
 		this.passText = passText;
 		this.killPersonPass = killPersonPass;
+		this.passFollowUp = passFollowUp;
 		
 		this.winText = winText;
 		this.winFollowUp = winFollowUp;

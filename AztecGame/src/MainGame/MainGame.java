@@ -51,6 +51,7 @@ public class MainGame {
 	//Party
 	public static ArrayList<PartyMember> party;
 	
+	
 	//Death Row (To Be Deleted)
 	private BufferedImage loadedimage;
 	private BufferedImage[] images = new BufferedImage[10];
@@ -61,7 +62,7 @@ public class MainGame {
 	//Starts the game, takes in the window frame, width, and height.
 	public MainGame(gameframe frame, int width, int height) throws IOException {
 		
-		party = new ArrayList<PartyMember>();
+	    party = new ArrayList<PartyMember>();
 		party.add(new PartyMember("The Gentleman", "Gentleman", 0,
 				"Quite.", PartyMemberStats.AVERAGE_ABE_STATS));
 		party.add(new PartyMember("Happy Hunter", "Hunter", 100,
@@ -83,7 +84,7 @@ public class MainGame {
 		
 		//Create map
 		map = new Map("assets/testMap.png", this);
-//		map = new Map(10, 10, this);
+		//map = new Map(10, 10, this);
 		// Creates the player
 		player1 = new Player(map);
 		player1.getCurrentTile().reveal();
