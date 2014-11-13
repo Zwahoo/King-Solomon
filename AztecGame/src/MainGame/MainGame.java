@@ -54,7 +54,7 @@ public class MainGame {
 	
 	//Death Row (To Be Deleted)
 	private BufferedImage loadedimage;
-	private BufferedImage[] images = new BufferedImage[10];
+	public static BufferedImage[] images = new BufferedImage[10];
 	
 	public static EventDrawer eventDrawer = null;
 	public static StartDayDrawer startDayDrawer = null;
@@ -172,35 +172,9 @@ public class MainGame {
 	
 	//Draw any drawable objects in the game world.
 	public void draw(Graphics g) {
-		int newx;
-		int newy;
-		// loop for drawing each tile
-		for (int i = 0; i < map.width; i++) {
-			newx = view.getLocation().x + (i * 64);
-			newy = view.getLocation().y + (i * 32);
-			for (int b = map.height-1; b >=0; b--) {
-				int curTileX = i;
-				int curTileY = map.height - b - 1;
-				Tile tile = map.getTile(curTileX, curTileY);
-
-				// if(!view.polygonIsInView(tile.selectangle)) continue; //Skip
-				// if it isn't in view
-
-				// draws the tile
-				g.drawImage(images[tile.getImageIndex()], newx, newy, null);
-
-				// draws player marker
-				if (curTileX == player1.getX() && curTileY == player1.getY()) {
-					loadedimage = images[3];
-					g.drawImage(loadedimage, newx + 43, newy + 12, null);
-				}
-
-				newx += 64;
-				newy -= 32;
-
-			}
-
-		}
+		// Draw map
+		map.draw(g, view, player1);
+		
 		//statsBar.setText(getStatString());
 		if (eventDrawer!=null)
 			eventDrawer.draw(g);
@@ -279,7 +253,7 @@ public class MainGame {
 		  }
 	}
 
-	public Event getRandomEvent(String loc) {
+	public Event getRandomMoveToEvent(String loc) {
 		int rand = (int)Math.floor(Math.random() * events.size());
 		if(rand == events.size()) rand--;
 		return events.get(rand);

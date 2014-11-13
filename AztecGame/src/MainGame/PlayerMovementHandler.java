@@ -11,7 +11,7 @@ public class PlayerMovementHandler extends InputListener {
 	Map map;
 	Player player;
 	
-	static final int NUM_TILES = 8;
+	static final int NUM_TILES = 12;
 	static final int N_TILE = 0;
 	static final int NE_TILE = 1;
 	static final int E_TILE = 2;
@@ -20,6 +20,11 @@ public class PlayerMovementHandler extends InputListener {
 	static final int SW_TILE = 5;
 	static final int W_TILE = 6;
 	static final int NW_TILE = 7;
+	static final int NE2_TILE = 8;
+	static final int NW2_TILE = 9;
+	static final int SE2_TILE = 10;
+	static final int SW2_TILE = 11;
+	
 	
 	private ArrayList<Integer> validMoveTiles;
 	private ArrayList<Integer> toRevealTiles;
@@ -54,6 +59,10 @@ public class PlayerMovementHandler extends InputListener {
 		toRevealTiles.add(NE_TILE);
 		toRevealTiles.add(SW_TILE);
 		toRevealTiles.add(SE_TILE);
+		toRevealTiles.add(NW2_TILE);
+		toRevealTiles.add(NE2_TILE);
+		toRevealTiles.add(SW2_TILE);
+		toRevealTiles.add(SE2_TILE);
 		
 		checkSight();
 	}
@@ -104,6 +113,7 @@ public class PlayerMovementHandler extends InputListener {
 		if(!isValidTile(t)) return;
 		player.setLoc(t.getX(), t.getY());
 		player.setCurrentTile(t);
+		System.out.println(t);
 		t.runEvent(mainGame.party);
 		mainGame.handleMoveStatChanges();
 	}
@@ -152,6 +162,18 @@ public class PlayerMovementHandler extends InputListener {
 		case(NW_TILE):
 			if(!pointIsInMap(x - 1, y)) return null;
 			return map.getTile(x-1, y);
+		case(NE2_TILE):
+			if(!pointIsInMap(x, y + 2)) return null;
+			return map.getTile(x, y + 2);
+		case(NW2_TILE):
+			if(!pointIsInMap(x - 2, y)) return null;
+			return map.getTile(x - 2, y);
+		case(SE2_TILE):
+			if(!pointIsInMap(x + 2, y)) return null;
+			return map.getTile(x + 2, y);
+		case(SW2_TILE):
+			if(!pointIsInMap(x, y-2)) return null;
+			return map.getTile(x, y-2);
 		default:
 			System.out.println("Unrecognized tile move request: " + tile);
 			return null;

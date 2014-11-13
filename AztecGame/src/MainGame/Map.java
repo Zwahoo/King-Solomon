@@ -1,5 +1,6 @@
 package MainGame;
 
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 //Zane Laughlin- map class- holds bunch of tiles
@@ -35,7 +36,7 @@ public class Map {
 				else if (i == 2){
 					a = "mountain";
 				}
-				t = new Tile(a, x, y, mainGame.getRandomEvent(a));
+				t = new Tile(a, x, y, mainGame.getRandomMoveToEvent(a));
 				tiles[x][y] = t;
 				//System.out.println(x + ", " + y);
 			}
@@ -85,16 +86,42 @@ public class Map {
                 	a = "jungle";
                 }
             	//System.out.println(a + " " + x + " " + y);
-                t = new Tile(a, x, y, mainGame.getRandomEvent(a));
+                t = new Tile(a, x, y, mainGame.getRandomMoveToEvent(a));
                 tiles[x][y] = t;
             }
         }
 	}
 	
-	//map which is generated from file data?
-	//public map(file f){
-	//	
-	//}
+	public void draw(Graphics g, View view, Player player1) {
+		int newx;
+		int newy;
+		for (int i = 0; i < width; i++) {
+			newx = view.getLocation().x + (i * 64);
+			newy = view.getLocation().y + (i * 32);
+			for (int b = height-1; b >=0; b--) {
+				int curTileX = i;
+				int curTileY = height - b - 1;
+				Tile tile = getTile(curTileX, curTileY);
+
+				// if(!view.polygonIsInView(tile.selectangle)) continue; //Skip
+				// if it isn't in view
+
+				// draws the tile
+				g.drawImage(MainGame.images[tile.getImageIndex()], newx, newy, null);
+
+				// draws player marker
+				if (curTileX == player1.getX() && curTileY == player1.getY()) {
+					BufferedImage loadedimage = MainGame.images[3];
+					g.drawImage(loadedimage, newx + 43, newy + 12, null);
+				}
+
+				
+				newx += 64;
+				newy -= 32;
+			}
+		}
+		
+	}
 	
 	public Tile getTile(int x, int y){
 		return tiles[x][y];

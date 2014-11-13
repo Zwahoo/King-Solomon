@@ -30,7 +30,7 @@ public class Tile {
 		xp = x;
 		yp = y;
 		revealed = false;
-		this.e = e;
+		//this.e = e;
 		
 	}
 	
@@ -109,6 +109,10 @@ public class Tile {
 		if(e == null) return;
 		MainGame.launchEvent(e, presMembers);
 	
+	}
+	
+	public String toString() {
+		return "Tile: (" + xp + ", " + yp + ") : " + getType();
 	}
 	
 }
