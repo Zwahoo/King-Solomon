@@ -30,7 +30,7 @@ public class Tile {
 		xp = x;
 		yp = y;
 		revealed = false;
-		//this.e = e;
+		this.e = e;
 		
 	}
 	
