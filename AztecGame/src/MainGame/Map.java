@@ -98,17 +98,17 @@ public class Map {
 	public void draw(Graphics g, View view, Player player1) {
 		int newx;
 		int newy;
-		for (int i = 0; i < width; i++) {
-			newx = view.getLocation().x + (i * 64);
-			newy = view.getLocation().y + (i * 32);
-			for (int b = 0; b < height; b++) {
+		for (int i = width-1; i >= 0; i--) {
+			newx = view.getLocation().x + (i * 64 + (height-1) * 64);
+			newy = view.getLocation().y + (i * 32 - (height-1) * 32);
+			for (int b = height-1; b >= 0; b--) {
 				int curTileX = i;
 				int curTileY = b;
 				Tile tile = getTile(curTileX, curTileY);
 
 				// draws the tile
 				g.drawImage(MainGame.images[tile.getImageIndex()], newx, newy, null);
-
+				
 				// draws player marker
 				if (curTileX == player1.getX() && curTileY == player1.getY()) {
 					BufferedImage loadedimage = MainGame.images[3];
@@ -116,8 +116,8 @@ public class Map {
 				}
 
 				
-				newx += 64;
-				newy -= 32;
+				newx -= 64;
+				newy += 32;
 			}
 		}
 		

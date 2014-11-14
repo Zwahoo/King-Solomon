@@ -202,8 +202,10 @@ public class EventDrawer {
 			adviceBox.draw(g);
 		if (result.getVisibility())
 			result.draw(g);
-		for (Button b : buttons)
+		for (int i=0; i<buttons.size(); i++) {
+			Button b = buttons.get(i);
 			b.draw(g);
+		}
 	}
 	
 	//draws image with rectangular background like everything else is drawn

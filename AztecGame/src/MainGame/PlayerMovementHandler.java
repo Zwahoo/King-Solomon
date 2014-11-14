@@ -27,7 +27,6 @@ public class PlayerMovementHandler extends InputListener {
 	
 	
 	private ArrayList<Integer> validMoveTiles;
-	private ArrayList<Integer> toRevealTiles;
 	
 	public boolean playerKeyMovement = false;
 	public boolean playerMouseMovement = true;
@@ -97,7 +96,6 @@ public class PlayerMovementHandler extends InputListener {
 		if(!t.getType().canBeOccupied) return;
 		player.setLoc(t.getX(), t.getY());
 		player.setCurrentTile(t);
-		System.out.println(t);
 		t.runEvent(mainGame.party);
 		mainGame.handleMoveStatChanges();
 		checkSight();
