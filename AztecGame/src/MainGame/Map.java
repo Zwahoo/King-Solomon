@@ -36,7 +36,7 @@ public class Map {
 				else if (i == 2){
 					a = "mountain";
 				}
-				t = new Tile(a, x, y, mainGame.getRandomMoveToEvent(a));
+				t = new Tile(a, x, y, mainGame.getRandomMoveToEvent(a), mainGame.getRandomInvestigateEvent(a), mainGame.getRandomRestEvent(a));
 				tiles[x][y] = t;
 				//System.out.println(x + ", " + y);
 			}
@@ -86,7 +86,7 @@ public class Map {
                 	a = "jungle";
                 }
             	//System.out.println(a + " " + x + " " + y);
-                t = new Tile(a, x, y, mainGame.getRandomMoveToEvent(a));
+                t = new Tile(a, x, y, mainGame.getRandomMoveToEvent(a), mainGame.getRandomInvestigateEvent(a), mainGame.getRandomRestEvent(a));
                 tiles[x][y] = t;
             }
         }

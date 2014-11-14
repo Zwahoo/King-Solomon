@@ -20,17 +20,20 @@ public class Tile {
 	private int xp;
 	private int yp;
 	private int imageIndex = 5;
-	private Event e;
+	private Event moveToEvent;
+	private Event investigateEvent;
+	private Event restEvent;
 	
 	//constructor
-	public Tile(String t, int  x, int y, Event e){
+	public Tile(String t, int  x, int y, Event moveTo, Event investigate, Event rest){
 		
 		this.type = t;
 		xp = x;
 		yp = y;
 		revealed = false;
-		this.e = e;
-		
+		this.moveToEvent = moveTo;
+		this.investigateEvent = investigate;
+		this.restEvent = rest;
 	}
 	
 	
@@ -105,8 +108,8 @@ public class Tile {
 	}
 	
 	public void runEvent(ArrayList<PartyMember> presMembers){
-		if(e == null) return;
-		MainGame.launchEvent(e, presMembers);
+		if(moveToEvent == null) return;
+		MainGame.launchEvent(moveToEvent, presMembers);
 	
 	}
 	

@@ -258,6 +258,14 @@ public class MainGame {
 		if(rand == events.size()) rand--;
 		return events.get(rand);
 	}
+	
+	public Event getRandomInvestigateEvent(String loc) {
+		return null;
+	}
+	
+	public Event getRandomRestEvent(String loc) {
+		return null;
+	}
 
 	public static void launchEvent(Event e, ArrayList<PartyMember> presMembers) {
 		currentMode = EVENT_MODE;
