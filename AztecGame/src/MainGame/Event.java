@@ -24,10 +24,10 @@ public class Event {
 	private String frequency;
 	
 	//Frequency Keys
-	public double LIKELY_FREQ_KEY = .75; //Percent chance of occurring
-	public double COMMON_FREQ_KEY = .60;
-	public double UNCOMMON_FREQ_KEY = .40;
-	public double RARE_FREQ_KEY = .25;
+	public final double LIKELY_FREQUENCY = .75; //Percent chance of occurring
+	public final double COMMON_FREQUENCY = .60;
+	public final double UNCOMMON_FREQUENCY = .40;
+	public final double RARE_FREQUENCY = .25;
 	
 	public Event(String eventID, String eventType, 
 			ArrayList<String> possibleLocations, ArrayList<String> reqParty, 

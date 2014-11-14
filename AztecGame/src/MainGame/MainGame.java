@@ -53,6 +53,11 @@ public class MainGame {
 	public static final String STAMINA_KEY = "Stamina";
 	public static final String PACK_ANIMALS_KEY = "Pack Animals";
 	
+	//Event Frequencies
+	public static final double MOVE_TO_FREQUENCY = .5;
+	public static final double INVESTIGATE_FREQUENCY = .25;
+	public static final double REST_FREQUENCY = .25;
+	
 	//Party
 	public static ArrayList<PartyMember> party;
 	
@@ -291,57 +296,132 @@ public class MainGame {
 	}
 
 	public Event getRandomMoveToEvent(String loc) {
-		ArrayList<Event> eventList = new ArrayList<Event>();
-		for (Event e : moveToEvents){
-			double randomNum = Math.random();
-			if (randomNum < e.LIKELY_FREQ_KEY && e.getFrequency().equalsIgnoreCase("likely")){
-				eventList.add(e);
-			} else if (randomNum < e.COMMON_FREQ_KEY && e.getFrequency().equalsIgnoreCase("common")) {
-				eventList.add(e);
-			} else if (randomNum < e.UNCOMMON_FREQ_KEY && e.getFrequency().equalsIgnoreCase("uncommon")) {
-				eventList.add(e);
-			} else if (randomNum < e.RARE_FREQ_KEY && e.getFrequency().equalsIgnoreCase("rare")){
-				eventList.add(e);
-			} else if (randomNum < e.RARE_FREQ_KEY && e.getFrequency().equalsIgnoreCase("once")){
-				eventList.add(e);
-			}
-		}
-		int randomNum2 = (int)Math.floor(Math.random() * eventList.size());
-//		if (randomNum2 == eventList.size()) randomNum2--;
-		if (eventList.size() > 0){
-			Event randomlyChosenEvent = eventList.get(randomNum2);
-			if (randomlyChosenEvent.getFrequency().equalsIgnoreCase("once")){
-				for (Event e : moveToEvents){
-					if (randomlyChosenEvent.getEventID().equalsIgnoreCase(e.getEventID())){
-						moveToEvents.remove(e);
-						break;
-					}
+		//This code takes into account frequency of event occurance.
+		double origRandom = Math.random();
+		
+		if (origRandom < MOVE_TO_FREQUENCY){
+			ArrayList<Event> eventList = new ArrayList<Event>();
+			for (Event e : moveToEvents){
+				double randomNum = Math.random();
+				if (randomNum < e.LIKELY_FREQUENCY && e.getFrequency().equalsIgnoreCase("likely")){
+					eventList.add(e);
+				} else if (randomNum < e.COMMON_FREQUENCY && e.getFrequency().equalsIgnoreCase("common")) {
+					eventList.add(e);
+				} else if (randomNum < e.UNCOMMON_FREQUENCY && e.getFrequency().equalsIgnoreCase("uncommon")) {
+					eventList.add(e);
+				} else if (randomNum < e.RARE_FREQUENCY && e.getFrequency().equalsIgnoreCase("rare")){
+					eventList.add(e);
+				} else if (randomNum < e.RARE_FREQUENCY && e.getFrequency().equalsIgnoreCase("once")){
+					eventList.add(e);
 				}
 			}
-			return randomlyChosenEvent;
+			int randomNum2 = (int)Math.floor(Math.random() * eventList.size());
+			if (eventList.size() > 0){
+				Event randomlyChosenEvent = eventList.get(randomNum2);
+				if (randomlyChosenEvent.getFrequency().equalsIgnoreCase("once")){
+					for (Event e : moveToEvents){
+						if (randomlyChosenEvent.getEventID().equalsIgnoreCase(e.getEventID())){
+							moveToEvents.remove(e);
+							break;
+						}
+					}
+				}
+				return randomlyChosenEvent;
+			}
+			else {
+				return getRandomMoveToEvent(loc);
+			}
 		}
 		else {
-			return getRandomMoveToEvent(loc);
+			return null;
 		}
 		
-		
+		//This commented block uses pure randomization.
 //		int rand = (int)Math.floor(Math.random() * moveToEvents.size());
 //		if(rand == moveToEvents.size()) rand--;
 //		return moveToEvents.get(rand);
 	}
 	
 	public Event getRandomInvestigateEvent(String loc) {
-//		int rand = (int)Math.floor(Math.random() * investigateEvents.size());
-//		if(rand == investigateEvents.size()) rand--;
-//		return investigateEvents.get(rand);
-		return null;
+		double origRandom = Math.random();
+		
+		if (origRandom < INVESTIGATE_FREQUENCY){
+			ArrayList<Event> eventList = new ArrayList<Event>();
+			for (Event e : investigateEvents){
+				double randomNum = Math.random();
+				if (randomNum < e.LIKELY_FREQUENCY && e.getFrequency().equalsIgnoreCase("likely")){
+					eventList.add(e);
+				} else if (randomNum < e.COMMON_FREQUENCY && e.getFrequency().equalsIgnoreCase("common")) {
+					eventList.add(e);
+				} else if (randomNum < e.UNCOMMON_FREQUENCY && e.getFrequency().equalsIgnoreCase("uncommon")) {
+					eventList.add(e);
+				} else if (randomNum < e.RARE_FREQUENCY && e.getFrequency().equalsIgnoreCase("rare")){
+					eventList.add(e);
+				} else if (randomNum < e.RARE_FREQUENCY && e.getFrequency().equalsIgnoreCase("once")){
+					eventList.add(e);
+				}
+			}
+			int randomNum2 = (int)Math.floor(Math.random() * eventList.size());
+			if (eventList.size() > 0){
+				Event randomlyChosenEvent = eventList.get(randomNum2);
+				if (randomlyChosenEvent.getFrequency().equalsIgnoreCase("once")){
+					for (Event e : investigateEvents){
+						if (randomlyChosenEvent.getEventID().equalsIgnoreCase(e.getEventID())){
+							investigateEvents.remove(e);
+							break;
+						}
+					}
+				}
+				return randomlyChosenEvent;
+			}
+			else {
+				return getRandomInvestigateEvent(loc);
+			}
+		}
+		else {
+			return null;
+		}
 	}
 	
 	public Event getRandomRestEvent(String loc) {
-//		int rand = (int)Math.floor(Math.random() * restEvents.size());
-//		if(rand == restEvents.size()) rand--;
-//		return restEvents.get(rand);
-		return null;
+		double origRandom = Math.random();
+		
+		if (origRandom < REST_FREQUENCY){
+			ArrayList<Event> eventList = new ArrayList<Event>();
+			for (Event e : restEvents){
+				double randomNum = Math.random();
+				if (randomNum < e.LIKELY_FREQUENCY && e.getFrequency().equalsIgnoreCase("likely")){
+					eventList.add(e);
+				} else if (randomNum < e.COMMON_FREQUENCY && e.getFrequency().equalsIgnoreCase("common")) {
+					eventList.add(e);
+				} else if (randomNum < e.UNCOMMON_FREQUENCY && e.getFrequency().equalsIgnoreCase("uncommon")) {
+					eventList.add(e);
+				} else if (randomNum < e.RARE_FREQUENCY && e.getFrequency().equalsIgnoreCase("rare")){
+					eventList.add(e);
+				} else if (randomNum < e.RARE_FREQUENCY && e.getFrequency().equalsIgnoreCase("once")){
+					eventList.add(e);
+				}
+			}
+			int randomNum2 = (int)Math.floor(Math.random() * eventList.size());
+			if (eventList.size() > 0){
+				Event randomlyChosenEvent = eventList.get(randomNum2);
+				if (randomlyChosenEvent.getFrequency().equalsIgnoreCase("once")){
+					for (Event e : restEvents){
+						if (randomlyChosenEvent.getEventID().equalsIgnoreCase(e.getEventID())){
+							restEvents.remove(e);
+							break;
+						}
+					}
+				}
+				return randomlyChosenEvent;
+			}
+			else {
+				return getRandomRestEvent(loc);
+			}
+		}
+		else {
+			return null;
+		}
 	}
 
 	public static void launchEvent(Event e, ArrayList<PartyMember> presMembers) {
