@@ -37,7 +37,9 @@ public class MainGame {
 	private static boolean statsChanged = false; // set this whenever the stats change
 	
 	//Event stuff
-	public ArrayList<Event> events;
+	public ArrayList<Event> moveToEvents = new ArrayList<Event>();
+	public ArrayList<Event> restEvents = new ArrayList<Event>();
+	public ArrayList<Event> investigateEvents = new ArrayList<Event>();
 	
 	public static final String FOOD_KEY = "Food";
 	public static final String WATER_KEY = "Water";
@@ -79,7 +81,6 @@ public class MainGame {
 				"He's Giddy!", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
 		
 		//Load in the events
-		events = new ArrayList<Event>();
 		loadEvents();
 		
 		//Create map
@@ -235,6 +236,7 @@ public class MainGame {
 	}
 	
 	public void loadEvents(){
+		ArrayList<Event> events = new ArrayList<Event>();
 		File dir = new File("assets/events/");
 		  ArrayList<File> directoryListing = new ArrayList<File>();
 		  for (File e : dir.listFiles()){
@@ -248,19 +250,76 @@ public class MainGame {
 		      events.add(newEvent);
 		    }
 		  }
+		  eventListCreator(events);
+	}
+	
+	public ArrayList<Event> eventListCreator(ArrayList<Event> events){
+		ArrayList<Event> typeEventList = new ArrayList<Event>();
+		for (Event e : events){
+			if (e.getEventType().equalsIgnoreCase("move") || e.getEventType().equalsIgnoreCase("moveTo")){
+				moveToEvents.add(e);
+			} else if (e.getEventType().equalsIgnoreCase("rest")){
+				restEvents.add(e);
+			} else if (e.getEventType().equalsIgnoreCase("investigate")){
+				investigateEvents.add(e);
+			} else{
+				System.out.println("Event called " + e.getEventID() + " has an incorrect type.");
+			}
+		}
+		return typeEventList;
 	}
 
 	public Event getRandomMoveToEvent(String loc) {
-		int rand = (int)Math.floor(Math.random() * events.size());
-		if(rand == events.size()) rand--;
-		return events.get(rand);
+		ArrayList<Event> eventList = new ArrayList<Event>();
+		for (Event e : moveToEvents){
+			double randomNum = Math.random();
+			if (randomNum < e.LIKELY_FREQ_KEY && e.getFrequency().equalsIgnoreCase("likely")){
+				eventList.add(e);
+			} else if (randomNum < e.COMMON_FREQ_KEY && e.getFrequency().equalsIgnoreCase("common")) {
+				eventList.add(e);
+			} else if (randomNum < e.UNCOMMON_FREQ_KEY && e.getFrequency().equalsIgnoreCase("uncommon")) {
+				eventList.add(e);
+			} else if (randomNum < e.RARE_FREQ_KEY && e.getFrequency().equalsIgnoreCase("rare")){
+				eventList.add(e);
+			} else if (randomNum < e.RARE_FREQ_KEY && e.getFrequency().equalsIgnoreCase("once")){
+				eventList.add(e);
+			}
+		}
+		int randomNum2 = (int)Math.floor(Math.random() * eventList.size());
+//		if (randomNum2 == eventList.size()) randomNum2--;
+		if (eventList.size() > 0){
+			Event randomlyChosenEvent = eventList.get(randomNum2);
+			if (randomlyChosenEvent.getFrequency().equalsIgnoreCase("once")){
+				for (Event e : moveToEvents){
+					if (randomlyChosenEvent.getEventID().equalsIgnoreCase(e.getEventID())){
+						moveToEvents.remove(e);
+						break;
+					}
+				}
+			}
+			return randomlyChosenEvent;
+		}
+		else {
+			return getRandomMoveToEvent(loc);
+		}
+		
+		
+//		int rand = (int)Math.floor(Math.random() * moveToEvents.size());
+//		if(rand == moveToEvents.size()) rand--;
+//		return moveToEvents.get(rand);
 	}
 	
 	public Event getRandomInvestigateEvent(String loc) {
+//		int rand = (int)Math.floor(Math.random() * investigateEvents.size());
+//		if(rand == investigateEvents.size()) rand--;
+//		return investigateEvents.get(rand);
 		return null;
 	}
 	
 	public Event getRandomRestEvent(String loc) {
+//		int rand = (int)Math.floor(Math.random() * restEvents.size());
+//		if(rand == restEvents.size()) rand--;
+//		return restEvents.get(rand);
 		return null;
 	}
 
