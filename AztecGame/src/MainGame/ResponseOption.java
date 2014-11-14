@@ -34,6 +34,8 @@ public class ResponseOption {
 	private boolean killPersonLose;
 	private int rewardDisperseLose;
 	
+	private PartyMember selectedMember = null;
+		
 	public ResponseOption(String text, ArrayList<Long> resourceStatCost, 
 			ArrayList<Long> partyStatRequirement, 
 			ArrayList<Long> resourceModifiers, ArrayList<Long> partyStatModifiers,
@@ -67,10 +69,21 @@ public class ResponseOption {
 		this.rewardDisperseLose = rewardDisperseLose;
 	}
 	
+	//Replaces the string {playername} with the selected player's name.
+	public String handleNameReplacement(String str) {
+		if(selectedMember != null) {
+			return str.replaceAll("\\{playername\\}", selectedMember.getName());
+		}
+		return str;
+	}
+	
+	public void setSelectedMember(PartyMember selectedMember) {
+		this.selectedMember = selectedMember;
+	}
 	
 	//Get and Set ALL the things!
 	public String getText() {
-		return text;
+		return handleNameReplacement(text);
 	}
 	public void setText(String text) {
 		this.text = text;
@@ -100,7 +113,7 @@ public class ResponseOption {
 		this.partyStatModifiers = partyStatModifiers;
 	}
 	public String getPassText() {
-		return passText;
+		return handleNameReplacement(passText);
 	}
 	public void setPassText(String passText) {
 		this.passText = passText;
@@ -122,7 +135,7 @@ public class ResponseOption {
 
 
 	public String getWinText() {
-		return winText;
+		return handleNameReplacement(winText);
 	}
 	public void setWinText(String winText) {
 		this.winText = winText;
@@ -172,7 +185,7 @@ public class ResponseOption {
 
 
 	public String getLoseText() {
-		return loseText;
+		return handleNameReplacement(loseText);
 	}
 	public void setLoseText(String loseText) {
 		this.loseText = loseText;

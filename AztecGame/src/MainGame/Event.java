@@ -46,7 +46,15 @@ public class Event {
 		this.setPartyMemberTargeted(partyMemberTargeted);
 		this.frequency = frequency;
 	}
-
+	
+	//Replaces the string {playername} with the selected player's name.
+	public String handleNameReplacement(String str) {
+		if(affectedPartyMember != null) {
+			return str.replaceAll("\\{playername\\}", affectedPartyMember.getName());
+		}
+		return str;
+	}
+	
 	//ALL the getters and setters!
 	public String getEventID() {
 		return eventID;
@@ -73,7 +81,7 @@ public class Event {
 		this.reqParty = reqParty;
 	}
 	public String getIntroText() {
-		return introText;
+		return handleNameReplacement(this.introText);
 	}
 	public void setIntroText(String introText) {
 		this.introText = introText;
@@ -91,13 +99,13 @@ public class Event {
 		this.advice = advice;
 	}
 	public String getFleePassText() {
-		return fleePassText;
+		return handleNameReplacement(fleePassText);
 	}
 	public void setFleePassText(String fleePassText) {
 		this.fleePassText = fleePassText;
 	}
 	public String getFleeFailText() {
-		return fleeFailText;
+		return handleNameReplacement(fleeFailText);
 	}
 	public void setFleeFailText(String fleeFailText) {
 		this.fleeFailText = fleeFailText;
@@ -106,18 +114,21 @@ public class Event {
 	public boolean isPartyMemberTargeted() {
 		return partyMemberTargeted;
 	}
-
+	
 	public void setPartyMemberTargeted(boolean partyMemberTargeted) {
 		this.partyMemberTargeted = partyMemberTargeted;
 	}
 
 	public void setAffectedPartyMemberRandomly(ArrayList<PartyMember> partyMembers){
 		int ran1 = (int)Math.floor(Math.random()*partyMembers.size());
-		this.affectedPartyMember = partyMembers.get(ran1);
+		this.setAffectedPartyMember(partyMembers.get(ran1));
 	}
 	
 	public void setAffectedPartyMember(PartyMember partyMember){
 		this.affectedPartyMember = partyMember;
+		for(ResponseOption resp : this.responseOptions) {
+			resp.setSelectedMember(affectedPartyMember);
+		}
 	}
 	public PartyMember getAffectedPartyMember(){
 		return affectedPartyMember;
