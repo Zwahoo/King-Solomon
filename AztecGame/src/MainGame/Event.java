@@ -23,6 +23,11 @@ public class Event {
 
 	private String frequency;
 	
+	//Frequency Keys
+	public double LIKELY_FREQ_KEY = .75; //Percent chance of occurring
+	public double COMMON_FREQ_KEY = .60;
+	public double UNCOMMON_FREQ_KEY = .40;
+	public double RARE_FREQ_KEY = .25;
 	
 	public Event(String eventID, String eventType, 
 			ArrayList<String> possibleLocations, ArrayList<String> reqParty, 
@@ -107,7 +112,7 @@ public class Event {
 	}
 
 	public void setAffectedPartyMemberRandomly(ArrayList<PartyMember> partyMembers){
-		int ran1 = (int)(Math.random()*(partyMembers.size() + 1));
+		int ran1 = (int)Math.floor(Math.random()*partyMembers.size());
 		this.affectedPartyMember = partyMembers.get(ran1);
 	}
 	
@@ -117,6 +122,20 @@ public class Event {
 	public PartyMember getAffectedPartyMember(){
 		return affectedPartyMember;
 	}
+	/**
+	 * @return the frequency
+	 */
+	public String getFrequency() {
+		return frequency;
+	}
+
+	/**
+	 * @param frequency the frequency to set
+	 */
+	public void setFrequency(String frequency) {
+		this.frequency = frequency;
+	}
+
 	public void testMe(){
 		System.out.println(eventID + " works!");
 	}
