@@ -101,13 +101,10 @@ public class Map {
 		for (int i = 0; i < width; i++) {
 			newx = view.getLocation().x + (i * 64);
 			newy = view.getLocation().y + (i * 32);
-			for (int b = height-1; b >=0; b--) {
+			for (int b = 0; b < height; b++) {
 				int curTileX = i;
-				int curTileY = height - b - 1;
+				int curTileY = b;
 				Tile tile = getTile(curTileX, curTileY);
-
-				// if(!view.polygonIsInView(tile.selectangle)) continue; //Skip
-				// if it isn't in view
 
 				// draws the tile
 				g.drawImage(MainGame.images[tile.getImageIndex()], newx, newy, null);

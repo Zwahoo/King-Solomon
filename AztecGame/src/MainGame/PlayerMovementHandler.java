@@ -98,7 +98,7 @@ public class PlayerMovementHandler extends InputListener {
 		player.setLoc(t.getX(), t.getY());
 		player.setCurrentTile(t);
 		System.out.println(t);
-		//t.runEvent(mainGame.party);
+		t.runEvent(mainGame.party);
 		mainGame.handleMoveStatChanges();
 		checkSight();
 	}

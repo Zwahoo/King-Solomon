@@ -96,7 +96,7 @@ public class MainGame {
 		player1.getCurrentTile().reveal();
 		
 		// Creates a view
-		view = new View(width, height);
+		view = new View(new Point(0, height/2), width, height);
 		
 		// sets up mouse input stuff (INPUT MUST BE INSTANTIATED LAST)
 		input = new InputManager(frame, this);
