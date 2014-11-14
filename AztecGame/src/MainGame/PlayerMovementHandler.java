@@ -124,6 +124,19 @@ public class PlayerMovementHandler extends InputListener {
     //Reveals tiles that are conditionally revealed.
     public void revealConditionalTiles() {
     	
+    	//Check if the tile overrides all sight inhibitions.
+    	if(player.getCurrentTile().getType().canSeeAll) {
+			revealTile(NE2_TILE);
+			revealTile(NW2_TILE);
+			revealTile(SE2_TILE);
+			revealTile(SW2_TILE);
+			revealTile(N_TILE);
+			revealTile(S_TILE);
+			revealTile(E_TILE);
+			revealTile(W_TILE);
+			return;
+    	}
+    	
     	Tile neTile = getNeighborTile(NE_TILE);
     	Tile nwTile = getNeighborTile(NW_TILE);
     	Tile seTile = getNeighborTile(SE_TILE);

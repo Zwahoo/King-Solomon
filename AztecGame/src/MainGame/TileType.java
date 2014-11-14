@@ -8,6 +8,7 @@ public class TileType {
 	public boolean canBeOccupied;
 	public int tileImageIndex;
 	Color mapCol;
+	public boolean canSeeAll = false;
 
 	public TileType(String name, boolean blockSight, boolean canBeOccupied, int tileImageIndex, Color mapCol) {
 		this.name = name;

@@ -143,6 +143,9 @@ public class MainGame {
 	    tileTypes.put("highland", new TileType("highland", false, true, 5, new Color(50, 100, 0)));
 	    tileTypes.put("solomonsMines", new TileType("solomonsMines", false, true, 5, new Color(255, 255, 255)));
 	    tileTypes.put("village", new TileType("village", false, true, 5, new Color(100, 100, 100)));
+	    
+	    //Highlands can see past everything.
+	    tileTypes.get("highland").canSeeAll = true;
 	}
 	
 	private void initStats() {
