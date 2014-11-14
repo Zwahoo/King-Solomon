@@ -116,6 +116,11 @@ public class EventDrawer {
 	
 	//initializes all parts of the event menu
 	public void launchEvent(Event toLaunch, ArrayList<PartyMember> presMembers) {
+		
+		if (toLaunch.isPartyMemberTargeted()){
+		      toLaunch.setAffectedPartyMemberRandomly(presMembers);
+		}
+		
 		info = new Textbox(toLaunch.getIntroText(), infoTextboxX, infoTextboxY, (int)(gameframe.windowWidth*infoTextboxWMult), (int)(gameframe.windowHeight*infoTextboxHMult), MainGame.input);
 		partyMembersTextbox  = new Textbox(getPresentPartyMembers(presMembers), partyMembersX, partyMembersY, (int)(gameframe.windowWidth*partyMembersWMult), (int)(gameframe.windowHeight*partyMembersHMult), MainGame.input);
 		adviceBox = new Textbox(parseAdvice(toLaunch.getAdvice(), presMembers), partyMembersX, partyMembersY, (int)(gameframe.windowWidth*partyMembersWMult), (int)(gameframe.windowHeight*partyMembersHMult), MainGame.input);
