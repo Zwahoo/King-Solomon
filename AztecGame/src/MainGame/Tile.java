@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 
-@SuppressWarnings("unused")
 public class Tile {
 	
 	private String type;
