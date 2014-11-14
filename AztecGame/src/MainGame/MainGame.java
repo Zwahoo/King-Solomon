@@ -1,5 +1,6 @@
 package MainGame;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -31,6 +32,8 @@ public class MainGame {
 	StatsBar statsBar;
 	int statBarWidth;
 	static int statBarHeight;
+	
+	public static HashMap<String, TileType> tileTypes;
 	
 	//Stats
 	private static LinkedHashMap <String, Integer> stats;
@@ -80,6 +83,8 @@ public class MainGame {
 		party.add(new PartyMember("Giddy Guide", "Guide", 100,
 				"He's Giddy!", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
 		
+		//Initialize the different tile types.
+		initTileTypes();
 		//Load in the events
 		loadEvents();
 		
@@ -125,6 +130,19 @@ public class MainGame {
 		// //CHECKPOINT
 		
 		
+	}
+	
+	private void initTileTypes() {
+		tileTypes = new HashMap<String, TileType>();
+	    tileTypes.put("desert", new TileType("desert", false, true, 5, new Color(255, 100, 0)));
+	    tileTypes.put("oasis", new TileType("oasis", false, true, 5, new Color(255, 200, 0)));
+	    tileTypes.put("jungle", new TileType("jungle", false, true, 1, new Color(0, 255, 0)));
+	    tileTypes.put("water", new TileType("water", false, false, 0, new Color(0, 0, 255)));
+	    tileTypes.put("savannah", new TileType("savannah", false, true, 5, new Color(255, 255, 0)));
+	    tileTypes.put("mountain", new TileType("mountain", true, false, 2, new Color(100, 50, 0)));
+	    tileTypes.put("highland", new TileType("highland", false, true, 5, new Color(50, 100, 0)));
+	    tileTypes.put("solomonsMines", new TileType("solomonsMines", false, true, 5, new Color(255, 255, 255)));
+	    tileTypes.put("village", new TileType("village", false, true, 5, new Color(100, 100, 100)));
 	}
 	
 	private void initStats() {

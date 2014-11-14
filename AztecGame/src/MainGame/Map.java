@@ -8,6 +8,7 @@ import java.io.File;
 
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
@@ -16,13 +17,14 @@ public class Map {
 	int width;
 	int height;
 	private Tile[][] tiles;
-		
+	
 	//random map generator
 	public Map(int width, int height, MainGame mainGame) {
 		this.width = width;
 		this.height = height;
 		tiles = new Tile[width][height];
 		String a = null;
+		
 		Tile t;
 		for (int x = 0; x < width; x++){
 			for (int y = 0; y < height; y++){
@@ -36,7 +38,8 @@ public class Map {
 				else if (i == 2){
 					a = "mountain";
 				}
-				t = new Tile(a, x, y, mainGame.getRandomMoveToEvent(a), mainGame.getRandomInvestigateEvent(a), mainGame.getRandomRestEvent(a));
+				TileType type = MainGame.tileTypes.get(a);
+				t = new Tile(type, x, y, mainGame.getRandomMoveToEvent(a), mainGame.getRandomInvestigateEvent(a), mainGame.getRandomRestEvent(a));
 				tiles[x][y] = t;
 				//System.out.println(x + ", " + y);
 			}
@@ -53,7 +56,7 @@ public class Map {
 		height = image.getHeight();
 		
 		tiles = new Tile[image.getWidth()][image.getHeight()];
-		String a = null;
+		TileType a = null;
 		Tile t;
 		
 		for (int x = 0; x < image.getWidth(); x++) {
@@ -64,29 +67,29 @@ public class Map {
                 int blue = clr & 0x000000ff;
                 
                 if ((red == 255 && green == 100) && blue == 0) {
-                    a = "desert";
+                    a = MainGame.tileTypes.get("desert");
                 } else if ((red == 255 && green == 200) && blue == 0){
-                    a = "oasis";
+                    a = MainGame.tileTypes.get("oasis");
                 } else if ((red == 0 && green == 255) && blue == 0){
-                	a = "jungle";
+                	a = MainGame.tileTypes.get("jungle");
                 } else if ((red == 0 && green == 0) && blue == 255){
-                	a = "water";
+                	a = MainGame.tileTypes.get("water");
                 } else if ((red == 255 && green == 255) && blue == 0){
-                	a = "savannah";
+                	a = MainGame.tileTypes.get("savannah");
                 } else if ((red == 100 && green == 50) && blue == 0){
-                	a = "mountain";
+                	a = MainGame.tileTypes.get("mountain");
                 } else if ((red == 50 && green == 100) && blue == 0){
-                	a = "highland";
+                	a = MainGame.tileTypes.get("highland");
                 } else if ((red == 255 && green == 255) && blue == 255){
-                	a = "solomonsMines";
+                	a = MainGame.tileTypes.get("solomonsMines");
                 } else if ((red == 100 && green == 100) && blue == 100){
-                	a = "village";
+                	a = MainGame.tileTypes.get("village");
                 } else {
                 	System.out.println("Pixel in map not recognized. Tile defaulting to jungle at " + x + ", " + y);
-                	a = "jungle";
+                	a = MainGame.tileTypes.get("jungle");
                 }
             	//System.out.println(a + " " + x + " " + y);
-                t = new Tile(a, x, y, mainGame.getRandomMoveToEvent(a), mainGame.getRandomInvestigateEvent(a), mainGame.getRandomRestEvent(a));
+                t = new Tile(a, x, y, mainGame.getRandomMoveToEvent(a.name), mainGame.getRandomInvestigateEvent(a.name), mainGame.getRandomRestEvent(a.name));
                 tiles[x][y] = t;
             }
         }
