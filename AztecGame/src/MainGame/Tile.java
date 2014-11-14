@@ -103,8 +103,9 @@ public class Tile {
 	
 	}
 	
+	@Override
 	public String toString() {
-		return "Tile: (" + xp + ", " + yp + ") : " + getType();
+		return "Tile: (" + xp + ", " + yp + ") : " + getType().name;
 	}
 	
 }

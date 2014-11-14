@@ -48,22 +48,6 @@ public class PlayerMovementHandler extends InputListener {
 		validMoveTiles.add(SW_TILE);
 		validMoveTiles.add(SE_TILE);
 		
-
-		toRevealTiles = new ArrayList<Integer>();
-		//Reveal all neighbors (or try to, at least).
-		toRevealTiles.add(N_TILE);
-		toRevealTiles.add(E_TILE);
-		toRevealTiles.add(S_TILE);
-		toRevealTiles.add(W_TILE);
-		toRevealTiles.add(NW_TILE);
-		toRevealTiles.add(NE_TILE);
-		toRevealTiles.add(SW_TILE);
-		toRevealTiles.add(SE_TILE);
-		toRevealTiles.add(NW2_TILE);
-		toRevealTiles.add(NE2_TILE);
-		toRevealTiles.add(SW2_TILE);
-		toRevealTiles.add(SE2_TILE);
-		
 		checkSight();
 	}
 	
@@ -105,17 +89,18 @@ public class PlayerMovementHandler extends InputListener {
 
 	public void moveToTile(int tile) {
 		move(getNeighborTile(tile));
-		checkSight();
 	}
 	
 	//changes the tile the player is on and sets the neighbors as well
 	public void move(Tile t){
 		if(!isValidTile(t)) return;
+		if(!t.getType().canBeOccupied) return;
 		player.setLoc(t.getX(), t.getY());
 		player.setCurrentTile(t);
 		System.out.println(t);
-		t.runEvent(mainGame.party);
+		//t.runEvent(mainGame.party);
 		mainGame.handleMoveStatChanges();
+		checkSight();
 	}
 	
 	public boolean isValidTile(Tile t) {
@@ -124,14 +109,68 @@ public class PlayerMovementHandler extends InputListener {
 	
 	//Updates which tiles are visible
     public void checkSight(){
-    	int x = 0;
-    	int y = 0;
-    	for(int i : toRevealTiles){
-    		Tile toReveal = getNeighborTile(i);
-    		if(toReveal != null){
-    			toReveal.reveal();
-    		}
+    	revealNonconditoinalTiles();
+    	revealConditionalTiles();
+    }
+    
+    //Reveals the tiles that are unconditionally revealed upon move.
+    public void revealNonconditoinalTiles() {
+    	revealTile(NW_TILE);
+    	revealTile(NE_TILE);
+    	revealTile(SW_TILE);
+    	revealTile(SE_TILE);
+    }
+    
+    //Reveals tiles that are conditionally revealed.
+    public void revealConditionalTiles() {
+    	
+    	Tile neTile = getNeighborTile(NE_TILE);
+    	Tile nwTile = getNeighborTile(NW_TILE);
+    	Tile seTile = getNeighborTile(SE_TILE);
+    	Tile swTile = getNeighborTile(SW_TILE);
+    	
+    	boolean neBlock = true;
+    	boolean nwBlock = true;
+    	boolean seBlock = true;
+    	boolean swBlock = true;
+    	
+    	if(neTile != null) neBlock = neTile.getType().blockSight;
+    	if(nwTile != null) nwBlock = nwTile.getType().blockSight;
+    	if(seTile != null) seBlock = seTile.getType().blockSight;
+    	if(swTile != null) swBlock = swTile.getType().blockSight;
+    	
+    	if(!neBlock) {
+    		revealTile(NE2_TILE);
     	}
+    	if(!nwBlock) {
+    		revealTile(NW2_TILE);
+    	}
+    	if(!seBlock) {
+    		revealTile(SE2_TILE);
+    	}
+    	if(!swBlock) {
+    		revealTile(SW2_TILE);
+    	}
+    	
+    	if(!(neBlock && nwBlock)) {
+    		revealTile(N_TILE);
+    	}
+    	if(!(seBlock && swBlock)) {
+    		revealTile(S_TILE);
+    	}
+    	if(!(neBlock && seBlock)) {
+    		revealTile(E_TILE);
+    	}
+    	if(!(nwBlock && swBlock)) {
+    		revealTile(W_TILE);
+    	}
+    }
+    
+    public void revealTile(int tileNum) {
+    	Tile toReveal = getNeighborTile(tileNum);
+		if(toReveal != null){
+			toReveal.reveal();
+		}
     }
     
 	public Tile getNeighborTile(int tile) {
