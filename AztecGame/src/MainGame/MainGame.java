@@ -516,5 +516,85 @@ public class MainGame {
 		startDayDrawer = null;
 	}
 	
+	public static boolean checkStat(Long partyStat, Long partyRequirement){
+		
+		return false;
+	}
+	
+	public static boolean checkResource(){
+		
+		return false;
+	}
+	
+	public static ArrayList<Long> getTotalCurrentPartyStats(){
+		PartyMember keyMan = party.get(0);
+		String[] partyStatKeys = {
+				keyMan.MARKSMANSHIP_KEY, keyMan.PERCEPTION_KEY,
+				keyMan.TACTICS_KEY, keyMan.LOYALTY_KEY,
+				keyMan.AGILITY_KEY, keyMan.STRENGTH_KEY,
+				keyMan.DIPLOMACY_KEY, keyMan.KNOWLEDGE_KEY
+		};
+		ArrayList<Long> totalCurrentPartyStats = new ArrayList<Long>();
+		for (int i = 0; i < partyStatKeys.length; i++){
+			totalCurrentPartyStats.add((long)0);
+		}
+		for (PartyMember e : party){
+			for (int i = 0; i < partyStatKeys.length; i++){
+				totalCurrentPartyStats.set(i, totalCurrentPartyStats.get(i) + (long)(e.getStat(partyStatKeys[i])));
+			}
+		}
+		return totalCurrentPartyStats;
+	}
+	
+	public static boolean isResponsePossible(ResponseOption ro){
+		
+		ArrayList<Long> partyStatRequirements = new ArrayList<Long>();
+		ArrayList<Long> resourceCosts = new ArrayList<Long>();
+		
+		partyStatRequirements.addAll(ro.getRequirements());
+		resourceCosts.addAll(ro.getCost());
+		
+		ArrayList<Long> totalCurrentPartyStats = new ArrayList<Long>();
+		totalCurrentPartyStats.addAll(getTotalCurrentPartyStats());
+		
+		//Key Chain
+		String[] resourceKeys = {
+				FOOD_KEY, WATER_KEY, VALUABLES_KEY,
+				AMMO_KEY, MEDICINE_KEY, MORALE_KEY,
+				STAMINA_KEY, PACK_ANIMALS_KEY
+		};
+		PartyMember keyMan = party.get(0);
+		@SuppressWarnings("static-access")
+		String[] partyStatKeys = {
+				keyMan.MARKSMANSHIP_KEY, keyMan.PERCEPTION_KEY,
+				keyMan.TACTICS_KEY, keyMan.LOYALTY_KEY,
+				keyMan.AGILITY_KEY, keyMan.STRENGTH_KEY,
+				keyMan.DIPLOMACY_KEY, keyMan.KNOWLEDGE_KEY
+		};
+		
+		
+		
+		boolean reqMet = true;
+		boolean costsMet = true;
+		
+		for (int i = 0; i < partyStatRequirements.size(); i++){
+			if (totalCurrentPartyStats.get(i) < partyStatRequirements.get(i)){
+				reqMet = false;
+			}
+		}
+		
+		for (int i = 0; i < resourceCosts.size(); i++){
+			if (stats.get(resourceKeys[i]) < resourceCosts.get(i)){
+				costsMet = false;
+			}
+		}
+		
+		if (!(reqMet && costsMet)){
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	
 }

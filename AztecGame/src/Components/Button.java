@@ -30,6 +30,8 @@ public class Button extends InputListener {
 	Color pressBor = new Color(100, 70, 70); //Border color for press mode
 	Color fontCol = new Color(0, 0, 0); //Color of the text
 	
+	public boolean isImpossible = false;
+	
 	Point stringLoc = null;
 	
 	//Constructors
@@ -80,7 +82,7 @@ public class Button extends InputListener {
 	//Sets the mode if mouse exits/exits the button.
 	public void update() {
 		boolean mouseOn = pointIntersectsButton(getMouseLoc());
-		if(mouseOn != mouseOnButton) {
+		if(mouseOn != mouseOnButton && !isImpossible) {
 			if(mouseOn) {
 				setMode(MODE_HOVER);	
 			} else {
@@ -126,15 +128,25 @@ public class Button extends InputListener {
 			setMouseOnButton(true);
 			bkgCol = pressCol;
 			borderCol = pressBor;
-		} else {
+		} 
+		else {
 			System.out.println("Unknown Mode Request in Button.");
 		}
+	}
+	
+	public void setColor(Color bkgCol, Color borderCol){
+		this.bkgCol = bkgCol;
+		this.borderCol = borderCol;
+	}
+	
+	public void setImpossible(boolean isImpossible){
+		this.isImpossible = isImpossible;
 	}
 	
 	@Override
 	//When the mouse is pressed (but not yet released)
 	public void mousePressed(int mouseButton, Point mouseLoc) {
-		if(mouseOnButton) {
+		if(mouseOnButton && !isImpossible) {
 			setMode(MODE_PRESSED);
 		}
 	}
@@ -142,7 +154,7 @@ public class Button extends InputListener {
 	@Override
 	//When the mouse as been released over the button, call the onClick method.
 	public void mouseReleased(int mouseButton, Point mouseLoc) {
-		if(mouseOnButton) {
+		if(mouseOnButton && !isImpossible) {
 			onClick();
 			setMode(MODE_HOVER);
 		}
