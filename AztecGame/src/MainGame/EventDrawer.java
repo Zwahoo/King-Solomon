@@ -131,14 +131,31 @@ public class EventDrawer {
 		int totalY = upperButtonY;	//variably keeps track of where the button should be drawn based on #buttons already drawn
 		//create a button for each response option for this specific event (max is 5)
 		for (final ResponseOption ro : toLaunch.getResponseOptions()) {
-			Button temp = new Button(buttonX, totalY, (int)(gameframe.windowWidth * buttonWMult), buttonHeight, ro.getText(), MainGame.input) {
-				@Override
-				public void onClick() {
-					handleResponseSelect(ro); //custom method for handling button press, currently just closes program
-				}
-			};
-			buttons.add(temp);			
-			totalY += (buttonSpace + buttonHeight);
+			boolean isResponsePossible = MainGame.isResponsePossible(ro);
+			
+			if (isResponsePossible){
+				Button temp = new Button(buttonX, totalY, (int)(gameframe.windowWidth * buttonWMult), buttonHeight, ro.getText(), MainGame.input) {
+					@Override
+					public void onClick() {
+						handleResponseSelect(ro); //custom method for handling button press, currently just closes program
+					}
+				};
+				buttons.add(temp);			
+				totalY += (buttonSpace + buttonHeight);
+			}
+			else if (!isResponsePossible){
+				Button temp = new Button(buttonX, totalY, (int)(gameframe.windowWidth * buttonWMult), buttonHeight, ro.getText(), MainGame.input) {
+					@Override
+					public void onClick() {
+					}
+				};
+				Color impossCol = new Color(200, 200, 200);
+				Color impossBor = new Color(100, 70, 70);
+				temp.setColor(impossCol, impossBor);
+				temp.setImpossible(true);
+				buttons.add(temp);			
+				totalY += (buttonSpace + buttonHeight);
+			}
 		}
 		advice = new Button(adviceButtonX, adviceButtonY, (int)(gameframe.windowWidth * adviceButtonWMult), (int)(gameframe.windowHeight * adviceButtonHMult), "Advice", MainGame.input) {
 			@Override
@@ -176,6 +193,7 @@ public class EventDrawer {
 		setResultText(r, resultNumber);
 		result.setVisibility(true);
 		
+		MainGame.responseEffect(resultNumber, r);
 		//MainGame.closeEvent();
 	}
 	
@@ -313,7 +331,7 @@ public class EventDrawer {
 			
 	}
 	
-	public void setResultText(final ResponseOption ro, int resultNumber) {
+	public void setResultText(final ResponseOption ro, final int resultNumber) {
 		if (resultNumber == 0) {
 			result.setText(ro.getLoseText());
 		} else if (resultNumber == 1) {

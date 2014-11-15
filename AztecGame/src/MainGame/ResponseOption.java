@@ -44,6 +44,7 @@ public class ResponseOption {
 			ArrayList<Long> winPartyStatChange, boolean killPersonWin, int rewardDisperseWin,
 			String loseText, String loseFollowUp, ArrayList<Long> loseResourceChange, 
 			ArrayList<Long> losePartyStatChange, boolean killPersonLose, int rewardDisperseLose){
+		
 		this.text = text;
 		this.cost.addAll(resourceStatCost);
 		this.requirements.addAll(partyStatRequirement);
@@ -67,6 +68,9 @@ public class ResponseOption {
 		this.losePartyStatChange.addAll(losePartyStatChange);
 		this.killPersonLose = killPersonLose;
 		this.rewardDisperseLose = rewardDisperseLose;
+		
+		appendTextWithCosts();
+		appendTextWithPartyRequirements();
 	}
 	
 	//Replaces the string {playername} with the selected player's name.
@@ -75,6 +79,57 @@ public class ResponseOption {
 			return str.replaceAll("\\{playername\\}", selectedMember.getName());
 		}
 		return str;
+	}
+	
+	public void appendTextWithCosts(){
+		String[] resourceKeys = {
+				MainGame.FOOD_KEY, MainGame.WATER_KEY, MainGame.VALUABLES_KEY,
+				MainGame.AMMO_KEY, MainGame.MEDICINE_KEY, MainGame.MORALE_KEY,
+				MainGame.STAMINA_KEY, MainGame.PACK_ANIMALS_KEY
+		};
+		boolean hasBeenEdited = false;
+		for (int i = 0; i < cost.size(); i++){
+			if (cost.get(i) > 0 && !hasBeenEdited){
+				text += " (Costs: " + cost.get(i) + " " + resourceKeys[i];
+				hasBeenEdited = true;
+			}
+			else if (cost.get(i) > 0 && hasBeenEdited){
+				text += ", " + cost.get(i) + " " + resourceKeys[i];
+			}
+		}
+		
+		if (hasBeenEdited){
+			text += ")";
+		}
+		else {
+			text += " (Costs: Nothing)";
+		}
+	}
+	
+	public void appendTextWithPartyRequirements(){
+		ArrayList<Long> totalCurrentPartyStats = new ArrayList<Long>();
+		totalCurrentPartyStats.addAll(MainGame.getTotalCurrentPartyStats());
+		PartyMember keyMan = MainGame.party.get(0);
+		String[] partyStatKeys = {
+				keyMan.MARKSMANSHIP_KEY, keyMan.PERCEPTION_KEY,
+				keyMan.TACTICS_KEY, keyMan.LOYALTY_KEY,
+				keyMan.AGILITY_KEY, keyMan.STRENGTH_KEY,
+				keyMan.DIPLOMACY_KEY, keyMan.KNOWLEDGE_KEY
+		};
+		
+		boolean hasBeenEdited = false;
+		for (int i = 0; i < totalCurrentPartyStats.size(); i++){
+			if ((totalCurrentPartyStats.get(i) < requirements.get(i)) && !hasBeenEdited){
+				text += " You require more: " + partyStatKeys[i];
+				hasBeenEdited = true;
+			}
+			else if (totalCurrentPartyStats.get(i) < requirements.get(i) && hasBeenEdited){
+				text += ", " + partyStatKeys[i];
+			}
+		}
+		if (hasBeenEdited){
+			text += ".";
+		}
 	}
 	
 	public void setSelectedMember(PartyMember selectedMember) {

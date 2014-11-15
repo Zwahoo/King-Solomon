@@ -244,8 +244,12 @@ public class MainGame {
 	public static ArrayList<PartyMember> getParty(){ return party; }
 	//Sets the stat, and raises the partyStatsChanged flag.
 	public static void setPartyStat(String statName, int val) {
-		if(val < 0) return; //No negative stats
-		stats.put(statName, val);
+		if(val < 0){
+			stats.put(statName, 0); //No negative stats, defaults to 0
+		}
+		else {
+			stats.put(statName, val);
+		}
 		statsChanged = true;
 	}
 	//Sets the stat, and raises the partyStatsChanged flag.
@@ -258,8 +262,13 @@ public class MainGame {
 		}
 		
 	public static void incRandomPersonStat(String statName, int val){
-		int ran1 = (int)(Math.random() * (party.size()));
-		party.get(ran1).incStat(statName, val);;
+		int ran1 = (int)Math.floor(Math.random() * (party.size()));
+		if (party.get(ran1).getStat(statName) + val < 0){
+			party.get(ran1).setStat(statName, 0);
+		}
+		else {
+			party.get(ran1).incStat(statName, val);
+		}
 	}
 	
 	public void loadEvents(){
@@ -430,7 +439,7 @@ public class MainGame {
 		eventDrawer = new EventDrawer(e, presMembers);
 	}
 
-	public static void closeEvent(String result, ResponseOption r) {
+	public static void responseEffect(int result, ResponseOption r) {
 		String[] resourceKeys = {
 				FOOD_KEY, WATER_KEY, VALUABLES_KEY,
 				AMMO_KEY, MEDICINE_KEY, MORALE_KEY,
@@ -449,20 +458,40 @@ public class MainGame {
 		ArrayList<Long> resourceChange = new ArrayList<Long>();
 		ArrayList<Long> partyStatChange = new ArrayList<Long>();
 		
-		if (result.equals("fail")){
+		if (result == 0){
 			partyStatChange.addAll(r.getLosePartyStatChange());
 			resourceChange.addAll(r.getLoseResourceChange());
-		} else if (result.equals("pass")){
+			
+			//Testing
+			System.out.println(partyStatChange.size() + " should be the same as " + r.getLosePartyStatChange().size() + ". This is a lose condition.");
+			System.out.println(resourceChange.size() + " should be the same as " + r.getLoseResourceChange().size() + ". This is a lose condition.");
+		} else if (result == 1){
 			for (int i = 0; i < resourceKeys.length; i++){
 				resourceChange.add((long) 0);
 			}
 			for (int c = 0; c < partyStatKeys.length; c++){
 				partyStatChange.add((long) 0);
 			}
-		} else if (result.equals("success")){
+			
+			//Testing
+			System.out.println(partyStatChange.size() + " should be the same as " + r.getLosePartyStatChange().size() + ". This is a pass condition.");
+			System.out.println(resourceChange.size() + " should be the same as " + r.getLoseResourceChange().size() + ". This is a pass condition.");
+		} else if (result == 2){
 			partyStatChange.addAll(r.getWinPartyStatChange());
 			resourceChange.addAll(r.getWinResourceChange());
+			
+			//Testing
+			System.out.println(partyStatChange.size() + " should be the same as " + r.getLosePartyStatChange().size() + ". This is a win condition.");
+			System.out.println(resourceChange.size() + " should be the same as " + r.getLoseResourceChange().size() + ". This is a win condition.");
 		}
+		
+		ArrayList<Long> resourceCost = new ArrayList<Long>();
+		resourceCost.addAll(r.getCost());
+		
+		for (int i = 0; i < resourceChange.size(); i++){
+			resourceChange.set(i, resourceChange.get(i) - resourceCost.get(i));
+		}
+		
 		for (int i = 0; i < resourceKeys.length - 1; i++){
 			incPartyStat(resourceKeys[i], resourceChange.get(i).intValue());
 		}
@@ -485,6 +514,86 @@ public class MainGame {
 		currentMode = newmode;
 		//also, launch event if necessary.
 		startDayDrawer = null;
+	}
+	
+	public static boolean checkStat(Long partyStat, Long partyRequirement){
+		
+		return false;
+	}
+	
+	public static boolean checkResource(){
+		
+		return false;
+	}
+	
+	public static ArrayList<Long> getTotalCurrentPartyStats(){
+		PartyMember keyMan = party.get(0);
+		String[] partyStatKeys = {
+				keyMan.MARKSMANSHIP_KEY, keyMan.PERCEPTION_KEY,
+				keyMan.TACTICS_KEY, keyMan.LOYALTY_KEY,
+				keyMan.AGILITY_KEY, keyMan.STRENGTH_KEY,
+				keyMan.DIPLOMACY_KEY, keyMan.KNOWLEDGE_KEY
+		};
+		ArrayList<Long> totalCurrentPartyStats = new ArrayList<Long>();
+		for (int i = 0; i < partyStatKeys.length; i++){
+			totalCurrentPartyStats.add((long)0);
+		}
+		for (PartyMember e : party){
+			for (int i = 0; i < partyStatKeys.length; i++){
+				totalCurrentPartyStats.set(i, totalCurrentPartyStats.get(i) + (long)(e.getStat(partyStatKeys[i])));
+			}
+		}
+		return totalCurrentPartyStats;
+	}
+	
+	public static boolean isResponsePossible(ResponseOption ro){
+		
+		ArrayList<Long> partyStatRequirements = new ArrayList<Long>();
+		ArrayList<Long> resourceCosts = new ArrayList<Long>();
+		
+		partyStatRequirements.addAll(ro.getRequirements());
+		resourceCosts.addAll(ro.getCost());
+		
+		ArrayList<Long> totalCurrentPartyStats = new ArrayList<Long>();
+		totalCurrentPartyStats.addAll(getTotalCurrentPartyStats());
+		
+		//Key Chain
+		String[] resourceKeys = {
+				FOOD_KEY, WATER_KEY, VALUABLES_KEY,
+				AMMO_KEY, MEDICINE_KEY, MORALE_KEY,
+				STAMINA_KEY, PACK_ANIMALS_KEY
+		};
+		PartyMember keyMan = party.get(0);
+		@SuppressWarnings("static-access")
+		String[] partyStatKeys = {
+				keyMan.MARKSMANSHIP_KEY, keyMan.PERCEPTION_KEY,
+				keyMan.TACTICS_KEY, keyMan.LOYALTY_KEY,
+				keyMan.AGILITY_KEY, keyMan.STRENGTH_KEY,
+				keyMan.DIPLOMACY_KEY, keyMan.KNOWLEDGE_KEY
+		};
+		
+		
+		
+		boolean reqMet = true;
+		boolean costsMet = true;
+		
+		for (int i = 0; i < partyStatRequirements.size(); i++){
+			if (totalCurrentPartyStats.get(i) < partyStatRequirements.get(i)){
+				reqMet = false;
+			}
+		}
+		
+		for (int i = 0; i < resourceCosts.size(); i++){
+			if (stats.get(resourceKeys[i]) < resourceCosts.get(i)){
+				costsMet = false;
+			}
+		}
+		
+		if (!(reqMet && costsMet)){
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 	
