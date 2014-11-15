@@ -338,7 +338,6 @@ public class EventDrawer {
 		for(Button button : buttons) {
 			button.removeInputManager(MainGame.input, temp);
 		}
-		
 	}
 	
 	public void destroyer() {

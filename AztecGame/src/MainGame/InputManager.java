@@ -21,8 +21,10 @@ public class InputManager {
 	public InputManager(Component c, MainGame mainGame) {
 		mouseInput = new MouseInput(c, this);
 		keyInput = new KeyboardInput(c, this);
-		playerMovHandler = new PlayerMovementHandler(mainGame, mainGame.getMap(), mainGame.getPlayer(), this);
-		viewMovHandler = new ViewMovementHandler(mainGame.getView(), this);
+		if(mainGame != null) {
+			playerMovHandler = new PlayerMovementHandler(mainGame, mainGame.getMap(), mainGame.getPlayer(), this);
+			viewMovHandler = new ViewMovementHandler(mainGame.getView(), this);
+		}
 	}
 	
 	public void update() {
@@ -72,39 +74,46 @@ public class InputManager {
 
 	//Mouse Override Methods
 	public void mouseClicked(int button) {
+		if(!inputListenersMap.containsKey(MainGame.currentMode)) return;
 		ArrayList<InputListener> temp = new ArrayList<InputListener>(inputListenersMap.get(MainGame.currentMode));
 		for(InputListener listener : temp) {
 			listener.mouseDown(button, getMouseLoc());
 		}
 	}
 	public void mouseMoved(Point point) {
+		if(!inputListenersMap.containsKey(MainGame.currentMode)) return;
 		ArrayList<InputListener> temp = new ArrayList<InputListener>(inputListenersMap.get(MainGame.currentMode));
 		for(InputListener listener : temp) {
 			listener.mouseMoved(point);
 		}
 	}
 	public void mouseEntered() {
+		if(!inputListenersMap.containsKey(MainGame.currentMode)) return;
 		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
 			listener.mouseEntered();
 		}
 	}
 	public void mouseExited() {
+		if(!inputListenersMap.containsKey(MainGame.currentMode)) return;
 		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
 			listener.mouseExited();
 		}
 	}
 	public void mousePressed(int button) {
+		if(!inputListenersMap.containsKey(MainGame.currentMode)) return;
 		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
 			listener.mousePressed(button, getMouseLoc());
 		}
 	}
 	public void mouseReleased(int button) {
+		if(!inputListenersMap.containsKey(MainGame.currentMode)) return;
 		ArrayList<InputListener> temp = new ArrayList<InputListener>(inputListenersMap.get(MainGame.currentMode));
 		for(InputListener listener : temp) {
 			listener.mouseReleased(button, getMouseLoc());
 		}
 	}
 	public void mouseDragged() {
+		if(!inputListenersMap.containsKey(MainGame.currentMode)) return;
 		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
 			listener.mouseDragged();
 		}
@@ -113,16 +122,19 @@ public class InputManager {
 	
 	//Keyboard Events
 	public void keyTyped(KeyEvent e) {
+		if(!inputListenersMap.containsKey(MainGame.currentMode)) return;
 		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
 			listener.keyTyped(e);
 		}
 	}
 	public void keyReleased(KeyEvent e) {
+		if(!inputListenersMap.containsKey(MainGame.currentMode)) return;
 		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
 			listener.keyReleased(e);
 		}	
 	}
 	public void keyPressed(KeyEvent e) {
+		if(!inputListenersMap.containsKey(MainGame.currentMode)) return;
 		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
 			listener.keyPressed(e);
 		}
