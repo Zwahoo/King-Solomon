@@ -312,7 +312,7 @@ public class EventDrawer {
 			
 	}
 	
-	public void setResultText(final ResponseOption ro, int resultNumber) {
+	public void setResultText(final ResponseOption ro, final int resultNumber) {
 		if (resultNumber == 0) {
 			result.setText(ro.getLoseText());
 		} else if (resultNumber == 1) {
@@ -325,6 +325,7 @@ public class EventDrawer {
 		exit = new Button(exitButtonX, exitButtonY, (int)(gameframe.windowWidth*exitButtonWMult), (int)(gameframe.windowHeight*exitButtonHMult), "Exit", MainGame.input) {
 			@Override
 			public void onClick() {
+				MainGame.responseEffect(resultNumber, ro);
 				MainGame.closeEvent();
 			}
 		};
