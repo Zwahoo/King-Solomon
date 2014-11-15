@@ -118,7 +118,8 @@ public class EventDrawer {
 	public void launchEvent(Event toLaunch, ArrayList<PartyMember> presMembers) {
 		
 		if (toLaunch.isPartyMemberTargeted()){
-		      toLaunch.setAffectedPartyMemberRandomly(presMembers);
+		      boolean couldTarget = toLaunch.setAffectedPartyMemberRandomly(presMembers);
+		      if(!couldTarget) return; //Can't select needed target. Don't launch event.
 		}
 		
 		info = new Textbox(toLaunch.getIntroText(), infoTextboxX, infoTextboxY, (int)(gameframe.windowWidth*infoTextboxWMult), (int)(gameframe.windowHeight*infoTextboxHMult), MainGame.input);

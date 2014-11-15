@@ -22,6 +22,8 @@ public class PartyMember {
 	boolean diseased;
 	boolean injured;
 	
+	private boolean isGentleman = false;
+	
 	private HashMap<String, Integer> stats;
 	
 	public PartyMember(String name, String type, int pay, String backgroundInfo, HashMap<String, Integer> stats) {
@@ -120,5 +122,13 @@ public class PartyMember {
 	}
 	public void setInjured(boolean injured) {
 		this.injured = injured;
+	}
+
+	public boolean isGentleman() {
+		return isGentleman;
+	}
+
+	public void setGentleman(boolean gent) {
+		this.isGentleman = gent;
 	}	
 }

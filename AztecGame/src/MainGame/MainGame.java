@@ -75,6 +75,7 @@ public class MainGame {
 	    party = new ArrayList<PartyMember>();
 		party.add(new PartyMember("The Gentleman", "Gentleman", 0,
 				"Quite.", PartyMemberStats.AVERAGE_ABE_STATS));
+		party.get(0).setGentleman(true);
 		party.add(new PartyMember("Happy Hunter", "Hunter", 100,
 				"Likes cooking meat and long walks on the savannah.", PartyMemberStats.HAPPY_HUNTER_STATS));
 		party.add(new PartyMember("Merry Mercenary", "Mercenary", 100,

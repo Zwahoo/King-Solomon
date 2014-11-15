@@ -119,9 +119,16 @@ public class Event {
 		this.partyMemberTargeted = partyMemberTargeted;
 	}
 
-	public void setAffectedPartyMemberRandomly(ArrayList<PartyMember> partyMembers){
+	public boolean setAffectedPartyMemberRandomly(ArrayList<PartyMember> partyMembers){
+		if(partyMembers.size() <= 1) {
+			return false;
+		}
 		int ran1 = (int)Math.floor(Math.random()*partyMembers.size());
+		while(partyMembers.get(ran1).isGentleman()) {
+			ran1 = (int)Math.floor(Math.random()*partyMembers.size());
+		}
 		this.setAffectedPartyMember(partyMembers.get(ran1));
+		return true;
 	}
 	
 	public void setAffectedPartyMember(PartyMember partyMember){
