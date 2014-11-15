@@ -283,7 +283,7 @@ public class MainGame {
 	public ArrayList<Event> eventListCreator(ArrayList<Event> events){
 		ArrayList<Event> typeEventList = new ArrayList<Event>();
 		for (Event e : events){
-			if (e.getEventType().equalsIgnoreCase("move") || e.getEventType().equalsIgnoreCase("moveTo")){
+			if (e.getEventType().equalsIgnoreCase("move")){
 				moveToEvents.add(e);
 			} else if (e.getEventType().equalsIgnoreCase("rest")){
 				restEvents.add(e);
@@ -312,14 +312,14 @@ public class MainGame {
 					eventList.add(e);
 				} else if (randomNum < e.RARE_FREQUENCY && e.getFrequency().equalsIgnoreCase("rare")){
 					eventList.add(e);
-				} else if (randomNum < e.RARE_FREQUENCY && e.getFrequency().equalsIgnoreCase("once")){
+				} else if (randomNum < e.RARE_FREQUENCY && e.getFrequency().substring(0,1).equals("1")){
 					eventList.add(e);
 				}
 			}
 			int randomNum2 = (int)Math.floor(Math.random() * eventList.size());
 			if (eventList.size() > 0){
 				Event randomlyChosenEvent = eventList.get(randomNum2);
-				if (randomlyChosenEvent.getFrequency().equalsIgnoreCase("once")){
+				if (randomlyChosenEvent.getFrequency().substring(0,1).equals("1")){
 					for (Event e : moveToEvents){
 						if (randomlyChosenEvent.getEventID().equalsIgnoreCase(e.getEventID())){
 							moveToEvents.remove(e);
@@ -358,14 +358,14 @@ public class MainGame {
 					eventList.add(e);
 				} else if (randomNum < e.RARE_FREQUENCY && e.getFrequency().equalsIgnoreCase("rare")){
 					eventList.add(e);
-				} else if (randomNum < e.RARE_FREQUENCY && e.getFrequency().equalsIgnoreCase("once")){
+				} else if (randomNum < e.RARE_FREQUENCY && e.getFrequency().substring(0,1).equals("1")){
 					eventList.add(e);
 				}
 			}
 			int randomNum2 = (int)Math.floor(Math.random() * eventList.size());
 			if (eventList.size() > 0){
 				Event randomlyChosenEvent = eventList.get(randomNum2);
-				if (randomlyChosenEvent.getFrequency().equalsIgnoreCase("once")){
+				if (randomlyChosenEvent.getFrequency().substring(0,1).equals("1")){
 					for (Event e : investigateEvents){
 						if (randomlyChosenEvent.getEventID().equalsIgnoreCase(e.getEventID())){
 							investigateEvents.remove(e);
@@ -399,14 +399,14 @@ public class MainGame {
 					eventList.add(e);
 				} else if (randomNum < e.RARE_FREQUENCY && e.getFrequency().equalsIgnoreCase("rare")){
 					eventList.add(e);
-				} else if (randomNum < e.RARE_FREQUENCY && e.getFrequency().equalsIgnoreCase("once")){
+				} else if (randomNum < e.RARE_FREQUENCY && e.getFrequency().substring(0,1).equals("1")){
 					eventList.add(e);
 				}
 			}
 			int randomNum2 = (int)Math.floor(Math.random() * eventList.size());
 			if (eventList.size() > 0){
 				Event randomlyChosenEvent = eventList.get(randomNum2);
-				if (randomlyChosenEvent.getFrequency().equalsIgnoreCase("once")){
+				if (randomlyChosenEvent.getFrequency().substring(0,1).equals("1")){
 					for (Event e : restEvents){
 						if (randomlyChosenEvent.getEventID().equalsIgnoreCase(e.getEventID())){
 							restEvents.remove(e);
