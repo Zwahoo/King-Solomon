@@ -17,6 +17,10 @@ import javax.swing.JFrame;
 @SuppressWarnings({ "serial", "unused" })
 public class gameframe extends JFrame {
 
+	
+	boolean doSetup = false;
+	
+	
 	private boolean isRunning = true;
 	private Insets insets;
 	private BufferedImage backBuffer;
@@ -24,6 +28,8 @@ public class gameframe extends JFrame {
 	public static int windowWidth = 1000;
 	public static int windowHeight = 800;
 	private MainGame mainGame;
+	private IntroSequence introSeq;
+	private boolean runIntroSequence = true;
 	
 	public static int topinset = 22;
 	public static int bottominset = 0;
@@ -44,11 +50,44 @@ public class gameframe extends JFrame {
 	 */
 	// starts the game and runs loop
 	public void run() throws IOException {
-
 		this.initialize(); // initializes things which need initializing before
 							// the game can run
-		//System.out.println("what is going on here"); // CHECKPOINT
+		if(doSetup) {
+
+		this.initializeIntroSequence(); // initializes things which need initializing before
+							// the game can run
+			
+		// initially draws everything
+		draw();
+		// loop which handles fps
+		while (runIntroSequence) {
+			// time
+			long time = System.currentTimeMillis();
+
+			update();
+			draw();
+			
+			runIntroSequence = !introSeq.finished;
+			
+			// runs an update 30 times a second
+			time = (1000 / fps) - (System.currentTimeMillis() - time);
+
+			// what the heck is even going on here man I mean seriously
+			// Somethin' 'bout a thread runnin' fer the frame I 'reckon
+			// It's limiting the framerate to fps... I think.
+			if (time > 0) {
+				try {
+					Thread.sleep(time);
+				} catch (Exception e) {
+				}
+			}
+		}
 		
+		introSeq = null;
+		
+		}
+		//Runs the main game
+		this.initializeMainGame();
 		
 		// initially draws everything
 		draw();
@@ -77,15 +116,21 @@ public class gameframe extends JFrame {
 		setVisible(false);
 	}
 
+	private void initializeMainGame() throws IOException {
+		mainGame = new MainGame(this, windowWidth, windowHeight);
+	}
+
+	private void initializeIntroSequence() {
+		introSeq = new IntroSequence(this);
+	}
+
 	/**
 	 * This method will set up everything need for the game to run
 	 * 
 	 * @throws IOException
 	 */
 	void initialize() throws IOException {
-				
-		mainGame = new MainGame(this, windowWidth, windowHeight);
-
+			
 		// offsets the frame to account for the top bar, border, etc.
 		insets = getInsets();
 		insets.set(topinset, leftinset, bottominset, rightinset);
@@ -121,7 +166,8 @@ public class gameframe extends JFrame {
 	// "move,"
 	// "check map," and "menu" mode
 	void update() {
-		mainGame.update();
+		if(mainGame != null) mainGame.update();
+		else if(introSeq != null) introSeq.update();
 	}
 
 	/**
@@ -138,7 +184,8 @@ public class gameframe extends JFrame {
 		// background height and width
 		bbg.fillRect(0, 0, windowWidth, windowHeight);
 		
-		mainGame.draw(bbg);
+		if(mainGame != null) mainGame.draw(bbg);
+		else if(introSeq != null) introSeq.draw(bbg);
 		
 		// actually draws the images and stuff on screen
 		g.drawImage(backBuffer, insets.left, insets.top, this);

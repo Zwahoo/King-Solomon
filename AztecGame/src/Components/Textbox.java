@@ -20,7 +20,7 @@ public class Textbox {
 	
 	Rectangle drawRect; //Rectangle encompassing the text box as it is drawn.
 	Rectangle textSpaceRect; //The rectangle defining the space in which the text should be drawn in the text box.
-	int textBuffer = 3; //Padding to give on either side of the text as it's drawn in textSpaceRect
+	public int textBuffer = 3; //Padding to give on either side of the text as it's drawn in textSpaceRect
 	int fullHeight; //The total height needed to display all text. If larger than drawRect's height, need scroll bar.
 	
 	String textOrig; //The text in its original form.
@@ -56,8 +56,7 @@ public class Textbox {
 	public void setText(String newText) {
 		textOrig = newText;
 		lines = fitStr(newText);
-		calculateFullHeight();
-		checkNeedScroll();
+		updateView();
 	}
 	
 	//Sets the size of the draw rectangle from the given values.
@@ -192,5 +191,15 @@ public class Textbox {
 	
 	public void setVisibility(boolean visibility) {
 		visible = visibility;
+	}
+	
+	public void SetFont(Font font) {
+		this.myFont = font;
+		updateView();
+	}
+	
+	public void updateView() {
+		calculateFullHeight();
+		checkNeedScroll();
 	}
 }

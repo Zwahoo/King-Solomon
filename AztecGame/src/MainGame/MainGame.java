@@ -21,7 +21,7 @@ public class MainGame {
 	private Player player1; //The player
 	private View view; //The "camera." What the player is seeing. Has a location, can move around.
 	public static InputManager input; // This registers all the mouse and keyboard
-	public static Integer currentMode;
+	public static Integer currentMode = -1;
 	
 	public static final Integer START_DAY_MODE = 0; // choose move, investigate, or rest
 	public static final Integer MOVEMENT_MODE = 1; // movement on map
