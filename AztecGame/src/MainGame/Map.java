@@ -17,15 +17,18 @@ public class Map {
 	int width;
 	int height;
 	private Tile[][] tiles;
+	private TileOverlay[][] tileOverlays;
 	
 	//random map generator
 	public Map(int width, int height, MainGame mainGame) {
 		this.width = width;
 		this.height = height;
 		tiles = new Tile[width][height];
+		tileOverlays = new TileOverlay[width][height];
 		String a = null;
 		
 		Tile t;
+		TileOverlay tO;
 		for (int x = 0; x < width; x++){
 			for (int y = 0; y < height; y++){
 				int i = (int) ((Math.random()) * 3);
@@ -42,8 +45,11 @@ public class Map {
 				t = new Tile(type, x, y, mainGame.getRandomMoveToEvent(a), mainGame.getRandomInvestigateEvent(a), mainGame.getRandomRestEvent(a));
 				tiles[x][y] = t;
 				//System.out.println(x + ", " + y);
+				tO = new TileOverlay(x, y, "dark");
+				tileOverlays[x][y] = tO;
 			}
 		}
+		
 	}
 
 	//map which is created from image
@@ -56,8 +62,10 @@ public class Map {
 		height = image.getHeight();
 		
 		tiles = new Tile[image.getWidth()][image.getHeight()];
+		tileOverlays = new TileOverlay[image.getWidth()][image.getHeight()];
 		TileType a = null;
 		Tile t;
+		TileOverlay tO;
 		
 		for (int x = 0; x < image.getWidth(); x++) {
             for (int y = 0; y < image.getHeight(); y++) {
@@ -91,6 +99,8 @@ public class Map {
             	//System.out.println(a + " " + x + " " + y);
                 t = new Tile(a, x, y, mainGame.getRandomMoveToEvent(a.name), mainGame.getRandomInvestigateEvent(a.name), mainGame.getRandomRestEvent(a.name));
                 tiles[x][y] = t;
+                tO = new TileOverlay(x, y, "blank");
+				tileOverlays[x][y] = tO;
             }
         }
 	}
@@ -105,9 +115,11 @@ public class Map {
 				int curTileX = i;
 				int curTileY = b;
 				Tile tile = getTile(curTileX, curTileY);
+				TileOverlay tileOverlay = getTileOverlay(curTileX, curTileY);
 
 				// draws the tile
 				g.drawImage(MainGame.images[tile.getImageIndex()], newx, newy, null);
+				g.drawImage(MainGame.images[tileOverlay.getImageIndex()], newx, newy, null);
 				
 				// draws player marker
 				if (curTileX == player1.getX() && curTileY == player1.getY()) {
@@ -125,5 +137,37 @@ public class Map {
 	
 	public Tile getTile(int x, int y){
 		return tiles[x][y];
+	}
+	
+	public TileOverlay getTileOverlay(int x, int y){
+		return tileOverlays[x][y];
+	}
+
+	/**
+	 * @return the width
+	 */
+	public int getWidth() {
+		return width;
+	}
+
+	/**
+	 * @param width the width to set
+	 */
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	/**
+	 * @return the height
+	 */
+	public int getHeight() {
+		return height;
+	}
+
+	/**
+	 * @param height the height to set
+	 */
+	public void setHeight(int height) {
+		this.height = height;
 	}
 }

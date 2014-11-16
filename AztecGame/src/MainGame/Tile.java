@@ -1,6 +1,7 @@
 package MainGame;
 //Zane Laughlin- Tile Class: Holds tile info
 
+import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 
-public class Tile {
+public class Tile{
 	
 	private TileType type;
 	public Polygon selectangle;
@@ -78,6 +79,14 @@ public class Tile {
 	public boolean checkcontains(int x, int y){
 		//System.out.println("ch2");
 		return this.selectangle.contains(x,y);
+	}
+	
+	public boolean checkcontains(Point pnt){
+		return this.selectangle.contains(pnt);
+	}
+	
+	public void update(){
+		
 	}
 	
 	public boolean getRevealed(){

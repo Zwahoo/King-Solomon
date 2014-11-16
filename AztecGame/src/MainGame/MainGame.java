@@ -124,6 +124,10 @@ public class MainGame {
 			images[3] = ImageIO.read(new File("assets/marker.png"));
 			images[4] = ImageIO.read(new File("assets/statusbar.png"));
 			images[5] = ImageIO.read(new File("assets/unknown.png"));
+			images[6] = ImageIO.read(new File("assets/redTint.png"));
+			images[7] = ImageIO.read(new File("assets/blueTint.png"));
+			images[8] = ImageIO.read(new File("assets/darkTint.png"));
+			images[9] = ImageIO.read(new File("assets/blank.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -179,6 +183,10 @@ public class MainGame {
 						newx + 63, newx + 125, newx + 125, newx + 63,
 						newx + 62, newy + 32, newy + 31, newy, newy, newy + 31,
 						newy + 32, newy + 63, newy + 63);
+				map.getTileOverlay(i, b).setSelectangle(newx, newx, newx + 62,
+						newx + 63, newx + 125, newx + 125, newx + 63,
+						newx + 62, newy + 32, newy + 31, newy, newy, newy + 31,
+						newy + 32, newy + 63, newy + 63);
 				newx += 64;
 				newy -= 32;
 			}
@@ -188,6 +196,11 @@ public class MainGame {
 	//Update all the various bits and pieces of the game world.
 	public void update() {
 		input.update();
+		for (int x = 0; x < map.getWidth(); x++){
+			for (int y = 0; y < map.getHeight(); y++){
+				map.getTileOverlay(x, y).update();
+			}
+		}
 		if (statsChanged) {
 			statsBar.setText(getStatString());
 			statsChanged = false;
@@ -461,10 +474,6 @@ public class MainGame {
 		if (result == 0){
 			partyStatChange.addAll(r.getLosePartyStatChange());
 			resourceChange.addAll(r.getLoseResourceChange());
-			
-			//Testing
-			System.out.println(partyStatChange.size() + " should be the same as " + r.getLosePartyStatChange().size() + ". This is a lose condition.");
-			System.out.println(resourceChange.size() + " should be the same as " + r.getLoseResourceChange().size() + ". This is a lose condition.");
 		} else if (result == 1){
 			for (int i = 0; i < resourceKeys.length; i++){
 				resourceChange.add((long) 0);
@@ -472,17 +481,9 @@ public class MainGame {
 			for (int c = 0; c < partyStatKeys.length; c++){
 				partyStatChange.add((long) 0);
 			}
-			
-			//Testing
-			System.out.println(partyStatChange.size() + " should be the same as " + r.getLosePartyStatChange().size() + ". This is a pass condition.");
-			System.out.println(resourceChange.size() + " should be the same as " + r.getLoseResourceChange().size() + ". This is a pass condition.");
 		} else if (result == 2){
 			partyStatChange.addAll(r.getWinPartyStatChange());
 			resourceChange.addAll(r.getWinResourceChange());
-			
-			//Testing
-			System.out.println(partyStatChange.size() + " should be the same as " + r.getLosePartyStatChange().size() + ". This is a win condition.");
-			System.out.println(resourceChange.size() + " should be the same as " + r.getLoseResourceChange().size() + ". This is a win condition.");
 		}
 		
 		ArrayList<Long> resourceCost = new ArrayList<Long>();
