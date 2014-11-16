@@ -313,7 +313,9 @@ public class MainGame {
 				restEvents.add(e);
 			} else if (e.getEventType().equalsIgnoreCase("investigate")){
 				investigateEvents.add(e);
-			} else{
+			} else if (e.getEventType().equalsIgnoreCase("Other")){
+				
+			} else {
 				System.out.println("Event called " + e.getEventID() + " has an incorrect type.");
 			}
 		}

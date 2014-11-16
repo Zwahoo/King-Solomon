@@ -35,6 +35,8 @@ public class ResponseOption {
 	private int rewardDisperseLose;
 	
 	private PartyMember selectedMember = null;
+	
+	public static final int MAX_LENGTH = 90; //How many characters can fit in a response option text box
 		
 	public ResponseOption(String text, ArrayList<Long> resourceStatCost, 
 			ArrayList<Long> partyStatRequirement, 
@@ -71,6 +73,7 @@ public class ResponseOption {
 		
 		appendTextWithCosts();
 		appendTextWithPartyRequirements();
+		checkTextLength();
 	}
 	
 	//Replaces the string {playername} with the selected player's name.
@@ -87,23 +90,29 @@ public class ResponseOption {
 				MainGame.AMMO_KEY, MainGame.MEDICINE_KEY, MainGame.MORALE_KEY,
 				MainGame.STAMINA_KEY, MainGame.PACK_ANIMALS_KEY
 		};
+		String tempText = "";
 		boolean hasBeenEdited = false;
 		for (int i = 0; i < cost.size(); i++){
 			if (cost.get(i) > 0 && !hasBeenEdited){
-				text += " (Costs: " + cost.get(i) + " " + resourceKeys[i];
+				tempText += " (Costs: " + cost.get(i) + " " + resourceKeys[i];
 				hasBeenEdited = true;
 			}
 			else if (cost.get(i) > 0 && hasBeenEdited){
-				text += ", " + cost.get(i) + " " + resourceKeys[i];
+				tempText += ", " + cost.get(i) + " " + resourceKeys[i];
 			}
 		}
 		
 		if (hasBeenEdited){
-			text += ")";
+			tempText += ")";
+			if (tempText.length() > MAX_LENGTH - text.length()){
+				tempText = " (Costs: A whole lot!)";
+			}
 		}
 		else {
-			text += " (Costs: Nothing)";
+			tempText += " (Costs: Nothing)";
 		}
+		
+		text += tempText;
 	}
 	
 	public void appendTextWithPartyRequirements(){
@@ -117,18 +126,32 @@ public class ResponseOption {
 				keyMan.DIPLOMACY_KEY, keyMan.KNOWLEDGE_KEY
 		};
 		
+		String tempText = "";
 		boolean hasBeenEdited = false;
 		for (int i = 0; i < totalCurrentPartyStats.size(); i++){
 			if ((totalCurrentPartyStats.get(i) < requirements.get(i)) && !hasBeenEdited){
-				text += " You require more: " + partyStatKeys[i];
+				tempText += " You require more: " + partyStatKeys[i];
 				hasBeenEdited = true;
 			}
 			else if (totalCurrentPartyStats.get(i) < requirements.get(i) && hasBeenEdited){
-				text += ", " + partyStatKeys[i];
+				tempText += ", " + partyStatKeys[i];
 			}
 		}
 		if (hasBeenEdited){
-			text += ".";
+			tempText += ".";
+			if (tempText.length() > MAX_LENGTH - text.length()){
+				tempText = " You need a lot better stats.";
+			}
+		}
+		
+		text += tempText;
+	}
+	
+	public void checkTextLength(){
+		int textLength = text.length();
+		
+		if (textLength > MAX_LENGTH){
+			text = text.substring(0, MAX_LENGTH + 1);
 		}
 	}
 	
