@@ -102,6 +102,15 @@ public class Tile {
 		MainGame.launchEvent(moveToEvent, presMembers);
 	
 	}
+	public void runInvestigateEvent(ArrayList<PartyMember> presMembers) {
+		if (investigateEvent == null) return;
+		MainGame.launchEvent(investigateEvent, presMembers);
+	}
+	
+	public void runRestEvent(ArrayList<PartyMember> presMembers) {
+		if (restEvent == null) return;
+		MainGame.launchEvent(restEvent, presMembers);
+	}
 	
 	@Override
 	public String toString() {
