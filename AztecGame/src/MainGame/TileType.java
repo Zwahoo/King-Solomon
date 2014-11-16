@@ -21,4 +21,12 @@ public class TileType {
 	public boolean colorMatch(int r, int g, int b) {
 		return (r == mapCol.getRed() && g == mapCol.getGreen() && b == mapCol.getBlue());
 	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public boolean canBeOccupied(){
+		return canBeOccupied;
+	}
 }

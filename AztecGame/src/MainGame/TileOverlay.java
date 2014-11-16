@@ -80,11 +80,53 @@ public class TileOverlay{
 	}
 	
 	public void update(){
-		boolean mouseOn = checkContains(MainGame.input.getMouseLoc().getX(), MainGame.input.getMouseLoc().getY() - 400);
-		if (mouseOn){
+		int playerX = MainGame.getPlayer().getX();
+		int playerY = MainGame.getPlayer().getY();
+		double xRelBoard = MainGame.input.getMouseLoc().getX() - MainGame.getViewLoc().x;
+        double yRelBoard = MainGame.input.getMouseLoc().getY() - MainGame.getViewLoc().y;
+		boolean mouseOn = checkContains(xRelBoard, yRelBoard);
+		if (this.getY() == playerY + 1 || this.getY() == playerY - 1){
+			if (this.getX() == playerX || this.getX() == playerX){
+				if (MainGame.map.getTile(getX(), getY()).getType().canBeOccupied() && mouseOn){
+					this.type = "darkBlue";
+				} else if (MainGame.map.getTile(getX(), getY()).getType().canBeOccupied() && !mouseOn){
+					this.type = "blue";
+				} else if (!MainGame.map.getTile(getX(), getY()).getType().canBeOccupied() && mouseOn){
+					this.type = "darkRed";
+				} else if (!MainGame.map.getTile(getX(), getY()).getType().canBeOccupied() && !mouseOn){
+					this.type = "red";
+				}
+			}
+			else if (mouseOn){
+				this.type = "dark";
+			}
+			else if (!mouseOn){
+				this.type = "blank";
+			}
+		}
+		else if (this.getX() == playerX + 1 || this.getX() == playerX - 1){
+			if (this.getY() == playerY || this.getY() == playerY){
+				if (MainGame.map.getTile(getX(), getY()).getType().canBeOccupied() && mouseOn){
+					this.type = "darkBlue";
+				} else if (MainGame.map.getTile(getX(), getY()).getType().canBeOccupied() && !mouseOn){
+					this.type = "blue";
+				} else if (!MainGame.map.getTile(getX(), getY()).getType().canBeOccupied() && mouseOn){
+					this.type = "darkRed";
+				} else if (!MainGame.map.getTile(getX(), getY()).getType().canBeOccupied() && !mouseOn){
+					this.type = "red";
+				}
+			}
+			else if (mouseOn){
+				this.type = "dark";
+			}
+			else if (!mouseOn){
+				this.type = "blank";
+			}
+		}
+		else if (mouseOn){
 			this.type = "dark";
 		}
-		else {
+		else if (!mouseOn){
 			this.type = "blank";
 		}
 	}
@@ -108,6 +150,12 @@ public class TileOverlay{
 			return 7;
 		} else if (type.equalsIgnoreCase("dark")){
 			return 8;
+		} else if (type.equalsIgnoreCase("blank")){
+			return 9;
+		} else if (type.equalsIgnoreCase("darkRed")){
+			return 10;
+		} else if (type.equalsIgnoreCase("darkBlue")){
+			return 11;
 		} else {
 			return 9;
 		}

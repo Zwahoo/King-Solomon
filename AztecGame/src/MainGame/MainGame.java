@@ -17,9 +17,9 @@ import Components.StatsBar;
 
 public class MainGame {
 
-	private Map map; //The map containing all the tiles making up the world
-	private Player player1; //The player
-	private View view; //The "camera." What the player is seeing. Has a location, can move around.
+	public static Map map; //The map containing all the tiles making up the world
+	private static Player player1; //The player
+	private static View view; //The "camera." What the player is seeing. Has a location, can move around.
 	public static InputManager input; // This registers all the mouse and keyboard
 	public static Integer currentMode = -1;
 	
@@ -64,7 +64,7 @@ public class MainGame {
 	
 	//Death Row (To Be Deleted)
 	private BufferedImage loadedimage;
-	public static BufferedImage[] images = new BufferedImage[10];
+	public static BufferedImage[] images = new BufferedImage[20];
 	
 	public static EventDrawer eventDrawer = null;
 	public static StartDayDrawer startDayDrawer = null;
@@ -128,6 +128,8 @@ public class MainGame {
 			images[7] = ImageIO.read(new File("assets/blueTint.png"));
 			images[8] = ImageIO.read(new File("assets/darkTint.png"));
 			images[9] = ImageIO.read(new File("assets/blank.png"));
+			images[10] = ImageIO.read(new File("assets/darkRedTint.png"));
+			images[11] = ImageIO.read(new File("assets/darkBlueTint.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -245,9 +247,9 @@ public class MainGame {
 	
 	
 	//Returns the location of the view.
-	public Point getViewLoc() { return view.getLocation();	}
+	public static Point getViewLoc() { return view.getLocation();	}
 	public Map getMap() { return map; }
-	public Player getPlayer() { return player1; }
+	public static Player getPlayer() { return player1; }
 	public View getView() { return view; }
 	//Returns a clone, so the stats can't be modified using the get method.
 	@SuppressWarnings("unchecked")
