@@ -43,6 +43,7 @@ public class MainGame {
 	public ArrayList<Event> moveToEvents = new ArrayList<Event>();
 	public ArrayList<Event> restEvents = new ArrayList<Event>();
 	public ArrayList<Event> investigateEvents = new ArrayList<Event>();
+	public ArrayList<Event> miscEvents = new ArrayList<Event>();
 	
 	public static final String FOOD_KEY = "Food";
 	public static final String WATER_KEY = "Water";
@@ -59,7 +60,9 @@ public class MainGame {
 	public static final double REST_FREQUENCY = .25;
 	
 	//Party
+	public static ArrayList<PartyMember> oldParty;
 	public static ArrayList<PartyMember> party;
+	public static ArrayList<PartyMember> possibleParty;
 	
 	
 	//Death Row (To Be Deleted)
@@ -72,21 +75,53 @@ public class MainGame {
 	//Starts the game, takes in the window frame, width, and height.
 	public MainGame(gameframe frame, int width, int height) throws IOException {
 		
-	    party = new ArrayList<PartyMember>();
-		party.add(new PartyMember("The Gentleman", "Gentleman", 0,
+		possibleParty = new ArrayList<PartyMember>();
+		possibleParty.add(new PartyMember("The Gentleman", "Gentleman", 0,
 				"Quite.", PartyMemberStats.AVERAGE_ABE_STATS));
-		party.get(0).setGentleman(true);
-		party.add(new PartyMember("Happy Hunter", "Hunter", 100,
+		possibleParty.get(0).setGentleman(true);
+		possibleParty.add(new PartyMember("Macumazahn", "Hunter", 100,
+				"An African native that consantly looks gaunt, wears jewelry and skins.", PartyMemberStats.HAPPY_HUNTER_STATS));
+		possibleParty.add(new PartyMember("Jan Kruger", "Hunter", 100,
+				"A Boer that is large, intimidating, and has brown hair.", PartyMemberStats.HAPPY_HUNTER_STATS));
+		possibleParty.add(new PartyMember("Umbopa", "Mercenary", 100,
+				"An African native that is large, intimidating, and has a large scar on his face. Usually leaves his chest bear.", PartyMemberStats.MERRY_MERCENARY_STATS));
+		possibleParty.add(new PartyMember("Wonai", "Naturalist", 100,
+				"An older African native that proudly wears the garb of a shaman.", PartyMemberStats.NIFTY_NATURALIST_STATS));
+		possibleParty.add(new PartyMember("Roland Perry", "Naturalist", 100,
+				"A British man with a small frame and brown hair. Often seen wearing a monocle and very fine clothes.", PartyMemberStats.NIFTY_NATURALIST_STATS));
+		possibleParty.add(new PartyMember("Theunis Van Zyl", "Missionary", 100,
+				"A Boer that looks like a mirror of the stereotypical priest. Has a small frame, white hair, and wears glasses with the classic clerical garb.", PartyMemberStats.MARVELOUS_MISSIONARY_STATS));
+		possibleParty.add(new PartyMember("Duncan MacKinnon", "Missionary", 100,
+				"A Scottish man with a large frame and red hair. He wears normal clothes and a wide brimmed hat.", PartyMemberStats.MARVELOUS_MISSIONARY_STATS));
+		possibleParty.add(new PartyMember("Willem de Bruin", "Explorer", 100,
+				"A Boer with a medium build and blonde hair. Usually seen with his favorite tan explorers' shirt and vest.", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
+		possibleParty.add(new PartyMember("Jack Reed", "Explorer", 100,
+				"An American man with a medium build and a 12 o' clock shadow. Has a handsome face and a great smile, and is often seen wearing a simple shirt.", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
+		possibleParty.add(new PartyMember("Tariro", "Guide", 100,
+				"An African native with a friendly face. He is often seen wearing European clothes imported from the north.", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
+		possibleParty.add(new PartyMember("Jakobus Kotze", "Guide", 100,
+				"A Boer with a medium build and brown hair. His sides are rather wide, and his often seen wearing simple farmers' clothes.", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
+		
+		party = new ArrayList<PartyMember>();
+		for (PartyMember e : possibleParty){
+			party.add(e);
+		}
+		
+	    oldParty = new ArrayList<PartyMember>();
+	    oldParty.add(new PartyMember("The Gentleman", "Gentleman", 0,
+				"Quite.", PartyMemberStats.AVERAGE_ABE_STATS));
+	    oldParty.get(0).setGentleman(true);
+	    oldParty.add(new PartyMember("Happy Hunter", "Hunter", 100,
 				"Likes cooking meat and long walks on the savannah.", PartyMemberStats.HAPPY_HUNTER_STATS));
-		party.add(new PartyMember("Merry Mercenary", "Mercenary", 100,
+	    oldParty.add(new PartyMember("Merry Mercenary", "Mercenary", 100,
 				"Was once payed $100,000 to kill the Queen. Married her instead.", PartyMemberStats.MERRY_MERCENARY_STATS));
-		party.add(new PartyMember("Nifty Naturalist", "Naturalist", 100,
+	    oldParty.add(new PartyMember("Nifty Naturalist", "Naturalist", 100,
 				"Once saved six men using only a single leaf of poison ivy, and three blades of grass.", PartyMemberStats.NIFTY_NATURALIST_STATS));
-		party.add(new PartyMember("Marvelous Missionary", "Missionary", 100,
+	    oldParty.add(new PartyMember("Marvelous Missionary", "Missionary", 100,
 				"Holds the current leading Convert-to-Failure ratio in the entire South African Pro Missionary League.", PartyMemberStats.MARVELOUS_MISSIONARY_STATS));
-		party.add(new PartyMember("Exuberant Explorer", "Explorer", 100,
+	    oldParty.add(new PartyMember("Exuberant Explorer", "Explorer", 100,
 				"Made the world's first Atlas at age 6.", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
-		party.add(new PartyMember("Giddy Guide", "Guide", 100,
+	    oldParty.add(new PartyMember("Giddy Guide", "Guide", 100,
 				"He's Giddy!", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
 		
 		//Initialize the different tile types.
@@ -313,10 +348,10 @@ public class MainGame {
 				restEvents.add(e);
 			} else if (e.getEventType().equalsIgnoreCase("investigate")){
 				investigateEvents.add(e);
-			} else if (e.getEventType().equalsIgnoreCase("Other")){
-				
+			} else if (e.getEventType().equalsIgnoreCase("other")){
+				miscEvents.add(e);
 			} else {
-				System.out.println("Event called " + e.getEventID() + " has an incorrect type.");
+				System.out.println("Event called " + e.getEventID() + " has an incorrect type called " + e.getEventType() + ".");
 			}
 		}
 		return typeEventList;
@@ -478,6 +513,12 @@ public class MainGame {
 		if (result == 0){
 			partyStatChange.addAll(r.getLosePartyStatChange());
 			resourceChange.addAll(r.getLoseResourceChange());
+			for (int i = 0; i < partyStatChange.size(); i++){
+				partyStatChange.set(i, -partyStatChange.get(i));
+			}
+			for (int i = 0; i < resourceChange.size(); i++){
+				resourceChange.set(i, -resourceChange.get(i));
+			}
 		} else if (result == 1){
 			for (int i = 0; i < resourceKeys.length; i++){
 				resourceChange.add((long) 0);
