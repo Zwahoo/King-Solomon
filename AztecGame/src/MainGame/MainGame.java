@@ -286,6 +286,10 @@ public class MainGame {
 		party.add(pm);
 	}
 	
+	public static void killPartyMember(PartyMember pm){
+		party.remove(pm);
+	}
+	
 	//Returns the location of the view.
 	public static Point getViewLoc() { return view.getLocation();	}
 	public Map getMap() { return map; }
