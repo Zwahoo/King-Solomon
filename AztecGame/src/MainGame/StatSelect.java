@@ -24,7 +24,14 @@ public class StatSelect implements DrawScreen {
 	int statsListY = titleTextboxHeight + 40;
 	int statsListX = 5;
 	
+	int unusedTextboxX = 10;
+	int unusedTextboxY = 10;
+	int unusedTextboxWidth = 50;
+	int unusedTextboxHeight = 50;
+	
 	ArrayList<StatEntryField> statsEntryItems = new ArrayList<StatEntryField>();
+	
+	Textbox unusedTextbox;	
 	
 	public StatSelect() {
 		titleBox = new Textbox("Select Gentleman's Stats",
@@ -62,6 +69,10 @@ public class StatSelect implements DrawScreen {
 		for(StatEntryField field : statsEntryItems) {
 			field.dispose();
 		}
+	}
+	
+	public static void UpdateUnused(int val) {
+		unused = val;
 	}
 	
 }
