@@ -507,7 +507,16 @@ public class MainGame {
 				STAMINA_KEY, PACK_ANIMALS_KEY
 		};
 		
+		//Need to change response option to have these fields and update them
 		PartyMember keyMan = party.get(0);
+		if(r.killSelectedMember) {
+			party.remove(r.getSelectedMember());
+			System.out.println("killed someone :(");
+		}
+		if(r.killRandomMember) {
+			//get which random member it was from the event
+		}
+		
 		@SuppressWarnings("static-access")
 		String[] partyStatKeys = {
 				keyMan.MARKSMANSHIP_KEY, keyMan.PERCEPTION_KEY,
