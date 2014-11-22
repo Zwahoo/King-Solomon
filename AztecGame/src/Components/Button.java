@@ -43,7 +43,7 @@ public class Button extends InputListener {
 	}
 	public Button(Rectangle rect, String str, InputManager inputManager) {
 		ArrayList<Integer> temp = new ArrayList<Integer>();
-		temp.add(MainGame.START_DAY_MODE); temp.add(MainGame.MOVEMENT_MODE); temp.add(MainGame.EVENT_MODE);
+		temp.add(MainGame.START_DAY_MODE); temp.add(MainGame.MOVEMENT_MODE); temp.add(MainGame.EVENT_MODE); temp.add(-1);
 		setInputManager(inputManager, temp); //Required for handling input
 		
 		this.myRect = new Rectangle(rect);

@@ -1,5 +1,6 @@
 package MainGame;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 
@@ -10,11 +11,12 @@ public class IntroSequence {
 	private DrawScreen currentScreen;
 	private StatSelect statSelect;
 	
+	Color bkgColor = Color.GRAY;
+	
 	public static InputManager input;
 	
 	public IntroSequence(Component c) {
 		input = new InputManager(c, null);
-		
 		setupStatSelect();
 	}
 
@@ -34,6 +36,8 @@ public class IntroSequence {
 	}
 	
 	public void draw(Graphics g) {
+		g.setColor(bkgColor);
+		g.fillRect(0, 0, gameframe.windowWidth, gameframe.windowHeight);
 		currentScreen.draw(g);
 	}
 
