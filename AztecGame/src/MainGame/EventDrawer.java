@@ -93,6 +93,9 @@ public class EventDrawer {
 	int exitButtonX;
 	int exitButtonY;
 	
+	//list of present party members
+	ArrayList<PartyMember> izDaParty = new ArrayList<PartyMember>();
+	
 	/*
 	 * @param	toLaunch: event being created
 	 * @param	presMembers: current party members for this event
@@ -123,6 +126,7 @@ public class EventDrawer {
 		}
 		
 		info = new Textbox(toLaunch.getIntroText(), infoTextboxX, infoTextboxY, (int)(gameframe.windowWidth*infoTextboxWMult), (int)(gameframe.windowHeight*infoTextboxHMult), MainGame.input);
+		izDaParty = presMembers;
 		partyMembersTextbox  = new Textbox(getPresentPartyMembers(presMembers), partyMembersX, partyMembersY, (int)(gameframe.windowWidth*partyMembersWMult), (int)(gameframe.windowHeight*partyMembersHMult), MainGame.input);
 		adviceBox = new Textbox(parseAdvice(toLaunch.getAdvice(), presMembers), partyMembersX, partyMembersY, (int)(gameframe.windowWidth*partyMembersWMult), (int)(gameframe.windowHeight*partyMembersHMult), MainGame.input);
 		result = new Textbox("", resultTextboxX, resultTextboxY, (int) (gameframe.windowWidth*resultTextboxWMult), 
@@ -344,7 +348,29 @@ public class EventDrawer {
 		exit = new Button(exitButtonX, exitButtonY, (int)(gameframe.windowWidth*exitButtonWMult), (int)(gameframe.windowHeight*exitButtonHMult), "Exit", MainGame.input) {
 			@Override
 			public void onClick() {
-				MainGame.closeEvent();
+				if (resultNumber == 1){
+					MainGame.closeEvent();
+				}
+				else if (resultNumber == 0){
+					MainGame.closeEvent();
+					if (!(ro.loseFollowUp.equals(null))){
+						int index = ro.loseFollowUp.indexOf('/');
+						String cutLoseFollowUp = "assets/events/" + ro.loseFollowUp.substring(index,ro.loseFollowUp.length()-1);
+						HashMap <String, Object> izDaMap= FileToMap.createMap(cutLoseFollowUp);
+						Event izDaEvent = MapToEvent.createEvent(izDaMap);
+						MainGame.launchEvent(izDaEvent, izDaParty);
+					}
+				}
+				else{
+					MainGame.closeEvent();
+					if (!(ro.winFollowUp.equals(null))){
+						int index = ro.winFollowUp.indexOf('/');
+						String cutWinFollowUp = "assets/events/" + ro.winFollowUp.substring(index,ro.winFollowUp.length()-1);
+						HashMap <String, Object> izDaMap= FileToMap.createMap(cutWinFollowUp);
+						Event izDaEvent = MapToEvent.createEvent(izDaMap);
+						MainGame.launchEvent(izDaEvent, izDaParty);
+					}
+				}
 			}
 		};
 		buttons.add(exit);
