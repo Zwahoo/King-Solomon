@@ -18,7 +18,7 @@ import javax.swing.JFrame;
 public class gameframe extends JFrame {
 
 	
-	boolean doSetup = true;
+	boolean doSetup = false;
 	
 	
 	private boolean isRunning = true;
