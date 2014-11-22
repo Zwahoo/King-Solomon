@@ -170,6 +170,15 @@ public class ResponseOption {
 		return selectedMember;
 	}
 	
+	public void killSelectedMember(){
+		MainGame.killPartyMember(selectedMember);
+	}
+	
+	public void killRandomMember(){
+		int ran1 = (int)Math.floor(Math.random() * (MainGame.party.size()));
+		MainGame.killPartyMember(MainGame.party.get(ran1));
+	}
+	
 	//Get and Set ALL the things!
 	public String getText() {
 		return handleNameReplacement(text);
