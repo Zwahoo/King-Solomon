@@ -56,13 +56,14 @@ public class MainGame {
 	
 	//Event Frequencies
 	public static final double MOVE_TO_FREQUENCY = .5;
-	public static final double INVESTIGATE_FREQUENCY = .25;
-	public static final double REST_FREQUENCY = .25;
+	// Change to ~.75 and ~.25 once null events are written
+	public static final double INVESTIGATE_FREQUENCY = 1;
+	public static final double REST_FREQUENCY = 1;
 	
 	//Party
 	public static ArrayList<PartyMember> oldParty;
-	public static ArrayList<PartyMember> party;
-	public static ArrayList<PartyMember> possibleParty;
+	public static ArrayList<PartyMember> party = new ArrayList<PartyMember>();
+	public static HashMap<String, PartyMember> possibleParty;
 	
 	
 	//Death Row (To Be Deleted)
@@ -75,38 +76,38 @@ public class MainGame {
 	//Starts the game, takes in the window frame, width, and height.
 	public MainGame(gameframe frame, int width, int height) throws IOException {
 		
-		possibleParty = new ArrayList<PartyMember>();
-		possibleParty.add(new PartyMember("The Gentleman", "Gentleman", 0,
+		//possibleParty = new ArrayList<PartyMember>();
+		possibleParty = new HashMap<String, PartyMember>();
+		possibleParty.put("Gentleman", new PartyMember("The Gentleman", "Gentleman", 0,
 				"Quite.", PartyMemberStats.AVERAGE_ABE_STATS));
-		possibleParty.get(0).setGentleman(true);
-		possibleParty.add(new PartyMember("Macumazahn", "Hunter", 100,
+		possibleParty.get("Gentleman").setGentleman(true);
+		possibleParty.put("Macumazahn", new PartyMember("Macumazahn", "Hunter", 100,
 				"An African native that consantly looks gaunt, wears jewelry and skins.", PartyMemberStats.HAPPY_HUNTER_STATS));
-		possibleParty.add(new PartyMember("Jan Kruger", "Hunter", 100,
+		possibleParty.put("Jan Kruger", new PartyMember("Jan Kruger", "Hunter", 100,
 				"A Boer that is large, intimidating, and has brown hair.", PartyMemberStats.HAPPY_HUNTER_STATS));
-		possibleParty.add(new PartyMember("Umbopa", "Mercenary", 100,
+		possibleParty.put("Umbopa", new PartyMember("Umbopa", "Mercenary", 100,
 				"An African native that is large, intimidating, and has a large scar on his face. Usually leaves his chest bear.", PartyMemberStats.MERRY_MERCENARY_STATS));
-		possibleParty.add(new PartyMember("Gunther Reinhart", "Mercenary", 100,
+		possibleParty.put("Gunther Reinhart", new PartyMember("Gunther Reinhart", "Mercenary", 100,
 				"A Prussian man with a medium build and black hair. He wears a military outfit and has a scruffy beard that gives him an intimidating appearance.", PartyMemberStats.MERRY_MERCENARY_STATS));
-		possibleParty.add(new PartyMember("Wonai", "Naturalist", 100,
+		possibleParty.put("Wonai", new PartyMember("Wonai", "Naturalist", 100,
 				"An older African native that proudly wears the garb of a shaman.", PartyMemberStats.NIFTY_NATURALIST_STATS));
-		possibleParty.add(new PartyMember("Roland Perry", "Naturalist", 100,
+		possibleParty.put("Roland Perry", new PartyMember("Roland Perry", "Naturalist", 100,
 				"A British man with a small frame and brown hair. Often seen wearing a monocle and very fine clothes.", PartyMemberStats.NIFTY_NATURALIST_STATS));
-		possibleParty.add(new PartyMember("Theunis Van Zyl", "Missionary", 100,
+		possibleParty.put("Theunis Van Zyl", new PartyMember("Theunis Van Zyl", "Missionary", 100,
 				"A Boer that looks like a mirror of the stereotypical priest. Has a small frame, white hair, and wears glasses with the classic clerical garb.", PartyMemberStats.MARVELOUS_MISSIONARY_STATS));
-		possibleParty.add(new PartyMember("Duncan MacKinnon", "Missionary", 100,
+		possibleParty.put("Duncan MacKinnon", new PartyMember("Duncan MacKinnon", "Missionary", 100,
 				"A Scottish man with a large frame and red hair. He wears normal clothes and a wide brimmed hat.", PartyMemberStats.MARVELOUS_MISSIONARY_STATS));
-		possibleParty.add(new PartyMember("Willem de Bruin", "Explorer", 100,
+		possibleParty.put("Willem de Bruin", new PartyMember("Willem de Bruin", "Explorer", 100,
 				"A Boer with a medium build and blonde hair. Usually seen with his favorite tan explorers' shirt and vest.", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
-		possibleParty.add(new PartyMember("Jack Reed", "Explorer", 100,
+		possibleParty.put("Jack Reed", new PartyMember("Jack Reed", "Explorer", 100,
 				"An American man with a medium build and a 12 o' clock shadow. Has a handsome face and a great smile, and is often seen wearing a simple shirt.", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
-		possibleParty.add(new PartyMember("Tariro", "Guide", 100,
+		possibleParty.put("Tariro", new PartyMember("Tariro", "Guide", 100,
 				"An African native with a friendly face. He is often seen wearing European clothes imported from the north.", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
-		possibleParty.add(new PartyMember("Jakobus Kotze", "Guide", 100,
+		possibleParty.put("Jakobus Kotze", new PartyMember("Jakobus Kotze", "Guide", 100,
 				"A Boer with a medium build and brown hair. His sides are rather wide, and his often seen wearing simple farmers' clothes.", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
 		
-		party = new ArrayList<PartyMember>();
-		for (PartyMember e : possibleParty){
-			party.add(e);
+		for (String e : possibleParty.keySet()){
+			addPartyMemberToParty(possibleParty.get(e));
 		}
 		
 	    oldParty = new ArrayList<PartyMember>();
@@ -282,6 +283,13 @@ public class MainGame {
 		incPartyStat(STAMINA_KEY, -10);
 	}
 	
+	public static void addPartyMemberToParty(PartyMember pm){
+		party.add(pm);
+	}
+	
+	public static void killPartyMember(PartyMember pm){
+		party.remove(pm);
+	}
 	
 	//Returns the location of the view.
 	public static Point getViewLoc() { return view.getLocation();	}
@@ -500,7 +508,9 @@ public class MainGame {
 				STAMINA_KEY, PACK_ANIMALS_KEY
 		};
 		
+		//Need to change response option to have these fields and update them
 		PartyMember keyMan = party.get(0);
+		
 		@SuppressWarnings("static-access")
 		String[] partyStatKeys = {
 				keyMan.MARKSMANSHIP_KEY, keyMan.PERCEPTION_KEY,
@@ -547,6 +557,26 @@ public class MainGame {
 			incRandomPersonStat(partyStatKeys[c], partyStatChange.get(c).intValue());
 		}
 		
+		if (r.isKillPersonLose() && result == 0){
+			if (r.getRewardDisperseLose() == 0){
+				r.killRandomMember();
+			} else if (r.getRewardDisperseLose() == 1){
+				r.killSelectedMember();
+			} else if (r.getRewardDisperseLose() == 2){
+				r.killRandomMember();
+			}
+		} else if (r.isKillPersonPass() && result == 1){
+			r.killSelectedMember();
+		} else if (r.isKillPersonWin() && result == 2){
+			if (r.getRewardDisperseWin() == 0){
+				r.killRandomMember();
+			} else if (r.getRewardDisperseWin() == 1){
+				r.killSelectedMember();
+			} else if (r.getRewardDisperseWin() == 2){
+				r.killRandomMember();
+			}
+		}
+		
 		resourceChange.clear();
 		partyStatChange.clear();
 }
@@ -558,9 +588,14 @@ public class MainGame {
 		startDayDrawer = new StartDayDrawer();
 	}
 
-	public static void closeStartDay(Integer newmode) {
+	public static void closeStartDay(Integer newmode, int startDayChoice) {
 		currentMode = newmode;
-		//also, launch event if necessary.
+		if (startDayChoice == 1) {
+			MainGame.launchEvent(MainGame.player1.getCurrentTile().getInvestigateEvent(), MainGame.party);
+		} else if (startDayChoice == 2) {
+			MainGame.launchEvent(MainGame.player1.getCurrentTile().getRestEvent(), MainGame.party);
+		}
+		startDayDrawer.destroyer();
 		startDayDrawer = null;
 	}
 	

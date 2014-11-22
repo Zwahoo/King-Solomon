@@ -36,6 +36,13 @@ public class ResponseOption {
 	
 	private PartyMember selectedMember = null;
 	
+	
+	//TODO implement these. Will affect the event creator
+	//Selected if user chooses to kill a member as an option
+	public boolean killSelectedMember;
+	//Random if the event itself kills a member
+	public boolean killRandomMember;
+	
 	public static final int MAX_LENGTH = 90; //How many characters can fit in a response option text box
 		
 	public ResponseOption(String text, ArrayList<Long> resourceStatCost, 
@@ -157,6 +164,19 @@ public class ResponseOption {
 	
 	public void setSelectedMember(PartyMember selectedMember) {
 		this.selectedMember = selectedMember;
+	}
+	
+	public PartyMember getSelectedMember() {
+		return selectedMember;
+	}
+	
+	public void killSelectedMember(){
+		MainGame.killPartyMember(selectedMember);
+	}
+	
+	public void killRandomMember(){
+		int ran1 = (int)Math.floor(Math.random() * (MainGame.party.size()));
+		MainGame.killPartyMember(MainGame.party.get(ran1));
 	}
 	
 	//Get and Set ALL the things!

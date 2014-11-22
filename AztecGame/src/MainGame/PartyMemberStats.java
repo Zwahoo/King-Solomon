@@ -22,6 +22,21 @@ public final class PartyMemberStats {
 	}
 	 */
 	
+	public static final HashMap<String, String> STAT_DESCRIPTIONS;
+	static
+	{
+		STAT_DESCRIPTIONS = new HashMap<String, String>();
+		STAT_DESCRIPTIONS.put(PartyMember.MARKSMANSHIP_KEY, "How accurate the party member is.");
+		STAT_DESCRIPTIONS.put(PartyMember.PERCEPTION_KEY, "How observant the party member is.");
+		STAT_DESCRIPTIONS.put(PartyMember.TACTICS_KEY, "How strategic the party member is.");
+		STAT_DESCRIPTIONS.put(PartyMember.LOYALTY_KEY, "How loyal the party member is.");
+		STAT_DESCRIPTIONS.put(PartyMember.AGILITY_KEY, "How agile the party member is.");
+		STAT_DESCRIPTIONS.put(PartyMember.STRENGTH_KEY, "How strong the party member is.");
+		STAT_DESCRIPTIONS.put(PartyMember.DIPLOMACY_KEY, "How charismatic the party member is.");
+		STAT_DESCRIPTIONS.put(PartyMember.KNOWLEDGE_KEY, "How smart the party member is.");
+		
+	}
+	
 	public static final HashMap<String, Integer> AVERAGE_ABE_STATS;
 	static
 	{

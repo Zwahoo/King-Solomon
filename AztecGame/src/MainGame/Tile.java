@@ -117,4 +117,12 @@ public class Tile{
 		return "Tile: (" + xp + ", " + yp + ") : " + getType().name;
 	}
 	
+	public Event getInvestigateEvent() {
+		return investigateEvent;
+	}
+	
+	public Event getRestEvent() {
+		return restEvent;
+	}
+	
 }
