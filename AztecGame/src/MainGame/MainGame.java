@@ -61,7 +61,7 @@ public class MainGame {
 	
 	//Party
 	public static ArrayList<PartyMember> oldParty;
-	public static ArrayList<PartyMember> party;
+	public static ArrayList<PartyMember> party = new ArrayList<PartyMember>();
 	public static HashMap<String, PartyMember> possibleParty;
 	
 	
@@ -104,6 +104,10 @@ public class MainGame {
 				"An African native with a friendly face. He is often seen wearing European clothes imported from the north.", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
 		possibleParty.put("Jakobus Kotze", new PartyMember("Jakobus Kotze", "Guide", 100,
 				"A Boer with a medium build and brown hair. His sides are rather wide, and his often seen wearing simple farmers' clothes.", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
+		
+		for (String e : possibleParty.keySet()){
+			addPartyMemberToParty(possibleParty.get(e));
+		}
 		
 	    oldParty = new ArrayList<PartyMember>();
 	    oldParty.add(new PartyMember("The Gentleman", "Gentleman", 0,
