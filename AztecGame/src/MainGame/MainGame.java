@@ -563,6 +563,14 @@ public class MainGame {
 			incRandomPersonStat(partyStatKeys[c], partyStatChange.get(c).intValue());
 		}
 		
+		if (r.isKillPersonLose() && result == 0){
+			r.killSelectedMember();
+		} else if (r.isKillPersonPass() && result == 1){
+			r.killSelectedMember();
+		} else if (r.isKillPersonWin() && result == 2){
+			r.killSelectedMember();
+		}
+		
 		resourceChange.clear();
 		partyStatChange.clear();
 }
