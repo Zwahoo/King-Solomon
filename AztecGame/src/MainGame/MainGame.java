@@ -85,6 +85,8 @@ public class MainGame {
 				"A Boer that is large, intimidating, and has brown hair.", PartyMemberStats.HAPPY_HUNTER_STATS));
 		possibleParty.add(new PartyMember("Umbopa", "Mercenary", 100,
 				"An African native that is large, intimidating, and has a large scar on his face. Usually leaves his chest bear.", PartyMemberStats.MERRY_MERCENARY_STATS));
+		possibleParty.add(new PartyMember("Gunther Reinhart", "Mercenary", 100,
+				"A Prussian man with a medium build and black hair. He wears a military outfit and has a scruffy beard that gives him an intimidating appearance.", PartyMemberStats.MERRY_MERCENARY_STATS));
 		possibleParty.add(new PartyMember("Wonai", "Naturalist", 100,
 				"An older African native that proudly wears the garb of a shaman.", PartyMemberStats.NIFTY_NATURALIST_STATS));
 		possibleParty.add(new PartyMember("Roland Perry", "Naturalist", 100,
