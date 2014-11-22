@@ -1,7 +1,7 @@
 package MainGame;
 
 import java.awt.Graphics;
-
+import java.util.ArrayList;
 import Components.Button;
 import Components.Textbox;
 
@@ -45,28 +45,34 @@ public class StartDayDrawer {
 				buttonheighti, MOVE_BUTTON_TEXT, MainGame.input) {
 			@Override
 			public void onClick() {
-				handleResponseSelect(MainGame.MOVEMENT_MODE);
+				handleResponseSelect(MainGame.MOVEMENT_MODE, 0);
 			}
 		};
 		investigateButton = new Button(0, verticalinset + buttonheighti,
 				buttonwidth, buttonheighti, INV_BUTTON_TEXT, MainGame.input){
 			@Override
 			public void onClick() {
-				handleResponseSelect(MainGame.EVENT_MODE);
+				handleResponseSelect(MainGame.EVENT_MODE, 1);
 			}
 		};
 		restButton = new Button(0, verticalinset + 2*buttonheighti,
 				buttonwidth, buttonheighti, REST_BUTTON_TEXT, MainGame.input){
 			@Override
 			public void onClick() {
-				handleResponseSelect(MainGame.EVENT_MODE);
+				handleResponseSelect(MainGame.EVENT_MODE, 2);
 			}
 		};
 	}
 	
 	// currently, just close the menu.
-	public void handleResponseSelect(Integer mode) {
-		MainGame.closeStartDay(MainGame.MOVEMENT_MODE);
+	public void handleResponseSelect(Integer mode, int startDayChoice) {
+		if (startDayChoice == 0) {
+			MainGame.closeStartDay(MainGame.MOVEMENT_MODE, 0);
+		} else if (startDayChoice == 1) {
+			MainGame.closeStartDay(MainGame.EVENT_MODE, 1);
+		} else {
+			MainGame.closeStartDay(MainGame.EVENT_MODE, 2);
+		}
 	}
 	
 	public void draw(Graphics g) {
@@ -81,6 +87,14 @@ public class StartDayDrawer {
 		moveButton.update();
 		investigateButton.update();
 		restButton.update();
+	}
+	
+	public void destroyer() {
+		ArrayList<Integer> temp = new ArrayList<Integer>();
+		temp.add(MainGame.START_DAY_MODE); temp.add(MainGame.MOVEMENT_MODE); temp.add(MainGame.EVENT_MODE);
+		moveButton.removeInputManager(MainGame.input, temp);
+		investigateButton.removeInputManager(MainGame.input, temp);
+		restButton.removeInputManager(MainGame.input, temp);
 	}
 
 }

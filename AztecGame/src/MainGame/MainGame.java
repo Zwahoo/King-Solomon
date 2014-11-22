@@ -56,8 +56,9 @@ public class MainGame {
 	
 	//Event Frequencies
 	public static final double MOVE_TO_FREQUENCY = .5;
-	public static final double INVESTIGATE_FREQUENCY = .25;
-	public static final double REST_FREQUENCY = .25;
+	// Change to ~.75 and ~.25 once null events are written
+	public static final double INVESTIGATE_FREQUENCY = 1;
+	public static final double REST_FREQUENCY = 1;
 	
 	//Party
 	public static ArrayList<PartyMember> oldParty;
@@ -558,9 +559,14 @@ public class MainGame {
 		startDayDrawer = new StartDayDrawer();
 	}
 
-	public static void closeStartDay(Integer newmode) {
+	public static void closeStartDay(Integer newmode, int startDayChoice) {
 		currentMode = newmode;
-		//also, launch event if necessary.
+		if (startDayChoice == 1) {
+			MainGame.launchEvent(MainGame.player1.getCurrentTile().getInvestigateEvent(), MainGame.party);
+		} else if (startDayChoice == 2) {
+			MainGame.launchEvent(MainGame.player1.getCurrentTile().getRestEvent(), MainGame.party);
+		}
+		startDayDrawer.destroyer();
 		startDayDrawer = null;
 	}
 	
