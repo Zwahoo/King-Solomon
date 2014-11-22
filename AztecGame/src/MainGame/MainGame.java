@@ -509,13 +509,6 @@ public class MainGame {
 		
 		//Need to change response option to have these fields and update them
 		PartyMember keyMan = party.get(0);
-		if(r.killSelectedMember) {
-			party.remove(r.getSelectedMember());
-			System.out.println("killed someone :(");
-		}
-		if(r.killRandomMember) {
-			//get which random member it was from the event
-		}
 		
 		@SuppressWarnings("static-access")
 		String[] partyStatKeys = {
@@ -564,11 +557,23 @@ public class MainGame {
 		}
 		
 		if (r.isKillPersonLose() && result == 0){
-			r.killSelectedMember();
+			if (r.getRewardDisperseLose() == 0){
+				r.killRandomMember();
+			} else if (r.getRewardDisperseLose() == 1){
+				r.killSelectedMember();
+			} else if (r.getRewardDisperseLose() == 2){
+				r.killRandomMember();
+			}
 		} else if (r.isKillPersonPass() && result == 1){
 			r.killSelectedMember();
 		} else if (r.isKillPersonWin() && result == 2){
-			r.killSelectedMember();
+			if (r.getRewardDisperseWin() == 0){
+				r.killRandomMember();
+			} else if (r.getRewardDisperseWin() == 1){
+				r.killSelectedMember();
+			} else if (r.getRewardDisperseWin() == 2){
+				r.killRandomMember();
+			}
 		}
 		
 		resourceChange.clear();
