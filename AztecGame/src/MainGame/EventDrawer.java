@@ -348,28 +348,46 @@ public class EventDrawer {
 		exit = new Button(exitButtonX, exitButtonY, (int)(gameframe.windowWidth*exitButtonWMult), (int)(gameframe.windowHeight*exitButtonHMult), "Exit", MainGame.input) {
 			@Override
 			public void onClick() {
+				System.out.println("I was clicked! YAY!");
 				if (resultNumber == 1){
 					MainGame.closeEvent();
 				}
 				else if (resultNumber == 0){
-					MainGame.closeEvent();
-					if (!(ro.loseFollowUp.equals(null))){
-						int index = ro.loseFollowUp.indexOf('/');
-						String cutLoseFollowUp = "assets/events/" + ro.loseFollowUp.substring(index,ro.loseFollowUp.length()-1);
+					if (ro.loseFollowUp.length() > 3){
+						System.out.println("I (apparently) have a follow up");
+						int index = ro.loseFollowUp.lastIndexOf("\\");
+						String cutLoseFollowUp = "assets\\events" + ro.loseFollowUp.substring(index,ro.loseFollowUp.length());
 						HashMap <String, Object> izDaMap= FileToMap.createMap(cutLoseFollowUp);
 						Event izDaEvent = MapToEvent.createEvent(izDaMap);
+						destroyer();
+					
+						MainGame.eventDrawer = null;
 						MainGame.launchEvent(izDaEvent, izDaParty);
 					}
+					else{
+						System.out.println("Imma close it.");
+						MainGame.closeEvent();
+						System.out.println("something went right...");
+					}
+
 				}
 				else{
-					MainGame.closeEvent();
-					if (!(ro.winFollowUp.equals(null))){
-						int index = ro.winFollowUp.indexOf('/');
-						String cutWinFollowUp = "assets/events/" + ro.winFollowUp.substring(index,ro.winFollowUp.length()-1);
+
+					if (ro.winFollowUp.length() > 3){
+						System.out.println("I (apparently) have a follow up");
+						int index = ro.winFollowUp.lastIndexOf("\\");
+						String cutWinFollowUp = "assets\\events" + ro.winFollowUp.substring(index,ro.winFollowUp.length());
 						HashMap <String, Object> izDaMap= FileToMap.createMap(cutWinFollowUp);
 						Event izDaEvent = MapToEvent.createEvent(izDaMap);
+						destroyer();
+						MainGame.eventDrawer = null;
 						MainGame.launchEvent(izDaEvent, izDaParty);
+					} else {
+						System.out.println("Imma close it.");
+						MainGame.closeEvent();
+						System.out.println("HHHHH yay");
 					}
+
 				}
 			}
 		};

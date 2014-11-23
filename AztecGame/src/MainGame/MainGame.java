@@ -582,6 +582,7 @@ public class MainGame {
 }
 
 	public static void closeEvent() {
+		System.out.println("Closing Time");
 		eventDrawer.destroyer();
 		currentMode = START_DAY_MODE;
 		eventDrawer = null;
