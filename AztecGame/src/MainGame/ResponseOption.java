@@ -175,7 +175,10 @@ public class ResponseOption {
 	}
 	
 	public void killRandomMember(){
-		int ran1 = (int)Math.floor(Math.random() * (MainGame.party.size()));
+		int ran1 = (int)Math.floor(Math.random() * (MainGame.party.size() - 1)) + 1;
+		if (MainGame.party.size() == 1){
+			ran1 = 0;
+		}
 		MainGame.killPartyMember(MainGame.party.get(ran1));
 	}
 	

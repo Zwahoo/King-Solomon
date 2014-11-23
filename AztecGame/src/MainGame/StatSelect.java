@@ -40,6 +40,10 @@ public class StatSelect implements DrawScreen {
 		titleBox.SetFont(new Font("Georgia", Font.PLAIN, 30));
 		titleBox.textBuffer = 10;
 		
+		unusedTextbox = new Textbox(unused + "", unusedTextboxX, unusedTextboxY, unusedTextboxWidth, unusedTextboxHeight, IntroSequence.input);
+		unusedTextbox.SetFont(new Font("Georgia", Font.PLAIN, 30));
+		unusedTextbox.textBuffer = 3;
+		
 		int yVal = statsListY;
 		for(String stat : PartyMemberStats.AVERAGE_ABE_STATS.keySet()) {
 			if(stat.equals("Loyalty")) continue;
@@ -52,6 +56,7 @@ public class StatSelect implements DrawScreen {
 	
 	public void draw(Graphics g) {
 		titleBox.draw(g);
+		unusedTextbox.draw(g);
 		for(StatEntryField field : statsEntryItems) {
 			field.draw(g);
 		}
@@ -59,6 +64,7 @@ public class StatSelect implements DrawScreen {
 	
 	public boolean update() {
 		titleBox.update();
+		unusedTextbox.update();
 		for(StatEntryField field : statsEntryItems) {
 			field.update();
 		}

@@ -106,9 +106,12 @@ public class MainGame {
 		possibleParty.put("Jakobus Kotze", new PartyMember("Jakobus Kotze", "Guide", 100,
 				"A Boer with a medium build and brown hair. His sides are rather wide, and his often seen wearing simple farmers' clothes.", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
 		
-		for (String e : possibleParty.keySet()){
-			addPartyMemberToParty(possibleParty.get(e));
-		}
+//		for (String e : possibleParty.keySet()){
+//			addPartyMemberToParty(possibleParty.get(e));
+//		}
+		
+		addPartyMemberToParty(possibleParty.get("Gentleman"));
+		addPartyMemberToParty(possibleParty.get("Wonai"));
 		
 	    oldParty = new ArrayList<PartyMember>();
 	    oldParty.add(new PartyMember("The Gentleman", "Gentleman", 0,
@@ -304,7 +307,9 @@ public class MainGame {
 	public static ArrayList<PartyMember> getParty(){ return party; }
 	//Sets the stat, and raises the partyStatsChanged flag.
 	public static void setPartyStat(String statName, int val) {
-		if(val < 0){
+		if (statName.equalsIgnoreCase("Morale")){
+			stats.put(statName, val);
+		}else if (val < 0){
 			stats.put(statName, 0); //No negative stats, defaults to 0
 		}
 		else {
@@ -564,6 +569,8 @@ public class MainGame {
 				r.killSelectedMember();
 			} else if (r.getRewardDisperseLose() == 2){
 				r.killRandomMember();
+			} else {
+				r.killSelectedMember();
 			}
 		} else if (r.isKillPersonPass() && result == 1){
 			r.killSelectedMember();
@@ -574,6 +581,8 @@ public class MainGame {
 				r.killSelectedMember();
 			} else if (r.getRewardDisperseWin() == 2){
 				r.killRandomMember();
+			} else {
+				r.killSelectedMember();
 			}
 		}
 		
