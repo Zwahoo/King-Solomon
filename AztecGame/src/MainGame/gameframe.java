@@ -50,68 +50,79 @@ public class gameframe extends JFrame {
 	 */
 	// starts the game and runs loop
 	public void run() throws IOException {
-		this.initialize(); // initializes things which need initializing before
-							// the game can run
-		if(doSetup) {
-
-		this.initializeIntroSequence(); // initializes things which need initializing before
-							// the game can run
-			
-		// initially draws everything
-		draw();
-		// loop which handles fps
-		while (runIntroSequence) {
-			// time
-			long time = System.currentTimeMillis();
-
-			update();
+		boolean go = true;
+		while (go){
+			this.initialize(); // initializes things which need initializing before
+								// the game can run
+			if(doSetup) {
+	
+			this.initializeIntroSequence(); // initializes things which need initializing before
+								// the game can run
+				
+			// initially draws everything
 			draw();
+			// loop which handles fps
+			while (runIntroSequence) {
+				// time
+				long time = System.currentTimeMillis();
+	
+				update();
+				draw();
+				
+				runIntroSequence = !introSeq.finished;
+				
+				// runs an update 30 times a second
+				time = (1000 / fps) - (System.currentTimeMillis() - time);
+	
+				// what the heck is even going on here man I mean seriously
+				// Somethin' 'bout a thread runnin' fer the frame I 'reckon
+				// It's limiting the framerate to fps... I think.
+				if (time > 0) {
+					try {
+						Thread.sleep(time);
+					} catch (Exception e) {
+					}
+				}
+			}
 			
-			runIntroSequence = !introSeq.finished;
+			introSeq = null;
 			
-			// runs an update 30 times a second
-			time = (1000 / fps) - (System.currentTimeMillis() - time);
-
-			// what the heck is even going on here man I mean seriously
-			// Somethin' 'bout a thread runnin' fer the frame I 'reckon
-			// It's limiting the framerate to fps... I think.
-			if (time > 0) {
-				try {
-					Thread.sleep(time);
-				} catch (Exception e) {
+			}
+			//Runs the main game
+			this.initializeMainGame();
+			
+			// initially draws everything
+			draw();
+			// loop which handles fps
+			while (isRunning) {
+				// time
+				long time = System.currentTimeMillis();
+	
+				update();
+				draw();
+	
+				// runs an update 30 times a second
+				time = (1000 / fps) - (System.currentTimeMillis() - time);
+	
+				// what the heck is even going on here man I mean seriously
+				// Somethin' 'bout a thread runnin' fer the frame I 'reckon
+				// It's limiting the framerate to fps... I think.
+				if (time > 0) {
+					try {
+						Thread.sleep(time);
+					} catch (Exception e) {
+					}
+				}
+				
+				if (MainGame.party.size() == 1){
+					doSetup = true;
+					runIntroSequence = true;
+					isRunning = false;
+					mainGame = null;
 				}
 			}
 		}
 		
-		introSeq = null;
-		
-		}
-		//Runs the main game
-		this.initializeMainGame();
-		
-		// initially draws everything
-		draw();
-		// loop which handles fps
-		while (isRunning) {
-			// time
-			long time = System.currentTimeMillis();
-
-			update();
-			draw();
-
-			// runs an update 30 times a second
-			time = (1000 / fps) - (System.currentTimeMillis() - time);
-
-			// what the heck is even going on here man I mean seriously
-			// Somethin' 'bout a thread runnin' fer the frame I 'reckon
-			// It's limiting the framerate to fps... I think.
-			if (time > 0) {
-				try {
-					Thread.sleep(time);
-				} catch (Exception e) {
-				}
-			}
-		}
 
 		setVisible(false);
 	}
