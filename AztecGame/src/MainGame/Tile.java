@@ -106,8 +106,13 @@ public class Tile{
 		return getType().tileImageIndex;
 	}
 	
+	// runEvent only for Movement Events (Change Name later)
 	public void runEvent(ArrayList<PartyMember> presMembers){
-		if(moveToEvent == null) return;
+		if(moveToEvent == null) {
+			MainGame.currentMode = MainGame.START_DAY_MODE;
+			MainGame.startDayDrawer = new StartDayDrawer();
+			return;
+		}
 		MainGame.launchEvent(moveToEvent, presMembers);
 	
 	}
