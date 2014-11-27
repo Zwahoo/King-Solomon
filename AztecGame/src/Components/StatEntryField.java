@@ -12,7 +12,7 @@ public class StatEntryField {
 	private int windowWidth = 1000;
 	private int windowHeight = 800;
 	
-	String statName;
+	public String statName;
 	String statDesc;
 	public int myVal = 0;
 	

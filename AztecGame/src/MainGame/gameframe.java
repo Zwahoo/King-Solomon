@@ -19,7 +19,7 @@ public class gameframe extends JFrame {
 
 
 	public static boolean DEBUG = true;
-	boolean doSetup = false;
+	boolean doSetup = true;
 	
 	
 	private boolean isRunning = true;
@@ -37,6 +37,8 @@ public class gameframe extends JFrame {
 	public static int leftinset = 0;
 	public static int rightinset = 0;
 	
+	private HashMap<String, Integer> gentStats = PartyMemberStats.AVERAGE_ABE_STATS;
+	
 	// MAIN
 	public static void main(String[] args) throws IOException {
 		gameframe game = new gameframe();
@@ -52,6 +54,7 @@ public class gameframe extends JFrame {
 	// starts the game and runs loop
 	public void run() throws IOException {
 		boolean go = true;
+		
 		while (go){
 			this.initialize(); // initializes things which need initializing before
 								// the game can run
@@ -85,6 +88,8 @@ public class gameframe extends JFrame {
 					}
 				}
 			}
+			
+			gentStats = introSeq.gentStats;
 			
 			introSeq = null;
 			
@@ -129,7 +134,7 @@ public class gameframe extends JFrame {
 	}
 
 	private void initializeMainGame() throws IOException {
-		mainGame = new MainGame(this, windowWidth, windowHeight);
+		mainGame = new MainGame(this, windowWidth, windowHeight, gentStats);
 	}
 
 	private void initializeIntroSequence() {

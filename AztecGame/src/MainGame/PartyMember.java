@@ -47,6 +47,7 @@ public class PartyMember {
 	public String generateStatsString(String between) {
 		String toRet = "";
 		for(String stat : stats.keySet()) {
+			if(isGentleman && stat.equals("Loyalty")) continue; //Gentleman has ALL the loyalty.
 			toRet += (stat + ": " + stats.get(stat) + "" + between);
 		}
 		//Remove last between
@@ -59,14 +60,14 @@ public class PartyMember {
 	//Getters and Setters
 	public int getStat(String key) {
 		if(!stats.containsKey(key)) {
-			System.out.println("Trying to obtain unknown stat: " + key + " for party member: " + name);
+			System.out.println("Trying to get unknown stat: " + key + " for party member: " + name);
 			return -1;
 		}
 		return stats.get(key);
 	}		
 	public void incStat(String key, int increase){
 		if(!stats.containsKey(key)) {
-			System.out.println("Trying to obtain unknown stat: " + key + " for party member: " + name);
+			System.out.println("Trying to inc unknown stat: " + key + " for party member: " + name);
 		}
 		else {
 			int currentValue = stats.get(key);
@@ -75,7 +76,7 @@ public class PartyMember {
 	}
 	public void setStat(String key, int val){
 		if(!stats.containsKey(key)) {
-			System.out.println("Trying to obtain unknown stat: " + key + " for party member: " + name);
+			System.out.println("Trying to set unknown stat: " + key + " for party member: " + name);
 		}
 		else {
 			stats.put(key, val);

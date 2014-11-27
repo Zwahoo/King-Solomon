@@ -43,11 +43,11 @@ public final class PartyMemberStats {
 		AVERAGE_ABE_STATS = new HashMap<String, Integer>();
 		AVERAGE_ABE_STATS.put(PartyMember.MARKSMANSHIP_KEY, 10);
 		AVERAGE_ABE_STATS.put(PartyMember.PERCEPTION_KEY, 10);
-		AVERAGE_ABE_STATS.put(PartyMember.TACTICS_KEY, 10);
-		AVERAGE_ABE_STATS.put(PartyMember.LOYALTY_KEY, 10);
-		AVERAGE_ABE_STATS.put(PartyMember.AGILITY_KEY, 10);
 		AVERAGE_ABE_STATS.put(PartyMember.STRENGTH_KEY, 10);
+		AVERAGE_ABE_STATS.put(PartyMember.LOYALTY_KEY, 10);
 		AVERAGE_ABE_STATS.put(PartyMember.DIPLOMACY_KEY, 10);
+		AVERAGE_ABE_STATS.put(PartyMember.AGILITY_KEY, 10);
+		AVERAGE_ABE_STATS.put(PartyMember.TACTICS_KEY, 10);
 		AVERAGE_ABE_STATS.put(PartyMember.KNOWLEDGE_KEY, 10);
 	}
 	

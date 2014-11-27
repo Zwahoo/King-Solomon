@@ -209,7 +209,4 @@ public class Button extends InputListener {
 		this.myText = text;
 		stringLoc = null;
 	}
-	public void delete() {
-		
-	}
 }

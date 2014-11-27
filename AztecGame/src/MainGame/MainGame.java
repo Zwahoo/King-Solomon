@@ -92,12 +92,12 @@ public class MainGame {
 	public static StartDayDrawer startDayDrawer = null;
 	
 	//Starts the game, takes in the window frame, width, and height.
-	public MainGame(gameframe frame, int width, int height) throws IOException {
+	public MainGame(gameframe frame, int width, int height, HashMap<String, Integer> gentStats) throws IOException {
 		
 		//possibleParty = new ArrayList<PartyMember>();
 		possibleParty = new HashMap<String, PartyMember>();
 		possibleParty.put("Gentleman", new PartyMember("The Gentleman", "Gentleman", 0,
-				"Quite.", PartyMemberStats.AVERAGE_ABE_STATS));
+				"Quite.", gentStats));
 		possibleParty.get("Gentleman").setGentleman(true);
 		possibleParty.put("Macumazahn", new PartyMember("Macumazahn", "Hunter", 100,
 				"An African native that consantly looks gaunt, wears jewelry and skins.", PartyMemberStats.HAPPY_HUNTER_STATS));
