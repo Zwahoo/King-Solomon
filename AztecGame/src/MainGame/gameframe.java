@@ -17,7 +17,8 @@ import javax.swing.JFrame;
 @SuppressWarnings({ "serial", "unused" })
 public class gameframe extends JFrame {
 
-	
+
+	public static boolean DEBUG = true;
 	boolean doSetup = false;
 	
 	

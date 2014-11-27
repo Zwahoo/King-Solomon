@@ -65,10 +65,28 @@ public class MainGame {
 	public static ArrayList<PartyMember> party = new ArrayList<PartyMember>();
 	public static HashMap<String, PartyMember> possibleParty;
 	
-	
-	//Death Row (To Be Deleted)
 	private BufferedImage loadedimage;
 	public static BufferedImage[] images = new BufferedImage[20];
+	public static int waterTileIndex = 0;
+	public static int jungleTileIndex = 1;
+	public static int mountainTileIndex = 2;
+	public static int desertTileIndex = 12;
+	public static int highlandTileIndex = 13;
+	public static int kingSolomonsMinesTileIndex = 14;
+	public static int oasisTileIndex = 15;
+	public static int savannahTileIndex = 16;
+	public static int villageTileIndex = 17;
+	
+	
+	public static int markerIndex = 3;
+	public static int statusBarIndex = 4;
+	public static int unknownIndex = 5;
+	public static int redTintIndex = 6;
+	public static int blueTintIndex = 7;
+	public static int darkTintIndex = 8;
+	public static int blankIndex = 9;
+	public static int darkRedTintIndex = 10;
+	public static int darkBlueTintIndex = 11;
 	
 	public static EventDrawer eventDrawer = null;
 	public static StartDayDrawer startDayDrawer = null;
@@ -136,7 +154,7 @@ public class MainGame {
 		loadEvents();
 		
 		//Create map
-		map = new Map("assets/testMap.png", this);
+		map = new Map("assets/Map.png", this);
 		//map = new Map(10, 10, this);
 		// Creates the player
 		player1 = new Player(map);
@@ -159,18 +177,24 @@ public class MainGame {
 		
 		// preloads images used for drawing dem sweet sweet grayfixs
 		try {
-			images[0] = ImageIO.read(new File("assets/Tiles/water.png"));
-			images[1] = ImageIO.read(new File("assets/Tiles/newJungle.png"));
-			images[2] = ImageIO.read(new File("assets/Tiles/newMountains.png"));
-			images[3] = ImageIO.read(new File("assets/marker.png"));
-			images[4] = ImageIO.read(new File("assets/statusbar.png"));
-			images[5] = ImageIO.read(new File("assets/Tiles/unknown.png"));
-			images[6] = ImageIO.read(new File("assets/redTint.png"));
-			images[7] = ImageIO.read(new File("assets/blueTint.png"));
-			images[8] = ImageIO.read(new File("assets/darkTint.png"));
-			images[9] = ImageIO.read(new File("assets/blank.png"));
-			images[10] = ImageIO.read(new File("assets/darkRedTint.png"));
-			images[11] = ImageIO.read(new File("assets/darkBlueTint.png"));
+			images[waterTileIndex] = ImageIO.read(new File("assets/Tiles/water.png"));
+			images[jungleTileIndex] = ImageIO.read(new File("assets/Tiles/newJungle.png"));
+			images[mountainTileIndex] = ImageIO.read(new File("assets/Tiles/newMountains.png"));
+			images[markerIndex] = ImageIO.read(new File("assets/marker.png"));
+			images[statusBarIndex] = ImageIO.read(new File("assets/statusbar.png"));
+			images[unknownIndex] = ImageIO.read(new File("assets/Tiles/unknown.png"));
+			images[redTintIndex] = ImageIO.read(new File("assets/redTint.png"));
+			images[blueTintIndex] = ImageIO.read(new File("assets/blueTint.png"));
+			images[darkTintIndex] = ImageIO.read(new File("assets/darkTint.png"));
+			images[blankIndex] = ImageIO.read(new File("assets/blank.png"));
+			images[darkRedTintIndex] = ImageIO.read(new File("assets/darkRedTint.png"));
+			images[darkBlueTintIndex] = ImageIO.read(new File("assets/darkBlueTint.png"));
+			images[desertTileIndex] = ImageIO.read(new File("assets/Tiles/desert.png"));
+			images[highlandTileIndex] = ImageIO.read(new File("assets/Tiles/highland.png"));
+			images[kingSolomonsMinesTileIndex] = ImageIO.read(new File("assets/Tiles/kingSolomonsMines.png"));
+			images[oasisTileIndex] = ImageIO.read(new File("assets/Tiles/oasis.png"));
+			images[savannahTileIndex] = ImageIO.read(new File("assets/Tiles/savannah.png"));
+			images[villageTileIndex] = ImageIO.read(new File("assets/Tiles/village.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -187,15 +211,15 @@ public class MainGame {
 	
 	private void initTileTypes() {
 		tileTypes = new HashMap<String, TileType>();
-	    tileTypes.put("desert", new TileType("desert", false, true, 5, new Color(255, 100, 0)));
-	    tileTypes.put("oasis", new TileType("oasis", false, true, 5, new Color(255, 200, 0)));
-	    tileTypes.put("jungle", new TileType("jungle", false, true, 1, new Color(0, 255, 0)));
-	    tileTypes.put("water", new TileType("water", false, false, 0, new Color(0, 0, 255)));
-	    tileTypes.put("savannah", new TileType("savannah", false, true, 5, new Color(255, 255, 0)));
-	    tileTypes.put("mountain", new TileType("mountain", true, false, 2, new Color(100, 50, 0)));
-	    tileTypes.put("highland", new TileType("highland", false, true, 5, new Color(50, 100, 0)));
-	    tileTypes.put("solomonsMines", new TileType("solomonsMines", false, true, 5, new Color(255, 255, 255)));
-	    tileTypes.put("village", new TileType("village", false, true, 5, new Color(100, 100, 100)));
+	    tileTypes.put("desert", new TileType("desert", false, true, desertTileIndex, new Color(255, 100, 0)));
+	    tileTypes.put("oasis", new TileType("oasis", false, true, oasisTileIndex, new Color(255, 200, 0)));
+	    tileTypes.put("jungle", new TileType("jungle", true, true, jungleTileIndex, new Color(0, 255, 0)));
+	    tileTypes.put("water", new TileType("water", false, false, waterTileIndex, new Color(0, 0, 255)));
+	    tileTypes.put("savannah", new TileType("savannah", false, true, savannahTileIndex, new Color(255, 255, 0)));
+	    tileTypes.put("mountain", new TileType("mountain", true, false, mountainTileIndex, new Color(100, 50, 0)));
+	    tileTypes.put("highland", new TileType("highland", false, true, highlandTileIndex, new Color(50, 100, 0)));
+	    tileTypes.put("solomonsMines", new TileType("solomonsMines", false, true, kingSolomonsMinesTileIndex, new Color(255, 255, 255)));
+	    tileTypes.put("village", new TileType("village", false, true, villageTileIndex, new Color(100, 100, 100)));
 	    
 	    //Highlands can see past everything.
 	    tileTypes.get("highland").canSeeAll = true;
