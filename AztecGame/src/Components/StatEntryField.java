@@ -5,7 +5,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import MainGame.IntroSequence;
-import MainGame.StatSelect;
+import MainGame.StatSelectScreen;
 
 public class StatEntryField {
 	
@@ -71,9 +71,9 @@ public class StatEntryField {
 	
 	public void changeStat(int changeAmt) {
 		if(myVal + changeAmt < 0) return;
-		if(StatSelect.unused - changeAmt < 0) return;
+		if(StatSelectScreen.unused - changeAmt < 0) return;
 		
-		StatSelect.UpdateUnused(StatSelect.unused - changeAmt);
+		StatSelectScreen.UpdateUnused(StatSelectScreen.unused - changeAmt);
 		myVal += changeAmt;
 		val.setText(myVal + "");
 	}

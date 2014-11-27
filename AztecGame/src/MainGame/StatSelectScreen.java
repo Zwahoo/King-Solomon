@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import Components.*;
 
-public class StatSelect implements DrawScreen {
+public class StatSelectScreen implements DrawScreen {
 	
 	public int windowWidth = 1000;
 	public int windowHeight = 800;
@@ -34,7 +34,7 @@ public class StatSelect implements DrawScreen {
 	
 	ArrayList<StatEntryField> statsEntryItems = new ArrayList<StatEntryField>();
 	
-	public StatSelect() {
+	public StatSelectScreen() {
 		titleBox = new Textbox("Select Gentleman's Stats",
 				windowWidth/2 - titleTextboxWidth/2, 10,
 				titleTextboxWidth, titleTextboxHeight, IntroSequence.input);

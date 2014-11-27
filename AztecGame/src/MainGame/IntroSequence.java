@@ -9,7 +9,7 @@ public class IntroSequence {
 	public boolean finished = false;
 	
 	private DrawScreen currentScreen;
-	private StatSelect statSelect;
+	private StatSelectScreen statSelect;
 	
 	Color bkgColor = Color.GRAY;
 	
@@ -22,7 +22,7 @@ public class IntroSequence {
 
 	
 	public void setupStatSelect() {
-		statSelect = new StatSelect();
+		statSelect = new StatSelectScreen();
 		currentScreen = statSelect;
 	}
 	
