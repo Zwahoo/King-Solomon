@@ -9,7 +9,7 @@ public class IntroSequence {
 	
 	public boolean finished = false;
 	
-	int stateNum = 1; //0 main screen | 1 stat select | 3 party select | 4 member info.
+	int stateNum = 1; //0 main screen | 1 stat select | 3 party select | 4 member info?
 	
 	private DrawScreen currentScreen;
 	private StatSelectScreen statSelect;
@@ -35,6 +35,7 @@ public class IntroSequence {
 		if(stateNum == 1) {
 			gentStats = statSelect.gentStats;
 		}
+		currentScreen.finish();
 		stateNum++;
 		finished = true;
 	}

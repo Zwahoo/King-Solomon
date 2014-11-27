@@ -37,11 +37,18 @@ public class gameframe extends JFrame {
 	public static int leftinset = 0;
 	public static int rightinset = 0;
 	
+
+	// frame graphics
+	Graphics g = null;
+	// buffered image which will be drawn to frame (but is first applied to "g")
+	Graphics bbg = null;
+	
 	private HashMap<String, Integer> gentStats = PartyMemberStats.AVERAGE_ABE_STATS;
 	
 	// MAIN
 	public static void main(String[] args) throws IOException {
 		gameframe game = new gameframe();
+		game.initialize();
 		game.run();
 		System.exit(0);
 	}
@@ -54,10 +61,11 @@ public class gameframe extends JFrame {
 	// starts the game and runs loop
 	public void run() throws IOException {
 		boolean go = true;
+
+		this.initialize(); // initializes things which need initializing before
+							// the game can run.
 		
 		while (go){
-			this.initialize(); // initializes things which need initializing before
-								// the game can run
 			if(doSetup) {
 	
 			this.initializeIntroSequence(); // initializes things which need initializing before
@@ -93,6 +101,7 @@ public class gameframe extends JFrame {
 			
 			introSeq = null;
 			
+			isRunning = true;
 			}
 			//Runs the main game
 			this.initializeMainGame();
@@ -157,6 +166,10 @@ public class gameframe extends JFrame {
 		// sets image size to be the same size as the window
 		backBuffer = new BufferedImage(windowWidth, windowHeight,
 				BufferedImage.TYPE_INT_RGB);
+		// frame graphics
+		g = getGraphics();
+		// buffered image which will be drawn to frame (but is first applied to "g")
+		bbg = backBuffer.getGraphics();
 		// sets title on top of game window
 		setTitle("King Solomon's Mines");
 		// sets window height again, just for funzies.
@@ -192,10 +205,6 @@ public class gameframe extends JFrame {
 	 */
 	// draws the graphics again when it is needed
 	void draw() {
-		// frame graphics
-		Graphics g = getGraphics();
-		// buffered image which will be drawn to frame (but is first applied to "g")
-		Graphics bbg = backBuffer.getGraphics();
 		// background color
 		bbg.setColor(Color.BLACK);
 		// background height and width

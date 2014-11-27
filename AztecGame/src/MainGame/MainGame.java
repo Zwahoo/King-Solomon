@@ -16,17 +16,53 @@ import javax.imageio.ImageIO;
 import Components.StatsBar;
 
 public class MainGame {
-
+	//--------------- CONSTNTS ---------------
+	//Day Modes
+	public static final Integer START_DAY_MODE = 0; // choose move, investigate, or rest
+	public static final Integer MOVEMENT_MODE = 1; // movement on map
+	public static final Integer EVENT_MODE = 2; // investigation or resting
+	//Stat Keys
+	public static final String FOOD_KEY = "Food";
+	public static final String WATER_KEY = "Water";
+	public static final String VALUABLES_KEY = "Valuables";
+	public static final String AMMO_KEY = "Ammo";
+	public static final String MEDICINE_KEY = "Medicine";
+	public static final String MORALE_KEY = "Morale";
+	public static final String STAMINA_KEY = "Stamina";
+	public static final String PACK_ANIMALS_KEY = "Pack Animals";
+	//Event Frequencies
+	public static final double MOVE_TO_FREQUENCY = .5;
+	//TODO Change to ~.75 and ~.25 once null events are written
+	public static final double INVESTIGATE_FREQUENCY = 1;
+	public static final double REST_FREQUENCY = 1;
+	//Tile Image Index Locations
+	public static final int WATER_TILE_INDEX = 0;
+	public static final int JUNGLE_TILE_INDEX = 1;
+	public static final int MOUNTAIN_TILE_INDEX = 2;
+	public static final int DESERT_TILE_INDEX = 12;
+	public static final int HIGHLAND_TILE_INDEX = 13;
+	public static final int KING_SOLOMONS_MINES_TILE_INDEX = 14;
+	public static final int OASIS_TILE_INDEX = 15;
+	public static final int SAVANNAH_TILE_INDEX = 16;
+	public static final int VILLAGE_TILE_INDEX = 17;
+	//Other image index locations
+	public static final int MARKER_INDEX = 3;
+	public static final int STATUS_BAR_INDEX = 4;
+	public static final int UNKNOWN_INDEX = 5;
+	public static final int RED_TINT_INDEX = 6;
+	public static final int BLUE_TINT_INDEX = 7;
+	public static final int DARK_TINT_INDEX = 8;
+	public static final int BLANK_INDEX = 9;
+	public static final int DARK_RED_TINT_INDEX = 10;
+	public static final int DARK_BLUE_TINT_INDEX = 11;
+	
+	
 	public static Map map; //The map containing all the tiles making up the world
 	private static Player player1; //The player
 	private static View view; //The "camera." What the player is seeing. Has a location, can move around.
 	public static InputManager input; // This registers all the mouse and keyboard
 	public static Integer currentMode = -1;
 	
-	public static final Integer START_DAY_MODE = 0; // choose move, investigate, or rest
-	public static final Integer MOVEMENT_MODE = 1; // movement on map
-	public static final Integer EVENT_MODE = 2; // investigation or resting
-
 	Rectangle drawRect;
 		
 	StatsBar statsBar;
@@ -44,22 +80,7 @@ public class MainGame {
 	public ArrayList<Event> restEvents = new ArrayList<Event>();
 	public ArrayList<Event> investigateEvents = new ArrayList<Event>();
 	public ArrayList<Event> miscEvents = new ArrayList<Event>();
-	
-	public static final String FOOD_KEY = "Food";
-	public static final String WATER_KEY = "Water";
-	public static final String VALUABLES_KEY = "Valuables";
-	public static final String AMMO_KEY = "Ammo";
-	public static final String MEDICINE_KEY = "Medicine";
-	public static final String MORALE_KEY = "Morale";
-	public static final String STAMINA_KEY = "Stamina";
-	public static final String PACK_ANIMALS_KEY = "Pack Animals";
-	
-	//Event Frequencies
-	public static final double MOVE_TO_FREQUENCY = .5;
-	// Change to ~.75 and ~.25 once null events are written
-	public static final double INVESTIGATE_FREQUENCY = 1;
-	public static final double REST_FREQUENCY = 1;
-	
+
 	//Party
 	public static ArrayList<PartyMember> oldParty;
 	public static ArrayList<PartyMember> party = new ArrayList<PartyMember>();
@@ -67,32 +88,29 @@ public class MainGame {
 	
 	private BufferedImage loadedimage;
 	public static BufferedImage[] images = new BufferedImage[20];
-	public static int waterTileIndex = 0;
-	public static int jungleTileIndex = 1;
-	public static int mountainTileIndex = 2;
-	public static int desertTileIndex = 12;
-	public static int highlandTileIndex = 13;
-	public static int kingSolomonsMinesTileIndex = 14;
-	public static int oasisTileIndex = 15;
-	public static int savannahTileIndex = 16;
-	public static int villageTileIndex = 17;
-	
-	
-	public static int markerIndex = 3;
-	public static int statusBarIndex = 4;
-	public static int unknownIndex = 5;
-	public static int redTintIndex = 6;
-	public static int blueTintIndex = 7;
-	public static int darkTintIndex = 8;
-	public static int blankIndex = 9;
-	public static int darkRedTintIndex = 10;
-	public static int darkBlueTintIndex = 11;
 	
 	public static EventDrawer eventDrawer = null;
 	public static StartDayDrawer startDayDrawer = null;
 	
+	//Reverts the event back to something more closely resembling it's start state.
+	public void resetAllVals() {
+		map = null;
+		player1 = null;
+		view = null;
+		input = null;
+		currentMode = -1;
+		oldParty = null;
+		party.clear();
+		possibleParty = null;
+		images = new BufferedImage[20];
+		eventDrawer = null;
+		startDayDrawer = null;
+	}
+	
 	//Starts the game, takes in the window frame, width, and height.
 	public MainGame(gameframe frame, int width, int height, HashMap<String, Integer> gentStats) throws IOException {
+		
+		resetAllVals();
 		
 		//possibleParty = new ArrayList<PartyMember>();
 		possibleParty = new HashMap<String, PartyMember>();
@@ -177,24 +195,24 @@ public class MainGame {
 		
 		// preloads images used for drawing dem sweet sweet grayfixs
 		try {
-			images[waterTileIndex] = ImageIO.read(new File("assets/Tiles/water.png"));
-			images[jungleTileIndex] = ImageIO.read(new File("assets/Tiles/newJungle.png"));
-			images[mountainTileIndex] = ImageIO.read(new File("assets/Tiles/newMountains.png"));
-			images[markerIndex] = ImageIO.read(new File("assets/marker.png"));
-			images[statusBarIndex] = ImageIO.read(new File("assets/statusbar.png"));
-			images[unknownIndex] = ImageIO.read(new File("assets/Tiles/unknown.png"));
-			images[redTintIndex] = ImageIO.read(new File("assets/redTint.png"));
-			images[blueTintIndex] = ImageIO.read(new File("assets/blueTint.png"));
-			images[darkTintIndex] = ImageIO.read(new File("assets/darkTint.png"));
-			images[blankIndex] = ImageIO.read(new File("assets/blank.png"));
-			images[darkRedTintIndex] = ImageIO.read(new File("assets/darkRedTint.png"));
-			images[darkBlueTintIndex] = ImageIO.read(new File("assets/darkBlueTint.png"));
-			images[desertTileIndex] = ImageIO.read(new File("assets/Tiles/desert.png"));
-			images[highlandTileIndex] = ImageIO.read(new File("assets/Tiles/highland.png"));
-			images[kingSolomonsMinesTileIndex] = ImageIO.read(new File("assets/Tiles/kingSolomonsMines.png"));
-			images[oasisTileIndex] = ImageIO.read(new File("assets/Tiles/oasis.png"));
-			images[savannahTileIndex] = ImageIO.read(new File("assets/Tiles/savannah.png"));
-			images[villageTileIndex] = ImageIO.read(new File("assets/Tiles/village.png"));
+			images[WATER_TILE_INDEX] = ImageIO.read(new File("assets/Tiles/water.png"));
+			images[JUNGLE_TILE_INDEX] = ImageIO.read(new File("assets/Tiles/newJungle.png"));
+			images[MOUNTAIN_TILE_INDEX] = ImageIO.read(new File("assets/Tiles/newMountains.png"));
+			images[MARKER_INDEX] = ImageIO.read(new File("assets/marker.png"));
+			images[STATUS_BAR_INDEX] = ImageIO.read(new File("assets/statusbar.png"));
+			images[UNKNOWN_INDEX] = ImageIO.read(new File("assets/Tiles/unknown.png"));
+			images[RED_TINT_INDEX] = ImageIO.read(new File("assets/redTint.png"));
+			images[BLUE_TINT_INDEX] = ImageIO.read(new File("assets/blueTint.png"));
+			images[DARK_TINT_INDEX] = ImageIO.read(new File("assets/darkTint.png"));
+			images[BLANK_INDEX] = ImageIO.read(new File("assets/blank.png"));
+			images[DARK_RED_TINT_INDEX] = ImageIO.read(new File("assets/darkRedTint.png"));
+			images[DARK_BLUE_TINT_INDEX] = ImageIO.read(new File("assets/darkBlueTint.png"));
+			images[DESERT_TILE_INDEX] = ImageIO.read(new File("assets/Tiles/desert.png"));
+			images[HIGHLAND_TILE_INDEX] = ImageIO.read(new File("assets/Tiles/highland.png"));
+			images[KING_SOLOMONS_MINES_TILE_INDEX] = ImageIO.read(new File("assets/Tiles/kingSolomonsMines.png"));
+			images[OASIS_TILE_INDEX] = ImageIO.read(new File("assets/Tiles/oasis.png"));
+			images[SAVANNAH_TILE_INDEX] = ImageIO.read(new File("assets/Tiles/savannah.png"));
+			images[VILLAGE_TILE_INDEX] = ImageIO.read(new File("assets/Tiles/village.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -211,15 +229,15 @@ public class MainGame {
 	
 	private void initTileTypes() {
 		tileTypes = new HashMap<String, TileType>();
-	    tileTypes.put("desert", new TileType("desert", false, true, desertTileIndex, new Color(255, 100, 0)));
-	    tileTypes.put("oasis", new TileType("oasis", false, true, oasisTileIndex, new Color(255, 200, 0)));
-	    tileTypes.put("jungle", new TileType("jungle", true, true, jungleTileIndex, new Color(0, 255, 0)));
-	    tileTypes.put("water", new TileType("water", false, false, waterTileIndex, new Color(0, 0, 255)));
-	    tileTypes.put("savannah", new TileType("savannah", false, true, savannahTileIndex, new Color(255, 255, 0)));
-	    tileTypes.put("mountain", new TileType("mountain", true, false, mountainTileIndex, new Color(100, 50, 0)));
-	    tileTypes.put("highland", new TileType("highland", false, true, highlandTileIndex, new Color(50, 100, 0)));
-	    tileTypes.put("solomonsMines", new TileType("solomonsMines", false, true, kingSolomonsMinesTileIndex, new Color(255, 255, 255)));
-	    tileTypes.put("village", new TileType("village", false, true, villageTileIndex, new Color(100, 100, 100)));
+	    tileTypes.put("desert", new TileType("desert", false, true, DESERT_TILE_INDEX, new Color(255, 100, 0)));
+	    tileTypes.put("oasis", new TileType("oasis", false, true, OASIS_TILE_INDEX, new Color(255, 200, 0)));
+	    tileTypes.put("jungle", new TileType("jungle", true, true, JUNGLE_TILE_INDEX, new Color(0, 255, 0)));
+	    tileTypes.put("water", new TileType("water", false, false, WATER_TILE_INDEX, new Color(0, 0, 255)));
+	    tileTypes.put("savannah", new TileType("savannah", false, true, SAVANNAH_TILE_INDEX, new Color(255, 255, 0)));
+	    tileTypes.put("mountain", new TileType("mountain", true, false, MOUNTAIN_TILE_INDEX, new Color(100, 50, 0)));
+	    tileTypes.put("highland", new TileType("highland", false, true, HIGHLAND_TILE_INDEX, new Color(50, 100, 0)));
+	    tileTypes.put("solomonsMines", new TileType("solomonsMines", false, true, KING_SOLOMONS_MINES_TILE_INDEX, new Color(255, 255, 255)));
+	    tileTypes.put("village", new TileType("village", false, true, VILLAGE_TILE_INDEX, new Color(100, 100, 100)));
 	    
 	    //Highlands can see past everything.
 	    tileTypes.get("highland").canSeeAll = true;

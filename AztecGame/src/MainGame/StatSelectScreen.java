@@ -74,6 +74,7 @@ public class StatSelectScreen implements DrawScreen {
 		
 	}
 	
+	@Override
 	public void draw(Graphics g) {
 		titleBox.draw(g);
 		unusedTextboxLabel.draw(g);
@@ -84,6 +85,7 @@ public class StatSelectScreen implements DrawScreen {
 		}
 	}
 	
+	@Override
 	public boolean update() {
 		titleBox.update();
 		unusedTextboxLabel.update();
@@ -102,6 +104,7 @@ public class StatSelectScreen implements DrawScreen {
 		return finished;
 	}
 	
+	@Override
 	public void finish() {
 		for(StatEntryField field : statsEntryItems) {
 			field.dispose();
