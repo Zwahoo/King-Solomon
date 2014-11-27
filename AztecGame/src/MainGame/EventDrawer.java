@@ -326,7 +326,7 @@ public class EventDrawer {
 			selection = r.nextInt(useful.size());
 			return useful.get(selection);
 		}
-		else if(useful.size() > 0){
+		else if(notUseful.size() > 0){
 			selection = r.nextInt(notUseful.size());
 			return notUseful.get(selection);
 		}

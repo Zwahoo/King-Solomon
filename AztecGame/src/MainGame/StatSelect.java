@@ -15,6 +15,8 @@ public class StatSelect implements DrawScreen {
 	public static int unused = 10;
 	
 	Textbox titleBox;
+	Textbox unusedTextboxLabel;	
+	static Textbox unusedTextboxValue;
 	
 	int titleTextboxWidth = 350;
 	int titleTextboxHeight = 50;
@@ -22,16 +24,15 @@ public class StatSelect implements DrawScreen {
 	int spacer = 50;
 	
 	int statsListY = titleTextboxHeight + 40;
-	int statsListX = 5;
+	int statsListX = 25;
 	
-	int unusedTextboxX = 10;
-	int unusedTextboxY = 10;
-	int unusedTextboxWidth = 50;
-	int unusedTextboxHeight = 50;
+	int unusedTextboxHeight = 40;
+	int unusedTextboxLabelWidth = (int)(windowWidth * (1.0/4.0));
+	int unusedTextboxValueWidth = (int)(windowWidth * (1.0/25.0));
+	int unusedTextboxX = 35;
+	int unusedTextboxY = statsListY + 6 * (40 + spacer) + spacer + 30;
 	
 	ArrayList<StatEntryField> statsEntryItems = new ArrayList<StatEntryField>();
-	
-	Textbox unusedTextbox;	
 	
 	public StatSelect() {
 		titleBox = new Textbox("Select Gentleman's Stats",
@@ -40,9 +41,9 @@ public class StatSelect implements DrawScreen {
 		titleBox.SetFont(new Font("Georgia", Font.PLAIN, 30));
 		titleBox.textBuffer = 10;
 		
-		unusedTextbox = new Textbox(unused + "", unusedTextboxX, unusedTextboxY, unusedTextboxWidth, unusedTextboxHeight, IntroSequence.input);
-		unusedTextbox.SetFont(new Font("Georgia", Font.PLAIN, 30));
-		unusedTextbox.textBuffer = 3;
+		unusedTextboxLabel = new Textbox("Unused: ", unusedTextboxX, unusedTextboxY, unusedTextboxLabelWidth, unusedTextboxHeight, IntroSequence.input);
+		//unusedTextbox.SetFont(new Font("Georgia", Font.PLAIN, 30));
+		unusedTextboxLabel.textBuffer = 5;
 		
 		int yVal = statsListY;
 		for(String stat : PartyMemberStats.AVERAGE_ABE_STATS.keySet()) {
@@ -56,7 +57,7 @@ public class StatSelect implements DrawScreen {
 	
 	public void draw(Graphics g) {
 		titleBox.draw(g);
-		unusedTextbox.draw(g);
+		unusedTextboxLabel.draw(g);
 		for(StatEntryField field : statsEntryItems) {
 			field.draw(g);
 		}
@@ -64,7 +65,7 @@ public class StatSelect implements DrawScreen {
 	
 	public boolean update() {
 		titleBox.update();
-		unusedTextbox.update();
+		unusedTextboxLabel.update();
 		for(StatEntryField field : statsEntryItems) {
 			field.update();
 		}
@@ -79,6 +80,7 @@ public class StatSelect implements DrawScreen {
 	
 	public static void UpdateUnused(int val) {
 		unused = val;
+		unusedTextboxValue.setText(val + "");
 	}
 	
 }

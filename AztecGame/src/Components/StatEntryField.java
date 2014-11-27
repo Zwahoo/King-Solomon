@@ -24,9 +24,10 @@ public class StatEntryField {
 	Button minus;
 	Textbox desc;
 	
-	public int myHeight = 50;
+	public int myHeight = 40;
 	private int spacer = 10;
-	private int buttonHeight = (myHeight/2 - spacer/2);
+	private int buttonSpacer = 3;
+	private int buttonHeight = (myHeight/2 - buttonSpacer/2);
 	
 	private int widthOfLabel = (int)(windowWidth * (1.0/4.0));
 	private int widthOfVal = (int)(windowWidth * (1.0/20.0));
@@ -43,7 +44,7 @@ public class StatEntryField {
 	}
 	
 	public void initComponents() {
-		int currentX = loc.x + spacer + 20;
+		int currentX = loc.x + spacer;
 		label = new Textbox(statName + ":", currentX, loc.y, widthOfLabel, myHeight, IntroSequence.input);
 		currentX += widthOfLabel + spacer;
 		val = new Textbox(myVal + "", currentX, loc.y, widthOfVal, myHeight, IntroSequence.input);
@@ -55,7 +56,7 @@ public class StatEntryField {
 				changeStat(1);
 			}
 		};
-		minus = new Button(currentX, loc.y + buttonHeight + spacer, widthOfButtons, buttonHeight, "-", IntroSequence.input) {
+		minus = new Button(currentX, loc.y + buttonHeight + buttonSpacer, widthOfButtons, buttonHeight, "-", IntroSequence.input) {
 			@Override
 			public void onClick() {
 				changeStat(-1);

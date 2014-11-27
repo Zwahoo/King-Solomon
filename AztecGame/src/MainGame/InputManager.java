@@ -9,6 +9,8 @@ import java.util.HashMap;
 @SuppressWarnings("unused")
 public class InputManager {
 	
+	private boolean debug = false;
+	
 	private MouseInput mouseInput;
 	private KeyboardInput keyInput;
 	//private ArrayList<InputListener> inputListeners = new ArrayList<InputListener>();
@@ -122,6 +124,14 @@ public class InputManager {
 	
 	//Keyboard Events
 	public void keyTyped(KeyEvent e) {
+		if(debug && (e.getKeyChar() == 'r') && MainGame.map != null) {
+			for(int i=0; i < MainGame.map.width; i++) {
+				for(int j=0; j < MainGame.map.height; j++) {
+					MainGame.map.getTile(i, j).reveal();
+				}	
+			}
+		}
+		
 		if(!inputListenersMap.containsKey(MainGame.currentMode)) return;
 		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
 			listener.keyTyped(e);
