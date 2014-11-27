@@ -46,6 +46,8 @@ public class StatSelectScreen implements DrawScreen {
 	private boolean finished = false;
 	
 	public StatSelectScreen() {
+		unused = 10;
+		
 		titleBox = new Textbox("Select Gentleman's Stats",
 				windowWidth/2 - titleTextboxWidth/2, 10,
 				titleTextboxWidth, titleTextboxHeight, IntroSequence.input);

@@ -9,9 +9,10 @@ public class IntroSequence {
 	
 	public boolean finished = false;
 	
-	int stateNum = 1; //0 main screen | 1 stat select | 3 party select | 4 member info?
+	int stateNum = 0; //0 main screen | 1 stat select | 3 party select | 4 member info?
 	
 	private DrawScreen currentScreen;
+	private StartScreen startScreen;
 	private StatSelectScreen statSelect;
 	
 	Color bkgColor = Color.GRAY;
@@ -27,22 +28,29 @@ public class IntroSequence {
 
 	
 	public void setupStatSelect() {
-		statSelect = new StatSelectScreen();
-		currentScreen = statSelect;
+		startScreen = new StartScreen();
+		currentScreen = startScreen;
 	}
 	
 	public void launchNextState() {
-		if(stateNum == 1) {
-			gentStats = statSelect.gentStats;
+		if(stateNum == 0) {
+			statSelect = new StatSelectScreen();
+			currentScreen = statSelect;
+			startScreen.finish();
 		}
-		currentScreen.finish();
+		else if(stateNum == 1) {
+			gentStats = statSelect.gentStats;
+			statSelect.finish();
+			finished = true;
+		}
 		stateNum++;
-		finished = true;
 	}
 	
 	public void update() {
 		boolean finished = currentScreen.update();
-		if(finished) launchNextState();
+		if(finished) {
+			launchNextState();
+		}
 	}
 	
 	public void draw(Graphics g) {
