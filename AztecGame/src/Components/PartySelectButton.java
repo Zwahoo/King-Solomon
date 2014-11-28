@@ -181,8 +181,8 @@ public class PartySelectButton {
 			nameBox.draw(g);
 			descBox.draw(g);
 			statsBox.draw(g);
-			hireButton.draw(g);
-			closeButton.draw(g);
+			if(hireButton != null) hireButton.draw(g);
+			if(closeButton != null) closeButton.draw(g);
 			classBox.draw(g);
 			drawImage(g);
 		}
