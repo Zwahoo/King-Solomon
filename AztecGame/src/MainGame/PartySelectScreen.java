@@ -22,6 +22,9 @@ public class PartySelectScreen implements DrawScreen {
 	
 	//Draw the selector boxes
 	public static boolean drawSelectorButtons = true;
+	
+	//Number of selected members
+	private static int numSelectedMembers = 0;
 
 	//Currency display information.
 	public static final String currencyLabel = "$";
@@ -49,7 +52,7 @@ public class PartySelectScreen implements DrawScreen {
 	BufferedImage bkgImg;
 	
 	//Button to finish selection.
-	Button finishButton;
+	static Button finishButton;
 	static Textbox fundsTextbox;
 	static String fundsLabel = "Funds: ";
 
@@ -57,7 +60,7 @@ public class PartySelectScreen implements DrawScreen {
 	public static int hBorders = 50;
 	
 	//Dimensions for the finish button.
-	static int finishWidth = 200;
+	static int finishWidth = 300;
 	static int finishHeight = 40;
 	static int finishX = gameframe.windowWidth - finishWidth - hBorders;
 	static int finishY = gameframe.windowHeight - finishHeight - hBorders;
@@ -94,12 +97,21 @@ public class PartySelectScreen implements DrawScreen {
 				finished = true;
 			}
 		};
-		finishButton.disable();
 		
 		fundsTextbox = new Textbox(makeFundsString(), fundsX, fundsY, fundsWidth, fundsHeight, IntroSequence.input);
 		fundsTextbox.hTextBuffer = fundsTextHBuffer;
 		fundsTextbox.vTextBuffer = fundsTextVBuffer;
-		fundsTextbox.updateView();
+		setFinishButtonEnabled(false);
+	}
+	
+	public static String makeFinishString() {
+		String plur = "s";
+		if(reqNumPartyMembers == 1) plur = "";
+		if(numSelectedMembers < reqNumPartyMembers) {
+			return "Finish (Need at Least " + reqNumPartyMembers + " Party Member" + plur + ")";
+		} else {
+			return "Finish";
+		}
 	}
 	
 	/**
@@ -171,27 +183,42 @@ public class PartySelectScreen implements DrawScreen {
 		return money;
 	}
 	
+	public static void incNumSelectedMembers(int amt) {
+		setNumSelectedMembers(numSelectedMembers + amt);
+	}
+	public static void setNumSelectedMembers(int newVal) {
+		numSelectedMembers = newVal;
+		finishButton.setText(makeFinishString());
+	}
+	public static int getNumSelectedMembers() {
+		return numSelectedMembers;
+	}
+	
 	@Override
 	public boolean update() {
 		finishButton.update();
 		fundsTextbox.update();
 		
 		boolean blockFinish = false;
-		int membersHired = 0; //Keeps track of the number of hired members.
 		for(PartySelectButton selector : partySelectors) {
 			selector.update();
-			if(selector.hired) membersHired++;
 			if(selector.blockFinish) blockFinish = true;
 		}
-		if(!finishButton.isImpossible && (blockFinish || (membersHired < reqNumPartyMembers))) {
-			finishButton.disable();
+		if(!finishButton.isImpossible && (blockFinish || (numSelectedMembers < reqNumPartyMembers))) {
+			setFinishButtonEnabled(false);
 		}
-		else if(finishButton.isImpossible && !blockFinish && (membersHired >= reqNumPartyMembers)) {
-			finishButton.enable();
+		else if(finishButton.isImpossible && !blockFinish && (numSelectedMembers >= reqNumPartyMembers)) {
+			setFinishButtonEnabled(true);
 		}
 		
 		
 		return finished;
+	}
+	
+	public void setFinishButtonEnabled(boolean enable) {
+		if(enable) finishButton.enable();
+		else finishButton.disable();
+		finishButton.setText(makeFinishString());
 	}
 	
 	public static void setAllSelectorsEnabled(boolean enabled) {

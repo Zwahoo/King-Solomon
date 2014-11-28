@@ -41,6 +41,7 @@ public class PartySelectButton {
 	Textbox nameBox;
 	Textbox descBox;
 	Textbox statsBox;
+	Textbox classBox;
 	Button hireButton;
 	Button closeButton;
 	BufferedImage memberImage;
@@ -58,12 +59,18 @@ public class PartySelectButton {
 	int nameHeight = 50;
 	int nameX = hBorder;
 	int nameY = upperBorder;
-
+	
+	//Class Box Dimensions
+	int classWidth = imageTotalWidth;
+	int classHeight = nameHeight;
+	int classX = imageX;
+	int classY = imageY + imageTotalHeight + vSpacer;
+	
 	//Member Stats Textbox Dimensions
 	int statsWidth = imageTotalWidth;
-	int statsHeight = gameframe.windowHeight - upperBorder - lowerBorder - vSpacer - imageTotalHeight;
+	int statsHeight = gameframe.windowHeight - upperBorder - lowerBorder - 2*vSpacer - imageTotalHeight - classHeight;
 	int statsX = imageX;
-	int statsY = imageY + imageTotalHeight + vSpacer;
+	int statsY = imageY + imageTotalHeight + classHeight + vSpacer * 2;
 	
 	//Close Button Dimensions
 	int closeBtnWidth = 200;
@@ -107,6 +114,7 @@ public class PartySelectButton {
 		nameBox = new Textbox(member.getName(), nameX, nameY, nameWidth, nameHeight, IntroSequence.input);
 		descBox = new Textbox(member.getBackgroundInfo(), descX, descY, descWidth, descHeight, IntroSequence.input);
 		statsBox = new Textbox(member.generateStatsString("\n"), statsX, statsY, statsWidth, statsHeight, IntroSequence.input);
+		classBox = new Textbox(member.getType(), classX, classY, classWidth, classHeight, IntroSequence.input);
 	}
 	
 	public void launchMoreInfo() {
@@ -130,8 +138,8 @@ public class PartySelectButton {
 	
 	public void closeMoreInfo() {
 		dispMoreInfo = false;
-		destroyMoreInfoSection();
 		PartySelectScreen.setAllSelectorsEnabled(true);
+		destroyMoreInfoSection();
 		PartySelectScreen.drawSelectorButtons = true;
 		blockFinish = false;
 	}
@@ -159,6 +167,7 @@ public class PartySelectButton {
 			nameBox.update();
 			descBox.update();
 			statsBox.update();
+			classBox.update();
 			hireButton.update();
 			closeButton.update();
 		}
@@ -174,6 +183,7 @@ public class PartySelectButton {
 			statsBox.draw(g);
 			hireButton.draw(g);
 			closeButton.draw(g);
+			classBox.draw(g);
 			drawImage(g);
 		}
 	}
@@ -184,6 +194,7 @@ public class PartySelectButton {
 	public void hire() {
 		if(!hired && PartySelectScreen.getMoney() - myMember.getPay() >= 0) { 
 			hired = true;
+			PartySelectScreen.incNumSelectedMembers(1);
 			PartySelectScreen.incMoney(-1*myMember.getPay());
 			mainButton.setText(makeButtonString());
 			if(hireButton != null) hireButton.setText(getHireText());
@@ -196,6 +207,7 @@ public class PartySelectButton {
 	public void fire() {
 		if(hired) {
 			hired = false;
+			PartySelectScreen.incNumSelectedMembers(-1);
 			PartySelectScreen.incMoney(myMember.getPay());
 			mainButton.setText(makeButtonString());
 			if(hireButton != null) hireButton.setText(getHireText());
