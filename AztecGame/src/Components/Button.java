@@ -49,9 +49,7 @@ public class Button extends InputListener {
 		setInputManager(inputManager, temp); //Required for handling input
 		
 		this.myRect = new Rectangle(rect);
-		this.myText = str;
-		setLines();
-		
+		setText(str);
 		myFont = new Font("Georgia", Font.PLAIN, 14);
 		
 		setMode(MODE_NORMAL);
@@ -216,6 +214,6 @@ public class Button extends InputListener {
 	}
 	public void setText(String text) {
 		this.myText = text;
-		stringLoc = null;
+		setLines();
 	}
 }

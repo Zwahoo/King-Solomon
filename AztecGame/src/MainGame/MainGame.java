@@ -106,7 +106,7 @@ public class MainGame {
 	}
 	
 	//Starts the game, takes in the window frame, width, and height.
-	public MainGame(gameframe frame, int width, int height, HashMap<String, Integer> gentStats) throws IOException {
+	public MainGame(gameframe frame, int width, int height, HashMap<String, Integer> gentStats, HashMap<String, PartyMember> theParty) throws IOException {
 		
 		resetAllVals();
 		
@@ -116,11 +116,12 @@ public class MainGame {
 //			addPartyMemberToParty(possibleParty.get(e));
 //		}
 		
-
 		PartyMember gentleman = new PartyMember("The Gentleman", "Gentleman", 0, "Quite.", gentStats);
 		gentleman.setGentleman(true);
 		addPartyMemberToParty(gentleman);
-		addPartyMemberToParty(PartyMemberStats.possibleParty.get("Wonai"));
+		for(PartyMember member: theParty.values()) {
+			addPartyMemberToParty(member);
+		}
 		
 	    oldParty = new ArrayList<PartyMember>();
 	    oldParty.add(new PartyMember("The Gentleman", "Gentleman", 0,

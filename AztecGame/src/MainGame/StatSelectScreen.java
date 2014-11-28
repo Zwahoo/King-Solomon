@@ -15,36 +15,42 @@ import Components.*;
 
 public class StatSelectScreen implements DrawScreen {
 	
-	public int windowWidth = 1000;
-	public int windowHeight = 800;
-	
+	//The number of unused points remianing to distribute.
 	public static int unused = 10;
 	
+	//The background image with title.
 	BufferedImage bkgImg;
+	//The textbox saying "Unused:"
 	Textbox unusedTextboxLabel;	
+	//The textbox containing the actual unused value.
 	static Textbox unusedTextboxValue;
+	//The button to progress to the next scene.
 	Button nextButton;
 	
+	//Vertical Spacing between Rows.
 	int spacer = 50;
 	
+	//Initial location for top row.
 	int statsListY = 90;
 	int statsListX = 25;
 	
+	//Dimensions for the unused textboxes.
 	int unusedTextboxHeight = 40;
-	int unusedTextboxLabelWidth = (int)(windowWidth * (1.0/4.0));
-	int unusedTextboxValueWidth = (int)(windowWidth * (1.0/20.0));
+	int unusedTextboxLabelWidth = (int)(gameframe.windowWidth * (1.0/4.0));
+	int unusedTextboxValueWidth = (int)(gameframe.windowWidth * (1.0/20.0));
 	int unusedTextboxX = 35;
 	int unusedTextboxY = statsListY + 6 * (40 + spacer) + spacer + 30;
 	
-	int nextBtnWidth = (int)(windowWidth * (1.0/4.0));
+	//Dimensions for the next button.
+	int nextBtnWidth = (int)(gameframe.windowWidth * (1.0/4.0));
 	int nextBtnHeight = unusedTextboxHeight;
-	int nextBtnX = windowWidth - nextBtnWidth - 40;
+	int nextBtnX = gameframe.windowWidth - nextBtnWidth - 40;
 	int nextBtnY = unusedTextboxY;
 	
+	//List of stat entry rows.
 	ArrayList<StatEntryField> statsEntryItems = new ArrayList<StatEntryField>();
 	
-	public HashMap<String, Integer> gentStats = new HashMap<String, Integer>();
-	
+	//Has the scene finished?
 	private boolean finished = false;
 	
 	public StatSelectScreen() {
@@ -97,13 +103,7 @@ public class StatSelectScreen implements DrawScreen {
 		for(StatEntryField field : statsEntryItems) {
 			field.update();
 		}
-		if(finished) {
-			gentStats.clear();
-			for(StatEntryField field : statsEntryItems) {
-				gentStats.put(field.statName, field.myVal);
-			}
-			gentStats.put(PartyMember.LOYALTY_KEY, 0);
-		}
+		
 		return finished;
 	}
 	
@@ -117,9 +117,27 @@ public class StatSelectScreen implements DrawScreen {
 		IntroSequence.input.removeInputListener(nextButton, modesList);
 	}
 	
+	/**
+	 * Updates the value of unusued, and the corresponding textbox.
+	 * @param val: The new integer value for unused.
+	 */
 	public static void UpdateUnused(int val) {
 		unused = val;
 		unusedTextboxValue.setText(val + "");
+	}
+
+	/**
+	 * Fills a valid stat list for the gentleman from user entered values.
+	 */
+	public HashMap<String, Integer> getGentStats() {
+		HashMap<String, Integer> gentStats = new HashMap<String, Integer>();
+		for(StatEntryField field : statsEntryItems) {
+			gentStats.put(field.statName, field.myVal);
+		}
+		//Gentleman loyalty = 0 so as not to mess with event modifiers.
+		//Note this is never displayed in game.
+		gentStats.put(PartyMember.LOYALTY_KEY, 0);
+		return gentStats;
 	}
 	
 	

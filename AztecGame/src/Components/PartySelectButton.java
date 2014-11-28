@@ -7,15 +7,16 @@ import MainGame.*;
 
 public class PartySelectButton {
 	
-	PartyMember myMember;
+	public PartyMember myMember;
 	int btnXLoc;
 	int btnYLoc;
 	int btnWidth;
 	int btnHeight;
-	public boolean selected = false;
+	public boolean hired = false;
 	
 	Button mainButton;
 	
+	boolean paymentCharBefore = true;
 	String paymentChar = "$";
 	
 	public PartySelectButton(PartyMember member, int btnXLoc, int btnYLoc, int btnWidth, int btnHeight) {
@@ -25,7 +26,13 @@ public class PartySelectButton {
 		this.btnWidth = btnWidth;
 		this.btnHeight = btnHeight;
 		
-		mainButton = new Button(btnXLoc, btnYLoc, btnWidth, btnHeight, makeButtonString(), IntroSequence.input);
+		mainButton = new Button(btnXLoc, btnYLoc, btnWidth, btnHeight, makeButtonString(), IntroSequence.input) {
+			@Override
+			public void onClick() {
+				if(hired) fire();
+				else hire();
+			}
+		};
 	}
 
 	public void update() {
@@ -35,23 +42,33 @@ public class PartySelectButton {
 	public void draw(Graphics g) {
 		mainButton.draw(g);
 	}
-	
+		
 	public void hire() {
-		if(!selected && PartySelectScreen.money - myMember.getPay() >= 0) { 
-			selected = true;
+		if(!hired && PartySelectScreen.money - myMember.getPay() >= 0) { 
+			hired = true;
 			PartySelectScreen.money -= myMember.getPay();
+			mainButton.setText(makeButtonString());
 		}
 	}
 	
 	public void fire() {
-		if(selected) {
-			selected = false;
+		if(hired) {
+			hired = false;
 			PartySelectScreen.money += myMember.getPay();
+			mainButton.setText(makeButtonString());
 		}
 	}
 	
 	public String makeButtonString() {
-		 return (myMember.getName() + "\n" + myMember.getType() + "\n" + paymentChar + "" + myMember.getPay());
+		String cost = (myMember.getPay() + "");
+		if(paymentCharBefore) {
+			cost = paymentChar + cost;
+		} else {
+			cost += paymentChar;
+		}
+		String note = "";
+		if(hired) note = " (Hired)";
+		return (myMember.getName() + note + "\n" + myMember.getType() + "\n" + cost);
 	}
 	
 	public void destroy() {
