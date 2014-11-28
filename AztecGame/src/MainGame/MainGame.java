@@ -116,7 +116,7 @@ public class MainGame {
 //			addPartyMemberToParty(possibleParty.get(e));
 //		}
 		
-		PartyMember gentleman = new PartyMember("The Gentleman", "Gentleman", 0, "Quite.", gentStats);
+		PartyMember gentleman = new PartyMember("The Gentleman", "Gentleman", 0, "Quite.", "assets/Portraits/MemberImage.png", gentStats);
 		gentleman.setGentleman(true);
 		addPartyMemberToParty(gentleman);
 		for(PartyMember member: theParty.values()) {
@@ -125,20 +125,20 @@ public class MainGame {
 		
 	    oldParty = new ArrayList<PartyMember>();
 	    oldParty.add(new PartyMember("The Gentleman", "Gentleman", 0,
-				"Quite.", PartyMemberStats.AVERAGE_ABE_STATS));
+				"Quite.", "assets/Portraits/MemberImage.png", PartyMemberStats.AVERAGE_ABE_STATS));
 	    oldParty.get(0).setGentleman(true);
 	    oldParty.add(new PartyMember("Happy Hunter", "Hunter", 100,
-				"Likes cooking meat and long walks on the savannah.", PartyMemberStats.HAPPY_HUNTER_STATS));
+				"Likes cooking meat and long walks on the savannah.", "assets/Portraits/MemberImage.png",  PartyMemberStats.HAPPY_HUNTER_STATS));
 	    oldParty.add(new PartyMember("Merry Mercenary", "Mercenary", 100,
-				"Was once payed $100,000 to kill the Queen. Married her instead.", PartyMemberStats.MERRY_MERCENARY_STATS));
+				"Was once payed $100,000 to kill the Queen. Married her instead.", "assets/Portraits/MemberImage.png",  PartyMemberStats.MERRY_MERCENARY_STATS));
 	    oldParty.add(new PartyMember("Nifty Naturalist", "Naturalist", 100,
-				"Once saved six men using only a single leaf of poison ivy, and three blades of grass.", PartyMemberStats.NIFTY_NATURALIST_STATS));
+				"Once saved six men using only a single leaf of poison ivy, and three blades of grass.", "assets/Portraits/MemberImage.png",  PartyMemberStats.NIFTY_NATURALIST_STATS));
 	    oldParty.add(new PartyMember("Marvelous Missionary", "Missionary", 100,
-				"Holds the current leading Convert-to-Failure ratio in the entire South African Pro Missionary League.", PartyMemberStats.MARVELOUS_MISSIONARY_STATS));
+				"Holds the current leading Convert-to-Failure ratio in the entire South African Pro Missionary League.", "assets/Portraits/MemberImage.png",  PartyMemberStats.MARVELOUS_MISSIONARY_STATS));
 	    oldParty.add(new PartyMember("Exuberant Explorer", "Explorer", 100,
-				"Made the world's first Atlas at age 6.", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
+				"Made the world's first Atlas at age 6.", "assets/Portraits/MemberImage.png", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
 	    oldParty.add(new PartyMember("Giddy Guide", "Guide", 100,
-				"He's Giddy!", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
+				"He's Giddy!", "assets/Portraits/MemberImage.png", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
 		
 		//Initialize the different tile types.
 		initTileTypes();

@@ -10,17 +10,26 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
-import Components.Button;
-import Components.PartySelectButton;
+import Components.*;
 
 public class PartySelectScreen implements DrawScreen {
 	
+	//The minimum number of hired party members to play.
+	public static int reqNumPartyMembers = 1;
+	
 	//How much money the player has left to spend on hiring people.
-	public static int money;
+	private static int money;
+	
+	//Draw the selector boxes
+	public static boolean drawSelectorButtons = true;
 
+	//Currency display information.
+	public static final String currencyLabel = "$";
+	public static final boolean currencyLabelBefore = true;
+	
 	//Spacing between buttons.
-	int hSpacer = 20;
-	int vSpacer = 20;
+	static int hSpacer = 20;
+	static int vSpacer = 20;
 	
 	//Row and column number of party members
 	int numRows;
@@ -34,26 +43,36 @@ public class PartySelectScreen implements DrawScreen {
 	boolean finished = false;
 	
 	//List of the party selection buttons.
-	public ArrayList<PartySelectButton> partySelectors = new ArrayList<PartySelectButton>();
+	public static ArrayList<PartySelectButton> partySelectors = new ArrayList<PartySelectButton>();
 	
 	//Background image for the scene.
 	BufferedImage bkgImg;
 	
 	//Button to finish selection.
 	Button finishButton;
+	static Textbox fundsTextbox;
+	static String fundsLabel = "Funds: ";
 
 	//The border on either side of the window before the buttons start/end.
-	int hBorders = 50;
+	public static int hBorders = 50;
 	
 	//Dimensions for the finish button.
-	int finishWidth = 200;
-	int finishHeight = 40;
-	int finishX = gameframe.windowWidth - finishWidth - hBorders;
-	int finishY = gameframe.windowHeight - finishHeight - hBorders;
+	static int finishWidth = 200;
+	static int finishHeight = 40;
+	static int finishX = gameframe.windowWidth - finishWidth - hBorders;
+	static int finishY = gameframe.windowHeight - finishHeight - hBorders;
+	
+	//Dimensions for the funds textbox.
+	int fundsWidth = 150;
+	int fundsHeight = 40;
+	int fundsTextHBuffer = 30;
+	int fundsTextVBuffer = 5;
+	int fundsX = hBorders;
+	int fundsY = gameframe.windowHeight - finishHeight - hBorders;
 	
 	//The top and bottom borders in which to fit party select buttons.
-	int upperBorder = 90;
-	int lowerBorder = gameframe.windowHeight - (finishY - vSpacer); //Need to leave room for "next" button and funds.
+	public static int upperBorder = 90;
+	public static int lowerBorder = gameframe.windowHeight - (finishY - vSpacer); //Need to leave room for "next" button and funds.
 	
 	/**
 	 * Sets the money, loads in background image, initializes all controls.
@@ -68,6 +87,7 @@ public class PartySelectScreen implements DrawScreen {
 		}
 		
 		initializeSelectors();
+		
 		finishButton = new Button(finishX, finishY, finishWidth, finishHeight, "Finish", IntroSequence.input) {
 			@Override
 			public void onClick() {
@@ -75,6 +95,11 @@ public class PartySelectScreen implements DrawScreen {
 			}
 		};
 		finishButton.disable();
+		
+		fundsTextbox = new Textbox(makeFundsString(), fundsX, fundsY, fundsWidth, fundsHeight, IntroSequence.input);
+		fundsTextbox.hTextBuffer = fundsTextHBuffer;
+		fundsTextbox.vTextBuffer = fundsTextVBuffer;
+		fundsTextbox.updateView();
 	}
 	
 	/**
@@ -109,6 +134,9 @@ public class PartySelectScreen implements DrawScreen {
 		}
 	}
 	
+	/**
+	 * Creates a HashMap of all selected members (excluding The Gentleman).
+	 */
 	public HashMap<String, PartyMember> getSelectedParty() {
 		HashMap<String, PartyMember> toRet = new HashMap<String, PartyMember>();
 		for(PartySelectButton selector : partySelectors) {
@@ -119,27 +147,64 @@ public class PartySelectScreen implements DrawScreen {
 		return toRet;
 	}
 	
+	public static String makeFundsString() {
+		String before = fundsLabel;
+		String after = "";
+		if(currencyLabelBefore) {
+		 	before += currencyLabel;
+		}
+		else {
+			after = currencyLabel;
+		}
+		return (before + money + after);
+	}
+	
+
+	public static void incMoney(int amt) {
+		setMoney(money + amt);
+	}
+	public static void setMoney(int newVal) {
+		money = newVal;
+		fundsTextbox.setText(makeFundsString());
+	}
+	public static int getMoney() {
+		return money;
+	}
+	
 	@Override
 	public boolean update() {
 		finishButton.update();
-		boolean memberSelected = false;
+		fundsTextbox.update();
+		
+		boolean blockFinish = false;
+		int membersHired = 0; //Keeps track of the number of hired members.
 		for(PartySelectButton selector : partySelectors) {
 			selector.update();
-			if(selector.hired) memberSelected = true;
+			if(selector.hired) membersHired++;
+			if(selector.blockFinish) blockFinish = true;
 		}
-		if(finishButton.isImpossible && memberSelected) {
-			finishButton.enable();
-		}
-		else if(!finishButton.isImpossible && !memberSelected) {
+		if(!finishButton.isImpossible && (blockFinish || (membersHired < reqNumPartyMembers))) {
 			finishButton.disable();
 		}
+		else if(finishButton.isImpossible && !blockFinish && (membersHired >= reqNumPartyMembers)) {
+			finishButton.enable();
+		}
+		
+		
 		return finished;
 	}
-
+	
+	public static void setAllSelectorsEnabled(boolean enabled) {
+		for(PartySelectButton selector : partySelectors) {
+			selector.setMainButtonEnabled(enabled);
+		}
+	}
+	
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(bkgImg, 0, 0, gameframe.windowWidth, gameframe.windowHeight, null);
 		finishButton.draw(g);
+		fundsTextbox.draw(g);
 		for(PartySelectButton selector : partySelectors) {
 			selector.draw(g);
 		}

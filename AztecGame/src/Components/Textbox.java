@@ -20,7 +20,8 @@ public class Textbox {
 	
 	Rectangle drawRect; //Rectangle encompassing the text box as it is drawn.
 	Rectangle textSpaceRect; //The rectangle defining the space in which the text should be drawn in the text box.
-	public int textBuffer = 3; //Padding to give on either side of the text as it's drawn in textSpaceRect
+	public int vTextBuffer = 3; //Padding to give on either side of the text as it's drawn in textSpaceRect
+	public int hTextBuffer = 3;
 	int fullHeight; //The total height needed to display all text. If larger than drawRect's height, need scroll bar.
 	
 	String textOrig; //The text in its original form.
@@ -86,7 +87,7 @@ public class Textbox {
 			for(int i=1; i<words.length; i++) {
 				String str = words[i];
 				String newStr = curLine + (" " + str);
-				if(getStringWidth(newStr) < (textSpaceRect.width - 2*textBuffer)) {
+				if(getStringWidth(newStr) < (textSpaceRect.width - 2*hTextBuffer)) {
 					curLine = newStr;
 				} else {
 					ret.add(curLine);
@@ -115,7 +116,7 @@ public class Textbox {
 		Component c = new JTextField();
 		lineHeight = c.getFontMetrics(myFont).getHeight() + 3;
 		fullHeight = lines.size() * lineHeight;
-		numLinesToShow = (int)Math.floor((textSpaceRect.height - textBuffer*2)/lineHeight);
+		numLinesToShow = (int)Math.floor((textSpaceRect.height - vTextBuffer*2)/lineHeight);
 	}
 
 	//Checks if the form needs a scroll bar.
@@ -175,7 +176,7 @@ public class Textbox {
 		int verticalOffset = 15;
 		int dispLine = 0;
 		for(int i=curScrollPos; i<lines.size() && dispLine <= numLinesToShow; i++) {
-			g.drawString(lines.get(i), textSpaceRect.x + textBuffer, textSpaceRect.y + textBuffer + verticalOffset + (dispLine)*lineHeight);
+			g.drawString(lines.get(i), textSpaceRect.x + hTextBuffer, textSpaceRect.y + vTextBuffer + verticalOffset + (dispLine)*lineHeight);
 			dispLine++;
 		}
 		

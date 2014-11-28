@@ -52,10 +52,10 @@ public class InputManager {
 		}
 	}
 	
-	public void removeInputListener(InputListener toAdd, ArrayList<Integer> modes) {
+	public void removeInputListener(InputListener toRemove, ArrayList<Integer> modes) {
 		for (Integer mode : modes) {
 			if (inputListenersMap.containsKey(mode)){
-				inputListenersMap.get(mode).remove(toAdd);
+				inputListenersMap.get(mode).remove(toRemove);
 			}
 		}
 	}

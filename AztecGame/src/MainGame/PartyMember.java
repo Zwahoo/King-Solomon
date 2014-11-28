@@ -1,7 +1,14 @@
 package MainGame;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 //holds attributes of each party member
+
+
+import javax.imageio.ImageIO;
 
 public class PartyMember {
 	
@@ -14,6 +21,7 @@ public class PartyMember {
 	public static final String DIPLOMACY_KEY = "Diplomacy";
 	public static final String KNOWLEDGE_KEY = "Knowledge";
 	
+	public BufferedImage image;
 	private String name;
 	private String type;
 	private int pay;
@@ -26,7 +34,7 @@ public class PartyMember {
 	
 	private HashMap<String, Integer> stats;
 	
-	public PartyMember(String name, String type, int pay, String backgroundInfo, HashMap<String, Integer> stats) {
+	public PartyMember(String name, String type, int pay, String backgroundInfo, String imageLocation, HashMap<String, Integer> stats) {
 		this.name = name;
 		this.type = type;
 		this.pay = pay;
@@ -36,6 +44,12 @@ public class PartyMember {
 		status = "Healthy";
 		diseased = false;
 		injured = false;
+		
+		try {
+			image = ImageIO.read(new File(imageLocation));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public String generateInfoString(String between) {
@@ -131,5 +145,13 @@ public class PartyMember {
 
 	public void setGentleman(boolean gent) {
 		this.isGentleman = gent;
+	}
+
+	public BufferedImage getImage() {
+		if(image != null) return image;
+		else {
+			System.out.println("Trying to access null image for party member: " + getName());
+			return new BufferedImage(0, 0, 0);
+		}
 	}	
 }

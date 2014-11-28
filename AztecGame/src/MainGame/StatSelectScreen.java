@@ -63,7 +63,7 @@ public class StatSelectScreen implements DrawScreen {
 		}
 		
 		unusedTextboxLabel = new Textbox("Unused: ", unusedTextboxX, unusedTextboxY, unusedTextboxLabelWidth, unusedTextboxHeight, IntroSequence.input);
-		unusedTextboxLabel.textBuffer = 5;
+		unusedTextboxLabel.hTextBuffer = 3;
 		int txtValX = unusedTextboxX + unusedTextboxLabelWidth + 10;
 		unusedTextboxValue = new Textbox(unused + "", txtValX, unusedTextboxY, unusedTextboxValueWidth, unusedTextboxHeight, IntroSequence.input);
 		
