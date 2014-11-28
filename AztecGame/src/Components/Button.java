@@ -34,6 +34,8 @@ public class Button extends InputListener {
 	
 	Point stringLoc = null;
 	
+	String[] lines; //Have to use a list to separate new lines (drawString() doesn't handle them).
+	
 	//Constructors
 	public Button(int x, int y, int width, int height, String str, InputManager inputManager) {
 		this(new Point(x, y), new Point(width, height), str, inputManager);
@@ -48,10 +50,15 @@ public class Button extends InputListener {
 		
 		this.myRect = new Rectangle(rect);
 		this.myText = str;
+		setLines();
 		
 		myFont = new Font("Georgia", Font.PLAIN, 14);
 		
 		setMode(MODE_NORMAL);
+	}
+	
+	public void setLines() {
+		lines = myText.split("\n");
 	}
 	
 	//Should be override when the button is created.
@@ -71,12 +78,14 @@ public class Button extends InputListener {
 		g.setFont(myFont);
 		g.setColor(fontCol);
 		
-		//Calculate the string location if it's not known
-		if(stringLoc == null) {
-			stringLoc = getStringDrawLoc(g, myFont, myText);
+		int lineHeight = g.getFontMetrics().getHeight();
+		int yOffset = (-1)*(lines.length/2)*(lineHeight);
+		for(String str : lines){
+			//Calculte the string location
+			stringLoc = getStringDrawLoc(g, myFont, str);
+			g.drawString(str, stringLoc.x, stringLoc.y + yOffset);
+			yOffset += lineHeight + 2;
 		}
-		
-		g.drawString(myText, stringLoc.x, stringLoc.y);
 	}
 	
 	//Sets the mode if mouse exits/exits the button.

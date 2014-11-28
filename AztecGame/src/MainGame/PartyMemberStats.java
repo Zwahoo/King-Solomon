@@ -22,6 +22,7 @@ public final class PartyMemberStats {
 	}
 	 */
 	
+	
 	public static final HashMap<String, String> STAT_DESCRIPTIONS;
 	static
 	{
@@ -134,5 +135,34 @@ public final class PartyMemberStats {
 		GIDDY_GUIDE_STATS.put(PartyMember.STRENGTH_KEY, 16);
 		GIDDY_GUIDE_STATS.put(PartyMember.DIPLOMACY_KEY, 8);
 		GIDDY_GUIDE_STATS.put(PartyMember.KNOWLEDGE_KEY, 9);
+	}
+	
+	
+	public static final HashMap<String, PartyMember> possibleParty = new HashMap<String, PartyMember>();
+	static {
+		possibleParty.put("Macumazahn", new PartyMember("Macumazahn", "Hunter", 100,
+				"An African native that consantly looks gaunt, wears jewelry and skins.", PartyMemberStats.HAPPY_HUNTER_STATS));
+		possibleParty.put("Jan Kruger", new PartyMember("Jan Kruger", "Hunter", 100,
+				"A Boer that is large, intimidating, and has brown hair.", PartyMemberStats.HAPPY_HUNTER_STATS));
+		possibleParty.put("Umbopa", new PartyMember("Umbopa", "Mercenary", 100,
+				"An African native that is large, intimidating, and has a large scar on his face. Usually leaves his chest bear.", PartyMemberStats.MERRY_MERCENARY_STATS));
+		possibleParty.put("Gunther Reinhart", new PartyMember("Gunther Reinhart", "Mercenary", 100,
+				"A Prussian man with a medium build and black hair. He wears a military outfit and has a scruffy beard that gives him an intimidating appearance.", PartyMemberStats.MERRY_MERCENARY_STATS));
+		possibleParty.put("Wonai", new PartyMember("Wonai", "Naturalist", 100,
+				"An older African native that proudly wears the garb of a shaman.", PartyMemberStats.NIFTY_NATURALIST_STATS));
+		possibleParty.put("Roland Perry", new PartyMember("Roland Perry", "Naturalist", 100,
+				"A British man with a small frame and brown hair. Often seen wearing a monocle and very fine clothes.", PartyMemberStats.NIFTY_NATURALIST_STATS));
+		possibleParty.put("Theunis Van Zyl", new PartyMember("Theunis Van Zyl", "Missionary", 100,
+				"A Boer that looks like a mirror of the stereotypical priest. Has a small frame, white hair, and wears glasses with the classic clerical garb.", PartyMemberStats.MARVELOUS_MISSIONARY_STATS));
+		possibleParty.put("Duncan MacKinnon", new PartyMember("Duncan MacKinnon", "Missionary", 100,
+				"A Scottish man with a large frame and red hair. He wears normal clothes and a wide brimmed hat.", PartyMemberStats.MARVELOUS_MISSIONARY_STATS));
+		possibleParty.put("Willem de Bruin", new PartyMember("Willem de Bruin", "Explorer", 100,
+				"A Boer with a medium build and blonde hair. Usually seen with his favorite tan explorers' shirt and vest.", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
+		possibleParty.put("Jack Reed", new PartyMember("Jack Reed", "Explorer", 100,
+				"An American man with a medium build and a 12 o' clock shadow. Has a handsome face and a great smile, and is often seen wearing a simple shirt.", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
+		possibleParty.put("Tariro", new PartyMember("Tariro", "Guide", 100,
+				"An African native with a friendly face. He is often seen wearing European clothes imported from the north.", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
+		possibleParty.put("Jakobus Kotze", new PartyMember("Jakobus Kotze", "Guide", 100,
+				"A Boer with a medium build and brown hair. His sides are rather wide, and his often seen wearing simple farmers' clothes.", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
 	}
 }

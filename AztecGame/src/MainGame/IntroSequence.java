@@ -14,6 +14,7 @@ public class IntroSequence {
 	private DrawScreen currentScreen;
 	private StartScreen startScreen;
 	private StatSelectScreen statSelect;
+	private PartySelectScreen partySelect;
 	
 	Color bkgColor = Color.GRAY;
 	
@@ -40,7 +41,10 @@ public class IntroSequence {
 		}
 		else if(stateNum == 1) {
 			gentStats = statSelect.gentStats;
+			partySelect = new PartySelectScreen();
+			currentScreen = partySelect;
 			statSelect.finish();
+		} else if (stateNum == 2) {
 			finished = true;
 		}
 		stateNum++;

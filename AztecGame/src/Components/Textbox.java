@@ -143,7 +143,7 @@ public class Textbox {
 			downBtn = new Button(xLoc, drawRect.y + drawRect.height - btnHeight - btnBuffer, btnWidth, btnHeight, "v", input) {
 				@Override
 				public void onClick() {
-					if(curScrollPos < (lines.size() - numLinesToShow)) {
+					if(curScrollPos < (lines.length - numLinesToShow)) {
 						curScrollPos++;
 					}
 				}

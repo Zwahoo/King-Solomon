@@ -18,7 +18,7 @@ public class StartScreen implements DrawScreen {
 	boolean hasDrawnBkgImg = false;
 	
 	int startWidth = 200;
-	int startHeight = 50;
+	int startHeight = 40;
 	int startX = gameframe.windowWidth - startWidth - 40;
 	int startY = gameframe.windowHeight - startHeight - 40;
 	

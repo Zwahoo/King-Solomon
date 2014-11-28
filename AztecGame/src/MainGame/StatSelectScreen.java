@@ -3,8 +3,13 @@ package MainGame;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.imageio.ImageIO;
 
 import Components.*;
 
@@ -15,17 +20,14 @@ public class StatSelectScreen implements DrawScreen {
 	
 	public static int unused = 10;
 	
-	Textbox titleBox;
+	BufferedImage bkgImg;
 	Textbox unusedTextboxLabel;	
 	static Textbox unusedTextboxValue;
 	Button nextButton;
 	
-	int titleTextboxWidth = 350;
-	int titleTextboxHeight = 50;
-	
 	int spacer = 50;
 	
-	int statsListY = titleTextboxHeight + 40;
+	int statsListY = 90;
 	int statsListX = 25;
 	
 	int unusedTextboxHeight = 40;
@@ -48,11 +50,11 @@ public class StatSelectScreen implements DrawScreen {
 	public StatSelectScreen() {
 		unused = 10;
 		
-		titleBox = new Textbox("Select Gentleman's Stats",
-				windowWidth/2 - titleTextboxWidth/2, 10,
-				titleTextboxWidth, titleTextboxHeight, IntroSequence.input);
-		titleBox.SetFont(new Font("Georgia", Font.PLAIN, 30));
-		titleBox.textBuffer = 10;
+		try {
+			bkgImg = ImageIO.read(new File("assets/SelectStatsScreen.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		unusedTextboxLabel = new Textbox("Unused: ", unusedTextboxX, unusedTextboxY, unusedTextboxLabelWidth, unusedTextboxHeight, IntroSequence.input);
 		unusedTextboxLabel.textBuffer = 5;
@@ -78,7 +80,7 @@ public class StatSelectScreen implements DrawScreen {
 	
 	@Override
 	public void draw(Graphics g) {
-		titleBox.draw(g);
+		g.drawImage(bkgImg, 0, 0, gameframe.windowWidth, gameframe.windowHeight, null);
 		unusedTextboxLabel.draw(g);
 		unusedTextboxValue.draw(g);
 		nextButton.draw(g);
@@ -89,7 +91,6 @@ public class StatSelectScreen implements DrawScreen {
 	
 	@Override
 	public boolean update() {
-		titleBox.update();
 		unusedTextboxLabel.update();
 		unusedTextboxValue.update();
 		nextButton.update();
