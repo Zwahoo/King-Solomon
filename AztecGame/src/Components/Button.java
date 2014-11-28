@@ -12,6 +12,7 @@ public class Button extends InputListener {
 	public static final int MODE_NORMAL = 0; //Default button "mode"
 	public static final int MODE_HOVER = 1; //The mouse is hovering over the button, but not pressed
 	public static final int MODE_PRESSED = 2; //The mouse has been clicked on the button, but not released yet.
+	int curMode = MODE_NORMAL;
 	
 	private String myText; //Text on the button.
 	private Rectangle2D myRect; //Location and size of the button
@@ -22,13 +23,29 @@ public class Button extends InputListener {
 	Color bkgCol; //The backdrop color for the button (switches between off, hover, and press Col)
 	Color borderCol; //The border color for the button (switches between off, hover, and press Bor)
 	
-	Color normCol = new Color(210, 150, 50); //Back color for normal mode
-	Color hoverCol = new Color(210, 150, 50); //Back color for hover mode
-	Color pressCol = new Color(180, 130, 30); //Back color for press mode
-	Color normBor = new Color(80, 50, 50); //Border color for normal mode
-	Color hoverBor = new Color(100, 70, 70); //Border color for hover mode
-	Color pressBor = new Color(100, 70, 70); //Border color for press mode
-	Color fontCol = new Color(0, 0, 0); //Color of the text
+	Color normColEnabled = new Color(210, 150, 50); //Back color for normal mode
+	Color hoverColEnabled = new Color(210, 150, 50); //Back color for hover mode
+	Color pressColEnabled = new Color(180, 130, 30); //Back color for press mode
+	Color normBorEnabled = new Color(80, 50, 50); //Border color for normal mode
+	Color hoverBorEnabled = new Color(100, 70, 70); //Border color for hover mode
+	Color pressBorEnabled = new Color(100, 70, 70); //Border color for press mode
+	Color fontColEnabled = new Color(0, 0, 0); //Color of the text
+	
+	Color normColDisabled = new Color(200, 200, 200); //Back color for normal mode
+	Color hoverColDisabled = new Color(200, 200, 200); //Back color for hover mode
+	Color pressColDisabled = new Color(200, 200, 200); //Back color for press mode
+	Color normBorDisabled = new Color(100, 70, 70); //Border color for normal mode
+	Color hoverBorDisabled = new Color(100, 70, 70); //Border color for hover mode
+	Color pressBorDisabled = new Color(100, 70, 70); //Border color for press mode
+	Color fontColDisabled = new Color(0, 0, 0); //Color of the text
+
+	Color normCol; //Back color for normal mode
+	Color hoverCol; //Back color for hover mode
+	Color pressCol; //Back color for press mode
+	Color normBor; //Border color for normal mode
+	Color hoverBor; //Border color for hover mode
+	Color pressBor; //Border color for press mode
+	Color fontCol; //Color of the text
 	
 	public boolean isImpossible = false;
 	
@@ -44,6 +61,7 @@ public class Button extends InputListener {
 		this(new Rectangle(loc.x, loc.y, size.x, size.y), str, inputManager);
 	}
 	public Button(Rectangle rect, String str, InputManager inputManager) {
+		setEnabled(true);
 		ArrayList<Integer> temp = new ArrayList<Integer>();
 		temp.add(MainGame.START_DAY_MODE); temp.add(MainGame.MOVEMENT_MODE); temp.add(MainGame.EVENT_MODE); temp.add(-1);
 		setInputManager(inputManager, temp); //Required for handling input
@@ -124,17 +142,20 @@ public class Button extends InputListener {
 			setMouseOnButton(false);
 			bkgCol = normCol;
 			borderCol = normBor;
+			curMode = MODE_NORMAL;
 		}
 		else if (mode == MODE_HOVER) {
 			setMouseOnButton(true);
 			bkgCol = hoverCol;
 			borderCol = hoverBor;
+			curMode = MODE_HOVER;
 			
 		}
 		else if (mode == MODE_PRESSED) {
 			setMouseOnButton(true);
 			bkgCol = pressCol;
 			borderCol = pressBor;
+			curMode = MODE_PRESSED;
 		} 
 		else {
 			System.out.println("Unknown Mode Request in Button.");
@@ -215,5 +236,32 @@ public class Button extends InputListener {
 	public void setText(String text) {
 		this.myText = text;
 		setLines();
+	}
+	public void enable() {
+		isImpossible = false;
+		normCol = normColEnabled;
+		hoverCol = hoverColEnabled;
+		pressCol = pressColEnabled;
+		normBor = normBorEnabled;
+		hoverBor = hoverBorEnabled;
+		pressBor = 	pressBorEnabled;
+		fontCol = fontColEnabled;
+		setMode(curMode);
+		
+	}
+	public void disable() {
+		isImpossible = true;
+		normCol = normColDisabled;
+		hoverCol = hoverColDisabled;
+		pressCol = pressColDisabled;
+		normBor = normBorDisabled;
+		hoverBor = hoverBorDisabled;
+		pressBor = 	pressBorDisabled;
+		fontCol = fontColDisabled;
+		setMode(curMode);
+	}
+	public void setEnabled(boolean val) {
+		if(val) enable();
+		else disable();
 	}
 }

@@ -74,6 +74,7 @@ public class PartySelectScreen implements DrawScreen {
 				finished = true;
 			}
 		};
+		finishButton.disable();
 	}
 	
 	/**
@@ -121,8 +122,16 @@ public class PartySelectScreen implements DrawScreen {
 	@Override
 	public boolean update() {
 		finishButton.update();
+		boolean memberSelected = false;
 		for(PartySelectButton selector : partySelectors) {
 			selector.update();
+			if(selector.hired) memberSelected = true;
+		}
+		if(finishButton.isImpossible && memberSelected) {
+			finishButton.enable();
+		}
+		else if(!finishButton.isImpossible && !memberSelected) {
+			finishButton.disable();
 		}
 		return finished;
 	}
