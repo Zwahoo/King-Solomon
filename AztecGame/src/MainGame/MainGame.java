@@ -63,6 +63,8 @@ public class MainGame {
 	public static InputManager input; // This registers all the mouse and keyboard
 	public static Integer currentMode = -1;
 	
+	BufferedImage bkgImg;
+	
 	Rectangle drawRect;
 		
 	StatsBar statsBar;
@@ -115,6 +117,8 @@ public class MainGame {
 //		for (String e : possibleParty.keySet()){
 //			addPartyMemberToParty(possibleParty.get(e));
 //		}
+		
+		//bkgImg = ImageIO.read(new File("assets/BkgImg.png"));
 		
 		PartyMember gentleman = new PartyMember("The Gentleman", "Gentleman", 0, "Quite.", "assets/Portraits/MemberImage.png", gentStats);
 		gentleman.setGentleman(true);
@@ -272,6 +276,11 @@ public class MainGame {
 	
 	//Draw any drawable objects in the game world.
 	public void draw(Graphics g) {
+		
+		if(bkgImg != null) {
+			g.drawImage(bkgImg, 0, 0, gameframe.windowWidth, gameframe.windowHeight, null);
+		}
+		
 		// Draw map
 		map.draw(g, view, player1);
 		
