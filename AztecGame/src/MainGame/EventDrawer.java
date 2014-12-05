@@ -356,7 +356,7 @@ public class EventDrawer {
 					if (ro.loseFollowUp.length() > 3){
 						System.out.println("I (apparently) have a follow up");
 						int index = ro.loseFollowUp.lastIndexOf("\\");
-						String cutLoseFollowUp = "assets\\events" + ro.loseFollowUp.substring(index,ro.loseFollowUp.length());
+						String cutLoseFollowUp = "assets/events/" + ro.loseFollowUp.substring(index+1,ro.loseFollowUp.length());
 						HashMap <String, Object> izDaMap= FileToMap.createMap(cutLoseFollowUp);
 						Event izDaEvent = MapToEvent.createEvent(izDaMap);
 						destroyer();
@@ -376,7 +376,7 @@ public class EventDrawer {
 					if (ro.winFollowUp.length() > 3){
 						System.out.println("I (apparently) have a follow up");
 						int index = ro.winFollowUp.lastIndexOf("\\");
-						String cutWinFollowUp = "assets\\events" + ro.winFollowUp.substring(index,ro.winFollowUp.length());
+						String cutWinFollowUp = "assets/events/" + ro.winFollowUp.substring(index+1,ro.winFollowUp.length());
 						HashMap <String, Object> izDaMap= FileToMap.createMap(cutWinFollowUp);
 						Event izDaEvent = MapToEvent.createEvent(izDaMap);
 						destroyer();
