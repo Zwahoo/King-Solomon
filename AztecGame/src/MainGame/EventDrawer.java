@@ -101,7 +101,10 @@ public class EventDrawer {
 	 * @param	presMembers: current party members for this event
 	 */
 	public EventDrawer(Event toLaunch, ArrayList<PartyMember> presMembers) {
-		
+		this(toLaunch, presMembers, null);
+	}
+	
+	public EventDrawer(Event toLaunch, ArrayList<PartyMember> presMembers, PartyMember toSelect) {	
 		/*currently just for testing will eventually be a parameter to the event? Not sure and don't want to change
 		*MapToEvent method without consulting Jackson
 		*/
@@ -114,15 +117,20 @@ public class EventDrawer {
 			image = null;
 		}
 		setLocations();
-		launchEvent(toLaunch, presMembers);
+		launchEvent(toLaunch, presMembers, toSelect);
 	}
 	
 	//initializes all parts of the event menu
-	public void launchEvent(Event toLaunch, ArrayList<PartyMember> presMembers) {
+	public void launchEvent(Event toLaunch, ArrayList<PartyMember> presMembers, PartyMember toSelect) {
 		
 		if (toLaunch.isPartyMemberTargeted()){
-		      boolean couldTarget = toLaunch.setAffectedPartyMemberRandomly(presMembers);
-		      if(!couldTarget) return; //Can't select needed target. Don't launch event.
+			if(toSelect != null) {
+				toLaunch.setAffectedPartyMember(toSelect);
+			}
+			else {
+				boolean couldTarget = toLaunch.setAffectedPartyMemberRandomly(presMembers);
+				if(!couldTarget) return; //Can't select needed target. Don't launch event.
+			}
 		}
 		
 		info = new Textbox(toLaunch.getIntroText(), infoTextboxX, infoTextboxY, (int)(gameframe.windowWidth*infoTextboxWMult), (int)(gameframe.windowHeight*infoTextboxHMult), MainGame.input);

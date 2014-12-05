@@ -82,6 +82,7 @@ public class PartySelectScreen implements DrawScreen {
 	 */
 	public PartySelectScreen() {
 		money = 600;
+		numSelectedMembers = 0;
 		
 		try{
 			bkgImg = ImageIO.read(new File("assets/SelectPartyScreen.png"));

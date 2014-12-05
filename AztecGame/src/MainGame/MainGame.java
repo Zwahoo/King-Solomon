@@ -530,6 +530,10 @@ public class MainGame {
 		currentMode = EVENT_MODE;
 		eventDrawer = new EventDrawer(e, presMembers);
 	}
+	public static void launchEventWithSelectedMember(Event e, ArrayList<PartyMember> presMembers, PartyMember toSelect) {
+		currentMode = EVENT_MODE;
+		eventDrawer = new EventDrawer(e, presMembers, toSelect);
+	}
 
 	public static void responseEffect(int result, ResponseOption r) {
 		String[] resourceKeys = {

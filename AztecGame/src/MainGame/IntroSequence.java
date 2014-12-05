@@ -42,6 +42,7 @@ public class IntroSequence {
 	 * Initializes the intro sequence and launches first scene.
 	 */
 	public IntroSequence(Component c) {
+		MainGame.currentMode = -1;
 		input = new InputManager(c, null);
 		setupInitialScene();
 	}

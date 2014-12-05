@@ -107,14 +107,14 @@ public class Tile{
 	}
 	
 	// runEvent only for Movement Events (Change Name later)
-	public void runEvent(ArrayList<PartyMember> presMembers){
+	public void runMoveToEvent(ArrayList<PartyMember> presMembers, boolean removeEvent){
 		if(moveToEvent == null) {
 			MainGame.currentMode = MainGame.START_DAY_MODE;
 			MainGame.startDayDrawer = new StartDayDrawer();
 			return;
 		}
 		MainGame.launchEvent(moveToEvent, presMembers);
-	
+		moveToEvent = null;
 	}
 	
 	@Override
