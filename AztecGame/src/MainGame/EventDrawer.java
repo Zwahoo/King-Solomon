@@ -356,6 +356,17 @@ public class EventDrawer {
 		} else {
 			result.setText(ro.getWinText());
 		}
+		
+		//Play the sound
+		if (resultNumber == 0) {
+			Sound resultSound = new Sound("assets/sounds/Bad Event Count.wav", false);
+		} else if (resultNumber == 1) {
+			Sound resultSound = new Sound("assets/sounds/Neutral Event Outcome.wav", false);
+		} else {
+			Sound resultSound = new Sound("assets/sounds/Good Event Outcome.wav", false);
+		}
+		
+		
 		clearButtons();
 		buttons.clear();
 		exit = new Button(exitButtonX, exitButtonY, (int)(gameframe.windowWidth*exitButtonWMult), (int)(gameframe.windowHeight*exitButtonHMult), "Exit", MainGame.input) {
