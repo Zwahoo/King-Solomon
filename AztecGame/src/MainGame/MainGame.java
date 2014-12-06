@@ -33,8 +33,8 @@ public class MainGame {
 	//Event Frequencies
 	public static final double MOVE_TO_FREQUENCY = .5;
 	//TODO Change to ~.75 and ~.25 once null events are written
-	public static final double INVESTIGATE_FREQUENCY = 1;
-	public static final double REST_FREQUENCY = 1;
+	public static final double INVESTIGATE_FREQUENCY = 0.75;
+	public static final double REST_FREQUENCY = 0.25;
 	//Tile Image Index Locations
 	public static final int WATER_TILE_INDEX = 0;
 	public static final int JUNGLE_TILE_INDEX = 1;
@@ -517,6 +517,8 @@ public class MainGame {
 	
 	public Event getRandomInvestigateEvent(String loc) {
 		double origRandom = Math.random();
+		HashMap defaultMap = FileToMap.createMap("assets/events/GenericInvestigate.txt");
+		Event defaultEvent = MapToEvent.createEvent(defaultMap);
 		
 		if (origRandom < INVESTIGATE_FREQUENCY){
 			ArrayList<Event> eventList = new ArrayList<Event>();
@@ -552,12 +554,14 @@ public class MainGame {
 			}
 		}
 		else {
-			return null;
+			return defaultEvent;
 		}
 	}
 	
 	public Event getRandomRestEvent(String loc) {
 		double origRandom = Math.random();
+		HashMap defaultMap = FileToMap.createMap("assets/events/genericRest.txt");
+		Event defaultEvent = MapToEvent.createEvent(defaultMap);
 		
 		if (origRandom < REST_FREQUENCY){
 			ArrayList<Event> eventList = new ArrayList<Event>();
@@ -593,7 +597,7 @@ public class MainGame {
 			}
 		}
 		else {
-			return null;
+			return defaultEvent;
 		}
 	}
 
