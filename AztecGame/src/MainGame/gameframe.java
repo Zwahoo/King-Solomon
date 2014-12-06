@@ -26,7 +26,7 @@ public class gameframe extends JFrame {
 
 
 	public static boolean DEBUG = true;
-	boolean doSetup = true;
+	boolean doSetup = false;
 	
 	
 	private boolean isRunning = true;

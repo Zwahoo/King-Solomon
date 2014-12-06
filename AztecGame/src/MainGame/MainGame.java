@@ -633,12 +633,6 @@ public class MainGame {
 		if (result == 0){
 			partyStatChange.addAll(r.getLosePartyStatChange());
 			resourceChange.addAll(r.getLoseResourceChange());
-//			for (int i = 0; i < partyStatChange.size(); i++){
-//				partyStatChange.set(i, -partyStatChange.get(i));
-//			}
-//			for (int i = 0; i < resourceChange.size(); i++){
-//				resourceChange.set(i, -resourceChange.get(i));
-//			}
 			int i = 0;
 			int j = 0;
 			for (Long e : partyStatChange){
@@ -728,6 +722,10 @@ public class MainGame {
 		}
 		startDayDrawer.destroyer();
 		startDayDrawer = null;
+		
+		if (stats.get(STAMINA_KEY)==0){
+			stats.put(MORALE_KEY, stats.get(MORALE_KEY) - 20);
+		}
 	}
 	
 	public static boolean checkStat(Long partyStat, Long partyRequirement){
