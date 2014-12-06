@@ -29,6 +29,8 @@ public class Event {
 	public final double UNCOMMON_FREQUENCY = .40;
 	public final double RARE_FREQUENCY = .25;
 	
+	public boolean playJingles = EventDrawer.defaultPlayJingles;
+	
 	public Event(String eventID, String eventType, 
 			ArrayList<String> possibleLocations, ArrayList<String> reqParty, 
 			String introText, ArrayList<ResponseOption> responseOptions, 

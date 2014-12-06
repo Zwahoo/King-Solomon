@@ -8,7 +8,7 @@ public class EventHandler {
 	private static int invalidModifierNum = -1000;
 	
 	public static int checkResponse(ResponseOption r, HashMap<String, Integer> resources, ArrayList<Integer> partyStats){
-	
+		
 		ArrayList<Integer> currentResources = new ArrayList<Integer>();
 		currentResources.add(resources.get(MainGame.FOOD_KEY));
 		currentResources.add(resources.get(MainGame.WATER_KEY));

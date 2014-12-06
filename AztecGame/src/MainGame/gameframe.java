@@ -44,6 +44,7 @@ public class gameframe extends JFrame {
 	public static int leftinset = 0;
 	public static int rightinset = 0;
 	
+	public Sound sound;
 
 	// frame graphics
 	Graphics g = null;
@@ -73,11 +74,12 @@ public class gameframe extends JFrame {
 		this.initialize(); // initializes things which need initializing before
 							// the game can run.
 		
-		Sound sound = new Sound("assets/sounds/KingSolomonsOverworldTheme.wav", true);
+		sound = new Sound("assets/sounds/KingSolomonsOverworldTheme.wav", true);
 		
 		while (go){
 			if(doSetup) {
-	
+			
+			if(!sound.isPlaying) sound = new Sound("assets/sounds/KingSolomonsOverworldTheme.wav", true);
 			this.initializeIntroSequence(); // initializes things which need initializing before
 								// the game can run
 				

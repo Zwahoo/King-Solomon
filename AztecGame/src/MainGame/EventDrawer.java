@@ -38,6 +38,10 @@ public class EventDrawer {
 	 * 										-Cur Party--Response 4-
 	 * 										-Cur Party--Response 5-
 	 */
+	//Play sounds on neutral/lose/win.
+	public static boolean defaultPlayJingles = true;
+	
+	public boolean playJingles;
 	
 	//image properties
 	BufferedImage image;
@@ -109,7 +113,7 @@ public class EventDrawer {
 		*MapToEvent method without consulting Jackson
 		*/
 		String imageLoc = "assets/sunset.png";
-		
+		playJingles = toLaunch.playJingles;
 		try {
 			image = ImageIO.read(new File(imageLoc));
 		} catch (IOException e) {
@@ -358,12 +362,14 @@ public class EventDrawer {
 		}
 		
 		//Play the sound
-		if (resultNumber == 0) {
-			Sound resultSound = new Sound("assets/sounds/Bad Event Count.wav", false);
-		} else if (resultNumber == 1) {
-			Sound resultSound = new Sound("assets/sounds/Neutral Event Outcome.wav", false);
-		} else {
-			Sound resultSound = new Sound("assets/sounds/Good Event Outcome.wav", false);
+		if(playJingles) {
+			if (resultNumber == 0) {
+				Sound resultSound = new Sound("assets/sounds/Bad Event Count.wav", false);
+			} else if (resultNumber == 1) {
+				Sound resultSound = new Sound("assets/sounds/Neutral Event Outcome.wav", false);
+			} else {
+				Sound resultSound = new Sound("assets/sounds/Good Event Outcome.wav", false);
+			}
 		}
 		
 		

@@ -36,13 +36,15 @@ import javax.swing.*;
 // Hence, we use a Swing application.
 public class Sound extends JFrame {
    Clip clip;
+   public boolean isPlaying = false;
+   
    // Constructor
    public Sound(String filename, boolean loop) {
 //      this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //      this.setTitle("Test Sound Clip");
 //      this.setSize(300, 200);
 //      this.setVisible(true);
-   
+	   
       try {
          // Open an audio input stream.
          //URL url = this.getClass().getClassLoader().getResource("assets/sounds/KingSolomonsOverworldTheme.wav");
@@ -70,10 +72,12 @@ public class Sound extends JFrame {
 	   else {
 		   clip.start();
 	   }
+	   isPlaying = true;
    }
    
    public void stopSound(){
 	   clip.stop();
+	   isPlaying = false;
    }
 }
 

@@ -310,13 +310,19 @@ public class MainGame {
 			this.closeStartDay(EVENT_MODE, -1);
 			HashMap eventMap = FileToMap.createMap("assets/events/Thomas_TempPartyGone.txt");
 			Event partyGone = MapToEvent.createEvent(eventMap);
+			partyGone.playJingles = false;
 			launchFinalEvent(partyGone, party);
+			frame.sound.stopSound();
+			Sound loseSound = new Sound("assets/sounds/Fatality.wav", false);
 			launchedFinalEvent = true;
 		}
 		if(!launchedFinalEvent && this.currentMode == this.START_DAY_MODE && this.getStats().get(FOOD_KEY) <= 0) {
 			this.closeStartDay(EVENT_MODE, -1);
 			HashMap eventMap = FileToMap.createMap("assets/events/FoodEvent.txt");
 			Event foodGone = MapToEvent.createEvent(eventMap);
+			foodGone.playJingles = false;
+			frame.sound.stopSound();
+			Sound loseSound = new Sound("assets/sounds/Fatality.wav", false);
 			launchFinalEvent(foodGone, party);
 			launchedFinalEvent = true;
 		}
@@ -324,6 +330,9 @@ public class MainGame {
 			this.closeStartDay(EVENT_MODE, -1);
 			HashMap eventMap = FileToMap.createMap("assets/events/WaterEvent.txt");
 			Event waterGone = MapToEvent.createEvent(eventMap);
+			waterGone.playJingles = false;
+			frame.sound.stopSound();
+			Sound loseSound = new Sound("assets/sounds/Fatality.wav", false);
 			launchFinalEvent(waterGone, party);
 			launchedFinalEvent = true;
 		}
