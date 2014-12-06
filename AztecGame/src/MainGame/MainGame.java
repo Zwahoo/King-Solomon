@@ -66,7 +66,7 @@ public class MainGame {
 	public static Integer currentMode = -1;
 	private static gameframe frame;
 	private static boolean finalEvent = false; //Set to true when launching the final event.
-	
+		
 	BufferedImage bkgImg;
 	
 	Rectangle drawRect;
@@ -76,6 +76,8 @@ public class MainGame {
 	static int statBarHeight;
 	
 	public static HashMap<String, TileType> tileTypes;
+	
+	private boolean hasRegisteredPartyGone = false;
 	
 	//Stats
 	private static LinkedHashMap <String, Integer> stats;
@@ -103,7 +105,7 @@ public class MainGame {
 		map = null;
 		player1 = null;
 		view = null;
-		input = null;
+		removeInputManager();
 		currentMode = -1;
 		oldParty = null;
 		party.clear();
@@ -112,6 +114,13 @@ public class MainGame {
 		startDayDrawer = null;
 		frame = null;
 		finalEvent = false;
+	}
+	
+	public static void removeInputManager() {
+		if(input != null) {
+			input.closeMe();
+			input = null;
+		}
 	}
 	
 	//Starts the game, takes in the window frame, width, and height.
@@ -293,10 +302,11 @@ public class MainGame {
 			}
 		}
 
-		if(this.currentMode == this.START_DAY_MODE && party.size() < MIN_PARTY_SIZE) {
+		if(!hasRegisteredPartyGone && this.currentMode == this.START_DAY_MODE && party.size() < MIN_PARTY_SIZE) {
 			HashMap eventMap = FileToMap.createMap("assets/events/Thomas_TempPartyGone.txt");
 			Event partyGone = MapToEvent.createEvent(eventMap);
 			launchFinalEvent(partyGone, party);
+			hasRegisteredPartyGone = true;
 		}
 		
 		
