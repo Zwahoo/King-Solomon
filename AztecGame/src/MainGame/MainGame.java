@@ -174,7 +174,8 @@ public class MainGame {
 		player1.getCurrentTile().reveal();
 		
 		// Creates a view
-		view = new View(new Point(0, height/2), width, height);
+		Point viewLoc = new Point((int)Math.round(-width*1.35), -1*height/2);
+		view = new View(viewLoc, width, height);
 		
 		//Store the gameframe
 		this.frame = frame;
