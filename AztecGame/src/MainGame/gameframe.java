@@ -75,10 +75,6 @@ public class gameframe extends JFrame {
 		
 		Sound sound = new Sound("assets/sounds/KingSolomonsOverworldTheme.wav", true);
 		
-		
-		
-		
-		
 		while (go){
 			if(doSetup) {
 	
