@@ -509,7 +509,6 @@ public class MainGame {
 						}
 					}
 				}
-				System.out.println("Adding event " + randomlyChosenEvent + " to Tile Type: " + loc);
 				return randomlyChosenEvent;
 			}
 			else {
@@ -723,7 +722,7 @@ public class MainGame {
 
 	public static void closeEvent() {
 		
-		System.out.println("Closing Time");
+		//System.out.println("Closing Time");
 		eventDrawer.destroyer();
 		currentMode = START_DAY_MODE;
 		eventDrawer = null;
