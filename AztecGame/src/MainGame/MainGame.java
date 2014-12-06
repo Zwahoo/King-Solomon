@@ -272,6 +272,14 @@ public class MainGame {
 			eventDrawer.update();
 		if (startDayDrawer!=null)
 			startDayDrawer.update();
+		for(int i = 0; i < party.size(); i++) {
+			PartyMember curMember = party.get(i);
+				if(curMember.isGentleman() == false) {
+				if(stats.get(MORALE_KEY) < -1*curMember.getStat(PartyMember.LOYALTY_KEY)) {
+					System.out.println("HELLO!");
+				}
+			}
+		}
 	}
 	
 	//Draw any drawable objects in the game world.
