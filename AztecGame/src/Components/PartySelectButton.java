@@ -95,7 +95,7 @@ public class PartySelectButton {
 	/**
 	 * Sets up the main button.
 	 */
-	public PartySelectButton(PartyMember member, int btnXLoc, int btnYLoc, int btnWidth, int btnHeight) {
+	public PartySelectButton(PartyMember member, int btnXLoc, int btnYLoc, int btnWidth, int btnHeight, InputManager input) {
 		this.myMember = member;
 		this.btnXLoc = btnXLoc;
 		this.btnYLoc = btnYLoc;
@@ -103,7 +103,7 @@ public class PartySelectButton {
 		this.btnHeight = btnHeight;
 		memberImage = member.getImage();
 		
-		mainButton = new Button(btnXLoc, btnYLoc, btnWidth, btnHeight, makeButtonString(), IntroSequence.input) {
+		mainButton = new Button(btnXLoc, btnYLoc, btnWidth, btnHeight, makeButtonString(), input) {
 			@Override
 			public void onClick() {
 				if(!dispMoreInfo) launchMoreInfo();
