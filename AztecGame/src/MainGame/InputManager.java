@@ -68,6 +68,10 @@ public class InputManager {
 		return new Point(mouseInput.getX(), mouseInput.getY());
 	}
 	
+	public PlayerMovementHandler getPlayerMovementHandler(){
+		return playerMovHandler;
+	}
+	
 	public boolean mouseInWindow() {
 		return mouseInput.checkmouseinwindow();
 	}

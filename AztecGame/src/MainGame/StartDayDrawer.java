@@ -1,7 +1,9 @@
 package MainGame;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+
 import Components.Button;
 import Components.Textbox;
 
@@ -17,6 +19,8 @@ public class StartDayDrawer {
 	public final String INV_BUTTON_TEXT = "INVESTIGATE";
 	public final String REST_BUTTON_TEXT = "REST";
 	public final String COLLECT_WATER_BUTTON_TEXT = "COLLECT WATER";
+	
+	private boolean isNextToWater = false;
 	
 	private final double topspacer = 0.05;
 	private final double buttonheight = 0.06;
@@ -64,14 +68,33 @@ public class StartDayDrawer {
 				handleResponseSelect(MainGame.EVENT_MODE, 2);
 			}
 		};
-		
-		collectWaterButton = new Button(0, verticalinset + 3*buttonheighti, 
-				buttonwidth, buttonheighti, COLLECT_WATER_BUTTON_TEXT, MainGame.input){
-			@Override
-			public void onClick() {
-				handleResponseSelect(MainGame.EVENT_MODE, 3);
+		for (int i = 1; i <= 7 ; i+=2){
+			if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i).getType().getName().equalsIgnoreCase("water")){
+				isNextToWater = true;
 			}
-		};
+		}
+		if (isNextToWater){
+			collectWaterButton = new Button(0, verticalinset + 3*buttonheighti, 
+					buttonwidth, buttonheighti, COLLECT_WATER_BUTTON_TEXT, MainGame.input){
+				@Override
+				public void onClick() {
+					handleResponseSelect(MainGame.EVENT_MODE, 3);
+				}
+			};
+		}
+		else {
+			collectWaterButton = new Button(0, verticalinset + 3*buttonheighti, 
+					buttonwidth, buttonheighti, COLLECT_WATER_BUTTON_TEXT, MainGame.input){
+				@Override
+				public void onClick() {
+					
+				}
+			};
+			Color impossCol = new Color(200, 200, 200);
+			Color impossBor = new Color(100, 70, 70);
+			collectWaterButton.setImpossible(true);
+			collectWaterButton.setColor(impossCol, impossBor);
+		}
 	}
 	
 	// currently, just close the menu.
@@ -109,6 +132,7 @@ public class StartDayDrawer {
 		moveButton.removeInputManager(MainGame.input, temp);
 		investigateButton.removeInputManager(MainGame.input, temp);
 		restButton.removeInputManager(MainGame.input, temp);
+		collectWaterButton.removeInputManager(MainGame.input, temp);
 	}
 
 }

@@ -607,11 +607,21 @@ public class MainGame {
 		if (result == 0){
 			partyStatChange.addAll(r.getLosePartyStatChange());
 			resourceChange.addAll(r.getLoseResourceChange());
-			for (int i = 0; i < partyStatChange.size(); i++){
-				partyStatChange.set(i, -partyStatChange.get(i));
+//			for (int i = 0; i < partyStatChange.size(); i++){
+//				partyStatChange.set(i, -partyStatChange.get(i));
+//			}
+//			for (int i = 0; i < resourceChange.size(); i++){
+//				resourceChange.set(i, -resourceChange.get(i));
+//			}
+			int i = 0;
+			int j = 0;
+			for (Long e : partyStatChange){
+				partyStatChange.set(i, -1*e);
+				i++;
 			}
-			for (int i = 0; i < resourceChange.size(); i++){
-				resourceChange.set(i, -resourceChange.get(i));
+			for (Long c : resourceChange){
+				resourceChange.set(j, -1*c);
+				j++;
 			}
 		} else if (result == 1){
 			for (int i = 0; i < resourceKeys.length; i++){
@@ -687,7 +697,7 @@ public class MainGame {
 		} else if (startDayChoice == 2) {
 			MainGame.launchEvent(MainGame.player1.getCurrentTile().getRestEvent(), MainGame.party);
 		} else if (startDayChoice == 3) {
-			Event e = MapToEvent.createEvent(FileToMap.createMap("assets/events/oreoEncounter.txt"));
+			Event e = MapToEvent.createEvent(FileToMap.createMap("assets/events/collectWater.txt"));
 			MainGame.launchEvent(e, MainGame.party);
 		}
 		startDayDrawer.destroyer();
