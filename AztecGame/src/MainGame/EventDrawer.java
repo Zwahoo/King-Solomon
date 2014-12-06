@@ -135,8 +135,8 @@ public class EventDrawer {
 		
 		info = new Textbox(toLaunch.getIntroText(), infoTextboxX, infoTextboxY, (int)(gameframe.windowWidth*infoTextboxWMult), (int)(gameframe.windowHeight*infoTextboxHMult), MainGame.input);
 		izDaParty = presMembers;
-		partyMembersTextbox  = new Textbox(getPresentPartyMembers(presMembers), partyMembersX, partyMembersY, (int)(gameframe.windowWidth*partyMembersWMult), (int)(gameframe.windowHeight*partyMembersHMult), MainGame.input);
-		adviceBox = new Textbox(parseAdvice(toLaunch.getAdvice(), presMembers), partyMembersX, partyMembersY, (int)(gameframe.windowWidth*partyMembersWMult), (int)(gameframe.windowHeight*partyMembersHMult), MainGame.input);
+		partyMembersTextbox  = new Textbox(getPresentPartyMembers(presMembers), partyMembersX, partyMembersY, (int)(gameframe.windowWidth*partyMembersWMult), (int)(gameframe.windowHeight*partyMembersHMult - 2*gameframe.windowHeight * spacer), MainGame.input);
+		adviceBox = new Textbox(parseAdvice(toLaunch.getAdvice(), presMembers), partyMembersX, partyMembersY, (int)(gameframe.windowWidth*partyMembersWMult), (int)(gameframe.windowHeight*partyMembersHMult - 2*gameframe.windowHeight * spacer), MainGame.input);
 		result = new Textbox("", resultTextboxX, resultTextboxY, (int) (gameframe.windowWidth*resultTextboxWMult), 
 				(int)(gameframe.windowHeight*resultTextboxHMult), MainGame.input);
 		info.setVisibility(true); partyMembersTextbox.setVisibility(true);
@@ -169,7 +169,7 @@ public class EventDrawer {
 				totalY += (buttonSpace + buttonHeight);
 			}
 		}
-		advice = new Button(adviceButtonX, adviceButtonY, (int)(gameframe.windowWidth * adviceButtonWMult), (int)(gameframe.windowHeight * adviceButtonHMult), "Advice", MainGame.input) {
+		advice = new Button(adviceButtonX, adviceButtonY, (int)(gameframe.windowWidth * partyMembersWMult), (int)(gameframe.windowHeight * adviceButtonHMult), "Advice", MainGame.input) {
 			@Override
 			public void onClick() {
 				handleAdviceResponseSelect();
@@ -287,9 +287,14 @@ public class EventDrawer {
 		buttonX = (int) (partyMembersX + gameframe.windowWidth * (partyMembersWMult + spacer));
 		upperButtonY = totalHeight;
 		
+		adviceButtonX = (int) (partyMembersX);
+		adviceButtonY = (int) ((partyMembersY + ((gameframe.windowHeight * partyMembersHMult) - 
+				(gameframe.windowHeight * spacer))));
+		/*
 		adviceButtonX = (int) (partyMembersX + gameframe.windowWidth * spacer);
 		adviceButtonY = (int) ((partyMembersY + ((gameframe.windowHeight * partyMembersHMult) - (gameframe.windowHeight * adviceButtonHMult))) - 
 				(gameframe.windowHeight * spacer));
+		*/
 		
 		exitButtonX = (int) (resultTextboxX + gameframe.windowWidth*spacer);
 		exitButtonY = (int) ((resultTextboxY + ((gameframe.windowHeight*resultTextboxHMult) - (gameframe.windowHeight*exitButtonHMult))) - 
