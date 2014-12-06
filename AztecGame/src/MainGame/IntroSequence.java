@@ -95,5 +95,12 @@ public class IntroSequence {
 		g.fillRect(0, 0, gameframe.windowWidth, gameframe.windowHeight);
 		currentScreen.draw(g);
 	}
+	
+	public static void removeInputManager() {
+		if(input != null) {
+			input.closeMe();
+			input = null;
+		}
+	}
 
 }

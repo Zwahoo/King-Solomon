@@ -61,7 +61,7 @@ public class EventDrawer {
 	double infoTextboxWMult = 0.8;
 	double infoTextboxHMult = .17;
 	double partyMembersWMult = .25;
-	double partyMembersHMult = .30;
+	double partyMembersHMult = .29;
 	double imageWMult = .8;
 	double imageHMult = .35;
 	double buttonWMult = .53;
@@ -135,8 +135,8 @@ public class EventDrawer {
 		
 		info = new Textbox(toLaunch.getIntroText(), infoTextboxX, infoTextboxY, (int)(gameframe.windowWidth*infoTextboxWMult), (int)(gameframe.windowHeight*infoTextboxHMult), MainGame.input);
 		izDaParty = presMembers;
-		partyMembersTextbox  = new Textbox(getPresentPartyMembers(presMembers), partyMembersX, partyMembersY, (int)(gameframe.windowWidth*partyMembersWMult), (int)(gameframe.windowHeight*partyMembersHMult), MainGame.input);
-		adviceBox = new Textbox(parseAdvice(toLaunch.getAdvice(), presMembers), partyMembersX, partyMembersY, (int)(gameframe.windowWidth*partyMembersWMult), (int)(gameframe.windowHeight*partyMembersHMult), MainGame.input);
+		partyMembersTextbox  = new Textbox(getPresentPartyMembers(presMembers), partyMembersX, partyMembersY, (int)(gameframe.windowWidth*partyMembersWMult), (int)(gameframe.windowHeight*partyMembersHMult - 2*gameframe.windowHeight * spacer), MainGame.input);
+		adviceBox = new Textbox(parseAdvice(toLaunch.getAdvice(), presMembers), partyMembersX, partyMembersY, (int)(gameframe.windowWidth*partyMembersWMult), (int)(gameframe.windowHeight*partyMembersHMult - 2*gameframe.windowHeight * spacer), MainGame.input);
 		result = new Textbox("", resultTextboxX, resultTextboxY, (int) (gameframe.windowWidth*resultTextboxWMult), 
 				(int)(gameframe.windowHeight*resultTextboxHMult), MainGame.input);
 		info.setVisibility(true); partyMembersTextbox.setVisibility(true);
@@ -169,7 +169,7 @@ public class EventDrawer {
 				totalY += (buttonSpace + buttonHeight);
 			}
 		}
-		advice = new Button(adviceButtonX, adviceButtonY, (int)(gameframe.windowWidth * adviceButtonWMult), (int)(gameframe.windowHeight * adviceButtonHMult), "Advice", MainGame.input) {
+		advice = new Button(adviceButtonX, adviceButtonY, (int)(gameframe.windowWidth * partyMembersWMult), (int)(gameframe.windowHeight * adviceButtonHMult), "Advice", MainGame.input) {
 			@Override
 			public void onClick() {
 				handleAdviceResponseSelect();
@@ -263,7 +263,7 @@ public class EventDrawer {
 	//initializes x and y locs based on window size
 	public void setLocations() {
 		
-		int partyInfoHeight = (int)(gameframe.windowHeight * partyMembersHMult);
+		int partyInfoHeight = (int)(gameframe.windowHeight * (partyMembersHMult + adviceButtonHMult - spacer));
 		buttonHeight = partyInfoHeight/6;	//divide by six because we want space between buttons to sum to size of a 6th button
 		buttonSpace = buttonHeight/4;		//divide by four because four spaces between all buttons
 		
@@ -287,9 +287,14 @@ public class EventDrawer {
 		buttonX = (int) (partyMembersX + gameframe.windowWidth * (partyMembersWMult + spacer));
 		upperButtonY = totalHeight;
 		
+		adviceButtonX = (int) (partyMembersX);
+		adviceButtonY = (int) ((partyMembersY + ((gameframe.windowHeight * partyMembersHMult) - 
+				((gameframe.windowHeight * spacer) * 1.5))));
+		/*
 		adviceButtonX = (int) (partyMembersX + gameframe.windowWidth * spacer);
 		adviceButtonY = (int) ((partyMembersY + ((gameframe.windowHeight * partyMembersHMult) - (gameframe.windowHeight * adviceButtonHMult))) - 
 				(gameframe.windowHeight * spacer));
+		*/
 		
 		exitButtonX = (int) (resultTextboxX + gameframe.windowWidth*spacer);
 		exitButtonY = (int) ((resultTextboxY + ((gameframe.windowHeight*resultTextboxHMult) - (gameframe.windowHeight*exitButtonHMult))) - 

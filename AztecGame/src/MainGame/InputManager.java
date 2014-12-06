@@ -68,6 +68,10 @@ public class InputManager {
 		return new Point(mouseInput.getX(), mouseInput.getY());
 	}
 	
+	public PlayerMovementHandler getPlayerMovementHandler(){
+		return playerMovHandler;
+	}
+	
 	public boolean mouseInWindow() {
 		return mouseInput.checkmouseinwindow();
 	}
@@ -149,5 +153,11 @@ public class InputManager {
 	}
 	public boolean keyIsDown(int keyCode) {
 		return keyInput.keyIsDown(keyCode);
+	}
+	
+	public void closeMe() {
+		inputListenersMap.clear();
+		mouseInput = null;
+		keyInput = null;
 	}
 }
