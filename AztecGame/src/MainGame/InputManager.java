@@ -150,4 +150,10 @@ public class InputManager {
 	public boolean keyIsDown(int keyCode) {
 		return keyInput.keyIsDown(keyCode);
 	}
+	
+	public void closeMe() {
+		inputListenersMap.clear();
+		mouseInput = null;
+		keyInput = null;
+	}
 }

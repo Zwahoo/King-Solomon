@@ -101,6 +101,7 @@ public class gameframe extends JFrame {
 			gentStats = introSeq.gentStats;
 			party = introSeq.party;
 			
+			IntroSequence.removeInputManager();
 			introSeq = null;
 			
 			isRunning = true;
@@ -139,9 +140,13 @@ public class gameframe extends JFrame {
 	}
 	
 	public void returnGameToMenu() {
+		IntroSequence.input = null;
 		doSetup = true;
 		runIntroSequence = true;
 		isRunning = false;
+		if(MainGame.input != null) {
+			MainGame.removeInputManager();
+		}
 		mainGame = null;
 	}
 	
