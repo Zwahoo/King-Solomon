@@ -135,6 +135,7 @@ public class gameframe extends JFrame {
 					doSetup = true;
 					runIntroSequence = true;
 					isRunning = false;
+					mainGame.resetAllVals();
 					mainGame = null;
 				}
 			}

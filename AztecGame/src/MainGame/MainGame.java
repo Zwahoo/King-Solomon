@@ -86,6 +86,7 @@ public class MainGame {
 	//Party
 	public static ArrayList<PartyMember> oldParty;
 	public static ArrayList<PartyMember> party = new ArrayList<PartyMember>();
+	public static PartyMember keyMan;
 	
 	private BufferedImage loadedimage;
 	public static BufferedImage[] images = new BufferedImage[20];
@@ -126,6 +127,7 @@ public class MainGame {
 		for(PartyMember member: theParty.values()) {
 			addPartyMemberToParty(member);
 		}
+		keyMan = gentleman;
 		
 	    oldParty = new ArrayList<PartyMember>();
 	    oldParty.add(new PartyMember("The Gentleman", "Gentleman", 0,
@@ -543,7 +545,7 @@ public class MainGame {
 		};
 		
 		//Need to change response option to have these fields and update them
-		PartyMember keyMan = party.get(0);
+
 		
 		@SuppressWarnings("static-access")
 		String[] partyStatKeys = {
