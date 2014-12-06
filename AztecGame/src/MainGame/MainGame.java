@@ -298,6 +298,8 @@ public class MainGame {
 			Event partyGone = MapToEvent.createEvent(eventMap);
 			launchFinalEvent(partyGone, party);
 		}
+		
+		
 	}
 	
 	//Draw any drawable objects in the game world.

@@ -130,14 +130,6 @@ public class gameframe extends JFrame {
 					} catch (Exception e) {
 					}
 				}
-				
-				if (MainGame.party.size() == 1){
-					doSetup = true;
-					runIntroSequence = true;
-					isRunning = false;
-					mainGame.resetAllVals();
-					mainGame = null;
-				}
 
 			}
 		}
