@@ -81,6 +81,8 @@ public class PartySelectScreen implements DrawScreen {
 	 * Sets the money, loads in background image, initializes all controls.
 	 */
 	public PartySelectScreen() {
+		partySelectors.clear();
+		
 		money = 600;
 		numSelectedMembers = 0;
 		
@@ -137,7 +139,7 @@ public class PartySelectScreen implements DrawScreen {
 		int curX = hBorders;
 		int curY = upperBorder;
 		for(PartyMember member : PartyMemberStats.possibleParty.values()) {
-			PartySelectButton selector = new PartySelectButton(member, curX, curY, selectBtnWidth, selectBtnHeight);
+			PartySelectButton selector = new PartySelectButton(member, curX, curY, selectBtnWidth, selectBtnHeight, IntroSequence.input);
 			partySelectors.add(selector);
 			curX += selectBtnWidth + hSpacer;
 			if((curX + selectBtnWidth) > (gameframe.windowWidth - hBorders)) {

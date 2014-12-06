@@ -61,7 +61,7 @@ public class EventDrawer {
 	double infoTextboxWMult = 0.8;
 	double infoTextboxHMult = .17;
 	double partyMembersWMult = .25;
-	double partyMembersHMult = .30;
+	double partyMembersHMult = .29;
 	double imageWMult = .8;
 	double imageHMult = .35;
 	double buttonWMult = .53;
@@ -263,7 +263,7 @@ public class EventDrawer {
 	//initializes x and y locs based on window size
 	public void setLocations() {
 		
-		int partyInfoHeight = (int)(gameframe.windowHeight * partyMembersHMult);
+		int partyInfoHeight = (int)(gameframe.windowHeight * (partyMembersHMult + adviceButtonHMult - spacer));
 		buttonHeight = partyInfoHeight/6;	//divide by six because we want space between buttons to sum to size of a 6th button
 		buttonSpace = buttonHeight/4;		//divide by four because four spaces between all buttons
 		
@@ -289,7 +289,7 @@ public class EventDrawer {
 		
 		adviceButtonX = (int) (partyMembersX);
 		adviceButtonY = (int) ((partyMembersY + ((gameframe.windowHeight * partyMembersHMult) - 
-				(gameframe.windowHeight * spacer))));
+				((gameframe.windowHeight * spacer) * 1.5))));
 		/*
 		adviceButtonX = (int) (partyMembersX + gameframe.windowWidth * spacer);
 		adviceButtonY = (int) ((partyMembersY + ((gameframe.windowHeight * partyMembersHMult) - (gameframe.windowHeight * adviceButtonHMult))) - 

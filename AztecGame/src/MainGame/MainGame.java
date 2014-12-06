@@ -77,7 +77,7 @@ public class MainGame {
 	
 	public static HashMap<String, TileType> tileTypes;
 	
-	private boolean hasRegisteredPartyGone = false;
+	private boolean launchedFinalEvent = false;
 	
 	//Stats
 	private static LinkedHashMap <String, Integer> stats;
@@ -134,7 +134,7 @@ public class MainGame {
 //			addPartyMemberToParty(possibleParty.get(e));
 //		}
 		
-		//bkgImg = ImageIO.read(new File("assets/BkgImg.png"));
+		bkgImg = ImageIO.read(new File("assets/BkgImg.png"));
 		
 		PartyMember gentleman = new PartyMember("The Gentleman", "Gentleman", 0, "Quite.", "assets/Portraits/MemberImage.png", gentStats);
 		gentleman.setGentleman(true);
@@ -174,7 +174,8 @@ public class MainGame {
 		player1.getCurrentTile().reveal();
 		
 		// Creates a view
-		view = new View(new Point(0, height/2), width, height);
+		Point viewLoc = new Point((int)Math.round(-width*1.35), -1*height/2);
+		view = new View(viewLoc, width, height);
 		
 		//Store the gameframe
 		this.frame = frame;
@@ -297,19 +298,35 @@ public class MainGame {
 			PartyMember curMember = party.get(i);
 				if(curMember.isGentleman() == false) {
 				if(stats.get(MORALE_KEY) < -1*curMember.getStat(PartyMember.LOYALTY_KEY)) {
-					System.out.println("HELLO!");
+					HashMap eventMap = FileToMap.createMap("assets/events/PlayerLeaves.txt");
+					Event memberGone = MapToEvent.createEvent(eventMap);
+					this.launchEventWithSelectedMember(memberGone, party, curMember);
+					break;
 				}
 			}
 		}
 
-		if(!hasRegisteredPartyGone && this.currentMode == this.START_DAY_MODE && party.size() < MIN_PARTY_SIZE) {
+		if(!launchedFinalEvent && this.currentMode == this.START_DAY_MODE && party.size() < MIN_PARTY_SIZE) {
+			this.closeStartDay(EVENT_MODE, -1);
 			HashMap eventMap = FileToMap.createMap("assets/events/Thomas_TempPartyGone.txt");
 			Event partyGone = MapToEvent.createEvent(eventMap);
 			launchFinalEvent(partyGone, party);
-			hasRegisteredPartyGone = true;
+			launchedFinalEvent = true;
 		}
-		
-		
+		if(!launchedFinalEvent && this.currentMode == this.START_DAY_MODE && this.getStats().get(FOOD_KEY) <= 0) {
+			this.closeStartDay(EVENT_MODE, -1);
+			HashMap eventMap = FileToMap.createMap("assets/events/FoodEvent.txt");
+			Event foodGone = MapToEvent.createEvent(eventMap);
+			launchFinalEvent(foodGone, party);
+			launchedFinalEvent = true;
+		}
+		if(!launchedFinalEvent && this.currentMode == this.START_DAY_MODE && this.getStats().get(WATER_KEY) <= 0) {
+			this.closeStartDay(EVENT_MODE, -1);
+			HashMap eventMap = FileToMap.createMap("assets/events/WaterEvent.txt");
+			Event waterGone = MapToEvent.createEvent(eventMap);
+			launchFinalEvent(waterGone, party);
+			launchedFinalEvent = true;
+		}
 	}
 	
 	//Draw any drawable objects in the game world.
@@ -607,11 +624,21 @@ public class MainGame {
 		if (result == 0){
 			partyStatChange.addAll(r.getLosePartyStatChange());
 			resourceChange.addAll(r.getLoseResourceChange());
-			for (int i = 0; i < partyStatChange.size(); i++){
-				partyStatChange.set(i, -partyStatChange.get(i));
+//			for (int i = 0; i < partyStatChange.size(); i++){
+//				partyStatChange.set(i, -partyStatChange.get(i));
+//			}
+//			for (int i = 0; i < resourceChange.size(); i++){
+//				resourceChange.set(i, -resourceChange.get(i));
+//			}
+			int i = 0;
+			int j = 0;
+			for (Long e : partyStatChange){
+				partyStatChange.set(i, -1*e);
+				i++;
 			}
-			for (int i = 0; i < resourceChange.size(); i++){
-				resourceChange.set(i, -resourceChange.get(i));
+			for (Long c : resourceChange){
+				resourceChange.set(j, -1*c);
+				j++;
 			}
 		} else if (result == 1){
 			for (int i = 0; i < resourceKeys.length; i++){
@@ -686,6 +713,9 @@ public class MainGame {
 			MainGame.launchEvent(MainGame.player1.getCurrentTile().getInvestigateEvent(), MainGame.party);
 		} else if (startDayChoice == 2) {
 			MainGame.launchEvent(MainGame.player1.getCurrentTile().getRestEvent(), MainGame.party);
+		} else if (startDayChoice == 3) {
+			Event e = MapToEvent.createEvent(FileToMap.createMap("assets/events/collectWater.txt"));
+			MainGame.launchEvent(e, MainGame.party);
 		}
 		startDayDrawer.destroyer();
 		startDayDrawer = null;

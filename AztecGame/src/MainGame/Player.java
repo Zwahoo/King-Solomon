@@ -2,6 +2,7 @@ package MainGame;
 import java.awt.*;
 //Zane Laughlin
 //player class- manages supplies, player location, etc.
+import java.util.ArrayList;
 
 @SuppressWarnings("unused")
 public class Player{
@@ -12,8 +13,10 @@ public class Player{
 	
 	//attaches player to map
 	public Player(Map m){
-		currenttile = m.getTile(1,1);
-		loc = new Point(1, 1);
+		int xStart = m.width - 2;
+		int yStart = 1;
+		currenttile = m.getTile(xStart, yStart);
+		loc = new Point(xStart, yStart);
 	}
 	
 	//Getters
