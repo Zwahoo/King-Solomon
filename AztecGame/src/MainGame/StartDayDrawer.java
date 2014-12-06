@@ -11,10 +11,12 @@ public class StartDayDrawer {
 	private Button moveButton;
 	private Button investigateButton;
 	private Button restButton;
+	private Button collectWaterButton;
 	
 	public final String MOVE_BUTTON_TEXT = "MOVE";
 	public final String INV_BUTTON_TEXT = "INVESTIGATE";
 	public final String REST_BUTTON_TEXT = "REST";
+	public final String COLLECT_WATER_BUTTON_TEXT = "COLLECT WATER";
 	
 	private final double topspacer = 0.05;
 	private final double buttonheight = 0.06;
@@ -62,6 +64,14 @@ public class StartDayDrawer {
 				handleResponseSelect(MainGame.EVENT_MODE, 2);
 			}
 		};
+		
+		collectWaterButton = new Button(0, verticalinset + 3*buttonheighti, 
+				buttonwidth, buttonheighti, COLLECT_WATER_BUTTON_TEXT, MainGame.input){
+			@Override
+			public void onClick() {
+				handleResponseSelect(MainGame.EVENT_MODE, 3);
+			}
+		};
 	}
 	
 	// currently, just close the menu.
@@ -70,8 +80,10 @@ public class StartDayDrawer {
 			MainGame.closeStartDay(MainGame.MOVEMENT_MODE, 0);
 		} else if (startDayChoice == 1) {
 			MainGame.closeStartDay(MainGame.EVENT_MODE, 1);
-		} else {
+		} else if (startDayChoice == 2) {
 			MainGame.closeStartDay(MainGame.EVENT_MODE, 2);
+		} else if (startDayChoice == 3){
+			MainGame.closeStartDay(MainGame.EVENT_MODE, 3);
 		}
 	}
 	
@@ -80,6 +92,7 @@ public class StartDayDrawer {
 		moveButton.draw(g);
 		investigateButton.draw(g);
 		restButton.draw(g);
+		collectWaterButton.draw(g);
 	}
 	
 	public void update() {
@@ -87,6 +100,7 @@ public class StartDayDrawer {
 		moveButton.update();
 		investigateButton.update();
 		restButton.update();
+		collectWaterButton.update();
 	}
 	
 	public void destroyer() {

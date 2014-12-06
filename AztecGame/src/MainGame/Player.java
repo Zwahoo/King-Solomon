@@ -2,6 +2,7 @@ package MainGame;
 import java.awt.*;
 //Zane Laughlin
 //player class- manages supplies, player location, etc.
+import java.util.ArrayList;
 
 @SuppressWarnings("unused")
 public class Player{

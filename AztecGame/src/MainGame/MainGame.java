@@ -676,6 +676,9 @@ public class MainGame {
 			MainGame.launchEvent(MainGame.player1.getCurrentTile().getInvestigateEvent(), MainGame.party);
 		} else if (startDayChoice == 2) {
 			MainGame.launchEvent(MainGame.player1.getCurrentTile().getRestEvent(), MainGame.party);
+		} else if (startDayChoice == 3) {
+			Event e = MapToEvent.createEvent(FileToMap.createMap("assets/events/oreoEncounter.txt"));
+			MainGame.launchEvent(e, MainGame.party);
 		}
 		startDayDrawer.destroyer();
 		startDayDrawer = null;
