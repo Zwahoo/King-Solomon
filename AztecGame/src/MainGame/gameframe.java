@@ -138,13 +138,21 @@ public class gameframe extends JFrame {
 					mainGame.resetAllVals();
 					mainGame = null;
 				}
+
 			}
 		}
 		
 
 		setVisible(false);
 	}
-
+	
+	public void returnGameToMenu() {
+		doSetup = true;
+		runIntroSequence = true;
+		isRunning = false;
+		mainGame = null;
+	}
+	
 	private void initializeMainGame() throws IOException {
 		mainGame = new MainGame(this, windowWidth, windowHeight, gentStats, party);
 	}
