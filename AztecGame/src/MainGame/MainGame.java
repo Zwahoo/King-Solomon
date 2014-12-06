@@ -55,13 +55,17 @@ public class MainGame {
 	public static final int BLANK_INDEX = 9;
 	public static final int DARK_RED_TINT_INDEX = 10;
 	public static final int DARK_BLUE_TINT_INDEX = 11;
+	//Minimum Number of Party Members Required for Game Over
+	public static final int MIN_PARTY_SIZE = 2;
 	
-	
-	public static Map map; //The map containing all the tiles making up the world
+
 	private static Player player1; //The player
 	private static View view; //The "camera." What the player is seeing. Has a location, can move around.
+	public static Map map; //The map containing all the tiles making up the world
 	public static InputManager input; // This registers all the mouse and keyboard
 	public static Integer currentMode = -1;
+	private static gameframe frame;
+	private static boolean finalEvent = false; //Set to true when launching the final event.
 	
 	BufferedImage bkgImg;
 	
@@ -105,6 +109,8 @@ public class MainGame {
 		images = new BufferedImage[20];
 		eventDrawer = null;
 		startDayDrawer = null;
+		frame = null;
+		finalEvent = false;
 	}
 	
 	//Starts the game, takes in the window frame, width, and height.
@@ -158,6 +164,9 @@ public class MainGame {
 		
 		// Creates a view
 		view = new View(new Point(0, height/2), width, height);
+		
+		//Store the gameframe
+		this.frame = frame;
 		
 		// sets up mouse input stuff (INPUT MUST BE INSTANTIATED LAST)
 		input = new InputManager(frame, this);
@@ -272,6 +281,7 @@ public class MainGame {
 			eventDrawer.update();
 		if (startDayDrawer!=null)
 			startDayDrawer.update();
+		
 		for(int i = 0; i < party.size(); i++) {
 			PartyMember curMember = party.get(i);
 				if(curMember.isGentleman() == false) {
@@ -279,6 +289,12 @@ public class MainGame {
 					System.out.println("HELLO!");
 				}
 			}
+		}
+
+		if(this.currentMode == this.START_DAY_MODE && party.size() < MIN_PARTY_SIZE) {
+			HashMap eventMap = FileToMap.createMap("assets/events/Thomas_TempPartyGone.txt");
+			Event partyGone = MapToEvent.createEvent(eventMap);
+			launchFinalEvent(partyGone, party);
 		}
 	}
 	
@@ -538,9 +554,19 @@ public class MainGame {
 		currentMode = EVENT_MODE;
 		eventDrawer = new EventDrawer(e, presMembers);
 	}
+	public static void launchFinalEvent(Event e, ArrayList<PartyMember> presMembers) {
+		currentMode = EVENT_MODE;
+		eventDrawer = new EventDrawer(e, presMembers);
+		finalEvent = true;
+	}
 	public static void launchEventWithSelectedMember(Event e, ArrayList<PartyMember> presMembers, PartyMember toSelect) {
 		currentMode = EVENT_MODE;
 		eventDrawer = new EventDrawer(e, presMembers, toSelect);
+	}
+	public static void launchFinalEventWithSelectedMember(Event e, ArrayList<PartyMember> presMembers, PartyMember toSelect) {
+		currentMode = EVENT_MODE;
+		eventDrawer = new EventDrawer(e, presMembers, toSelect);
+		finalEvent = true;
 	}
 
 	public static void responseEffect(int result, ResponseOption r) {
@@ -628,11 +654,16 @@ public class MainGame {
 }
 
 	public static void closeEvent() {
-		System.out.println("Closing Time");
-		eventDrawer.destroyer();
-		currentMode = START_DAY_MODE;
-		eventDrawer = null;
-		startDayDrawer = new StartDayDrawer();
+		
+		if(finalEvent) {
+			frame.returnGameToMenu();
+		} else {
+			System.out.println("Closing Time");
+			eventDrawer.destroyer();
+			currentMode = START_DAY_MODE;
+			eventDrawer = null;
+			startDayDrawer = new StartDayDrawer();
+		}
 	}
 
 	public static void closeStartDay(Integer newmode, int startDayChoice) {
