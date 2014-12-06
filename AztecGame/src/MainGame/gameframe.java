@@ -6,9 +6,16 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 
 /**
@@ -56,8 +63,8 @@ public class gameframe extends JFrame {
 
 	/**
 	 * This method starts the game and runs it in a loop
-	 * 
-	 * @throws IOException
+	 * leException 
+	 * @throws IOException 
 	 */
 	// starts the game and runs loop
 	public void run() throws IOException {
@@ -65,6 +72,12 @@ public class gameframe extends JFrame {
 
 		this.initialize(); // initializes things which need initializing before
 							// the game can run.
+		
+		Sound sound = new Sound("assets/sounds/KingSolomonsOverworldTheme.wav", true);
+		
+		
+		
+		
 		
 		while (go){
 			if(doSetup) {
