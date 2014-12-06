@@ -646,15 +646,15 @@ public class MainGame {
 
 	public static void closeEvent() {
 		
+		System.out.println("Closing Time");
+		eventDrawer.destroyer();
+		currentMode = START_DAY_MODE;
+		eventDrawer = null;
+		startDayDrawer = new StartDayDrawer();
+
 		if(finalEvent) {
 			frame.returnGameToMenu();
-		} else {
-			System.out.println("Closing Time");
-			eventDrawer.destroyer();
-			currentMode = START_DAY_MODE;
-			eventDrawer = null;
-			startDayDrawer = new StartDayDrawer();
-		}
+		} 
 	}
 
 	public static void closeStartDay(Integer newmode, int startDayChoice) {
