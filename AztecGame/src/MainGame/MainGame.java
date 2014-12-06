@@ -66,6 +66,7 @@ public class MainGame {
 	public static Integer currentMode = -1;
 	private static gameframe frame;
 	private static boolean finalEvent = false; //Set to true when launching the final event.
+	private static boolean kickedMemberThisTurn = false;
 		
 	BufferedImage bkgImg;
 	
@@ -114,6 +115,7 @@ public class MainGame {
 		startDayDrawer = null;
 		frame = null;
 		finalEvent = false;
+		kickedMemberThisTurn = false;
 	}
 	
 	public static void removeInputManager() {
@@ -294,14 +296,19 @@ public class MainGame {
 		if (startDayDrawer!=null)
 			startDayDrawer.update();
 		
-		for(int i = 0; i < party.size(); i++) {
-			PartyMember curMember = party.get(i);
-				if(curMember.isGentleman() == false) {
-				if(stats.get(MORALE_KEY) < -1*curMember.getStat(PartyMember.LOYALTY_KEY)) {
-					HashMap eventMap = FileToMap.createMap("assets/events/PlayerLeaves.txt");
-					Event memberGone = MapToEvent.createEvent(eventMap);
-					this.launchEventWithSelectedMember(memberGone, party, curMember);
-					break;
+		if(!kickedMemberThisTurn && this.currentMode == this.START_DAY_MODE) {
+			for(int i = 0; i < party.size(); i++) {
+				PartyMember curMember = party.get(i);
+					if(curMember.isGentleman() == false) {
+					if(stats.get(MORALE_KEY) < -1*curMember.getStat(PartyMember.LOYALTY_KEY)) {
+						this.closeStartDay(EVENT_MODE, -1);
+						HashMap eventMap = FileToMap.createMap("assets/events/PlayerLeaves.txt");
+						Event memberGone = MapToEvent.createEvent(eventMap);
+						memberGone.playJingles = false;
+						this.launchEventWithSelectedMember(memberGone, party, curMember);
+						kickedMemberThisTurn = true;
+						break;
+					}
 				}
 			}
 		}
@@ -720,9 +727,9 @@ public class MainGame {
 			Event e = MapToEvent.createEvent(FileToMap.createMap("assets/events/collectWater.txt"));
 			MainGame.launchEvent(e, MainGame.party);
 		}
+		kickedMemberThisTurn = false;
 		startDayDrawer.destroyer();
 		startDayDrawer = null;
-		
 		if (stats.get(STAMINA_KEY)==0){
 			stats.put(MORALE_KEY, stats.get(MORALE_KEY) - 20);
 		}
@@ -796,6 +803,7 @@ public class MainGame {
 		}
 		
 		for (int i = 0; i < resourceCosts.size(); i++){
+			if(resourceKeys[i] == MainGame.MORALE_KEY && resourceCosts.get(i) <= 0) continue; //Morale may be negative
 			if (stats.get(resourceKeys[i]) < resourceCosts.get(i)){
 				costsMet = false;
 			}
