@@ -468,6 +468,15 @@ public class MainGame {
 		return typeEventList;
 	}
 
+	
+	public boolean containsIgnoreCase(ArrayList<String> list, String str) {
+		for(String str2 : list) {
+			if(str2.equalsIgnoreCase(str)) return true;
+		}
+		return false;
+	}
+	
+	
 	public Event getRandomMoveToEvent(String loc) {
 		//This code takes into account frequency of event occurance.
 		double origRandom = Math.random();
@@ -475,6 +484,7 @@ public class MainGame {
 		if (origRandom < MOVE_TO_FREQUENCY){
 			ArrayList<Event> eventList = new ArrayList<Event>();
 			for (Event e : moveToEvents){
+				if(!containsIgnoreCase(e.getPossibleLocations(), loc)) continue;
 				double randomNum = Math.random();
 				if (randomNum < e.LIKELY_FREQUENCY && e.getFrequency().equalsIgnoreCase("likely")){
 					eventList.add(e);
@@ -499,6 +509,7 @@ public class MainGame {
 						}
 					}
 				}
+				System.out.println("Adding event " + randomlyChosenEvent + " to Tile Type: " + loc);
 				return randomlyChosenEvent;
 			}
 			else {
@@ -523,6 +534,7 @@ public class MainGame {
 		if (origRandom < INVESTIGATE_FREQUENCY){
 			ArrayList<Event> eventList = new ArrayList<Event>();
 			for (Event e : investigateEvents){
+				if(!containsIgnoreCase(e.getPossibleLocations(), loc)) continue;
 				double randomNum = Math.random();
 				if (randomNum < e.LIKELY_FREQUENCY && e.getFrequency().equalsIgnoreCase("likely")){
 					eventList.add(e);
@@ -566,6 +578,7 @@ public class MainGame {
 		if (origRandom < REST_FREQUENCY){
 			ArrayList<Event> eventList = new ArrayList<Event>();
 			for (Event e : restEvents){
+				if(!containsIgnoreCase(e.getPossibleLocations(), loc)) continue;
 				double randomNum = Math.random();
 				if (randomNum < e.LIKELY_FREQUENCY && e.getFrequency().equalsIgnoreCase("likely")){
 					eventList.add(e);
