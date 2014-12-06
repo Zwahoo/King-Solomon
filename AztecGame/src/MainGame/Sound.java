@@ -35,7 +35,7 @@ import javax.swing.*;
 // To play sound using Clip, the process need to be alive.
 // Hence, we use a Swing application.
 public class Sound extends JFrame {
-   
+   Clip clip;
    // Constructor
    public Sound(String filename, boolean loop) {
 //      this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,13 +49,10 @@ public class Sound extends JFrame {
     	 File soundFile = new File(filename);
          AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
          // Get a sound clip resource.
-         Clip clip = AudioSystem.getClip();
+         clip = AudioSystem.getClip();
          // Open audio clip and load samples from the audio input stream.
          clip.open(audioIn);
-         if (loop)
-        	 clip.loop(Clip.LOOP_CONTINUOUSLY);
-         else
-        	 clip.start();
+         playSound(loop);
       } catch (UnsupportedAudioFileException e) {
          e.printStackTrace();
       } catch (IOException e) {
@@ -64,6 +61,19 @@ public class Sound extends JFrame {
          e.printStackTrace();
       }
      
+   }
+   
+   public void playSound(boolean loop){
+	   if (loop){
+		   clip.loop(Clip.LOOP_CONTINUOUSLY);
+	   }
+	   else {
+		   clip.start();
+	   }
+   }
+   
+   public void stopSound(){
+	   clip.stop();
    }
 }
 
