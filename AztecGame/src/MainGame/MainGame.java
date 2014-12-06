@@ -134,7 +134,7 @@ public class MainGame {
 //			addPartyMemberToParty(possibleParty.get(e));
 //		}
 		
-		//bkgImg = ImageIO.read(new File("assets/BkgImg.png"));
+		bkgImg = ImageIO.read(new File("assets/BkgImg.png"));
 		
 		PartyMember gentleman = new PartyMember("The Gentleman", "Gentleman", 0, "Quite.", "assets/Portraits/MemberImage.png", gentStats);
 		gentleman.setGentleman(true);
@@ -307,12 +307,26 @@ public class MainGame {
 		}
 
 		if(!launchedFinalEvent && this.currentMode == this.START_DAY_MODE && party.size() < MIN_PARTY_SIZE) {
+			this.closeStartDay(EVENT_MODE, -1);
 			HashMap eventMap = FileToMap.createMap("assets/events/Thomas_TempPartyGone.txt");
 			Event partyGone = MapToEvent.createEvent(eventMap);
 			launchFinalEvent(partyGone, party);
 			launchedFinalEvent = true;
 		}
-		
+		if(!launchedFinalEvent && this.currentMode == this.START_DAY_MODE && this.getStats().get(FOOD_KEY) <= 0) {
+			this.closeStartDay(EVENT_MODE, -1);
+			HashMap eventMap = FileToMap.createMap("assets/events/FoodEvent.txt");
+			Event foodGone = MapToEvent.createEvent(eventMap);
+			launchFinalEvent(foodGone, party);
+			launchedFinalEvent = true;
+		}
+		if(!launchedFinalEvent && this.currentMode == this.START_DAY_MODE && this.getStats().get(WATER_KEY) <= 0) {
+			this.closeStartDay(EVENT_MODE, -1);
+			HashMap eventMap = FileToMap.createMap("assets/events/WaterEvent.txt");
+			Event waterGone = MapToEvent.createEvent(eventMap);
+			launchFinalEvent(waterGone, party);
+			launchedFinalEvent = true;
+		}
 	}
 	
 	//Draw any drawable objects in the game world.
