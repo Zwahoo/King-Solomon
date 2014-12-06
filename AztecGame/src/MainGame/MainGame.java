@@ -77,7 +77,7 @@ public class MainGame {
 	
 	public static HashMap<String, TileType> tileTypes;
 	
-	private boolean hasRegisteredPartyGone = false;
+	private boolean launchedFinalEvent = false;
 	
 	//Stats
 	private static LinkedHashMap <String, Integer> stats;
@@ -298,18 +298,20 @@ public class MainGame {
 			PartyMember curMember = party.get(i);
 				if(curMember.isGentleman() == false) {
 				if(stats.get(MORALE_KEY) < -1*curMember.getStat(PartyMember.LOYALTY_KEY)) {
-					System.out.println("HELLO!");
+					HashMap eventMap = FileToMap.createMap("assets/events/PlayerLeaves.txt");
+					Event memberGone = MapToEvent.createEvent(eventMap);
+					this.launchEventWithSelectedMember(memberGone, party, curMember);
+					break;
 				}
 			}
 		}
 
-		if(!hasRegisteredPartyGone && this.currentMode == this.START_DAY_MODE && party.size() < MIN_PARTY_SIZE) {
+		if(!launchedFinalEvent && this.currentMode == this.START_DAY_MODE && party.size() < MIN_PARTY_SIZE) {
 			HashMap eventMap = FileToMap.createMap("assets/events/Thomas_TempPartyGone.txt");
 			Event partyGone = MapToEvent.createEvent(eventMap);
 			launchFinalEvent(partyGone, party);
-			hasRegisteredPartyGone = true;
+			launchedFinalEvent = true;
 		}
-		
 		
 	}
 	
