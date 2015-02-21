@@ -307,7 +307,7 @@ public class MainGame {
 						HashMap eventMap = FileToMap.createMap("assets/events/PlayerLeaves.txt");
 						Event memberGone = MapToEvent.createEvent(eventMap);
 						memberGone.playJingles = false;
-						launchEventWithSelectedMember(memberGone, party, curMember);
+						launchEvent(memberGone, party, curMember, false);
 						kickedMemberThisTurn = true;
 						break;
 					}
@@ -553,22 +553,18 @@ public class MainGame {
 	}
 
 	public static void launchEvent(Event e, ArrayList<PartyMember> presMembers) {
-		setCurrentMode(EVENT_MODE);
-		eventDrawer = new EventDrawer(e, presMembers);
+		launchEvent(e, presMembers, null, false);
 	}
 	public static void launchFinalEvent(Event e, ArrayList<PartyMember> presMembers) {
-		setCurrentMode(EVENT_MODE);
-		eventDrawer = new EventDrawer(e, presMembers);
-		finalEvent = true;
+		launchEvent(e, presMembers, null, true);
 	}
-	public static void launchEventWithSelectedMember(Event e, ArrayList<PartyMember> presMembers, PartyMember toSelect) {
+	public static void launchEvent(Event e, ArrayList<PartyMember> presMembers, PartyMember toSelect, boolean isFinalEvent) {
 		setCurrentMode(EVENT_MODE);
 		eventDrawer = new EventDrawer(e, presMembers, toSelect);
+		finalEvent = isFinalEvent;
 	}
 	public static void launchFinalEventWithSelectedMember(Event e, ArrayList<PartyMember> presMembers, PartyMember toSelect) {
-		setCurrentMode(EVENT_MODE);
-		eventDrawer = new EventDrawer(e, presMembers, toSelect);
-		finalEvent = true;
+		launchEvent(e, presMembers, toSelect, true);
 	}
 
 	public static void responseEffect(int result, ResponseOption r) {
