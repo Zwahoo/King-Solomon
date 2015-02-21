@@ -52,7 +52,7 @@ public class PlayerMovementHandler extends InputListener {
 	
 	@Override
 	public void mouseDown(int mouseButton, Point mouseLoc) {
-        if(!playerMouseMovement || MainGame.currentMode != MainGame.MOVEMENT_MODE) return;
+        if(!playerMouseMovement || MainGame.getCurrentMode() != MainGame.MOVEMENT_MODE) return;
         
         int xRelBoard = mouseLoc.x - mainGame.getViewLoc().x;
         int yRelBoard = mouseLoc.y - mainGame.getViewLoc().y;

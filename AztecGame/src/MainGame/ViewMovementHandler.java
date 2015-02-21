@@ -39,7 +39,7 @@ public class ViewMovementHandler extends InputListener {
     public void checkMouseMovement() {
     	//checks to see if mouse is at the edge of the frame
     	if (viewMouseMovement && mouseInWindow() 
-    			&& MainGame.currentMode != MainGame.EVENT_MODE) {
+    			&& MainGame.getCurrentMode() != MainGame.EVENT_MODE) {
     		int x = getMouseLoc().x;
     		int y = getMouseLoc().y;
     	
@@ -64,7 +64,7 @@ public class ViewMovementHandler extends InputListener {
     
 	public void checkKeyMovement() {
 		if(!viewKeyMovement 
-				|| MainGame.currentMode == MainGame.EVENT_MODE) return;
+				|| MainGame.getCurrentMode() == MainGame.EVENT_MODE) return;
 		
 		int xChange = 0;
 		int yChange = 0;
