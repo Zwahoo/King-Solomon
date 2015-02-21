@@ -230,15 +230,15 @@ public class MainGame {
 	
 	private void initTileTypes() {
 		tileTypes = new HashMap<String, TileType>();
-	    tileTypes.put("desert", new TileType("desert", false, true, DESERT_TILE_INDEX, new Color(255, 100, 0)));
-	    tileTypes.put("oasis", new TileType("oasis", false, true, OASIS_TILE_INDEX, new Color(255, 200, 0)));
-	    tileTypes.put("jungle", new TileType("jungle", true, true, JUNGLE_TILE_INDEX, new Color(0, 255, 0)));
-	    tileTypes.put("water", new TileType("water", false, false, WATER_TILE_INDEX, new Color(0, 0, 255)));
-	    tileTypes.put("savannah", new TileType("savannah", false, true, SAVANNAH_TILE_INDEX, new Color(255, 255, 0)));
-	    tileTypes.put("mountain", new TileType("mountain", true, false, MOUNTAIN_TILE_INDEX, new Color(100, 50, 0)));
-	    tileTypes.put("highland", new TileType("highland", false, true, HIGHLAND_TILE_INDEX, new Color(50, 100, 0)));
-	    tileTypes.put("solomonsMines", new TileType("solomonsMines", false, true, KING_SOLOMONS_MINES_TILE_INDEX, new Color(255, 255, 255)));
-	    tileTypes.put("village", new TileType("village", false, true, VILLAGE_TILE_INDEX, new Color(100, 100, 100)));
+	    tileTypes.put("desert", new TileType("desert", false, true, false, DESERT_TILE_INDEX, new Color(255, 100, 0)));
+	    tileTypes.put("oasis", new TileType("oasis", false, true, false, OASIS_TILE_INDEX, new Color(255, 200, 0)));
+	    tileTypes.put("jungle", new TileType("jungle", true, true, false, JUNGLE_TILE_INDEX, new Color(0, 255, 0)));
+	    tileTypes.put("water", new TileType("water", false, false, false, WATER_TILE_INDEX, new Color(0, 0, 255)));
+	    tileTypes.put("savannah", new TileType("savannah", false, true, false, SAVANNAH_TILE_INDEX, new Color(255, 255, 0)));
+	    tileTypes.put("mountain", new TileType("mountain", true, false, false, MOUNTAIN_TILE_INDEX, new Color(100, 50, 0)));
+	    tileTypes.put("highland", new TileType("highland", false, true, false, HIGHLAND_TILE_INDEX, new Color(50, 100, 0)));
+	    tileTypes.put("solomonsMines", new TileType("solomonsMines", false, true, true, KING_SOLOMONS_MINES_TILE_INDEX, new Color(255, 255, 255)));
+	    tileTypes.put("village", new TileType("village", false, true, true, VILLAGE_TILE_INDEX, new Color(100, 100, 100)));
 	    
 	    //Highlands can see past everything.
 	    tileTypes.get("highland").canSeeAll = true;

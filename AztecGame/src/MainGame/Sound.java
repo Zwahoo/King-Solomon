@@ -40,10 +40,6 @@ public class Sound extends JFrame {
    
    // Constructor
    public Sound(String filename, boolean loop) {
-//      this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//      this.setTitle("Test Sound Clip");
-//      this.setSize(300, 200);
-//      this.setVisible(true);
 	   
       try {
          // Open an audio input stream.
@@ -80,5 +76,3 @@ public class Sound extends JFrame {
 	   isPlaying = false;
    }
 }
-
-
