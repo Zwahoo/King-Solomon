@@ -24,10 +24,18 @@ public class Event {
 	private String frequency;
 	
 	//Frequency Keys
-	public final double LIKELY_FREQUENCY = .75; //Percent chance of occurring
-	public final double COMMON_FREQUENCY = .60;
-	public final double UNCOMMON_FREQUENCY = .40;
-	public final double RARE_FREQUENCY = .25;
+	public final HashMap<String, Double> eventFrequencies = new HashMap<String, Double>() {
+		{
+			put("Likely", 0.75);
+			put("Common", 0.60);
+			put("Uncommon", 0.40);
+			put("Rare", 0.25);
+		}
+	};
+	//public final double LIKELY_FREQUENCY = .75; //Percent chance of occurring
+	//public final double COMMON_FREQUENCY = .60;
+	//public final double UNCOMMON_FREQUENCY = .40;
+	//public final double RARE_FREQUENCY = .25;
 	
 	public boolean playJingles = EventDrawer.defaultPlayJingles;
 	
