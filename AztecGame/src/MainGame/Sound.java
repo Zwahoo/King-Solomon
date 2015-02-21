@@ -39,6 +39,7 @@ import javax.swing.JFrame;
 // To play sound using Clip, the process need to be alive.
 // Hence, we use a Swing application.
 public class Sound extends JFrame {
+
 	Clip clip;
 	public boolean isPlaying = false;
 
@@ -85,5 +86,4 @@ public class Sound extends JFrame {
 		isPlaying = false;
 	}
 }
-
 

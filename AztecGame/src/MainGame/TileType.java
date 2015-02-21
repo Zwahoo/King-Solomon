@@ -6,14 +6,16 @@ public class TileType {
 	public String name;
 	public boolean blockSight;
 	public boolean canBeOccupied;
+	public boolean alwaysHaveEvent;
 	public int tileImageIndex;
 	Color mapCol;
 	public boolean canSeeAll = false;
 
-	public TileType(String name, boolean blockSight, boolean canBeOccupied, int tileImageIndex, Color mapCol) {
+	public TileType(String name, boolean blockSight, boolean canBeOccupied, boolean alwaysHaveEvent, int tileImageIndex, Color mapCol) {
 		this.name = name;
 		this.blockSight = blockSight;
 		this.canBeOccupied = canBeOccupied;
+		this.alwaysHaveEvent = alwaysHaveEvent;
 		this.tileImageIndex = tileImageIndex;
 		this.mapCol = mapCol;
 	}
