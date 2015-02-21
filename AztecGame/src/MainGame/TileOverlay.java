@@ -80,7 +80,7 @@ public class TileOverlay{
 		double yRelBoard = MainGame.input.getMouseLoc().getY() - MainGame.getViewLoc().y;
 		boolean mouseOn = checkContains(xRelBoard, yRelBoard);
 		if ((getY() == (playerY + 1)) || (getY() == (playerY - 1))){
-			if ((getX() == playerX) || (getX() == playerX)){
+			if (((getX() == playerX) || (getX() == playerX)) && (MainGame.getCurrentMode() == MainGame.MOVEMENT_MODE)) {
 				if (MainGame.map.getTile(getX(), getY()).getType().canBeOccupied() && mouseOn){
 					type = "darkBlue";
 				} else if (MainGame.map.getTile(getX(), getY()).getType().canBeOccupied() && !mouseOn){
@@ -98,10 +98,9 @@ public class TileOverlay{
 				type = "blank";
 			}
 		}
-		else if ((getX() == (playerX + 1)) || (getX() == (playerX - 1))){
-			if ((getY() == playerY) || (getY() == playerY)){
-				if (MainGame.map.getTile(getX(), getY()).getType().canBeOccupied() && mouseOn
-						&& (MainGame.getCurrentMode() == MainGame.MOVEMENT_MODE)) {
+		else if ((getX() == (playerX + 1)) || (getX() == (playerX - 1))) {
+			if (((getY() == playerY) || (getY() == playerY)) && (MainGame.getCurrentMode() == MainGame.MOVEMENT_MODE)) {
+				if (MainGame.map.getTile(getX(), getY()).getType().canBeOccupied() && mouseOn) {
 					type = "darkBlue";
 				} else if (MainGame.map.getTile(getX(), getY()).getType().canBeOccupied() && !mouseOn){
 					type = "blue";
