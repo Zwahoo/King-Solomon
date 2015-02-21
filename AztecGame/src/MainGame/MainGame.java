@@ -63,7 +63,7 @@ public class MainGame {
 	private static View view; //The "camera." What the player is seeing. Has a location, can move around.
 	public static Map map; //The map containing all the tiles making up the world
 	public static InputManager input; // This registers all the mouse and keyboard
-	public static Integer currentMode = -1;
+	private static Integer currentMode = -1;
 	private static gameframe frame;
 	private static boolean finalEvent = false; //Set to true when launching the final event.
 	private static boolean kickedMemberThisTurn = false;
@@ -107,7 +107,7 @@ public class MainGame {
 		player1 = null;
 		view = null;
 		removeInputManager();
-		currentMode = -1;
+		setCurrentMode(-1);
 		oldParty = null;
 		party.clear();
 		images = new BufferedImage[20];
@@ -176,7 +176,7 @@ public class MainGame {
 		player1.getCurrentTile().reveal();
 		
 		// Creates a view
-		Point viewLoc = new Point((int)Math.round(-width*1.35), -1*height/2);
+		Point viewLoc = new Point((int)Math.round(-width*1.35), (-1*height)/2);
 		view = new View(viewLoc, width, height);
 		
 		//Store the gameframe
@@ -220,7 +220,7 @@ public class MainGame {
 		
 		initSelectangles();
 		
-		currentMode = START_DAY_MODE; // temporary, should be BEGIN_DAY_MODE
+		setCurrentMode(START_DAY_MODE); // temporary, should be BEGIN_DAY_MODE
 		startDayDrawer = new StartDayDrawer();
 
 		// //CHECKPOINT
@@ -291,21 +291,23 @@ public class MainGame {
 			statsBar.setText(getStatString());
 			statsChanged = false;
 		}
-		if (eventDrawer!=null)
+		if (eventDrawer!=null) {
 			eventDrawer.update();
-		if (startDayDrawer!=null)
+		}
+		if (startDayDrawer!=null) {
 			startDayDrawer.update();
+		}
 		
-		if(!kickedMemberThisTurn && this.currentMode == this.START_DAY_MODE) {
+		if(!kickedMemberThisTurn && (getCurrentMode() == START_DAY_MODE)) {
 			for(int i = 0; i < party.size(); i++) {
 				PartyMember curMember = party.get(i);
 					if(curMember.isGentleman() == false) {
-					if(stats.get(MORALE_KEY) < -1*curMember.getStat(PartyMember.LOYALTY_KEY)) {
-						this.closeStartDay(EVENT_MODE, -1);
+					if(stats.get(MORALE_KEY) < (-1*curMember.getStat(PartyMember.LOYALTY_KEY))) {
+						closeStartDay(EVENT_MODE, -1);
 						HashMap eventMap = FileToMap.createMap("assets/events/PlayerLeaves.txt");
 						Event memberGone = MapToEvent.createEvent(eventMap);
 						memberGone.playJingles = false;
-						this.launchEventWithSelectedMember(memberGone, party, curMember);
+						launchEventWithSelectedMember(memberGone, party, curMember);
 						kickedMemberThisTurn = true;
 						break;
 					}
@@ -313,8 +315,8 @@ public class MainGame {
 			}
 		}
 
-		if(!launchedFinalEvent && this.currentMode == this.START_DAY_MODE && party.size() < MIN_PARTY_SIZE) {
-			this.closeStartDay(EVENT_MODE, -1);
+		if(!launchedFinalEvent && (getCurrentMode() == START_DAY_MODE) && (party.size() < MIN_PARTY_SIZE)) {
+			closeStartDay(EVENT_MODE, -1);
 			HashMap eventMap = FileToMap.createMap("assets/events/Thomas_TempPartyGone.txt");
 			Event partyGone = MapToEvent.createEvent(eventMap);
 			partyGone.playJingles = false;
@@ -323,8 +325,8 @@ public class MainGame {
 			Sound loseSound = new Sound("assets/sounds/Fatality.wav", false);
 			launchedFinalEvent = true;
 		}
-		if(!launchedFinalEvent && this.currentMode == this.START_DAY_MODE && this.getStats().get(FOOD_KEY) <= 0) {
-			this.closeStartDay(EVENT_MODE, -1);
+		if(!launchedFinalEvent && (getCurrentMode() == START_DAY_MODE) && (getStats().get(FOOD_KEY) <= 0)) {
+			closeStartDay(EVENT_MODE, -1);
 			HashMap eventMap = FileToMap.createMap("assets/events/FoodEvent.txt");
 			Event foodGone = MapToEvent.createEvent(eventMap);
 			foodGone.playJingles = false;
@@ -333,8 +335,8 @@ public class MainGame {
 			launchFinalEvent(foodGone, party);
 			launchedFinalEvent = true;
 		}
-		if(!launchedFinalEvent && this.currentMode == this.START_DAY_MODE && this.getStats().get(WATER_KEY) <= 0) {
-			this.closeStartDay(EVENT_MODE, -1);
+		if(!launchedFinalEvent && (getCurrentMode() == START_DAY_MODE) && (getStats().get(WATER_KEY) <= 0)) {
+			closeStartDay(EVENT_MODE, -1);
 			HashMap eventMap = FileToMap.createMap("assets/events/WaterEvent.txt");
 			Event waterGone = MapToEvent.createEvent(eventMap);
 			waterGone.playJingles = false;
@@ -356,11 +358,13 @@ public class MainGame {
 		map.draw(g, view, player1);
 		
 		//statsBar.setText(getStatString());
-		if (eventDrawer!=null)
+		if (eventDrawer!=null) {
 			eventDrawer.draw(g);
+		}
 		//See logic in update() method for when stats bar text gets updates
-		if (startDayDrawer!=null)
+		if (startDayDrawer!=null) {
 			startDayDrawer.draw(g);
+		}
         statsBar.draw(g);
 	}
 	
@@ -424,7 +428,7 @@ public class MainGame {
 		
 	public static void incRandomPersonStat(String statName, int val){
 		int ran1 = (int)Math.floor(Math.random() * (party.size()));
-		if (party.get(ran1).getStat(statName) + val < 0){
+		if ((party.get(ran1).getStat(statName) + val) < 0){
 			party.get(ran1).setStat(statName, 0);
 		}
 		else {
@@ -471,7 +475,9 @@ public class MainGame {
 	
 	public boolean containsIgnoreCase(ArrayList<String> list, String str) {
 		for(String str2 : list) {
-			if(str2.equalsIgnoreCase(str)) return true;
+			if(str2.equalsIgnoreCase(str)) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -484,17 +490,19 @@ public class MainGame {
 		if (origRandom < MOVE_TO_FREQUENCY){
 			ArrayList<Event> eventList = new ArrayList<Event>();
 			for (Event e : moveToEvents){
-				if(!containsIgnoreCase(e.getPossibleLocations(), loc)) continue;
+				if(!containsIgnoreCase(e.getPossibleLocations(), loc)) {
+					continue;
+				}
 				double randomNum = Math.random();
-				if (randomNum < e.LIKELY_FREQUENCY && e.getFrequency().equalsIgnoreCase("likely")){
+				if ((randomNum < e.LIKELY_FREQUENCY) && e.getFrequency().equalsIgnoreCase("likely")){
 					eventList.add(e);
-				} else if (randomNum < e.COMMON_FREQUENCY && e.getFrequency().equalsIgnoreCase("common")) {
+				} else if ((randomNum < e.COMMON_FREQUENCY) && e.getFrequency().equalsIgnoreCase("common")) {
 					eventList.add(e);
-				} else if (randomNum < e.UNCOMMON_FREQUENCY && e.getFrequency().equalsIgnoreCase("uncommon")) {
+				} else if ((randomNum < e.UNCOMMON_FREQUENCY) && e.getFrequency().equalsIgnoreCase("uncommon")) {
 					eventList.add(e);
-				} else if (randomNum < e.RARE_FREQUENCY && e.getFrequency().equalsIgnoreCase("rare")){
+				} else if ((randomNum < e.RARE_FREQUENCY) && e.getFrequency().equalsIgnoreCase("rare")){
 					eventList.add(e);
-				} else if (randomNum < e.RARE_FREQUENCY && e.getFrequency().substring(0,1).equals("1")){
+				} else if ((randomNum < e.RARE_FREQUENCY) && e.getFrequency().substring(0,1).equals("1")){
 					eventList.add(e);
 				}
 			}
@@ -533,17 +541,19 @@ public class MainGame {
 		if (origRandom < INVESTIGATE_FREQUENCY){
 			ArrayList<Event> eventList = new ArrayList<Event>();
 			for (Event e : investigateEvents){
-				if(!containsIgnoreCase(e.getPossibleLocations(), loc)) continue;
+				if(!containsIgnoreCase(e.getPossibleLocations(), loc)) {
+					continue;
+				}
 				double randomNum = Math.random();
-				if (randomNum < e.LIKELY_FREQUENCY && e.getFrequency().equalsIgnoreCase("likely")){
+				if ((randomNum < e.LIKELY_FREQUENCY) && e.getFrequency().equalsIgnoreCase("likely")){
 					eventList.add(e);
-				} else if (randomNum < e.COMMON_FREQUENCY && e.getFrequency().equalsIgnoreCase("common")) {
+				} else if ((randomNum < e.COMMON_FREQUENCY) && e.getFrequency().equalsIgnoreCase("common")) {
 					eventList.add(e);
-				} else if (randomNum < e.UNCOMMON_FREQUENCY && e.getFrequency().equalsIgnoreCase("uncommon")) {
+				} else if ((randomNum < e.UNCOMMON_FREQUENCY) && e.getFrequency().equalsIgnoreCase("uncommon")) {
 					eventList.add(e);
-				} else if (randomNum < e.RARE_FREQUENCY && e.getFrequency().equalsIgnoreCase("rare")){
+				} else if ((randomNum < e.RARE_FREQUENCY) && e.getFrequency().equalsIgnoreCase("rare")){
 					eventList.add(e);
-				} else if (randomNum < e.RARE_FREQUENCY && e.getFrequency().substring(0,1).equals("1")){
+				} else if ((randomNum < e.RARE_FREQUENCY) && e.getFrequency().substring(0,1).equals("1")){
 					eventList.add(e);
 				}
 			}
@@ -577,17 +587,19 @@ public class MainGame {
 		if (origRandom < REST_FREQUENCY){
 			ArrayList<Event> eventList = new ArrayList<Event>();
 			for (Event e : restEvents){
-				if(!containsIgnoreCase(e.getPossibleLocations(), loc)) continue;
+				if(!containsIgnoreCase(e.getPossibleLocations(), loc)) {
+					continue;
+				}
 				double randomNum = Math.random();
-				if (randomNum < e.LIKELY_FREQUENCY && e.getFrequency().equalsIgnoreCase("likely")){
+				if ((randomNum < e.LIKELY_FREQUENCY) && e.getFrequency().equalsIgnoreCase("likely")){
 					eventList.add(e);
-				} else if (randomNum < e.COMMON_FREQUENCY && e.getFrequency().equalsIgnoreCase("common")) {
+				} else if ((randomNum < e.COMMON_FREQUENCY) && e.getFrequency().equalsIgnoreCase("common")) {
 					eventList.add(e);
-				} else if (randomNum < e.UNCOMMON_FREQUENCY && e.getFrequency().equalsIgnoreCase("uncommon")) {
+				} else if ((randomNum < e.UNCOMMON_FREQUENCY) && e.getFrequency().equalsIgnoreCase("uncommon")) {
 					eventList.add(e);
-				} else if (randomNum < e.RARE_FREQUENCY && e.getFrequency().equalsIgnoreCase("rare")){
+				} else if ((randomNum < e.RARE_FREQUENCY) && e.getFrequency().equalsIgnoreCase("rare")){
 					eventList.add(e);
-				} else if (randomNum < e.RARE_FREQUENCY && e.getFrequency().substring(0,1).equals("1")){
+				} else if ((randomNum < e.RARE_FREQUENCY) && e.getFrequency().substring(0,1).equals("1")){
 					eventList.add(e);
 				}
 			}
@@ -614,20 +626,20 @@ public class MainGame {
 	}
 
 	public static void launchEvent(Event e, ArrayList<PartyMember> presMembers) {
-		currentMode = EVENT_MODE;
+		setCurrentMode(EVENT_MODE);
 		eventDrawer = new EventDrawer(e, presMembers);
 	}
 	public static void launchFinalEvent(Event e, ArrayList<PartyMember> presMembers) {
-		currentMode = EVENT_MODE;
+		setCurrentMode(EVENT_MODE);
 		eventDrawer = new EventDrawer(e, presMembers);
 		finalEvent = true;
 	}
 	public static void launchEventWithSelectedMember(Event e, ArrayList<PartyMember> presMembers, PartyMember toSelect) {
-		currentMode = EVENT_MODE;
+		setCurrentMode(EVENT_MODE);
 		eventDrawer = new EventDrawer(e, presMembers, toSelect);
 	}
 	public static void launchFinalEventWithSelectedMember(Event e, ArrayList<PartyMember> presMembers, PartyMember toSelect) {
-		currentMode = EVENT_MODE;
+		setCurrentMode(EVENT_MODE);
 		eventDrawer = new EventDrawer(e, presMembers, toSelect);
 		finalEvent = true;
 	}
@@ -685,14 +697,14 @@ public class MainGame {
 			resourceChange.set(i, resourceChange.get(i) - resourceCost.get(i));
 		}
 		
-		for (int i = 0; i < resourceKeys.length - 1; i++){
+		for (int i = 0; i < (resourceKeys.length - 1); i++){
 			incPartyStat(resourceKeys[i], resourceChange.get(i).intValue());
 		}
 		for (int c = 0; c < partyStatKeys.length; c++){
 			incRandomPersonStat(partyStatKeys[c], partyStatChange.get(c).intValue());
 		}
 		
-		if (r.isKillPersonLose() && result == 0){
+		if (r.isKillPersonLose() && (result == 0)){
 			if (r.getRewardDisperseLose() == 0){
 				r.killRandomMember();
 			} else if (r.getRewardDisperseLose() == 1){
@@ -702,9 +714,9 @@ public class MainGame {
 			} else {
 				r.killSelectedMember();
 			}
-		} else if (r.isKillPersonPass() && result == 1){
+		} else if (r.isKillPersonPass() && (result == 1)){
 			r.killSelectedMember();
-		} else if (r.isKillPersonWin() && result == 2){
+		} else if (r.isKillPersonWin() && (result == 2)){
 			if (r.getRewardDisperseWin() == 0){
 				r.killRandomMember();
 			} else if (r.getRewardDisperseWin() == 1){
@@ -724,7 +736,7 @@ public class MainGame {
 		
 		//System.out.println("Closing Time");
 		eventDrawer.destroyer();
-		currentMode = START_DAY_MODE;
+		setCurrentMode(START_DAY_MODE);
 		eventDrawer = null;
 		startDayDrawer = new StartDayDrawer();
 
@@ -734,7 +746,7 @@ public class MainGame {
 	}
 
 	public static void closeStartDay(Integer newmode, int startDayChoice) {
-		currentMode = newmode;
+		setCurrentMode(newmode);
 		if (startDayChoice == 1) {
 			MainGame.launchEvent(MainGame.player1.getCurrentTile().getInvestigateEvent(), MainGame.party);
 		} else if (startDayChoice == 2) {
@@ -775,7 +787,7 @@ public class MainGame {
 		}
 		for (PartyMember e : party){
 			for (int i = 0; i < partyStatKeys.length; i++){
-				totalCurrentPartyStats.set(i, totalCurrentPartyStats.get(i) + (long)(e.getStat(partyStatKeys[i])));
+				totalCurrentPartyStats.set(i, totalCurrentPartyStats.get(i) + (e.getStat(partyStatKeys[i])));
 			}
 		}
 		return totalCurrentPartyStats;
@@ -819,7 +831,10 @@ public class MainGame {
 		}
 		
 		for (int i = 0; i < resourceCosts.size(); i++){
-			if(resourceKeys[i] == MainGame.MORALE_KEY && resourceCosts.get(i) <= 0) continue; //Morale may be negative
+			if((resourceKeys[i] == MainGame.MORALE_KEY) && (resourceCosts.get(i) <= 0))
+			 {
+				continue; //Morale may be negative
+			}
 			if (stats.get(resourceKeys[i]) < resourceCosts.get(i)){
 				costsMet = false;
 			}
@@ -830,6 +845,16 @@ public class MainGame {
 		} else {
 			return true;
 		}
+	}
+
+	public static Integer getCurrentMode()
+	{
+		return currentMode;
+	}
+
+	public static void setCurrentMode(Integer currentMode)
+	{
+		MainGame.currentMode = currentMode;
 	}
 	
 	

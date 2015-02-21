@@ -3,16 +3,10 @@ package MainGame;
 
 import java.awt.Point;
 import java.awt.Polygon;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
 
 
 public class TileOverlay{
-	
+
 	public Polygon selectangle;
 	private boolean revealed;
 	String type; //Red, Blue, or Dark
@@ -20,22 +14,22 @@ public class TileOverlay{
 	private int[] yar = new int[8];
 	private int xp;
 	private int yp;
-	
+
 	//constructor
 	public TileOverlay(int x, int y, String type){
-		
+
 		xp = x;
 		yp = y;
 		revealed = false;
 		this.type = type;
 	}
-	
-	
+
+
 	//reveals tile
 	public void reveal(){
 		revealed = true;
 	}
-	
+
 	public void setSelectangle(int x1, int x2, int x3, int x4, int x5, int x6, int x7, int x8, int y1, int y2, int y3, int y4, int y5, int y6, int y7, int y8){
 		//x array
 		//System.out.println("STAR WOLF");
@@ -58,91 +52,92 @@ public class TileOverlay{
 		yar[7] = y8;
 		selectangle = new Polygon(xar, yar, 8);
 		//System.out.println(selectangle);
-		
+
 	}
-	
+
 	public void moveSelectangle(int x, int y){
 		selectangle.translate(x,y);
 	}
-	
+
 	public boolean checkcontains(int x, int y){
 		//System.out.println("ch2");
-		return this.selectangle.contains(x,y);
+		return selectangle.contains(x,y);
 	}
-	
+
 	public boolean checkcontains(Point pnt){
-		return this.selectangle.contains(pnt);
+		return selectangle.contains(pnt);
 	}
-	
+
 	public boolean checkContains(double x, double y){
 		//System.out.println("ch2");
-		return this.selectangle.contains(x,y);
+		return selectangle.contains(x,y);
 	}
-	
+
 	public void update(){
 		int playerX = MainGame.getPlayer().getX();
 		int playerY = MainGame.getPlayer().getY();
 		double xRelBoard = MainGame.input.getMouseLoc().getX() - MainGame.getViewLoc().x;
-        double yRelBoard = MainGame.input.getMouseLoc().getY() - MainGame.getViewLoc().y;
+		double yRelBoard = MainGame.input.getMouseLoc().getY() - MainGame.getViewLoc().y;
 		boolean mouseOn = checkContains(xRelBoard, yRelBoard);
-		if (this.getY() == playerY + 1 || this.getY() == playerY - 1){
-			if (this.getX() == playerX || this.getX() == playerX){
+		if ((getY() == (playerY + 1)) || (getY() == (playerY - 1))){
+			if ((getX() == playerX) || (getX() == playerX)){
 				if (MainGame.map.getTile(getX(), getY()).getType().canBeOccupied() && mouseOn){
-					this.type = "darkBlue";
+					type = "darkBlue";
 				} else if (MainGame.map.getTile(getX(), getY()).getType().canBeOccupied() && !mouseOn){
-					this.type = "blue";
+					type = "blue";
 				} else if (!MainGame.map.getTile(getX(), getY()).getType().canBeOccupied() && mouseOn){
-					this.type = "darkRed";
+					type = "darkRed";
 				} else if (!MainGame.map.getTile(getX(), getY()).getType().canBeOccupied() && !mouseOn){
-					this.type = "red";
+					type = "red";
 				}
 			}
 			else if (mouseOn){
-				this.type = "dark";
+				type = "dark";
 			}
 			else if (!mouseOn){
-				this.type = "blank";
+				type = "blank";
 			}
 		}
-		else if (this.getX() == playerX + 1 || this.getX() == playerX - 1){
-			if (this.getY() == playerY || this.getY() == playerY){
-				if (MainGame.map.getTile(getX(), getY()).getType().canBeOccupied() && mouseOn){
-					this.type = "darkBlue";
+		else if ((getX() == (playerX + 1)) || (getX() == (playerX - 1))){
+			if ((getY() == playerY) || (getY() == playerY)){
+				if (MainGame.map.getTile(getX(), getY()).getType().canBeOccupied() && mouseOn
+						&& (MainGame.getCurrentMode() == MainGame.MOVEMENT_MODE)) {
+					type = "darkBlue";
 				} else if (MainGame.map.getTile(getX(), getY()).getType().canBeOccupied() && !mouseOn){
-					this.type = "blue";
+					type = "blue";
 				} else if (!MainGame.map.getTile(getX(), getY()).getType().canBeOccupied() && mouseOn){
-					this.type = "darkRed";
+					type = "darkRed";
 				} else if (!MainGame.map.getTile(getX(), getY()).getType().canBeOccupied() && !mouseOn){
-					this.type = "red";
+					type = "red";
 				}
 			}
 			else if (mouseOn){
-				this.type = "dark";
+				type = "dark";
 			}
 			else if (!mouseOn){
-				this.type = "blank";
+				type = "blank";
 			}
 		}
 		else if (mouseOn){
-			this.type = "dark";
+			type = "dark";
 		}
 		else if (!mouseOn){
-			this.type = "blank";
+			type = "blank";
 		}
 	}
-	
+
 	public boolean getRevealed(){
 		return revealed;
 	}
-	
+
 	public int getX(){
 		return xp;
 	}
-	
+
 	public int getY(){
 		return yp;
 	}
-	
+
 	public int getImageIndex() {
 		if (type.equalsIgnoreCase("red")){
 			return 6;
@@ -160,10 +155,10 @@ public class TileOverlay{
 			return 9;
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Tile Overlay: (" + xp + ", " + yp + ")";
 	}
-	
+
 }

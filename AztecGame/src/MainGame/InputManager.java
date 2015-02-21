@@ -78,47 +78,47 @@ public class InputManager {
 
 	//Mouse Override Methods
 	public void mouseClicked(int button) {
-		if(!inputListenersMap.containsKey(MainGame.currentMode)) return;
-		ArrayList<InputListener> temp = new ArrayList<InputListener>(inputListenersMap.get(MainGame.currentMode));
+		if(!inputListenersMap.containsKey(MainGame.getCurrentMode())) return;
+		ArrayList<InputListener> temp = new ArrayList<InputListener>(inputListenersMap.get(MainGame.getCurrentMode()));
 		for(InputListener listener : temp) {
 			listener.mouseDown(button, getMouseLoc());
 		}
 	}
 	public void mouseMoved(Point point) {
-		if(!inputListenersMap.containsKey(MainGame.currentMode)) return;
-		ArrayList<InputListener> temp = new ArrayList<InputListener>(inputListenersMap.get(MainGame.currentMode));
+		if(!inputListenersMap.containsKey(MainGame.getCurrentMode())) return;
+		ArrayList<InputListener> temp = new ArrayList<InputListener>(inputListenersMap.get(MainGame.getCurrentMode()));
 		for(InputListener listener : temp) {
 			listener.mouseMoved(point);
 		}
 	}
 	public void mouseEntered() {
-		if(!inputListenersMap.containsKey(MainGame.currentMode)) return;
-		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
+		if(!inputListenersMap.containsKey(MainGame.getCurrentMode())) return;
+		for(InputListener listener : inputListenersMap.get(MainGame.getCurrentMode())) {
 			listener.mouseEntered();
 		}
 	}
 	public void mouseExited() {
-		if(!inputListenersMap.containsKey(MainGame.currentMode)) return;
-		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
+		if(!inputListenersMap.containsKey(MainGame.getCurrentMode())) return;
+		for(InputListener listener : inputListenersMap.get(MainGame.getCurrentMode())) {
 			listener.mouseExited();
 		}
 	}
 	public void mousePressed(int button) {
-		if(!inputListenersMap.containsKey(MainGame.currentMode)) return;
-		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
+		if(!inputListenersMap.containsKey(MainGame.getCurrentMode())) return;
+		for(InputListener listener : inputListenersMap.get(MainGame.getCurrentMode())) {
 			listener.mousePressed(button, getMouseLoc());
 		}
 	}
 	public void mouseReleased(int button) {
-		if(!inputListenersMap.containsKey(MainGame.currentMode)) return;
-		ArrayList<InputListener> temp = new ArrayList<InputListener>(inputListenersMap.get(MainGame.currentMode));
+		if(!inputListenersMap.containsKey(MainGame.getCurrentMode())) return;
+		ArrayList<InputListener> temp = new ArrayList<InputListener>(inputListenersMap.get(MainGame.getCurrentMode()));
 		for(InputListener listener : temp) {
 			listener.mouseReleased(button, getMouseLoc());
 		}
 	}
 	public void mouseDragged() {
-		if(!inputListenersMap.containsKey(MainGame.currentMode)) return;
-		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
+		if(!inputListenersMap.containsKey(MainGame.getCurrentMode())) return;
+		for(InputListener listener : inputListenersMap.get(MainGame.getCurrentMode())) {
 			listener.mouseDragged();
 		}
 	}
@@ -134,20 +134,20 @@ public class InputManager {
 			}
 		}
 		
-		if(!inputListenersMap.containsKey(MainGame.currentMode)) return;
-		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
+		if(!inputListenersMap.containsKey(MainGame.getCurrentMode())) return;
+		for(InputListener listener : inputListenersMap.get(MainGame.getCurrentMode())) {
 			listener.keyTyped(e);
 		}
 	}
 	public void keyReleased(KeyEvent e) {
-		if(!inputListenersMap.containsKey(MainGame.currentMode)) return;
-		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
+		if(!inputListenersMap.containsKey(MainGame.getCurrentMode())) return;
+		for(InputListener listener : inputListenersMap.get(MainGame.getCurrentMode())) {
 			listener.keyReleased(e);
 		}	
 	}
 	public void keyPressed(KeyEvent e) {
-		if(!inputListenersMap.containsKey(MainGame.currentMode)) return;
-		for(InputListener listener : inputListenersMap.get(MainGame.currentMode)) {
+		if(!inputListenersMap.containsKey(MainGame.getCurrentMode())) return;
+		for(InputListener listener : inputListenersMap.get(MainGame.getCurrentMode())) {
 			listener.keyPressed(e);
 		}
 	}
