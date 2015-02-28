@@ -19,39 +19,6 @@ public class Map {
 	private Tile[][] tiles;
 	private TileOverlay[][] tileOverlays;
 	
-	//random map generator
-	public Map(int width, int height, MainGame mainGame) {
-		this.width = width;
-		this.height = height;
-		tiles = new Tile[width][height];
-		tileOverlays = new TileOverlay[width][height];
-		String a = null;
-		
-		Tile t;
-		TileOverlay tO;
-		for (int x = 0; x < width; x++){
-			for (int y = 0; y < height; y++){
-				int i = (int) ((Math.random()) * 3);
-				if (i == 0){
-					a = "water";
-				}
-				else if (i == 1){
-					a = "jungle";
-				}
-				else if (i == 2){
-					a = "mountain";
-				}
-				TileType type = MainGame.tileTypes.get(a);
-				t = new Tile(type, x, y, mainGame.getRandomMoveToEvent(a), mainGame.getRandomInvestigateEvent(a), mainGame.getRandomRestEvent(a));
-				tiles[x][y] = t;
-				//System.out.println(x + ", " + y);
-				tO = new TileOverlay(x, y, "dark");
-				tileOverlays[x][y] = tO;
-			}
-		}
-		
-	}
-
 	//map which is created from image
 	//filePath is in the form assets/filename.png
 	public Map(String filePath, MainGame mainGame) throws IOException{
@@ -97,7 +64,7 @@ public class Map {
                 	a = MainGame.tileTypes.get("jungle");
                 }
             	//System.out.println(a + " " + x + " " + y);
-                t = new Tile(a, x, y, mainGame.getRandomMoveToEvent(a.name), mainGame.getRandomInvestigateEvent(a.name), mainGame.getRandomRestEvent(a.name));
+                t = new Tile(a, x, y, mainGame.getRandomMoveToEvent(a), mainGame.getRandomInvestigateEvent(a), mainGame.getRandomRestEvent(a));
                 tiles[x][y] = t;
                 tO = new TileOverlay(x, y, "blank");
 				tileOverlays[x][y] = tO;
