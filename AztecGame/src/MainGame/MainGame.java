@@ -57,7 +57,7 @@ public class MainGame {
 	public static final int DARK_BLUE_TINT_INDEX = 11;
 	//Minimum Number of Party Members Required for Game Over
 	public static final int MIN_PARTY_SIZE = 2;
-	
+
 
 	private static Player player1; //The player
 	private static View view; //The "camera." What the player is seeing. Has a location, can move around.
@@ -67,23 +67,23 @@ public class MainGame {
 	private static gameframe frame;
 	private static boolean finalEvent = false; //Set to true when launching the final event.
 	private static boolean kickedMemberThisTurn = false;
-		
+
 	BufferedImage bkgImg;
-	
+
 	Rectangle drawRect;
-		
+
 	StatsBar statsBar;
 	int statBarWidth;
 	static int statBarHeight;
-	
+
 	public static HashMap<String, TileType> tileTypes;
-	
+
 	private boolean launchedFinalEvent = false;
-	
+
 	//Stats
 	private static LinkedHashMap <String, Integer> stats;
 	private static boolean statsChanged = false; // set this whenever the stats change
-	
+
 	//Event stuff
 	public ArrayList<Event> moveToEvents = new ArrayList<Event>();
 	public ArrayList<Event> restEvents = new ArrayList<Event>();
@@ -94,13 +94,13 @@ public class MainGame {
 	public static ArrayList<PartyMember> oldParty;
 	public static ArrayList<PartyMember> party = new ArrayList<PartyMember>();
 	public static PartyMember keyMan;
-	
+
 	private BufferedImage loadedimage;
 	public static BufferedImage[] images = new BufferedImage[20];
-	
+
 	public static EventDrawer eventDrawer = null;
 	public static StartDayDrawer startDayDrawer = null;
-	
+
 	//Reverts the event back to something more closely resembling it's start state.
 	public void resetAllVals() {
 		map = null;
@@ -117,27 +117,27 @@ public class MainGame {
 		finalEvent = false;
 		kickedMemberThisTurn = false;
 	}
-	
+
 	public static void removeInputManager() {
 		if(input != null) {
 			input.closeMe();
 			input = null;
 		}
 	}
-	
+
 	//Starts the game, takes in the window frame, width, and height.
 	public MainGame(gameframe frame, int width, int height, HashMap<String, Integer> gentStats, HashMap<String, PartyMember> theParty) throws IOException {
-		
+
 		resetAllVals();
-		
+
 		//possibleParty = new ArrayList<PartyMember>();
-		
-//		for (String e : possibleParty.keySet()){
-//			addPartyMemberToParty(possibleParty.get(e));
-//		}
-		
+
+		//		for (String e : possibleParty.keySet()){
+		//			addPartyMemberToParty(possibleParty.get(e));
+		//		}
+
 		bkgImg = ImageIO.read(new File("assets/BkgImg.png"));
-		
+
 		PartyMember gentleman = new PartyMember("The Gentleman", "Gentleman", 0, "Quite.", "assets/Portraits/MemberImage.png", gentStats);
 		gentleman.setGentleman(true);
 		addPartyMemberToParty(gentleman);
@@ -145,55 +145,55 @@ public class MainGame {
 			addPartyMemberToParty(member);
 		}
 		keyMan = gentleman;
-		
-	    oldParty = new ArrayList<PartyMember>();
-	    oldParty.add(new PartyMember("The Gentleman", "Gentleman", 0,
+
+		oldParty = new ArrayList<PartyMember>();
+		oldParty.add(new PartyMember("The Gentleman", "Gentleman", 0,
 				"Quite.", "assets/Portraits/MemberImage.png", PartyMemberStats.AVERAGE_ABE_STATS));
-	    oldParty.get(0).setGentleman(true);
-	    oldParty.add(new PartyMember("Happy Hunter", "Hunter", 100,
+		oldParty.get(0).setGentleman(true);
+		oldParty.add(new PartyMember("Happy Hunter", "Hunter", 100,
 				"Likes cooking meat and long walks on the savannah.", "assets/Portraits/MemberImage.png",  PartyMemberStats.HAPPY_HUNTER_STATS));
-	    oldParty.add(new PartyMember("Merry Mercenary", "Mercenary", 100,
+		oldParty.add(new PartyMember("Merry Mercenary", "Mercenary", 100,
 				"Was once payed $100,000 to kill the Queen. Married her instead.", "assets/Portraits/MemberImage.png",  PartyMemberStats.MERRY_MERCENARY_STATS));
-	    oldParty.add(new PartyMember("Nifty Naturalist", "Naturalist", 100,
+		oldParty.add(new PartyMember("Nifty Naturalist", "Naturalist", 100,
 				"Once saved six men using only a single leaf of poison ivy, and three blades of grass.", "assets/Portraits/MemberImage.png",  PartyMemberStats.NIFTY_NATURALIST_STATS));
-	    oldParty.add(new PartyMember("Marvelous Missionary", "Missionary", 100,
+		oldParty.add(new PartyMember("Marvelous Missionary", "Missionary", 100,
 				"Holds the current leading Convert-to-Failure ratio in the entire South African Pro Missionary League.", "assets/Portraits/MemberImage.png",  PartyMemberStats.MARVELOUS_MISSIONARY_STATS));
-	    oldParty.add(new PartyMember("Exuberant Explorer", "Explorer", 100,
+		oldParty.add(new PartyMember("Exuberant Explorer", "Explorer", 100,
 				"Made the world's first Atlas at age 6.", "assets/Portraits/MemberImage.png", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
-	    oldParty.add(new PartyMember("Giddy Guide", "Guide", 100,
+		oldParty.add(new PartyMember("Giddy Guide", "Guide", 100,
 				"He's Giddy!", "assets/Portraits/MemberImage.png", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
-		
+
 		//Initialize the different tile types.
 		initTileTypes();
 		//Load in the events
 		loadEvents();
-		
+
 		//Create map
 		map = new Map("assets/Map.png", this);
 		//map = new Map(10, 10, this);
 		// Creates the player
 		player1 = new Player(map);
 		player1.getCurrentTile().reveal();
-		
+
 		// Creates a view
 		Point viewLoc = new Point((int)Math.round(-width*1.35), (-1*height)/2);
 		view = new View(viewLoc, width, height);
-		
+
 		//Store the gameframe
 		this.frame = frame;
-		
+
 		// sets up mouse input stuff (INPUT MUST BE INSTANTIATED LAST)
 		input = new InputManager(frame, this);
 
 		//Sets the stats of the party
 		initStats();
-		
-		
-		
+
+
+
 		statBarWidth = frame.getWidth();
 		statBarHeight = (int) ((gameframe.windowHeight)*.05);
 		statsBar = new StatsBar(getStatString(), statBarWidth, statBarHeight, input); // create stats bar
-		
+
 		// preloads images used for drawing dem sweet sweet grayfixs
 		try {
 			images[WATER_TILE_INDEX] = ImageIO.read(new File("assets/Tiles/water.png"));
@@ -217,33 +217,33 @@ public class MainGame {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		initSelectangles();
-		
+
 		setCurrentMode(START_DAY_MODE); // temporary, should be BEGIN_DAY_MODE
 		startDayDrawer = new StartDayDrawer();
 
 		// //CHECKPOINT
-		
-		
+
+
 	}
-	
+
 	private void initTileTypes() {
 		tileTypes = new HashMap<String, TileType>();
-	    tileTypes.put("desert", new TileType("Desert", false, true, false, DESERT_TILE_INDEX, new Color(255, 100, 0)));
-	    tileTypes.put("oasis", new TileType("Oasis", false, true, false, OASIS_TILE_INDEX, new Color(255, 200, 0)));
-	    tileTypes.put("jungle", new TileType("Jungle", true, true, false, JUNGLE_TILE_INDEX, new Color(0, 255, 0)));
-	    tileTypes.put("water", new TileType("Water", false, false, false, WATER_TILE_INDEX, new Color(0, 0, 255)));
-	    tileTypes.put("savannah", new TileType("Savannah", false, true, false, SAVANNAH_TILE_INDEX, new Color(255, 255, 0)));
-	    tileTypes.put("mountain", new TileType("Mountain", true, false, false, MOUNTAIN_TILE_INDEX, new Color(100, 50, 0)));
-	    tileTypes.put("highland", new TileType("Highland", false, true, false, HIGHLAND_TILE_INDEX, new Color(50, 100, 0)));
-	    tileTypes.put("solomonsMines", new TileType("King Solomon’s Mines", false, true, true, KING_SOLOMONS_MINES_TILE_INDEX, new Color(255, 255, 255)));
-	    tileTypes.put("village", new TileType("Village", false, true, true, VILLAGE_TILE_INDEX, new Color(100, 100, 100)));
-	    
-	    //Highlands can see past everything.
-	    tileTypes.get("highland").canSeeAll = true;
+		tileTypes.put("desert", new TileType("Desert", false, true, false, DESERT_TILE_INDEX, new Color(255, 100, 0)));
+		tileTypes.put("oasis", new TileType("Oasis", false, true, false, OASIS_TILE_INDEX, new Color(255, 200, 0)));
+		tileTypes.put("jungle", new TileType("Jungle", true, true, false, JUNGLE_TILE_INDEX, new Color(0, 255, 0)));
+		tileTypes.put("water", new TileType("Water", false, false, false, WATER_TILE_INDEX, new Color(0, 0, 255)));
+		tileTypes.put("savannah", new TileType("Savannah", false, true, false, SAVANNAH_TILE_INDEX, new Color(255, 255, 0)));
+		tileTypes.put("mountain", new TileType("Mountain", true, false, false, MOUNTAIN_TILE_INDEX, new Color(100, 50, 0)));
+		tileTypes.put("highland", new TileType("Highland", false, true, false, HIGHLAND_TILE_INDEX, new Color(50, 100, 0)));
+		tileTypes.put("solomonsMines", new TileType("King Solomonï¿½s Mines", false, true, true, KING_SOLOMONS_MINES_TILE_INDEX, new Color(255, 255, 255)));
+		tileTypes.put("village", new TileType("Village", false, true, true, VILLAGE_TILE_INDEX, new Color(100, 100, 100)));
+
+		//Highlands can see past everything.
+		tileTypes.get("highland").canSeeAll = true;
 	}
-	
+
 	private void initStats() {
 		stats = new LinkedHashMap<String, Integer>();
 		setPartyStat(MORALE_KEY, 100);
@@ -255,7 +255,7 @@ public class MainGame {
 		setPartyStat(VALUABLES_KEY, 0);
 		setPartyStat(PACK_ANIMALS_KEY, 0);
 	}
-	
+
 	//Sets up the selectangles for the map.
 	private void initSelectangles() {
 		// sets up initial tile selectangles
@@ -278,7 +278,7 @@ public class MainGame {
 			}
 		}
 	}
-	
+
 	//Update all the various bits and pieces of the game world.
 	public void update() {
 		input.update();
@@ -297,11 +297,11 @@ public class MainGame {
 		if (startDayDrawer!=null) {
 			startDayDrawer.update();
 		}
-		
+
 		if(!kickedMemberThisTurn && (getCurrentMode() == START_DAY_MODE)) {
 			for(int i = 0; i < party.size(); i++) {
 				PartyMember curMember = party.get(i);
-					if(curMember.isGentleman() == false) {
+				if(curMember.isGentleman() == false) {
 					if(stats.get(MORALE_KEY) < (-1*curMember.getStat(PartyMember.LOYALTY_KEY))) {
 						closeStartDay(EVENT_MODE, -1);
 						HashMap eventMap = FileToMap.createMap("assets/events/PlayerLeaves.txt");
@@ -346,17 +346,17 @@ public class MainGame {
 			launchedFinalEvent = true;
 		}
 	}
-	
+
 	//Draw any drawable objects in the game world.
 	public void draw(Graphics g) {
-		
+
 		if(bkgImg != null) {
 			g.drawImage(bkgImg, 0, 0, gameframe.windowWidth, gameframe.windowHeight, null);
 		}
-		
+
 		// Draw map
 		map.draw(g, view, player1);
-		
+
 		//statsBar.setText(getStatString());
 		if (eventDrawer!=null) {
 			eventDrawer.draw(g);
@@ -365,9 +365,9 @@ public class MainGame {
 		if (startDayDrawer!=null) {
 			startDayDrawer.draw(g);
 		}
-        statsBar.draw(g);
+		statsBar.draw(g);
 	}
-	
+
 	//Converts the HashMap of Stats and Values into a set and then into a string
 	//Edit this to change what gets printed in the stat bar
 	private static String getStatString() {
@@ -378,22 +378,23 @@ public class MainGame {
 		retVal = retVal.substring(0, retVal.length() - 3); //Remove the last bar.
 		return retVal;
 	}
-	
-	
-	public void handleMoveStatChanges() {
-		incPartyStat(FOOD_KEY, -1);
-		incPartyStat(WATER_KEY, -1);
+
+
+	public static void handleNewDayStatChanges()
+	{
+		incPartyStat(FOOD_KEY, -1 * party.size());
+		incPartyStat(WATER_KEY, -1 * party.size());
 		incPartyStat(STAMINA_KEY, -10);
 	}
-	
+
 	public static void addPartyMemberToParty(PartyMember pm){
 		party.add(pm);
 	}
-	
+
 	public static void killPartyMember(PartyMember pm){
 		party.remove(pm);
 	}
-	
+
 	//Returns the location of the view.
 	public static Point getViewLoc() { return view.getLocation();	}
 	public Map getMap() { return map; }
@@ -418,14 +419,14 @@ public class MainGame {
 		statsChanged = true;
 	}
 	//Sets the stat, and raises the partyStatsChanged flag.
-		public static void incPartyStat(String statName, int val) {
-			if(!stats.containsKey(statName)) {
-				System.out.println("Couldn't find stat " + statName + " to increment!");
-				return;
-			}
-			setPartyStat(statName, stats.get(statName) + val);
+	public static void incPartyStat(String statName, int val) {
+		if(!stats.containsKey(statName)) {
+			System.out.println("Couldn't find stat " + statName + " to increment!");
+			return;
 		}
-		
+		setPartyStat(statName, stats.get(statName) + val);
+	}
+
 	public static void incRandomPersonStat(String statName, int val){
 		int ran1 = (int)Math.floor(Math.random() * (party.size()));
 		if ((party.get(ran1).getStat(statName) + val) < 0){
@@ -435,25 +436,25 @@ public class MainGame {
 			party.get(ran1).incStat(statName, val);
 		}
 	}
-	
+
 	public void loadEvents(){
 		ArrayList<Event> events = new ArrayList<Event>();
 		File dir = new File("assets/events/");
-		  ArrayList<File> directoryListing = new ArrayList<File>();
-		  for (File e : dir.listFiles()){
-			  if (!e.isHidden()){
-				  directoryListing.add(e);
-			  }
-		  }
-		  if (directoryListing != null) {
-		    for (File child : directoryListing) {
-		      Event newEvent = MapToEvent.createEvent(FileToMap.createMap(child.getPath()));
-		      events.add(newEvent);
-		    }
-		  }
-		  eventListCreator(events);
+		ArrayList<File> directoryListing = new ArrayList<File>();
+		for (File e : dir.listFiles()){
+			if (!e.isHidden()){
+				directoryListing.add(e);
+			}
+		}
+		if (directoryListing != null) {
+			for (File child : directoryListing) {
+				Event newEvent = MapToEvent.createEvent(FileToMap.createMap(child.getPath()));
+				events.add(newEvent);
+			}
+		}
+		eventListCreator(events);
 	}
-	
+
 	public ArrayList<Event> eventListCreator(ArrayList<Event> events){
 		ArrayList<Event> typeEventList = new ArrayList<Event>();
 		for (Event e : events){
@@ -472,7 +473,7 @@ public class MainGame {
 		return typeEventList;
 	}
 
-	
+
 	public boolean containsIgnoreCase(ArrayList<String> list, String str) {
 		for(String str2 : list) {
 			if(str2.equalsIgnoreCase(str)) {
@@ -481,28 +482,28 @@ public class MainGame {
 		}
 		return false;
 	}
-	
-	
+
+
 	public Event getRandomMoveToEvent(TileType loc) {
 		//This code takes into account frequency of event occurance.
 		double origRandom = Math.random();
-		
-		return getRandomEvent(loc, null, this.MOVE_TO_FREQUENCY, this.moveToEvents);
+
+		return getRandomEvent(loc, null, MOVE_TO_FREQUENCY, moveToEvents);
 	}
-	
+
 	public Event getRandomInvestigateEvent(TileType loc) {
 		double origRandom = Math.random();
 		HashMap defaultMap = FileToMap.createMap("assets/events/GenericInvestigate.txt");
 		Event defaultEvent = MapToEvent.createEvent(defaultMap);
-		
-		return getRandomEvent(loc, defaultEvent, this.INVESTIGATE_FREQUENCY, this.investigateEvents);
+
+		return getRandomEvent(loc, defaultEvent, INVESTIGATE_FREQUENCY, investigateEvents);
 	}
-	
+
 	public Event getRandomRestEvent(TileType loc) {
 		HashMap defaultMap = FileToMap.createMap("assets/events/genericRest.txt");
 		Event defaultEvent = MapToEvent.createEvent(defaultMap);
-		
-		return getRandomEvent(loc, defaultEvent, this.REST_FREQUENCY, this.restEvents);
+
+		return getRandomEvent(loc, defaultEvent, REST_FREQUENCY, restEvents);
 	}
 
 	public Event getRandomEvent(TileType type, Event defaultEvent, double nonDefaultFreq, ArrayList<Event> eventList) {
@@ -510,11 +511,14 @@ public class MainGame {
 	}
 
 	public Event getRandomEvent(TileType type, Event defaultEvent, double nonDefaultFreq, ArrayList<Event> eventList, int recNum) {
-		if(recNum > 10) return null; //Don't recurse infinitely
-		
+		if(recNum > 10)
+		{
+			return null; //Don't recurse infinitely
+		}
+
 		double origRandom = Math.random();
-		
-		if (origRandom < nonDefaultFreq || (defaultEvent == null && type.alwaysHaveEvent)){
+
+		if ((origRandom < nonDefaultFreq) || ((defaultEvent == null) && type.alwaysHaveEvent)){
 			ArrayList<Event> tmpList = new ArrayList<Event>();
 			//Adds events to temp list based on frequency
 			for (Event e : eventList){
@@ -573,21 +577,21 @@ public class MainGame {
 				AMMO_KEY, MEDICINE_KEY, MORALE_KEY,
 				STAMINA_KEY, PACK_ANIMALS_KEY
 		};
-		
+
 		//Need to change response option to have these fields and update them
 
-		
+
 		@SuppressWarnings("static-access")
 		String[] partyStatKeys = {
-				keyMan.MARKSMANSHIP_KEY, keyMan.PERCEPTION_KEY,
-				keyMan.TACTICS_KEY, keyMan.LOYALTY_KEY,
-				keyMan.AGILITY_KEY, keyMan.STRENGTH_KEY,
-				keyMan.DIPLOMACY_KEY, keyMan.KNOWLEDGE_KEY
+			keyMan.MARKSMANSHIP_KEY, keyMan.PERCEPTION_KEY,
+			keyMan.TACTICS_KEY, keyMan.LOYALTY_KEY,
+			keyMan.AGILITY_KEY, keyMan.STRENGTH_KEY,
+			keyMan.DIPLOMACY_KEY, keyMan.KNOWLEDGE_KEY
 		};
-		
+
 		ArrayList<Long> resourceChange = new ArrayList<Long>();
 		ArrayList<Long> partyStatChange = new ArrayList<Long>();
-		
+
 		if (result == 0){
 			partyStatChange.addAll(r.getLosePartyStatChange());
 			resourceChange.addAll(r.getLoseResourceChange());
@@ -612,21 +616,21 @@ public class MainGame {
 			partyStatChange.addAll(r.getWinPartyStatChange());
 			resourceChange.addAll(r.getWinResourceChange());
 		}
-		
+
 		ArrayList<Long> resourceCost = new ArrayList<Long>();
 		resourceCost.addAll(r.getCost());
-		
+
 		for (int i = 0; i < resourceChange.size(); i++){
 			resourceChange.set(i, resourceChange.get(i) - resourceCost.get(i));
 		}
-		
+
 		for (int i = 0; i < (resourceKeys.length - 1); i++){
 			incPartyStat(resourceKeys[i], resourceChange.get(i).intValue());
 		}
 		for (int c = 0; c < partyStatKeys.length; c++){
 			incRandomPersonStat(partyStatKeys[c], partyStatChange.get(c).intValue());
 		}
-		
+
 		if (r.isKillPersonLose() && (result == 0)){
 			if (r.getRewardDisperseLose() == 0){
 				r.killRandomMember();
@@ -650,13 +654,13 @@ public class MainGame {
 				r.killSelectedMember();
 			}
 		}
-		
+
 		resourceChange.clear();
 		partyStatChange.clear();
-}
+	}
 
 	public static void closeEvent() {
-		
+
 		//System.out.println("Closing Time");
 		eventDrawer.destroyer();
 		setCurrentMode(START_DAY_MODE);
@@ -685,17 +689,17 @@ public class MainGame {
 			stats.put(MORALE_KEY, stats.get(MORALE_KEY) - 20);
 		}
 	}
-	
+
 	public static boolean checkStat(Long partyStat, Long partyRequirement){
-		
+
 		return false;
 	}
-	
+
 	public static boolean checkResource(){
-		
+
 		return false;
 	}
-	
+
 	public static ArrayList<Long> getTotalCurrentPartyStats(){
 		PartyMember keyMan = party.get(0);
 		String[] partyStatKeys = {
@@ -715,18 +719,18 @@ public class MainGame {
 		}
 		return totalCurrentPartyStats;
 	}
-	
+
 	public static boolean isResponsePossible(ResponseOption ro){
-		
+
 		ArrayList<Long> partyStatRequirements = new ArrayList<Long>();
 		ArrayList<Long> resourceCosts = new ArrayList<Long>();
-		
+
 		partyStatRequirements.addAll(ro.getRequirements());
 		resourceCosts.addAll(ro.getCost());
-		
+
 		ArrayList<Long> totalCurrentPartyStats = new ArrayList<Long>();
 		totalCurrentPartyStats.addAll(getTotalCurrentPartyStats());
-		
+
 		//Key Chain
 		String[] resourceKeys = {
 				FOOD_KEY, WATER_KEY, VALUABLES_KEY,
@@ -736,33 +740,33 @@ public class MainGame {
 		PartyMember keyMan = party.get(0);
 		@SuppressWarnings("static-access")
 		String[] partyStatKeys = {
-				keyMan.MARKSMANSHIP_KEY, keyMan.PERCEPTION_KEY,
-				keyMan.TACTICS_KEY, keyMan.LOYALTY_KEY,
-				keyMan.AGILITY_KEY, keyMan.STRENGTH_KEY,
-				keyMan.DIPLOMACY_KEY, keyMan.KNOWLEDGE_KEY
+			keyMan.MARKSMANSHIP_KEY, keyMan.PERCEPTION_KEY,
+			keyMan.TACTICS_KEY, keyMan.LOYALTY_KEY,
+			keyMan.AGILITY_KEY, keyMan.STRENGTH_KEY,
+			keyMan.DIPLOMACY_KEY, keyMan.KNOWLEDGE_KEY
 		};
-		
-		
-		
+
+
+
 		boolean reqMet = true;
 		boolean costsMet = true;
-		
+
 		for (int i = 0; i < partyStatRequirements.size(); i++){
 			if (totalCurrentPartyStats.get(i) < partyStatRequirements.get(i)){
 				reqMet = false;
 			}
 		}
-		
+
 		for (int i = 0; i < resourceCosts.size(); i++){
 			if((resourceKeys[i] == MainGame.MORALE_KEY) && (resourceCosts.get(i) <= 0))
-			 {
+			{
 				continue; //Morale may be negative
 			}
 			if (stats.get(resourceKeys[i]) < resourceCosts.get(i)){
 				costsMet = false;
 			}
 		}
-		
+
 		if (!(reqMet && costsMet)){
 			return false;
 		} else {
@@ -777,8 +781,11 @@ public class MainGame {
 
 	public static void setCurrentMode(Integer currentMode)
 	{
+		if (currentMode == 0) {
+			handleNewDayStatChanges();
+		}
 		MainGame.currentMode = currentMode;
 	}
-	
-	
+
+
 }
