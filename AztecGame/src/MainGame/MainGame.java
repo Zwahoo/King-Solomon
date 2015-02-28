@@ -632,6 +632,15 @@ public class MainGame {
 		launchEvent(e, presMembers, null, true);
 	}
 	public static void launchEvent(Event e, ArrayList<PartyMember> presMembers, PartyMember toSelect, boolean isFinalEvent) {
+		boolean validevent = true;
+		for (int i = 0; i < e.getReqParty().size(); i++) {
+			if(!checkParty(e.getReqParty().get(i))){
+				validevent = false;
+			}
+		}
+		if (!validevent) { 
+			newEvent();
+		}
 		setCurrentMode(EVENT_MODE);
 		eventDrawer = new EventDrawer(e, presMembers, toSelect);
 		finalEvent = isFinalEvent;
@@ -842,7 +851,22 @@ public class MainGame {
 			return true;
 		}
 	}
-
+	
+	public static boolean checkParty(String type) {
+		
+		boolean booly = false;
+		for (int i = 0; i < party.size(); i++) {
+			if (party.get(i).getType().equalsIgnoreCase(type)) {
+				booly = true;
+			}
+		}
+		return booly;
+	}
+	
+	public static void newEvent() {
+		
+	}
+	
 	public static Integer getCurrentMode()
 	{
 		return currentMode;
@@ -852,6 +876,8 @@ public class MainGame {
 	{
 		MainGame.currentMode = currentMode;
 	}
+	
+	
 	
 	
 }
