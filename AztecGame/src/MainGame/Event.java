@@ -57,9 +57,10 @@ public class Event {
 		this.frequency = frequency;
 	}
 	
-	//Replaces the string {playername} with the selected player's name.
+	//Replaces the string {playername} or {selectedname} with the selected player's name.
 	public String handleNameReplacement(String str) {
 		if(affectedPartyMember != null) {
+			str = str.replaceAll("\\{selectedname\\}", affectedPartyMember.getName());
 			return str.replaceAll("\\{playername\\}", affectedPartyMember.getName());
 		}
 		return str;
