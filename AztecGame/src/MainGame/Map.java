@@ -85,12 +85,12 @@ public class Map {
 				TileOverlay tileOverlay = getTileOverlay(curTileX, curTileY);
 
 				// draws the tile
-				g.drawImage(MainGame.images[tile.getImageIndex()], newx, newy, null);
-				g.drawImage(MainGame.images[tileOverlay.getImageIndex()], newx, newy, null);
+				g.drawImage(MainGame.tileImages[tile.getImageIndex()], newx, newy, null);
+				g.drawImage(MainGame.tileImages[tileOverlay.getImageIndex()], newx, newy, null);
 				
 				// draws player marker
 				if (curTileX == player1.getX() && curTileY == player1.getY()) {
-					BufferedImage loadedimage = MainGame.images[3];
+					BufferedImage loadedimage = MainGame.tileImages[3];
 					g.drawImage(loadedimage, newx + 43, newy + 12, null);
 				}
 

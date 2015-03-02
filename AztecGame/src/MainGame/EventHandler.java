@@ -46,7 +46,7 @@ public class EventHandler {
 			if (currentResourceModifier != invalidModifierNum) {
 				resourceModifier += currentResource - currentResourceModifier;
 			}
-		} */
+		}*/
 
 		ArrayList<Integer> currentPartyStats = new ArrayList<Integer>();
 		currentPartyStats.addAll(partyStats);
