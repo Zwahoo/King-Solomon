@@ -85,10 +85,10 @@ public class MainGame {
 	private static boolean statsChanged = false; // set this whenever the stats change
 	
 	//Event stuff
-	public ArrayList<Event> moveToEvents = new ArrayList<Event>();
-	public ArrayList<Event> restEvents = new ArrayList<Event>();
-	public ArrayList<Event> investigateEvents = new ArrayList<Event>();
-	public ArrayList<Event> miscEvents = new ArrayList<Event>();
+	public static ArrayList<Event> moveToEvents = new ArrayList<Event>();
+	public static ArrayList<Event> restEvents = new ArrayList<Event>();
+	public static ArrayList<Event> investigateEvents = new ArrayList<Event>();
+	public static ArrayList<Event> miscEvents = new ArrayList<Event>();
 
 	//Party
 	public static ArrayList<PartyMember> oldParty;
@@ -237,7 +237,7 @@ public class MainGame {
 	    tileTypes.put("savannah", new TileType("Savannah", false, true, false, SAVANNAH_TILE_INDEX, new Color(255, 255, 0)));
 	    tileTypes.put("mountain", new TileType("Mountain", true, false, false, MOUNTAIN_TILE_INDEX, new Color(100, 50, 0)));
 	    tileTypes.put("highland", new TileType("Highland", false, true, false, HIGHLAND_TILE_INDEX, new Color(50, 100, 0)));
-	    tileTypes.put("solomonsMines", new TileType("King Solomon’s Mines", false, true, true, KING_SOLOMONS_MINES_TILE_INDEX, new Color(255, 255, 255)));
+	    tileTypes.put("solomonsMines", new TileType("King Solomonï¿½s Mines", false, true, true, KING_SOLOMONS_MINES_TILE_INDEX, new Color(255, 255, 255)));
 	    tileTypes.put("village", new TileType("Village", false, true, true, VILLAGE_TILE_INDEX, new Color(100, 100, 100)));
 	    
 	    //Highlands can see past everything.
@@ -473,7 +473,7 @@ public class MainGame {
 	}
 
 	
-	public boolean containsIgnoreCase(ArrayList<String> list, String str) {
+	public static boolean containsIgnoreCase(ArrayList<String> list, String str) {
 		for(String str2 : list) {
 			if(str2.equalsIgnoreCase(str)) {
 				return true;
@@ -487,7 +487,7 @@ public class MainGame {
 		//This code takes into account frequency of event occurance.
 		double origRandom = Math.random();
 		
-		return getRandomEvent(loc, null, this.MOVE_TO_FREQUENCY, this.moveToEvents);
+		return getRandomEvent(loc, null, MOVE_TO_FREQUENCY, moveToEvents);
 	}
 	
 	public Event getRandomInvestigateEvent(TileType loc) {
@@ -495,22 +495,22 @@ public class MainGame {
 		HashMap defaultMap = FileToMap.createMap("assets/events/GenericInvestigate.txt");
 		Event defaultEvent = MapToEvent.createEvent(defaultMap);
 		
-		return getRandomEvent(loc, defaultEvent, this.INVESTIGATE_FREQUENCY, this.investigateEvents);
+		return getRandomEvent(loc, defaultEvent, INVESTIGATE_FREQUENCY, investigateEvents);
 	}
 	
 	public Event getRandomRestEvent(TileType loc) {
 		HashMap defaultMap = FileToMap.createMap("assets/events/genericRest.txt");
 		Event defaultEvent = MapToEvent.createEvent(defaultMap);
 		
-		return getRandomEvent(loc, defaultEvent, this.REST_FREQUENCY, this.restEvents);
+		return getRandomEvent(loc, defaultEvent, REST_FREQUENCY, restEvents);
 	}
 
 	public Event getRandomEvent(TileType type, Event defaultEvent, double nonDefaultFreq, ArrayList<Event> eventList) {
 		return getRandomEvent(type, defaultEvent, nonDefaultFreq, eventList, 0);
 	}
 
-	public Event getRandomEvent(TileType type, Event defaultEvent, double nonDefaultFreq, ArrayList<Event> eventList, int recNum) {
-		if(recNum > 10) return null; //Don't recurse infinitely
+	public static Event getRandomEvent(TileType type, Event defaultEvent, double nonDefaultFreq, ArrayList<Event> eventList, int recNum) {
+		if(recNum > 10) return defaultEvent; //Don't recurse infinitely
 		
 		double origRandom = Math.random();
 		
@@ -566,7 +566,7 @@ public class MainGame {
 			}
 		}
 		if (!validevent) { 
-			newEvent();
+			e = newEvent(e.getEventType());
 		}
 		setCurrentMode(EVENT_MODE);
 		eventDrawer = new EventDrawer(e, presMembers, toSelect);
@@ -695,15 +695,6 @@ public class MainGame {
 		}
 	}
 	
-	public static boolean checkStat(Long partyStat, Long partyRequirement){
-		
-		return false;
-	}
-	
-	public static boolean checkResource(){
-		
-		return false;
-	}
 	
 	public static ArrayList<Long> getTotalCurrentPartyStats(){
 		PartyMember keyMan = party.get(0);
@@ -790,8 +781,21 @@ public class MainGame {
 		return booly;
 	}
 	
-	public static void newEvent() {
-		
+	public static Event newEvent(String type) {
+		Event e = null;
+		TileType tile = player1.getCurrentTile().getType();
+		if (type.equalsIgnoreCase("Move")) {
+			e = getRandomEvent(tile,null,1, moveToEvents, 10);
+		} else if (type.equalsIgnoreCase("Investigate")) {
+			HashMap defaultMap = FileToMap.createMap("assets/events/GenericInvestigate.txt");
+			Event defaultEvent = MapToEvent.createEvent(defaultMap);
+			e = getRandomEvent(tile, defaultEvent, INVESTIGATE_FREQUENCY, investigateEvents, 10);
+		} else if (type.equalsIgnoreCase("Rest")) {
+			HashMap defaultMap = FileToMap.createMap("assets/events/genericRest.txt");
+			Event defaultEvent = MapToEvent.createEvent(defaultMap);
+			e = getRandomEvent(tile, defaultEvent, REST_FREQUENCY, restEvents, 10);
+		}
+		return e;
 	}
 	
 	public static Integer getCurrentMode()
