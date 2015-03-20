@@ -85,7 +85,29 @@ public class Map {
 				TileOverlay tileOverlay = getTileOverlay(curTileX, curTileY);
 
 				// draws the tile
+				int tileImageIndex = tile.getImageIndex();
+				int tileOverlayIndex = tile.getOverlayImageIndex();
+				if(tileImageIndex == MainGame.GRAB_NEAREST_TILE_INDEX) {
+					boolean done = false;
+					for(int checkX=curTileX-1; checkX<=curTileX + 1; checkX++) {
+						for(int checkY=curTileY-1; checkY<=curTileY+1; checkY++) {
+							if(checkX == curTileX || checkY == curTileY || done) { continue; }
+							if(checkX < 0 || checkX > width-1 || checkY < 0 || checkY > height-1) { continue; }
+							
+							Tile toCheck = getTile(checkX, checkY);
+							if(toCheck.canBeOccupied()) {
+								tile.setImageIndex(toCheck.getImageIndex());
+								done = true;
+							}
+						}
+					}
+					//if(!done) tile.setImageIndex(MainGame.SAVANNAH_TILE_INDEX);
+				}
+				
 				g.drawImage(MainGame.tileImages[tile.getImageIndex()], newx, newy, null);
+				if(tileOverlayIndex != -1) {
+					g.drawImage(MainGame.tileImages[tileOverlayIndex], newx, newy, null);
+				}
 				g.drawImage(MainGame.tileImages[tileOverlay.getImageIndex()], newx, newy, null);
 				
 				// draws player marker

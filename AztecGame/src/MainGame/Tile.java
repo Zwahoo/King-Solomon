@@ -26,7 +26,6 @@ public class Tile{
 	
 	//constructor
 	public Tile(TileType t, int  x, int y, Event moveTo, Event investigate, Event rest){
-		
 		this.type = t;
 		xp = x;
 		yp = y;
@@ -128,6 +127,21 @@ public class Tile{
 	
 	public Event getRestEvent() {
 		return restEvent;
+	}
+
+	public int getOverlayImageIndex() {
+		return getType().tileImageOverlay;
+	}
+
+
+	public boolean canBeOccupied() {
+		return getType().canBeOccupied;
+	}
+
+
+	public void setImageIndex(int imageIndex) {
+		getType().setImageIndex(imageIndex);
+		
 	}
 	
 }

@@ -37,6 +37,7 @@ public class MainGame {
 	public static final double INVESTIGATE_FREQUENCY = 0.75;
 	public static final double REST_FREQUENCY = 0.25;
 	//Tile Image Index Locations
+	public static final int GRAB_NEAREST_TILE_INDEX = -1;
 	public static final int WATER_TILE_INDEX = 0;
 	public static final int JUNGLE_TILE_INDEX = 1;
 	public static final int MOUNTAIN_TILE_INDEX = 2;
@@ -224,10 +225,11 @@ public class MainGame {
 		tileTypes.put("mountain", new TileType("Mountain", true, false, false, MOUNTAIN_TILE_INDEX, new Color(100, 50, 0)));
 		tileTypes.put("highland", new TileType("Highland", false, true, false, HIGHLAND_TILE_INDEX, new Color(50, 100, 0)));
 		tileTypes.put("solomonsMines", new TileType("King Solomon�s Mines", false, true, true, KING_SOLOMONS_MINES_TILE_INDEX, new Color(255, 255, 255)));
-		tileTypes.put("village", new TileType("Village", false, true, true, VILLAGE_TILE_INDEX, new Color(100, 100, 100)));
-
+		tileTypes.put("village", new TileType("Village", false, true, true, GRAB_NEAREST_TILE_INDEX, new Color(100, 100, 100)));
+		
 		//Highlands can see past everything.
 		tileTypes.get("highland").canSeeAll = true;
+		tileTypes.get("village").setOverlay(VILLAGE_TILE_INDEX);
 	}
 
 	/**
@@ -237,9 +239,9 @@ public class MainGame {
 		stats = new LinkedHashMap<String, Integer>();
 		setPartyStat(MORALE_KEY, 100);
 		setPartyStat(STAMINA_KEY, 100);
-		setPartyStat(FOOD_KEY, 20);
-		setPartyStat(WATER_KEY, 20);
-		setPartyStat(AMMO_KEY, 10);
+		setPartyStat(FOOD_KEY, 60);
+		setPartyStat(WATER_KEY, 60);
+		setPartyStat(AMMO_KEY, 100);
 		setPartyStat(MEDICINE_KEY, 10);
 		setPartyStat(VALUABLES_KEY, 0);
 		setPartyStat(PACK_ANIMALS_KEY, 0);
@@ -933,6 +935,7 @@ public class MainGame {
 	public static ArrayList<PartyMember> getParty(){
 		return party;
 	}
+	
 	/**
 	 * @return The map of stats in the form (string: stat key, int: stat value).
 	 */

@@ -8,6 +8,7 @@ public class TileType {
 	public boolean canBeOccupied;
 	public boolean alwaysHaveEvent;
 	public int tileImageIndex;
+	public int tileImageOverlay;
 	Color mapCol;
 	public boolean canSeeAll = false;
 
@@ -18,6 +19,15 @@ public class TileType {
 		this.alwaysHaveEvent = alwaysHaveEvent;
 		this.tileImageIndex = tileImageIndex;
 		this.mapCol = mapCol;
+		this.tileImageOverlay = -1;
+	}
+	
+	/**
+	 * Set an overlay image for a tile.
+	 * @param index The index of the overlay in the MainGame's TileImage list
+	 */
+	public void setOverlay(int index) {
+		tileImageOverlay = index;
 	}
 	
 	public boolean colorMatch(int r, int g, int b) {
@@ -30,5 +40,9 @@ public class TileType {
 	
 	public boolean canBeOccupied(){
 		return canBeOccupied;
+	}
+
+	public void setImageIndex(int imageIndex) {
+		this.tileImageIndex = imageIndex;
 	}
 }
