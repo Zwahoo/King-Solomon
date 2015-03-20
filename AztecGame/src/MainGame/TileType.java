@@ -45,4 +45,9 @@ public class TileType {
 	public void setImageIndex(int imageIndex) {
 		this.tileImageIndex = imageIndex;
 	}
+	
+	@Override
+	public String toString() {
+		return "Type: " + name;
+	}
 }

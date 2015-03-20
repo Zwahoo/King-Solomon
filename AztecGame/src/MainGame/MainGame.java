@@ -93,6 +93,8 @@ public class MainGame {
 	public static ArrayList<Event> restEvents = new ArrayList<Event>();
 	public static ArrayList<Event> investigateEvents = new ArrayList<Event>();
 	public static ArrayList<Event> miscEvents = new ArrayList<Event>();
+	//Holds separate lists of valid events for tiles that always need an event
+	public static HashMap<TileType, ArrayList<Event>> alwaysMoveToEvents = new HashMap<TileType, ArrayList<Event>>();
 
 	//Party
 	public static ArrayList<PartyMember> party = new ArrayList<PartyMember>();
@@ -224,12 +226,16 @@ public class MainGame {
 		tileTypes.put("savannah", new TileType("Savannah", false, true, false, SAVANNAH_TILE_INDEX, new Color(255, 255, 0)));
 		tileTypes.put("mountain", new TileType("Mountain", true, false, false, MOUNTAIN_TILE_INDEX, new Color(100, 50, 0)));
 		tileTypes.put("highland", new TileType("Highland", false, true, false, HIGHLAND_TILE_INDEX, new Color(50, 100, 0)));
-		tileTypes.put("solomonsMines", new TileType("King Solomon�s Mines", false, true, true, KING_SOLOMONS_MINES_TILE_INDEX, new Color(255, 255, 255)));
+		tileTypes.put("solomonsMines", new TileType("KingSolomonsMines", false, true, true, KING_SOLOMONS_MINES_TILE_INDEX, new Color(255, 255, 255)));
 		tileTypes.put("village", new TileType("Village", false, true, true, GRAB_NEAREST_TILE_INDEX, new Color(100, 100, 100)));
 		
 		//Highlands can see past everything.
 		tileTypes.get("highland").canSeeAll = true;
 		tileTypes.get("village").setOverlay(VILLAGE_TILE_INDEX);
+		
+		for(TileType type : tileTypes.values()) {
+			if(type.alwaysHaveEvent) alwaysMoveToEvents.put(type, new ArrayList<Event>());
+		}
 	}
 
 	/**
@@ -535,6 +541,14 @@ public class MainGame {
 			} else {
 				System.out.println("Event called " + e.getEventID() + " has an incorrect type called " + e.getEventType() + ".");
 			}
+			
+			if(e.eventFrequencies.get(e.getFrequency()) > 0 && e.getEventType().equals(Event.moveToString)) {
+				for(TileType type : alwaysMoveToEvents.keySet()) {
+					if(e.getPossibleLocations().contains(type.getName())) {
+						alwaysMoveToEvents.get(type).add(e);
+					}
+				}
+			}
 		}
 	}
 
@@ -555,14 +569,14 @@ public class MainGame {
 
 	/**
 	 * Provides a randomly selected move-to event
-	 * @param loc The type of tile the event will run on
+	 * @param type The type of tile the event will run on
 	 * @return A randomly selected move-to event
 	 */
-	public Event getRandomMoveToEvent(TileType loc) {
+	public Event getRandomMoveToEvent(TileType type) {
 		//This code takes into account frequency of event occurance.
 		double origRandom = Math.random();
 		
-		return getRandomEvent(loc, null, MOVE_TO_FREQUENCY, moveToEvents);
+		return getRandomEvent(type, null, MOVE_TO_FREQUENCY, moveToEvents);
 	}
 
 	/**
@@ -612,10 +626,16 @@ public class MainGame {
 	 * @return A randomly selected event
 	 */
 	public static Event getRandomEvent(TileType type, Event defaultEvent, double nonDefaultFreq, ArrayList<Event> eventList, int recNum) {
-		if(recNum > 10) return defaultEvent; //Don't recurse infinitely
+		if(recNum > 100) {
+			return defaultEvent; //Don't recurse infinitely
+		}
 		
 		double origRandom = Math.random();
-
+		
+		if(type.alwaysHaveEvent) {
+			eventList = alwaysMoveToEvents.get(type);
+		}
+		
 		if ((origRandom < nonDefaultFreq) || ((defaultEvent == null) && type.alwaysHaveEvent)){
 			ArrayList<Event> tmpList = new ArrayList<Event>();
 			//Adds events to temp list based on frequency
@@ -934,16 +954,16 @@ public class MainGame {
 	public static Event newEvent(String type) {
 		Event e = null;
 		TileType tile = player1.getCurrentTile().getType();
-		if (type.equalsIgnoreCase("Move")) {
-			e = getRandomEvent(tile,null,1, moveToEvents, 10);
-		} else if (type.equalsIgnoreCase("Investigate")) {
+		if (type.equalsIgnoreCase(Event.moveToString)) {
+			e = getRandomEvent(tile,null,1, moveToEvents, 0);
+		} else if (type.equalsIgnoreCase(Event.investigateString)) {
 			HashMap defaultMap = FileToMap.createMap("assets/events/GenericInvestigate.txt");
 			Event defaultEvent = MapToEvent.createEvent(defaultMap);
-			e = getRandomEvent(tile, defaultEvent, INVESTIGATE_FREQUENCY, investigateEvents, 10);
-		} else if (type.equalsIgnoreCase("Rest")) {
+			e = getRandomEvent(tile, defaultEvent, INVESTIGATE_FREQUENCY, investigateEvents, 0);
+		} else if (type.equalsIgnoreCase(Event.restString)) {
 			HashMap defaultMap = FileToMap.createMap("assets/events/genericRest.txt");
 			Event defaultEvent = MapToEvent.createEvent(defaultMap);
-			e = getRandomEvent(tile, defaultEvent, REST_FREQUENCY, restEvents, 10);
+			e = getRandomEvent(tile, defaultEvent, REST_FREQUENCY, restEvents, 0);
 		}
 		return e;
 	}

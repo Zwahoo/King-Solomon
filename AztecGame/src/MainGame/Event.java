@@ -6,6 +6,10 @@ import java.util.HashMap;
 
 public class Event {
 
+	public static String moveToString = "Move";
+	public static String investigateString = "Investigate";
+	public static String restString = "Rest";
+		
 	//General Info
 	private String eventID;
 	private String eventType;
@@ -26,6 +30,7 @@ public class Event {
 	//Frequency Keys
 	public final HashMap<String, Double> eventFrequencies = new HashMap<String, Double>() {
 		{
+			put("Never", 0.0);
 			put("Likely", 0.75);
 			put("Common", 0.60);
 			put("Uncommon", 0.40);
