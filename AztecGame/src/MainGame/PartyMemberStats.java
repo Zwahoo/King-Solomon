@@ -165,4 +165,20 @@ public final class PartyMemberStats {
 		possibleParty.put("Jakobus Kotze", new PartyMember("Jakobus Kotze", "Guide", 100,
 				"A Boer with a medium build and brown hair. His sides are rather wide, and his often seen wearing simple farmers' clothes.", "assets/Portraits/MemberImage.png", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
 	}
+	
+	public static final HashMap<String, PartyMember> defaultParty = new HashMap<String, PartyMember>();
+	static {
+		defaultParty.put("Kevin", new PartyMember("Kevin", "Hunter", 100,
+				"An African native that consantly looks gaunt, wears jewelry and skins.", "assets/Portraits/MemberImage.png", PartyMemberStats.HAPPY_HUNTER_STATS));
+		defaultParty.put("Zane", new PartyMember("Zane", "Mercenary", 100,
+				"Zane shoots first, and asks questions NEVER!", "assets/Portraits/MemberImage.png", PartyMemberStats.MERRY_MERCENARY_STATS));
+		defaultParty.put("Oliver", new PartyMember("Oliver", "Naturalist", 100,
+				"Oliver loves olives.", "assets/Portraits/MemberImage.png", PartyMemberStats.NIFTY_NATURALIST_STATS));
+		defaultParty.put("Michael", new PartyMember("Michael", "Missionary", 100,
+				"Likes fishing and long walks on the beach.", "assets/Portraits/MemberImage.png", PartyMemberStats.MARVELOUS_MISSIONARY_STATS));
+		defaultParty.put("Thomas", new PartyMember("Thomas", "Explorer", 100,
+				"Thomas doesn't know how he ended up on an expedition into Africa.", "assets/Portraits/MemberImage.png", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
+		defaultParty.put("Nick", new PartyMember("Nick", "Guide", 100,
+				"Hs a terrible sense of direction. Why is he a guide again?", "assets/Portraits/MemberImage.png", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
+	}
 }
