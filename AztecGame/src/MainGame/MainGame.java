@@ -89,10 +89,10 @@ public class MainGame {
 	private static boolean statsChanged = false; // set this whenever the stats change
 
 	//Event stuff
-	public ArrayList<Event> moveToEvents = new ArrayList<Event>();
-	public ArrayList<Event> restEvents = new ArrayList<Event>();
-	public ArrayList<Event> investigateEvents = new ArrayList<Event>();
-	public ArrayList<Event> miscEvents = new ArrayList<Event>();
+	public static ArrayList<Event> moveToEvents = new ArrayList<Event>();
+	public static ArrayList<Event> restEvents = new ArrayList<Event>();
+	public static ArrayList<Event> investigateEvents = new ArrayList<Event>();
+	public static ArrayList<Event> miscEvents = new ArrayList<Event>();
 
 	//Party
 	public static ArrayList<PartyMember> party = new ArrayList<PartyMember>();
@@ -544,7 +544,7 @@ public class MainGame {
 	 * @param str The string to check for
 	 * @return True if the list contains the given string (ignoring case) false otherwise.
 	 */
-	public boolean containsIgnoreCase(ArrayList<String> list, String str) {
+	public static boolean containsIgnoreCase(ArrayList<String> list, String str) {
 		for(String str2 : list) {
 			if(str2.equalsIgnoreCase(str)) {
 				return true;
@@ -561,7 +561,7 @@ public class MainGame {
 	public Event getRandomMoveToEvent(TileType loc) {
 		//This code takes into account frequency of event occurance.
 		double origRandom = Math.random();
-
+		
 		return getRandomEvent(loc, null, MOVE_TO_FREQUENCY, moveToEvents);
 	}
 
@@ -574,7 +574,7 @@ public class MainGame {
 		double origRandom = Math.random();
 		HashMap defaultMap = FileToMap.createMap("assets/events/GenericInvestigate.txt");
 		Event defaultEvent = MapToEvent.createEvent(defaultMap);
-
+		
 		return getRandomEvent(loc, defaultEvent, INVESTIGATE_FREQUENCY, investigateEvents);
 	}
 
@@ -586,7 +586,7 @@ public class MainGame {
 	public Event getRandomRestEvent(TileType loc) {
 		HashMap defaultMap = FileToMap.createMap("assets/events/genericRest.txt");
 		Event defaultEvent = MapToEvent.createEvent(defaultMap);
-
+		
 		return getRandomEvent(loc, defaultEvent, REST_FREQUENCY, restEvents);
 	}
 
@@ -611,12 +611,9 @@ public class MainGame {
 	 * @param recNum The number of times this method has recursed (caps at 10).
 	 * @return A randomly selected event
 	 */
-	private Event getRandomEvent(TileType type, Event defaultEvent, double nonDefaultFreq, ArrayList<Event> eventList, int recNum) {
-		if(recNum > 10)
-		{
-			return null; //Don't recurse infinitely
-		}
-
+	public static Event getRandomEvent(TileType type, Event defaultEvent, double nonDefaultFreq, ArrayList<Event> eventList, int recNum) {
+		if(recNum > 10) return defaultEvent; //Don't recurse infinitely
+		
 		double origRandom = Math.random();
 
 		if ((origRandom < nonDefaultFreq) || ((defaultEvent == null) && type.alwaysHaveEvent)){
@@ -691,6 +688,15 @@ public class MainGame {
 	 * @param isFinalEvent Boolean indicating if this event should end the game. (True = end game. False = don't end game)
 	 */
 	public static void launchEvent(Event e, ArrayList<PartyMember> presMembers, PartyMember toSelect, boolean isFinalEvent) {
+		boolean validevent = true;
+		for (int i = 0; i < e.getReqParty().size(); i++) {
+			if(!checkParty(e.getReqParty().get(i))){
+				validevent = false;
+			}
+		}
+		if (!validevent) { 
+			e = newEvent(e.getEventType());
+		}
 		setCurrentMode(EVENT_MODE);
 		eventDrawer = new EventDrawer(e, presMembers, toSelect);
 		finalEvent = isFinalEvent;
@@ -828,6 +834,8 @@ public class MainGame {
 			stats.put(MORALE_KEY, stats.get(MORALE_KEY) - 20);
 		}
 	}
+	
+	
 
 	/**
 	 * @return A list containing the sum of each party members value for each stat
@@ -911,7 +919,35 @@ public class MainGame {
 			return true;
 		}
 	}
-
+	
+	public static boolean checkParty(String type) {
+		
+		boolean booly = false;
+		for (int i = 0; i < party.size(); i++) {
+			if (party.get(i).getType().equalsIgnoreCase(type)) {
+				booly = true;
+			}
+		}
+		return booly;
+	}
+	
+	public static Event newEvent(String type) {
+		Event e = null;
+		TileType tile = player1.getCurrentTile().getType();
+		if (type.equalsIgnoreCase("Move")) {
+			e = getRandomEvent(tile,null,1, moveToEvents, 10);
+		} else if (type.equalsIgnoreCase("Investigate")) {
+			HashMap defaultMap = FileToMap.createMap("assets/events/GenericInvestigate.txt");
+			Event defaultEvent = MapToEvent.createEvent(defaultMap);
+			e = getRandomEvent(tile, defaultEvent, INVESTIGATE_FREQUENCY, investigateEvents, 10);
+		} else if (type.equalsIgnoreCase("Rest")) {
+			HashMap defaultMap = FileToMap.createMap("assets/events/genericRest.txt");
+			Event defaultEvent = MapToEvent.createEvent(defaultMap);
+			e = getRandomEvent(tile, defaultEvent, REST_FREQUENCY, restEvents, 10);
+		}
+		return e;
+	}
+	
 
 	/*
 	 * ------------------------ GETTERS ------------------------ 
@@ -988,4 +1024,6 @@ public class MainGame {
 			party.get(ran1).incStat(statName, val);
 		}
 	}
+	
+	
 }
