@@ -23,6 +23,7 @@ public class Tile{
 	private Event moveToEvent;
 	private Event investigateEvent;
 	private Event restEvent;
+	public int personalImageIndex = -1;
 	
 	//constructor
 	public Tile(TileType t, int  x, int y, Event moveTo, Event investigate, Event rest){
@@ -102,6 +103,9 @@ public class Tile{
 	
 	public int getImageIndex() {
 		if(!revealed) return 5;
+		if(getType().tileImageIndex == MainGame.GRAB_NEAREST_TILE_INDEX) {
+			return personalImageIndex;
+		}
 		return getType().tileImageIndex;
 	}
 	
@@ -138,10 +142,14 @@ public class Tile{
 		return getType().canBeOccupied;
 	}
 
-
-	public void setImageIndex(int imageIndex) {
-		getType().setImageIndex(imageIndex);
-		
+	/**
+	 * Sets the image index of this tile
+	 * @param imageIndex Index to use.
+	 * @param personal Whether it's personal (true) or for all types of this type.
+	 */
+	public void setImageIndex(int imageIndex, boolean personal) {
+		if(personal) personalImageIndex = imageIndex;
+		else getType().setImageIndex(imageIndex);
 	}
 	
 }

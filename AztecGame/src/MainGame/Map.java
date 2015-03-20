@@ -96,12 +96,12 @@ public class Map {
 							
 							Tile toCheck = getTile(checkX, checkY);
 							if(toCheck.canBeOccupied()) {
-								tile.setImageIndex(toCheck.getImageIndex());
+								tile.setImageIndex(toCheck.getImageIndex(), true);
 								done = true;
 							}
 						}
 					}
-					//if(!done) tile.setImageIndex(MainGame.SAVANNAH_TILE_INDEX);
+					if(!done) tile.setImageIndex(MainGame.SAVANNAH_TILE_INDEX, true);
 				}
 				
 				g.drawImage(MainGame.tileImages[tile.getImageIndex()], newx, newy, null);
