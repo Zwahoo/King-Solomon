@@ -96,7 +96,7 @@ public class Map {
 							
 							Tile toCheck = getTile(checkX, checkY);
 							if(toCheck.canBeOccupied()) {
-								tile.setImageIndex(toCheck.getImageIndex(), true);
+								tile.setImageIndex(toCheck.getImageIndex(false), true);
 								done = true;
 							}
 						}

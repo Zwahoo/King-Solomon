@@ -243,7 +243,7 @@ public class MainGame {
 		setPartyStat(WATER_KEY, 60);
 		setPartyStat(AMMO_KEY, 100);
 		setPartyStat(MEDICINE_KEY, 10);
-		setPartyStat(VALUABLES_KEY, 0);
+		setPartyStat(VALUABLES_KEY, 20);
 		setPartyStat(PACK_ANIMALS_KEY, 0);
 	}
 

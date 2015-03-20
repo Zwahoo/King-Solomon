@@ -101,8 +101,24 @@ public class Tile{
 		return yp;
 	}
 	
+	/**
+	 * Gets the artwork index for the tile.
+	 * In reference to MainGame's tile image list
+	 * Returns 5 if the tile has not been revealed on the map
+	 * @return The artwork index for the tile
+	 */
 	public int getImageIndex() {
-		if(!revealed) return 5;
+		return getImageIndex(true);
+	}
+	
+	/**
+	 * Gets the artwork index for the tile.
+	 * In reference to MainGame's tile image list
+	 * @param checkRevealed Return 5 if the tile has not been revealed on the map
+	 * @return The artwork index for the tile
+	 */
+	public int getImageIndex(boolean checkRevealed) {
+		if(checkRevealed && !revealed) return 5;
 		if(getType().tileImageIndex == MainGame.GRAB_NEAREST_TILE_INDEX) {
 			return personalImageIndex;
 		}
