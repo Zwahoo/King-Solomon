@@ -1,17 +1,16 @@
 package MainGame;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 //holds attributes of each party member
 
-
 import javax.imageio.ImageIO;
 
 public class PartyMember {
-	
+
+	public static final int				NUM_KEYS			= 8;
 	public static final String MARKSMANSHIP_KEY = "Marksmanship";
 	public static final String PERCEPTION_KEY = "Perception";
 	public static final String TACTICS_KEY = "Tactics";
@@ -20,7 +19,7 @@ public class PartyMember {
 	public static final String STRENGTH_KEY = "Strength";
 	public static final String DIPLOMACY_KEY = "Diplomacy";
 	public static final String KNOWLEDGE_KEY = "Knowledge";
-	
+
 	public BufferedImage image;
 	private String name;
 	private String type;
@@ -29,9 +28,9 @@ public class PartyMember {
 	private String status;
 	boolean diseased;
 	boolean injured;
-	
+
 	private boolean isGentleman = false;
-	
+
 	private HashMap<String, Integer> stats;
 	
 	public PartyMember(String name, String type, int pay, String backgroundInfo, String imageLocation, HashMap<String, Integer> stats) {
@@ -40,18 +39,18 @@ public class PartyMember {
 		this.pay = pay;
 		this.backgroundInfo = backgroundInfo;
 		this.stats = stats;
-		
+
 		status = "Healthy";
 		diseased = false;
 		injured = false;
-		
+
 		try {
 			image = ImageIO.read(new File(imageLocation));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public String generateInfoString(String between) {
 		String toRet = name;
 		toRet += between;
@@ -61,16 +60,19 @@ public class PartyMember {
 	public String generateStatsString(String between) {
 		String toRet = "";
 		for(String stat : stats.keySet()) {
-			if(isGentleman && stat.equals("Loyalty")) continue; //Gentleman has ALL the loyalty.
+			if(isGentleman && stat.equals("Loyalty"))
+			{
+				continue; //Gentleman has ALL the loyalty.
+			}
 			toRet += (stat + ": " + stats.get(stat) + "" + between);
 		}
 		//Remove last between
 		toRet = toRet.substring(0, toRet.length() - between.length());
 		return toRet;
 	}
-	
-	
-	
+
+
+
 	//Getters and Setters
 	public int getStat(String key) {
 		if(!stats.containsKey(key)) {
@@ -144,14 +146,31 @@ public class PartyMember {
 	}
 
 	public void setGentleman(boolean gent) {
-		this.isGentleman = gent;
+		isGentleman = gent;
 	}
 
 	public BufferedImage getImage() {
-		if(image != null) return image;
-		else {
+		if(image != null) {
+			return image;
+		} else {
 			System.out.println("Trying to access null image for party member: " + getName());
 			return new BufferedImage(0, 0, 0);
 		}
 	}	
+	
+	public static int getEventCreatorIndexOfStat(String statKey) {
+		//Marks, Percep, Tact, Loyal, Agi, Str, Dip, Know
+		switch(statKey) {
+			case MARKSMANSHIP_KEY: return 0;
+			case PERCEPTION_KEY: return 1;
+			case TACTICS_KEY: return 2;
+			case LOYALTY_KEY: return 3;
+			case AGILITY_KEY: return 4;
+			case STRENGTH_KEY: return 5;
+			case DIPLOMACY_KEY: return 6;
+			case KNOWLEDGE_KEY: return 7;
+		}
+		System.out.println("Looking for event creator index of nonexistant stat key: " + statKey);
+		return -1;
+	}
 }

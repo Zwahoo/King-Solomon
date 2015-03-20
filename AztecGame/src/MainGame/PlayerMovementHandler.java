@@ -1,6 +1,6 @@
 package MainGame;
 
-import java.awt.*;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
@@ -34,11 +34,11 @@ public class PlayerMovementHandler extends InputListener {
 	public PlayerMovementHandler(MainGame mainGame, Map theMap, Player thePlayer, InputManager input) {
 		ArrayList<Integer> temp = new ArrayList<Integer>();
 		temp.add(MainGame.MOVEMENT_MODE);
-		this.setInputManager(input, temp);
+		setInputManager(input, temp);
 		
 		this.mainGame = mainGame;
-		this.map = theMap;
-		this.player = thePlayer;
+		map = theMap;
+		player = thePlayer;
 		
 		validMoveTiles = new ArrayList<Integer>();
 		//Can only move nw, ne, sw, se.
@@ -52,7 +52,9 @@ public class PlayerMovementHandler extends InputListener {
 	
 	@Override
 	public void mouseDown(int mouseButton, Point mouseLoc) {
-        if(!playerMouseMovement || MainGame.getCurrentMode() != MainGame.MOVEMENT_MODE) return;
+        if(!playerMouseMovement || (MainGame.getCurrentMode() != MainGame.MOVEMENT_MODE)) {
+			return;
+		}
         
         int xRelBoard = mouseLoc.x - mainGame.getViewLoc().x;
         int yRelBoard = mouseLoc.y - mainGame.getViewLoc().y;
@@ -71,7 +73,9 @@ public class PlayerMovementHandler extends InputListener {
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(!playerKeyMovement) return;
+		if(!playerKeyMovement) {
+			return;
+		}
 		int keyCode = e.getKeyCode();
 		if(keyCode == Controls.NORTH_EAST_KEY) {
 			moveToTile(NE_TILE);
@@ -92,17 +96,20 @@ public class PlayerMovementHandler extends InputListener {
 	
 	//changes the tile the player is on and sets the neighbors as well
 	public void move(Tile t){
-		if(!isValidTile(t)) return;
-		if(!t.getType().canBeOccupied) return;
+		if(!isValidTile(t)) {
+			return;
+		}
+		if(!t.getType().canBeOccupied) {
+			return;
+		}
 		player.setLoc(t.getX(), t.getY());
 		player.setCurrentTile(t);
 		t.runMoveToEvent(mainGame.party, true);
-		mainGame.handleMoveStatChanges();
 		checkSight();
 	}
 	
 	public boolean isValidTile(Tile t) {
-		return (t != null && !t.getType().equals("dummy"));
+		return ((t != null) && !t.getType().equals("dummy"));
 	}
 	
 	//Updates which tiles are visible
@@ -145,10 +152,18 @@ public class PlayerMovementHandler extends InputListener {
     	boolean seBlock = true;
     	boolean swBlock = true;
     	
-    	if(neTile != null) neBlock = neTile.getType().blockSight;
-    	if(nwTile != null) nwBlock = nwTile.getType().blockSight;
-    	if(seTile != null) seBlock = seTile.getType().blockSight;
-    	if(swTile != null) swBlock = swTile.getType().blockSight;
+    	if(neTile != null) {
+			neBlock = neTile.getType().blockSight;
+		}
+    	if(nwTile != null) {
+			nwBlock = nwTile.getType().blockSight;
+		}
+    	if(seTile != null) {
+			seBlock = seTile.getType().blockSight;
+		}
+    	if(swTile != null) {
+			swBlock = swTile.getType().blockSight;
+		}
     	
     	if(!neBlock) {
     		revealTile(NE2_TILE);
@@ -189,40 +204,64 @@ public class PlayerMovementHandler extends InputListener {
 		int y = player.getY();
 		switch(tile) {
 		case(N_TILE):
-			if(!pointIsInMap(x - 1, y + 1)) return null;
+			if(!pointIsInMap(x - 1, y + 1)) {
+				return null;
+			}
 			return map.getTile(x - 1, y + 1);
 		case(NE_TILE):
-			if(!pointIsInMap(x, y + 1)) return null;
+			if(!pointIsInMap(x, y + 1)) {
+				return null;
+			}
 			return map.getTile(x, y + 1);
 		case(E_TILE):
-			if(!pointIsInMap(x + 1, y + 1)) return null;
+			if(!pointIsInMap(x + 1, y + 1)) {
+				return null;
+			}
 			return map.getTile(x + 1, y + 1);
 		case(SE_TILE):
-			if(!pointIsInMap(x + 1, y)) return null;
+			if(!pointIsInMap(x + 1, y)) {
+				return null;
+			}
 			return map.getTile(x + 1, y);
 		case(S_TILE):
-			if(!pointIsInMap(x + 1, y - 1)) return null;
+			if(!pointIsInMap(x + 1, y - 1)) {
+				return null;
+			}
 			return map.getTile(x + 1, y - 1);
 		case(SW_TILE):
-			if(!pointIsInMap(x, y - 1)) return null;
+			if(!pointIsInMap(x, y - 1)) {
+				return null;
+			}
 			return map.getTile(x, y - 1);
 		case(W_TILE):
-			if(!pointIsInMap(x - 1, y - 1)) return null;
+			if(!pointIsInMap(x - 1, y - 1)) {
+				return null;
+			}
 			return map.getTile(x - 1, y - 1);
 		case(NW_TILE):
-			if(!pointIsInMap(x - 1, y)) return null;
+			if(!pointIsInMap(x - 1, y)) {
+				return null;
+			}
 			return map.getTile(x-1, y);
 		case(NE2_TILE):
-			if(!pointIsInMap(x, y + 2)) return null;
+			if(!pointIsInMap(x, y + 2)) {
+				return null;
+			}
 			return map.getTile(x, y + 2);
 		case(NW2_TILE):
-			if(!pointIsInMap(x - 2, y)) return null;
+			if(!pointIsInMap(x - 2, y)) {
+				return null;
+			}
 			return map.getTile(x - 2, y);
 		case(SE2_TILE):
-			if(!pointIsInMap(x + 2, y)) return null;
+			if(!pointIsInMap(x + 2, y)) {
+				return null;
+			}
 			return map.getTile(x + 2, y);
 		case(SW2_TILE):
-			if(!pointIsInMap(x, y-2)) return null;
+			if(!pointIsInMap(x, y-2)) {
+				return null;
+			}
 			return map.getTile(x, y-2);
 		default:
 			System.out.println("Unrecognized tile move request: " + tile);
@@ -231,8 +270,12 @@ public class PlayerMovementHandler extends InputListener {
 	}
 	
 	public boolean pointIsInMap(int x, int y){
-		if(x < 0 || y < 0) return false;
-		if(x >= map.width || y >= map.height) return false;
+		if((x < 0) || (y < 0)) {
+			return false;
+		}
+		if((x >= map.width) || (y >= map.height)) {
+			return false;
+		}
 		return true;
 	}
 }
