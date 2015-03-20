@@ -105,7 +105,7 @@ public class Map {
 				}
 				
 				g.drawImage(MainGame.tileImages[tile.getImageIndex()], newx, newy, null);
-				if(tileOverlayIndex != -1) {
+				if(tile.getRevealed() && tileOverlayIndex != -1) {
 					g.drawImage(MainGame.tileImages[tileOverlayIndex], newx, newy, null);
 				}
 				g.drawImage(MainGame.tileImages[tileOverlay.getImageIndex()], newx, newy, null);
