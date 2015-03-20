@@ -23,21 +23,20 @@ public class Button extends InputListener {
 	Color bkgCol; //The backdrop color for the button (switches between off, hover, and press Col)
 	Color borderCol; //The border color for the button (switches between off, hover, and press Bor)
 	
-	Color normColEnabled = new Color(210, 150, 50); //Back color for normal mode
-	Color hoverColEnabled = new Color(210, 150, 50); //Back color for hover mode
-	Color pressColEnabled = new Color(180, 130, 30); //Back color for press mode
-	Color normBorEnabled = new Color(80, 50, 50); //Border color for normal mode
-	Color hoverBorEnabled = new Color(100, 70, 70); //Border color for hover mode
-	Color pressBorEnabled = new Color(100, 70, 70); //Border color for press mode
+	Color normColEnabled = new Color(60, 60, 125); //Back color for normal mode
+	Color hoverColEnabled = new Color(40, 40, 125); //Back color for hover mode
+	Color pressColEnabled = new Color(10, 10, 125); //Back color for press mode
+	Color normBorEnabled = new Color(0, 0, 0); //Border color for normal mode
+	Color hoverBorEnabled = new Color(0, 0, 0); //Border color for hover mode
+	Color pressBorEnabled = new Color(0, 0, 0); //Border color for press mode
 	Color fontColEnabled = new Color(0, 0, 0); //Color of the text
 	
-	Color normColDisabled = new Color(200, 200, 200); //Back color for normal mode
-	Color hoverColDisabled = new Color(200, 200, 200); //Back color for hover mode
-	Color pressColDisabled = new Color(200, 200, 200); //Back color for press mode
-	Color normBorDisabled = new Color(100, 70, 70); //Border color for normal mode
-	Color hoverBorDisabled = new Color(100, 70, 70); //Border color for hover mode
-	Color pressBorDisabled = new Color(100, 70, 70); //Border color for press mode
-	Color fontColDisabled = new Color(0, 0, 0); //Color of the text
+	Color normColDisabled = new Color(20, 20, 20); //Back color for normal mode
+	Color hoverColDisabled = new Color(20, 20, 20); //Back color for hover mode
+	Color pressColDisabled = new Color(20, 20, 20); //Back color for press mode
+	Color normBorDisabled = new Color(0, 0, 0); //Border color for normal mode
+	Color hoverBorDisabled = new Color(0, 0, 0); //Border color for hover mode
+	Color pressBorDisabled = new Color(0, 0, 0); //Border color for press mode
 
 	Color normCol; //Back color for normal mode
 	Color hoverCol; //Back color for hover mode
@@ -61,6 +60,24 @@ public class Button extends InputListener {
 		this(new Rectangle(loc.x, loc.y, size.x, size.y), str, inputManager);
 	}
 	public Button(Rectangle rect, String str, InputManager inputManager) {
+		
+		int backR = 210;//50 + (int)(Math.random()*205);
+		int backG = 210;//50 + (int)(Math.random()*205);
+		int backB = 215;//50 + (int)(Math.random()*205);
+		
+		System.out.println("R: " + backR + " G: " + backG + " B: " + backB);
+		
+		normColEnabled = new Color(backR, backG, backB); //Back color for normal mode
+		hoverColEnabled = new Color(backR - 20, backG - 20, backB - 20); //Back color for hover mode
+		pressColEnabled = new Color(backR - 50, backG - 50, backB - 50); //Back color for press mode
+		normBorEnabled = new Color(0, 0, 0); //Border color for normal mode
+		hoverBorEnabled = new Color(0, 0, 0); //Border color for hover mode
+		pressBorEnabled = new Color(0, 0, 0); //Border color for press mode
+		fontColEnabled = new Color(0, 0, 0); //Color of the text
+		
+		
+		
+		
 		setEnabled(true);
 		ArrayList<Integer> temp = new ArrayList<Integer>();
 		temp.add(MainGame.START_DAY_MODE); temp.add(MainGame.MOVEMENT_MODE); temp.add(MainGame.EVENT_MODE); temp.add(-1);
@@ -68,7 +85,7 @@ public class Button extends InputListener {
 		
 		this.myRect = new Rectangle(rect);
 		setText(str);
-		myFont = new Font("Georgia", Font.PLAIN, 14);
+		myFont = new Font("Arial", Font.PLAIN, 14);
 		
 		setMode(MODE_NORMAL);
 	}
@@ -257,7 +274,6 @@ public class Button extends InputListener {
 		normBor = normBorDisabled;
 		hoverBor = hoverBorDisabled;
 		pressBor = 	pressBorDisabled;
-		fontCol = fontColDisabled;
 		setMode(curMode);
 	}
 	public void setEnabled(boolean val) {
