@@ -60,7 +60,7 @@ public class MainGame {
 	//Minimum Number of Party Members Required for Game Over
 	public static final int MIN_PARTY_SIZE = 2;
 
-	public static final boolean DISCO_MODE = false;
+	public static final boolean DISCO_MODE = true;
 	
 	//-----------------------------------------
 
