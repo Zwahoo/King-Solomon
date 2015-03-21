@@ -17,7 +17,7 @@ import Components.StatsBar;
 
 public class MainGame {
 	//--------------- CONSTANTS ---------------
-	
+
 	//Day Modes
 	public static final Integer START_DAY_MODE = 0; // choose move, investigate, or rest
 	public static final Integer MOVEMENT_MODE = 1; // movement on map
@@ -61,7 +61,7 @@ public class MainGame {
 	public static final int MIN_PARTY_SIZE = 2;
 
 	public static final boolean DISCO_MODE = false;
-	
+
 	//-----------------------------------------
 
 
@@ -110,7 +110,7 @@ public class MainGame {
 	public static StartDayDrawer startDayDrawer = null;
 
 	public static int dayCounter = 1;
-	
+
 	//Reverts the event back to something more closely resembling it's start state.
 	public void resetAllVals() {
 		map = null;
@@ -189,7 +189,7 @@ public class MainGame {
 		setCurrentMode(START_DAY_MODE); // temporary, should be BEGIN_DAY_MODE. Hah. Temporary. Yeah, right...
 		startDayDrawer = new StartDayDrawer(); //Draw the start day menu
 	}
-	
+
 	/**
 	 * Loads the images in for each tile
 	 */
@@ -217,7 +217,7 @@ public class MainGame {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Sets up all possible types of tiles
 	 * And the data needed for each.
@@ -233,13 +233,17 @@ public class MainGame {
 		tileTypes.put("highland", new TileType("Highland", false, true, false, HIGHLAND_TILE_INDEX, new Color(50, 100, 0)));
 		tileTypes.put("solomonsMines", new TileType("KingSolomonsMines", false, true, true, KING_SOLOMONS_MINES_TILE_INDEX, new Color(255, 255, 255)));
 		tileTypes.put("village", new TileType("Village", false, true, true, GRAB_NEAREST_TILE_INDEX, new Color(100, 100, 100)));
-		
+
 		//Highlands can see past everything.
 		tileTypes.get("highland").canSeeAll = true;
 		tileTypes.get("village").setOverlay(VILLAGE_TILE_INDEX);
-		
+		tileTypes.get("oasis").setWater(true);
+		tileTypes.get("water").setWater(true);
+
 		for(TileType type : tileTypes.values()) {
-			if(type.alwaysHaveEvent) alwaysMoveToEvents.put(type, new ArrayList<Event>());
+			if(type.alwaysHaveEvent) {
+				alwaysMoveToEvents.put(type, new ArrayList<Event>());
+			}
 		}
 	}
 
@@ -289,23 +293,23 @@ public class MainGame {
 	public void update() {
 		//Update Input
 		input.update();
-		
+
 		//Update tile overlays
 		updateTileOverlay();
-		
+
 		//Update stat bar
 		updateStatsBar();
-		
+
 		//Update menu drawers
 		updateMenuDrawers();
-		
+
 		//Boot a member if morale is below their threshold
 		checkMorale();
-		
+
 		//Check lose condiditions
 		checkEndGameConditions();
 	}
-	
+
 	//Draw any drawable objects in the game world.
 	public void draw(Graphics g) {
 
@@ -338,7 +342,7 @@ public class MainGame {
 			}
 		}
 	}
-	
+
 	/**
 	 * Updates the status of the stats bar.
 	 */
@@ -348,7 +352,7 @@ public class MainGame {
 			statsChanged = false;
 		}
 	}
-	
+
 	/**
 	 * Update both event and start day drawers if they're active.
 	 */
@@ -360,7 +364,7 @@ public class MainGame {
 			startDayDrawer.update();
 		}
 	}
-	
+
 	/**
 	 * Check if any party members should be booted
 	 * Due to low morale.
@@ -384,21 +388,21 @@ public class MainGame {
 			}
 		}
 	}
-	
+
 	/**
 	 * Checks if any end game conditions have been met.
 	 */
 	private void checkEndGameConditions() {
 		//Too many party gone
 		checkTooFewParty();
-		
+
 		//No food left
 		checkFoodDeath();
-		
+
 		//No water left.
 		checkWaterDeath();
 	}
-	
+
 	/**
 	 * Checks if player no longer has a large enough
 	 * party to complete the game
@@ -415,7 +419,7 @@ public class MainGame {
 			launchedFinalEvent = true;
 		}
 	}
-	
+
 	/**
 	 * Checks if the player has no food left
 	 * and, if so, ends the game.
@@ -432,7 +436,7 @@ public class MainGame {
 			launchedFinalEvent = true;
 		}
 	}
-	
+
 	/**
 	 * Checks if the player has no water left
 	 * and, if so, ends the game.
@@ -449,7 +453,7 @@ public class MainGame {
 			launchedFinalEvent = true;
 		}
 	}
-	
+
 	/**
 	 * Creates the string to display in the stats bar
 	 * @return A string of stats followed by their values
@@ -499,7 +503,7 @@ public class MainGame {
 	public static void killPartyMember(PartyMember pm){
 		party.remove(pm);
 	}
-	
+
 	/**
 	 * Increments the stat to by the given amount and raises
 	 * the partyStatsChanged flag.
@@ -513,8 +517,8 @@ public class MainGame {
 		}
 		setPartyStat(statName, stats.get(statName) + val);
 	}
-	
-	
+
+
 
 	/**
 	 * Loads all events in the events folder into the game
@@ -536,7 +540,7 @@ public class MainGame {
 		}
 		createEventLists(events);
 	}
-	
+
 	/**
 	 * Separates out the given event list into
 	 * the distinct move-to, rest, and investigate
@@ -556,8 +560,8 @@ public class MainGame {
 			} else {
 				System.out.println("Event called " + e.getEventID() + " has an incorrect type called " + e.getEventType() + ".");
 			}
-			
-			if(e.eventFrequencies.get(e.getFrequency()) > 0 && e.getEventType().equals(Event.moveToString)) {
+
+			if((e.eventFrequencies.get(e.getFrequency()) > 0) && e.getEventType().equals(Event.moveToString)) {
 				for(TileType type : alwaysMoveToEvents.keySet()) {
 					if(e.getPossibleLocations().contains(type.getName())) {
 						alwaysMoveToEvents.get(type).add(e);
@@ -590,7 +594,7 @@ public class MainGame {
 	public Event getRandomMoveToEvent(TileType type) {
 		//This code takes into account frequency of event occurance.
 		double origRandom = Math.random();
-		
+
 		return getRandomEvent(type, null, MOVE_TO_FREQUENCY, moveToEvents);
 	}
 
@@ -603,7 +607,7 @@ public class MainGame {
 		double origRandom = Math.random();
 		HashMap defaultMap = FileToMap.createMap("assets/events/GenericInvestigate.txt");
 		Event defaultEvent = MapToEvent.createEvent(defaultMap);
-		
+
 		return getRandomEvent(loc, defaultEvent, INVESTIGATE_FREQUENCY, investigateEvents);
 	}
 
@@ -615,7 +619,7 @@ public class MainGame {
 	public Event getRandomRestEvent(TileType loc) {
 		HashMap defaultMap = FileToMap.createMap("assets/events/genericRest.txt");
 		Event defaultEvent = MapToEvent.createEvent(defaultMap);
-		
+
 		return getRandomEvent(loc, defaultEvent, REST_FREQUENCY, restEvents);
 	}
 
@@ -630,7 +634,7 @@ public class MainGame {
 	public Event getRandomEvent(TileType type, Event defaultEvent, double nonDefaultFreq, ArrayList<Event> eventList) {
 		return getRandomEvent(type, defaultEvent, nonDefaultFreq, eventList, 0);
 	}
-	
+
 	/**
 	 * Provides a random event
 	 * @param type The type of tile the event will run on.
@@ -644,13 +648,13 @@ public class MainGame {
 		if(recNum > 100) {
 			return defaultEvent; //Don't recurse infinitely
 		}
-		
+
 		double origRandom = Math.random();
-		
+
 		if(type.alwaysHaveEvent) {
 			eventList = alwaysMoveToEvents.get(type);
 		}
-		
+
 		if ((origRandom < nonDefaultFreq) || ((defaultEvent == null) && type.alwaysHaveEvent)){
 			ArrayList<Event> tmpList = new ArrayList<Event>();
 			//Adds events to temp list based on frequency
@@ -737,7 +741,7 @@ public class MainGame {
 		finalEvent = isFinalEvent;
 	}
 	// ----------------------------------------------------
-	
+
 	/**
 	 * Manages the effects of selecting a response during an event.
 	 * @param result Integer indicating whether the event was won or lost (0 = lose, 2 = win)
@@ -869,8 +873,8 @@ public class MainGame {
 			stats.put(MORALE_KEY, stats.get(MORALE_KEY) - 20);
 		}
 	}
-	
-	
+
+
 
 	/**
 	 * @return A list containing the sum of each party members value for each stat
@@ -954,7 +958,7 @@ public class MainGame {
 			return true;
 		}
 	}
-	
+
 	public static boolean checkParty(String type) {
 		int check = 0;
 		boolean booly = true;
@@ -969,7 +973,7 @@ public class MainGame {
 		}
 		return booly;
 	}
-	
+
 	public static Event newEvent(String type) {
 		Event e = null;
 		TileType tile = player1.getCurrentTile().getType();
@@ -986,7 +990,7 @@ public class MainGame {
 		}
 		return e;
 	}
-	
+
 
 	/*
 	 * ------------------------ GETTERS ------------------------ 
@@ -1010,7 +1014,7 @@ public class MainGame {
 	public static ArrayList<PartyMember> getParty(){
 		return party;
 	}
-	
+
 	/**
 	 * @return The map of stats in the form (string: stat key, int: stat value).
 	 */
@@ -1036,7 +1040,7 @@ public class MainGame {
 		}
 		MainGame.currentMode = currentMode;
 	}
-	
+
 	/**
 	 * Sets the stat, and raises the partyStatsChanged flag.
 	 * @param statName The stat to set.
@@ -1068,6 +1072,6 @@ public class MainGame {
 			party.get(ran1).incStat(statName, val);
 		}
 	}
-	
-	
+
+
 }

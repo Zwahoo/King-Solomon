@@ -70,10 +70,7 @@ public class StartDayDrawer {
 		};
 		for (int i = 1; i <= 7 ; i+=2){
 			if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i) != null){
-				if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i).getType().getName()
-						.equalsIgnoreCase("water")
-						|| MainGame.input.getPlayerMovementHandler().getNeighborTile(i).getType().getName()
-								.equalsIgnoreCase("oasis")) {
+				if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i).getType().hasWater()) {
 					isNextToWater = true;
 				}
 			}
