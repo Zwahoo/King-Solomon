@@ -113,7 +113,7 @@ public class Map {
 				// draws player marker
 				if (curTileX == player1.getX() && curTileY == player1.getY()) {
 					BufferedImage loadedimage = MainGame.tileImages[3];
-					g.drawImage(loadedimage, newx + 43, newy + 12, null);
+					g.drawImage(loadedimage, newx + 38, newy + 7, null);
 				}
 
 				

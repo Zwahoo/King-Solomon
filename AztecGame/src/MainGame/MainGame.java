@@ -470,8 +470,18 @@ public class MainGame {
 	public static void handleNewDayStatChanges()
 	{
 		incPartyStat(FOOD_KEY, -1 * party.size());
-		incPartyStat(WATER_KEY, -1 * party.size());
 		incPartyStat(STAMINA_KEY, -3);
+		
+		boolean isNextToWater = false;
+		for (int i = 1; i <= 7 ; i+=2){
+			if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i) != null){
+				if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i).getType().getName().equalsIgnoreCase("water"))
+					isNextToWater = true;
+			}
+		}
+		if (!isNextToWater){
+			incPartyStat(WATER_KEY, -1 * party.size());
+		}
 	}
 
 	/**
