@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import MainGame.InputManager;
+import MainGame.MainGame;
 
 public class Textbox {
 	
@@ -33,7 +34,7 @@ public class Textbox {
 	int lineHeight; //The height of each line of text in the text box.
 	boolean hasScroll = false; //Does the text box need a scroll bar?
 	
-	Color backCol = new Color(60, 60, 125); //The background color of the text box.
+	Color backCol = new Color(210, 210, 215); //The background color of the text box.
 	Color borderCol = new Color(0, 0, 0); //The border color of the text box.
 	Color textCol = new Color(0, 0, 0); //The color of the text in the text box.
 	private Font myFont; //The font to use for the text in the text box.
@@ -46,11 +47,12 @@ public class Textbox {
 	}
 	public Textbox(String str, Point pos, int width, int height, InputManager input) {
 
-		int backR = 210;//50 + (int)(Math.random()*205);
-		int backG = 210;//50 + (int)(Math.random()*205);
-		int backB = 215;//50 + (int)(Math.random()*205);
-		
-		backCol = new Color(backR, backG, backB); //The background color of the text box.
+		if(MainGame.DISCO_MODE) {
+			int backR = 50 + (int)(Math.random()*205);
+			int backG = 50 + (int)(Math.random()*205);
+			int backB = 50 + (int)(Math.random()*205);
+			backCol = new Color(backR, backG, backB); //The background color of the text box.
+		}
 		
 		this.input = input;
 		textOrig = str;

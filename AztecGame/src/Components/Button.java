@@ -23,9 +23,9 @@ public class Button extends InputListener {
 	Color bkgCol; //The backdrop color for the button (switches between off, hover, and press Col)
 	Color borderCol; //The border color for the button (switches between off, hover, and press Bor)
 	
-	Color normColEnabled = new Color(60, 60, 125); //Back color for normal mode
-	Color hoverColEnabled = new Color(40, 40, 125); //Back color for hover mode
-	Color pressColEnabled = new Color(10, 10, 125); //Back color for press mode
+	Color normColEnabled = new Color(210, 210, 215); //Back color for normal mode
+	Color hoverColEnabled; //Back color for hover mode
+	Color pressColEnabled; //Back color for press mode
 	Color normBorEnabled = new Color(0, 0, 0); //Border color for normal mode
 	Color hoverBorEnabled = new Color(0, 0, 0); //Border color for hover mode
 	Color pressBorEnabled = new Color(0, 0, 0); //Border color for press mode
@@ -61,22 +61,15 @@ public class Button extends InputListener {
 	}
 	public Button(Rectangle rect, String str, InputManager inputManager) {
 		
-		int backR = 210;//50 + (int)(Math.random()*205);
-		int backG = 210;//50 + (int)(Math.random()*205);
-		int backB = 215;//50 + (int)(Math.random()*205);
+		if(MainGame.DISCO_MODE) {
+			int backR = 50 + (int)(Math.random()*205);
+			int backG = 50 + (int)(Math.random()*205);
+			int backB = 50 + (int)(Math.random()*205);
+			normColEnabled = new Color(backR, backG, backB); //Back color for normal mode
+		}
 		
-		System.out.println("R: " + backR + " G: " + backG + " B: " + backB);
-		
-		normColEnabled = new Color(backR, backG, backB); //Back color for normal mode
-		hoverColEnabled = new Color(backR - 20, backG - 20, backB - 20); //Back color for hover mode
-		pressColEnabled = new Color(backR - 50, backG - 50, backB - 50); //Back color for press mode
-		normBorEnabled = new Color(0, 0, 0); //Border color for normal mode
-		hoverBorEnabled = new Color(0, 0, 0); //Border color for hover mode
-		pressBorEnabled = new Color(0, 0, 0); //Border color for press mode
-		fontColEnabled = new Color(0, 0, 0); //Color of the text
-		
-		
-		
+		hoverColEnabled = new Color(normColEnabled.getRed() - 20, normColEnabled.getGreen() - 20, normColEnabled.getBlue() - 20); //Back color for hover mode
+		pressColEnabled = new Color(normColEnabled.getRed() - 50, normColEnabled.getGreen() - 50, normColEnabled.getBlue() - 50); //Back color for press mode
 		
 		setEnabled(true);
 		ArrayList<Integer> temp = new ArrayList<Integer>();

@@ -19,7 +19,7 @@ public class PartyExpandPanel {
 	public int numRows = 0;
 	private int numPartyMembers;
 	
-	Color backColor = new Color(60, 60, 125);
+	Color backColor = new Color(210, 210, 215);
 	Color borderColor = new Color(0, 0, 0);
 	private int borderSize = 5;
 	Color memberInfoPanelTextCol = new Color(0, 0, 0);
@@ -33,12 +33,14 @@ public class PartyExpandPanel {
 	int lineHeight;
 	
 	public PartyExpandPanel(int rightX, int upperY) {
-
-		int backR = 210;//50 + (int)(Math.random()*205);
-		int backG = 210;//50 + (int)(Math.random()*205);
-		int backB = 215;//50 + (int)(Math.random()*205);
 		
-		backColor = new Color(backR, backG, backB); //The background color of the text box.
+		if(MainGame.DISCO_MODE) {
+			int backR = 50 + (int)(Math.random()*205);
+			int backG = 50 + (int)(Math.random()*205);
+			int backB = 50 + (int)(Math.random()*205);
+		
+			backColor = new Color(backR, backG, backB); //The background color of the text box.
+		}
 		
 		this.rightX = rightX;
 		this.upperY = upperY;
