@@ -59,7 +59,7 @@ public class MainGame {
 	public static final int DARK_BLUE_TINT_INDEX = 11;
 	//Minimum Number of Party Members Required for Game Over
 	public static final int MIN_PARTY_SIZE = 2;
-	
+
 	public static final boolean DISCO_MODE = false;
 	
 	//-----------------------------------------
@@ -109,6 +109,8 @@ public class MainGame {
 	public static EventDrawer eventDrawer = null;
 	public static StartDayDrawer startDayDrawer = null;
 
+	public static int dayCounter = 1;
+	
 	//Reverts the event back to something more closely resembling it's start state.
 	public void resetAllVals() {
 		map = null;
@@ -123,6 +125,7 @@ public class MainGame {
 		frame = null;
 		finalEvent = false;
 		kickedMemberThisTurn = false;
+		dayCounter = 1;
 	}
 
 	public static void removeInputManager() {
@@ -1010,7 +1013,12 @@ public class MainGame {
 	public static void setCurrentMode(Integer currentMode)
 	{
 		if (currentMode == 0) {
-			handleNewDayStatChanges();
+			if (dayCounter == 3) {
+				handleNewDayStatChanges();
+				dayCounter = 1;
+			} else {
+				dayCounter++;
+			}
 		}
 		MainGame.currentMode = currentMode;
 	}
