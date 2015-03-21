@@ -85,12 +85,34 @@ public class Map {
 				TileOverlay tileOverlay = getTileOverlay(curTileX, curTileY);
 
 				// draws the tile
-				g.drawImage(MainGame.images[tile.getImageIndex()], newx, newy, null);
-				g.drawImage(MainGame.images[tileOverlay.getImageIndex()], newx, newy, null);
+				int tileImageIndex = tile.getImageIndex();
+				int tileOverlayIndex = tile.getOverlayImageIndex();
+				if(tileImageIndex == MainGame.GRAB_NEAREST_TILE_INDEX) {
+					boolean done = false;
+					for(int checkX=curTileX-1; checkX<=curTileX + 1; checkX++) {
+						for(int checkY=curTileY-1; checkY<=curTileY+1; checkY++) {
+							if(checkX == curTileX || checkY == curTileY || done) { continue; }
+							if(checkX < 0 || checkX > width-1 || checkY < 0 || checkY > height-1) { continue; }
+							
+							Tile toCheck = getTile(checkX, checkY);
+							if(toCheck.canBeOccupied()) {
+								tile.setImageIndex(toCheck.getImageIndex(false), true);
+								done = true;
+							}
+						}
+					}
+					if(!done) tile.setImageIndex(MainGame.SAVANNAH_TILE_INDEX, true);
+				}
+				
+				g.drawImage(MainGame.tileImages[tile.getImageIndex()], newx, newy, null);
+				if(tile.getRevealed() && tileOverlayIndex != -1) {
+					g.drawImage(MainGame.tileImages[tileOverlayIndex], newx, newy, null);
+				}
+				g.drawImage(MainGame.tileImages[tileOverlay.getImageIndex()], newx, newy, null);
 				
 				// draws player marker
 				if (curTileX == player1.getX() && curTileY == player1.getY()) {
-					BufferedImage loadedimage = MainGame.images[3];
+					BufferedImage loadedimage = MainGame.tileImages[3];
 					g.drawImage(loadedimage, newx + 43, newy + 12, null);
 				}
 

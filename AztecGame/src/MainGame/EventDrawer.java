@@ -330,8 +330,10 @@ public class EventDrawer {
 		String currAdvice = "";
 
 		for(PartyMember member : presMembers) {
-			if (advice.containsKey(member.getName())) {
-				currAdvice = advice.get(member.getName());
+			String key = member.getName();
+			if(!advice.containsKey(key)) key = member.getType();
+			if (advice.containsKey(key)) {
+				currAdvice = advice.get(key);
 				if (currAdvice.charAt(0) == 'U') {
 					useful.add(member.getName() + " says: \"" + currAdvice.substring(1) + "\"");
 				} else {

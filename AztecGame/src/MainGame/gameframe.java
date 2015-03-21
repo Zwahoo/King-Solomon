@@ -26,7 +26,7 @@ public class gameframe extends JFrame {
 
 
 	public static boolean DEBUG = true;
-	boolean doSetup = true;
+	boolean doSetup = false;
 	
 	
 	private boolean isRunning = true;
@@ -52,7 +52,7 @@ public class gameframe extends JFrame {
 	Graphics bbg = null;
 	
 	private HashMap<String, Integer> gentStats = PartyMemberStats.AVERAGE_ABE_STATS;
-	private HashMap<String, PartyMember> party = PartyMemberStats.possibleParty;
+	private HashMap<String, PartyMember> party = PartyMemberStats.defaultParty;
 	
 	// MAIN
 	public static void main(String[] args) throws IOException {
@@ -78,44 +78,43 @@ public class gameframe extends JFrame {
 		
 		while (go){
 			if(doSetup) {
-			
-			if(!sound.isPlaying) sound = new Sound("assets/sounds/KingSolomonsOverworldTheme.wav", true);
-			this.initializeIntroSequence(); // initializes things which need initializing before
-								// the game can run
-				
-			// initially draws everything
-			draw();
-			// loop which handles fps
-			while (runIntroSequence) {
-				// time
-				long time = System.currentTimeMillis();
-	
-				update();
+				if(!sound.isPlaying) sound = new Sound("assets/sounds/KingSolomonsOverworldTheme.wav", true);
+				this.initializeIntroSequence(); // initializes things which need initializing before
+									// the game can run
+					
+				// initially draws everything
 				draw();
-				
-				runIntroSequence = !introSeq.finished;
-				
-				// runs an update 30 times a second
-				time = (1000 / fps) - (System.currentTimeMillis() - time);
-	
-				// what the heck is even going on here man I mean seriously
-				// Somethin' 'bout a thread runnin' fer the frame I 'reckon
-				// It's limiting the framerate to fps... I think.
-				if (time > 0) {
-					try {
-						Thread.sleep(time);
-					} catch (Exception e) {
+				// loop which handles fps
+				while (runIntroSequence) {
+					// time
+					long time = System.currentTimeMillis();
+		
+					update();
+					draw();
+					
+					runIntroSequence = !introSeq.finished;
+					
+					// runs an update 30 times a second
+					time = (1000 / fps) - (System.currentTimeMillis() - time);
+		
+					// what the heck is even going on here man I mean seriously
+					// Somethin' 'bout a thread runnin' fer the frame I 'reckon
+					// It's limiting the framerate to fps... I think.
+					if (time > 0) {
+						try {
+							Thread.sleep(time);
+						} catch (Exception e) {
+						}
 					}
 				}
-			}
-			
-			gentStats = introSeq.gentStats;
-			party = introSeq.party;
-			
-			IntroSequence.removeInputManager();
-			introSeq = null;
-			
-			isRunning = true;
+				
+				gentStats = introSeq.gentStats;
+				party = introSeq.party;
+				
+				IntroSequence.removeInputManager();
+				introSeq = null;
+				
+				isRunning = true;
 			}
 			//Runs the main game
 			this.initializeMainGame();

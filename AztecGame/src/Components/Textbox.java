@@ -33,8 +33,8 @@ public class Textbox {
 	int lineHeight; //The height of each line of text in the text box.
 	boolean hasScroll = false; //Does the text box need a scroll bar?
 	
-	Color backCol = new Color(210, 150, 50); //The background color of the text box.
-	Color borderCol = new Color(80, 50, 50); //The border color of the text box.
+	Color backCol = new Color(60, 60, 125); //The background color of the text box.
+	Color borderCol = new Color(0, 0, 0); //The border color of the text box.
 	Color textCol = new Color(0, 0, 0); //The color of the text in the text box.
 	private Font myFont; //The font to use for the text in the text box.
 	
@@ -45,9 +45,16 @@ public class Textbox {
 		this(str, new Point(x, y), width, height, input);
 	}
 	public Textbox(String str, Point pos, int width, int height, InputManager input) {
+
+		int backR = 210;//50 + (int)(Math.random()*205);
+		int backG = 210;//50 + (int)(Math.random()*205);
+		int backB = 215;//50 + (int)(Math.random()*205);
+		
+		backCol = new Color(backR, backG, backB); //The background color of the text box.
+		
 		this.input = input;
 		textOrig = str;
-		myFont = new Font("Georgia", Font.PLAIN, 14);
+		myFont = new Font("Arial", Font.PLAIN, 14);
 		sizeRectangles(pos.x, pos.y, width, height);
 		lines = fitStr(str);
 		calculateFullHeight();

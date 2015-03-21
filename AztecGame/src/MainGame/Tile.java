@@ -23,10 +23,10 @@ public class Tile{
 	private Event moveToEvent;
 	private Event investigateEvent;
 	private Event restEvent;
+	public int personalImageIndex = -1;
 	
 	//constructor
 	public Tile(TileType t, int  x, int y, Event moveTo, Event investigate, Event rest){
-		
 		this.type = t;
 		xp = x;
 		yp = y;
@@ -101,8 +101,27 @@ public class Tile{
 		return yp;
 	}
 	
+	/**
+	 * Gets the artwork index for the tile.
+	 * In reference to MainGame's tile image list
+	 * Returns 5 if the tile has not been revealed on the map
+	 * @return The artwork index for the tile
+	 */
 	public int getImageIndex() {
-		if(!revealed) return 5;
+		return getImageIndex(true);
+	}
+	
+	/**
+	 * Gets the artwork index for the tile.
+	 * In reference to MainGame's tile image list
+	 * @param checkRevealed Return 5 if the tile has not been revealed on the map
+	 * @return The artwork index for the tile
+	 */
+	public int getImageIndex(boolean checkRevealed) {
+		if(checkRevealed && !revealed) return 5;
+		if(getType().tileImageIndex == MainGame.GRAB_NEAREST_TILE_INDEX) {
+			return personalImageIndex;
+		}
 		return getType().tileImageIndex;
 	}
 	
@@ -128,6 +147,25 @@ public class Tile{
 	
 	public Event getRestEvent() {
 		return restEvent;
+	}
+
+	public int getOverlayImageIndex() {
+		return getType().tileImageOverlay;
+	}
+
+
+	public boolean canBeOccupied() {
+		return getType().canBeOccupied;
+	}
+
+	/**
+	 * Sets the image index of this tile
+	 * @param imageIndex Index to use.
+	 * @param personal Whether it's personal (true) or for all types of this type.
+	 */
+	public void setImageIndex(int imageIndex, boolean personal) {
+		if(personal) personalImageIndex = imageIndex;
+		else getType().setImageIndex(imageIndex);
 	}
 	
 }

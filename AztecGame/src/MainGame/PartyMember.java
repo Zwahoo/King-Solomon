@@ -32,7 +32,7 @@ public class PartyMember {
 	private boolean isGentleman = false;
 
 	private HashMap<String, Integer> stats;
-
+	
 	public PartyMember(String name, String type, int pay, String backgroundInfo, String imageLocation, HashMap<String, Integer> stats) {
 		this.name = name;
 		this.type = type;
@@ -157,4 +157,20 @@ public class PartyMember {
 			return new BufferedImage(0, 0, 0);
 		}
 	}	
+	
+	public static int getEventCreatorIndexOfStat(String statKey) {
+		//Marks, Percep, Tact, Loyal, Agi, Str, Dip, Know
+		switch(statKey) {
+			case MARKSMANSHIP_KEY: return 0;
+			case PERCEPTION_KEY: return 1;
+			case TACTICS_KEY: return 2;
+			case LOYALTY_KEY: return 3;
+			case AGILITY_KEY: return 4;
+			case STRENGTH_KEY: return 5;
+			case DIPLOMACY_KEY: return 6;
+			case KNOWLEDGE_KEY: return 7;
+		}
+		System.out.println("Looking for event creator index of nonexistant stat key: " + statKey);
+		return -1;
+	}
 }
