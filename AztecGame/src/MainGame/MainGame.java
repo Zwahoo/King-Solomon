@@ -947,11 +947,16 @@ public class MainGame {
 
 	public static boolean checkParty(String type) {
 
-		boolean booly = false;
+		int check = 0;
+		boolean booly = true;
 		for (int i = 0; i < party.size(); i++) {
-			if (party.get(i).getType().equalsIgnoreCase(type)) {
-				booly = true;
+			if (!party.get(i).getType().equalsIgnoreCase(type)) {
+				check = check + 1;
 			}
+			if (check == party.size()) {
+				booly = false;
+			}
+			check = 0;
 		}
 		return booly;
 	}
