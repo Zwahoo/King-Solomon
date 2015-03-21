@@ -8,42 +8,42 @@ import Components.Button;
 import Components.Textbox;
 
 public class StartDayDrawer {
-	
+
 	private Textbox textbox;
 	private Button moveButton;
 	private Button investigateButton;
 	private Button restButton;
 	private Button collectWaterButton;
-	
+
 	public final String MOVE_BUTTON_TEXT = "MOVE";
 	public final String INV_BUTTON_TEXT = "INVESTIGATE";
 	public final String REST_BUTTON_TEXT = "REST";
 	public final String COLLECT_WATER_BUTTON_TEXT = "COLLECT WATER";
-	
+
 	private boolean isNextToWater = false;
-	
+
 	private final double topspacer = 0.05;
 	private final double buttonheight = 0.06;
 	private final double width = 0.2;
 	private final double totalheight = 3*buttonheight;
-	
+
 	private int verticalinset;
 	private int buttonheighti;
 	private int buttonwidth;
 	private int totalheighti;
-	
+
 	public StartDayDrawer() {
 		setLocations();
 		launchStartDay();
 	}
-	
+
 	private void setLocations() {
 		verticalinset = (int) (gameframe.windowHeight * topspacer);
 		buttonheighti = (int) (gameframe.windowHeight * buttonheight);
 		buttonwidth = (int) (gameframe.windowWidth * width);
 		totalheighti = (int) (gameframe.windowHeight * totalheight);
 	}
-	
+
 	public void launchStartDay() {
 		textbox = new Textbox("", 0, verticalinset, 
 				buttonwidth, totalheighti, MainGame.input);
@@ -61,7 +61,7 @@ public class StartDayDrawer {
 				handleResponseSelect(MainGame.EVENT_MODE, 1);
 			}
 		};
-		restButton = new Button(0, verticalinset + 2*buttonheighti,
+		restButton = new Button(0, verticalinset + (2*buttonheighti),
 				buttonwidth, buttonheighti, REST_BUTTON_TEXT, MainGame.input){
 			@Override
 			public void onClick() {
@@ -70,12 +70,16 @@ public class StartDayDrawer {
 		};
 		for (int i = 1; i <= 7 ; i+=2){
 			if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i) != null){
-				if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i).getType().getName().equalsIgnoreCase("water"))
+				if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i).getType().getName()
+						.equalsIgnoreCase("water")
+						|| MainGame.input.getPlayerMovementHandler().getNeighborTile(i).getType().getName()
+								.equalsIgnoreCase("oasis")) {
 					isNextToWater = true;
+				}
 			}
 		}
 		if (isNextToWater){
-			collectWaterButton = new Button(0, verticalinset + 3*buttonheighti, 
+			collectWaterButton = new Button(0, verticalinset + (3*buttonheighti), 
 					buttonwidth, buttonheighti, COLLECT_WATER_BUTTON_TEXT, MainGame.input){
 				@Override
 				public void onClick() {
@@ -84,11 +88,11 @@ public class StartDayDrawer {
 			};
 		}
 		else {
-			collectWaterButton = new Button(0, verticalinset + 3*buttonheighti, 
+			collectWaterButton = new Button(0, verticalinset + (3*buttonheighti), 
 					buttonwidth, buttonheighti, COLLECT_WATER_BUTTON_TEXT, MainGame.input){
 				@Override
 				public void onClick() {
-					
+
 				}
 			};
 			Color impossCol = new Color(200, 200, 200);
@@ -97,7 +101,7 @@ public class StartDayDrawer {
 			collectWaterButton.setColor(impossCol, impossBor);
 		}
 	}
-	
+
 	// currently, just close the menu.
 	public void handleResponseSelect(Integer mode, int startDayChoice) {
 		if (startDayChoice == 0) {
@@ -110,7 +114,7 @@ public class StartDayDrawer {
 			MainGame.closeStartDay(MainGame.EVENT_MODE, 3);
 		}
 	}
-	
+
 	public void draw(Graphics g) {
 		textbox.draw(g);
 		moveButton.draw(g);
@@ -118,7 +122,7 @@ public class StartDayDrawer {
 		restButton.draw(g);
 		collectWaterButton.draw(g);
 	}
-	
+
 	public void update() {
 		textbox.update();
 		moveButton.update();
@@ -126,7 +130,7 @@ public class StartDayDrawer {
 		restButton.update();
 		collectWaterButton.update();
 	}
-	
+
 	public void destroyer() {
 		ArrayList<Integer> temp = new ArrayList<Integer>();
 		temp.add(MainGame.START_DAY_MODE); temp.add(MainGame.MOVEMENT_MODE); temp.add(MainGame.EVENT_MODE);
