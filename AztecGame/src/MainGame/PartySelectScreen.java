@@ -1,7 +1,6 @@
 package MainGame;
 
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +9,9 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
-import Components.*;
+import Components.Button;
+import Components.PartySelectButton;
+import Components.Textbox;
 
 public class PartySelectScreen implements DrawScreen {
 	
@@ -109,7 +110,9 @@ public class PartySelectScreen implements DrawScreen {
 	
 	public static String makeFinishString() {
 		String plur = "s";
-		if(reqNumPartyMembers == 1) plur = "";
+		if(reqNumPartyMembers == 1) {
+			plur = "";
+		}
 		if(numSelectedMembers < reqNumPartyMembers) {
 			return "Finish (Need at Least " + reqNumPartyMembers + " Party Member" + plur + ")";
 		} else {
@@ -129,8 +132,8 @@ public class PartySelectScreen implements DrawScreen {
 		numCols = (int) Math.ceil((double)numMembers/(double)numRows);
 		
 		//TotalW and TotalH are the amount of space to fill with buttons.
-		int totalW = gameframe.windowWidth - 2*hBorders - hSpacer*(numCols - 1);
-		int totalH = gameframe.windowHeight - upperBorder - lowerBorder - vSpacer*(numRows - 1);
+		int totalW = gameframe.windowWidth - (2*hBorders) - (hSpacer*(numCols - 1));
+		int totalH = gameframe.windowHeight - upperBorder - lowerBorder - (vSpacer*(numRows - 1));
 		//Calculate optimal sizing.
 		selectBtnWidth = (int)Math.floor(totalW/numCols);
 		selectBtnHeight = (int)Math.floor(totalH/numRows);
@@ -205,7 +208,9 @@ public class PartySelectScreen implements DrawScreen {
 		boolean blockFinish = false;
 		for(PartySelectButton selector : partySelectors) {
 			selector.update();
-			if(selector.blockFinish) blockFinish = true;
+			if(selector.blockFinish) {
+				blockFinish = true;
+			}
 		}
 		if(!finishButton.isImpossible && (blockFinish || (numSelectedMembers < reqNumPartyMembers))) {
 			setFinishButtonEnabled(false);
@@ -219,8 +224,11 @@ public class PartySelectScreen implements DrawScreen {
 	}
 	
 	public void setFinishButtonEnabled(boolean enable) {
-		if(enable) finishButton.enable();
-		else finishButton.disable();
+		if(enable) {
+			finishButton.enable();
+		} else {
+			finishButton.disable();
+		}
 		finishButton.setText(makeFinishString());
 	}
 	
