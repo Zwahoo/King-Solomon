@@ -479,7 +479,7 @@ public class MainGame {
 		boolean isNextToWater = false;
 		for (int i = 1; i <= 7 ; i+=2){
 			if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i) != null){
-				if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i).getType().getName().equalsIgnoreCase("water"))
+				if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i).getType().hasWater)
 					isNextToWater = true;
 			}
 		}
