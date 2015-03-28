@@ -83,9 +83,10 @@ public class ResponseOption {
 		checkTextLength();
 	}
 	
-	//Replaces the string {playername} with the selected player's name.
+	//Replaces the string {playername} and {selectedname} with the selected player's name.
 	public String handleNameReplacement(String str) {
 		if(selectedMember != null) {
+			str = str.replaceAll("\\{selectedname\\}", selectedMember.getName());
 			return str.replaceAll("\\{playername\\}", selectedMember.getName());
 		}
 		return str;
