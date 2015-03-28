@@ -1,6 +1,5 @@
 package MainGame;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -85,17 +84,20 @@ public class StartDayDrawer {
 			};
 		}
 		else {
-			collectWaterButton = new Button(0, verticalinset + (3*buttonheighti), 
-					buttonwidth, buttonheighti, COLLECT_WATER_BUTTON_TEXT, MainGame.input){
-				@Override
-				public void onClick() {
-
-				}
-			};
-			Color impossCol = new Color(200, 200, 200);
-			Color impossBor = new Color(100, 70, 70);
-			collectWaterButton.setImpossible(true);
-			collectWaterButton.setColor(impossCol, impossBor);
+			collectWaterButton = null;
+			// collectWaterButton = new Button(0, verticalinset +
+			// (3*buttonheighti),
+			// buttonwidth, buttonheighti, COLLECT_WATER_BUTTON_TEXT,
+			// MainGame.input){
+			// @Override
+			// public void onClick() {
+			//
+			// }
+			// };
+			// Color impossCol = new Color(200, 200, 200);
+			// Color impossBor = new Color(100, 70, 70);
+			// collectWaterButton.setImpossible(true);
+			// collectWaterButton.setColor(impossCol, impossBor);
 		}
 	}
 
@@ -117,7 +119,9 @@ public class StartDayDrawer {
 		moveButton.draw(g);
 		investigateButton.draw(g);
 		restButton.draw(g);
-		collectWaterButton.draw(g);
+		if (collectWaterButton != null) {
+			collectWaterButton.draw(g);
+		}
 	}
 
 	public void update() {
@@ -125,7 +129,9 @@ public class StartDayDrawer {
 		moveButton.update();
 		investigateButton.update();
 		restButton.update();
-		collectWaterButton.update();
+		if (collectWaterButton != null) {
+			collectWaterButton.update();
+		}
 	}
 
 	public void destroyer() {
@@ -134,7 +140,9 @@ public class StartDayDrawer {
 		moveButton.removeInputManager(MainGame.input, temp);
 		investigateButton.removeInputManager(MainGame.input, temp);
 		restButton.removeInputManager(MainGame.input, temp);
-		collectWaterButton.removeInputManager(MainGame.input, temp);
+		if (collectWaterButton != null) {
+			collectWaterButton.removeInputManager(MainGame.input, temp);
+		}
 	}
 
 }
