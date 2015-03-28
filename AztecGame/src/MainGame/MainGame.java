@@ -62,8 +62,9 @@ public class MainGame {
 
 
 	public static final boolean DISCO_MODE = false;
-	
-//github.com/Zwahoo/King-Solomon.git
+	public static final boolean TEST_MODE = false;
+
+	//github.com/Zwahoo/King-Solomon.git
 	//-----------------------------------------
 
 
@@ -158,7 +159,11 @@ public class MainGame {
 		loadEvents();
 
 		//Create map
-		map = new Map("assets/Map.png", this);
+		if (TEST_MODE) {
+			map = new Map("assets/testingMap.png", this);
+		} else {
+			map = new Map("assets/Map.png", this);
+		}
 		//map = new Map(10, 10, this);
 		// Creates the player
 		player1 = new Player(map);
@@ -477,12 +482,13 @@ public class MainGame {
 	{
 		incPartyStat(FOOD_KEY, -1 * party.size());
 		incPartyStat(STAMINA_KEY, -3);
-		
+
 		boolean isNextToWater = false;
 		for (int i = 1; i <= 7 ; i+=2){
 			if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i) != null){
-				if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i).getType().hasWater)
+				if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i).getType().hasWater) {
 					isNextToWater = true;
+				}
 			}
 		}
 		if (!isNextToWater){
