@@ -60,8 +60,10 @@ public class MainGame {
 	//Minimum Number of Party Members Required for Game Over
 	public static final int MIN_PARTY_SIZE = 2;
 
-	public static final boolean DISCO_MODE = false;
 
+	public static final boolean DISCO_MODE = false;
+	
+//github.com/Zwahoo/King-Solomon.git
 	//-----------------------------------------
 
 
@@ -479,7 +481,7 @@ public class MainGame {
 		boolean isNextToWater = false;
 		for (int i = 1; i <= 7 ; i+=2){
 			if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i) != null){
-				if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i).getType().getName().equalsIgnoreCase("water"))
+				if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i).getType().hasWater)
 					isNextToWater = true;
 			}
 		}
