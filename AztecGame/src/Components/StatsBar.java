@@ -1,9 +1,12 @@
 package Components;
 
+import java.awt.Font;
 import java.awt.Graphics;
 
 import MainGame.InputManager;
 import MainGame.MainGame;
+import MainGame.PartyMember;
+import MainGame.gameframe;
 
 //A bar that displays the current stats of the party.
 //Can be updated by using setText and passing it the parsed HashMap of stats 
@@ -22,20 +25,35 @@ public class StatsBar extends Textbox {
 	int expandButtonSize = 25;
 	int expandButtonLeftBuffer = 5;
 	int expandButtonUpBuffer = 5;
+	int tbWidth;
+	int partyWidth;
+	
+	int partyHeight;
 	
 	PartyExpandPanel expandPanel = null;
+	Textbox partyMembersTextbox;
 	
 	public StatsBar(String str, int width, int height, InputManager input) {
-		this(str, 0, 0, width, height, input);
+		this(str, 0, gameframe.windowHeight, width, height, input);
 	}
 	
 	public StatsBar(String str, int x, int y, int width, int height, InputManager input) {
-		super(str, x, y, width, height, input);
-		this.width = width;
-		this.height = height;
+		super(str, x, y - (int)(height*1.38), (int)(width*0.75), height, input);
+		tbWidth = (int)(width * 0.75);
+		partyHeight = 3*height;
+		partyWidth = width - tbWidth - 2;
+		this.SetFont(new Font("Arial", Font.PLAIN, 16));
+		this.vTextBuffer -= 6;
 		
+		int partyX = gameframe.windowWidth - partyWidth - 3;
+		int partyY = gameframe.windowHeight - (int)(partyHeight * 1.125);
+		partyMembersTextbox = new Textbox(getPartyText(), partyX, partyY, partyWidth, partyHeight, input);
+		
+		
+		expandButtonSize = height / 2;
+		expandButtonUpBuffer = height / 4;
 		int buttonX = x+width-expandButtonSize-expandButtonLeftBuffer;
-		int buttonY = y + height/2 - expandButtonSize/2;
+		int buttonY = y + height - expandButtonSize/2;
 		expandButton = new Button(buttonX, buttonY, expandButtonSize, expandButtonSize, collapsedText, input) {
 			@Override 
 			public void onClick() {
@@ -44,6 +62,15 @@ public class StatsBar extends Textbox {
 		};
 	}
 	
+	private String getPartyText() {
+		String intro = "Present Party: \n";
+		for (PartyMember partyMember : MainGame.party) {
+			intro += partyMember.getName() + "\n";
+		}
+
+		return intro;
+	}
+
 	public void showHideExpandPanel() {
 		if(expandPanel == null) {
 			showExpandPanel();
@@ -73,6 +100,7 @@ public class StatsBar extends Textbox {
 	public void update() {
 		super.update();
 		expandButton.update();
+		partyMembersTextbox.update();
 		if(expandPanel != null) {
 			expandPanel.update();
 		}
@@ -82,6 +110,7 @@ public class StatsBar extends Textbox {
 	public void draw(Graphics g) {
 		super.draw(g);
 		expandButton.draw(g);
+		partyMembersTextbox.draw(g);
 		if(expandPanel != null) {
 			expandPanel.draw(g);
 		}
