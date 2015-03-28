@@ -180,8 +180,9 @@ public class MainGame {
 
 		//Set up the stat bar
 		statBarWidth = frame.getWidth();
-		statBarHeight = (int) ((gameframe.windowHeight)*.05);
+		statBarHeight = (int) ((gameframe.windowHeight)*.06 + gameframe.windowWidth * 0.02);
 		statsBar = new StatsBar(getStatsBarString(), statBarWidth, statBarHeight, input); // create stats bar
+		
 
 		// preloads images used for drawing dem sweet sweet grayfixs
 		preloadTileImages();
@@ -461,9 +462,11 @@ public class MainGame {
 	 * @return A string of stats followed by their values
 	 */
 	private static String getStatsBarString() {
-		String retVal = "";
+		String retVal = "\n    ";
 		for( String s : stats.keySet()) {
-			retVal += s + ": " + stats.get(s) + " | ";
+			if(!s.equals("Pack Animals")) {
+				retVal += s + ": " + stats.get(s) + "     ";
+			}
 		}
 		retVal = retVal.substring(0, retVal.length() - 3); //Remove the last bar.
 		return retVal;

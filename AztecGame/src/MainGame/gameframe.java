@@ -30,7 +30,7 @@ public class gameframe extends JFrame {
 	
 	
 	private boolean isRunning = true;
-	private Insets insets;
+	public static Insets insets;
 	private BufferedImage backBuffer;
 	private int fps = 30;
 	public static int windowWidth = 1000;
