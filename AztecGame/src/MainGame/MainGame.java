@@ -81,7 +81,7 @@ public class MainGame {
 
 	Rectangle drawRect;
 
-	StatsBar statsBar;
+	static StatsBar statsBar;
 	int statBarWidth;
 	static int statBarHeight;
 
@@ -185,9 +185,9 @@ public class MainGame {
 
 		//Set up the stat bar
 		statBarWidth = frame.getWidth();
-		statBarHeight = (int) ((gameframe.windowHeight)*.06 + gameframe.windowWidth * 0.02);
+		statBarHeight = (int) (((gameframe.windowHeight)*.06) + (gameframe.windowWidth * 0.02));
 		statsBar = new StatsBar(getStatsBarString(), statBarWidth, statBarHeight, input); // create stats bar
-		
+
 
 		// preloads images used for drawing dem sweet sweet grayfixs
 		preloadTileImages();
@@ -748,6 +748,7 @@ public class MainGame {
 			e = newEvent(e.getEventType());
 		}
 		setCurrentMode(EVENT_MODE);
+		statsBar.hidePartyPanel();
 		eventDrawer = new EventDrawer(e, presMembers, toSelect);
 		finalEvent = isFinalEvent;
 	}
@@ -854,6 +855,7 @@ public class MainGame {
 		//System.out.println("Closing Time");
 		eventDrawer.destroyer();
 		setCurrentMode(START_DAY_MODE);
+		statsBar.showPartyPanel();
 		eventDrawer = null;
 		startDayDrawer = new StartDayDrawer();
 

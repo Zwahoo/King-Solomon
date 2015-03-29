@@ -21,15 +21,33 @@ public class StartDayDrawer {
 
 	private boolean isNextToWater = false;
 
-	private final double topspacer = 0.05;
-	private final double buttonheight = 0.06;
 	private final double width = 0.2;
-	private final double totalheight = 3*buttonheight;
+	private final double buttonWidth = 0.158;
+	private final double buttonSpacer = 0.75 * buttonWidth;
+	private final double spacer = 0.02;
+	// Four above are percentages of total screen width.
+
+	private final double topspacer = 0.05;
+	private final double buttonHeight = 0.06;
+	private final double totalheight = 3 * buttonHeight;
+	// private final double partyPanelHeight = 3 * (buttonHeight + ((spacer *
+	// gameframe.windowWidth) / 800));
+	// Three above are percentages of total screen height.
+
+	private final double iconWidthHeight = (.5 * ((spacer * gameframe.windowWidth) + (buttonHeight * gameframe.windowHeight))) / 1000;
+	private final double iconSpacer = 0.070;
+	// Two above are a percentage of the total screen width.
+
+	private final double partyPanelWidth = MainGame.statsBar.partyWidth;
+	private final double partyPanelHeight = MainGame.statsBar.partyHeight;
 
 	private int verticalinset;
-	private int buttonheighti;
-	private int buttonwidth;
+	private int buttonHeighti;
+	private int buttonWidthi;
+	private int buttonSpaceri;
 	private int totalheighti;
+	private int spaceri;
+	private int partyPanelHeighti;
 
 	public StartDayDrawer() {
 		setLocations();
@@ -37,53 +55,65 @@ public class StartDayDrawer {
 	}
 
 	private void setLocations() {
-		verticalinset = (int) (gameframe.windowHeight * topspacer);
-		buttonheighti = (int) (gameframe.windowHeight * buttonheight);
-		buttonwidth = (int) (gameframe.windowWidth * width);
+		spaceri = (int) (gameframe.windowWidth * spacer);
+		buttonHeighti = (int) (gameframe.windowHeight * buttonHeight);
+		verticalinset = gameframe.windowHeight - ((2 * MainGame.statBarHeight) + spaceri);
+		buttonWidthi = (int) (gameframe.windowWidth * buttonWidth);
+		buttonSpaceri = (int) (gameframe.windowWidth * buttonSpacer);
 		totalheighti = (int) (gameframe.windowHeight * totalheight);
+		partyPanelHeighti = (int) (gameframe.windowHeight * partyPanelHeight);
 	}
 
 	public void launchStartDay() {
-		textbox = new Textbox("", 0, verticalinset, 
-				buttonwidth, totalheighti, MainGame.input);
-		moveButton = new Button(0, verticalinset, buttonwidth, 
-				buttonheighti, MOVE_BUTTON_TEXT, MainGame.input) {
+		/*
+		 * textbox = new Textbox("", 0, 20, buttonWidthi, totalheighti,
+		 * MainGame.input);
+		 */
+		moveButton = new Button(spaceri, verticalinset, buttonWidthi,
+				buttonHeighti, MOVE_BUTTON_TEXT, MainGame.input) {
 			@Override
 			public void onClick() {
 				handleResponseSelect(MainGame.MOVEMENT_MODE, 0);
 			}
 		};
-		investigateButton = new Button(0, verticalinset + buttonheighti,
-				buttonwidth, buttonheighti, INV_BUTTON_TEXT, MainGame.input){
+		investigateButton = new Button(spaceri + buttonWidthi + buttonSpaceri,
+				verticalinset, buttonWidthi, buttonHeighti, INV_BUTTON_TEXT,
+				MainGame.input) {
 			@Override
 			public void onClick() {
 				handleResponseSelect(MainGame.EVENT_MODE, 1);
 			}
 		};
-		restButton = new Button(0, verticalinset + (2*buttonheighti),
-				buttonwidth, buttonheighti, REST_BUTTON_TEXT, MainGame.input){
+		restButton = new Button(spaceri + (2 * buttonWidthi)
+				+ (2 * buttonSpaceri), verticalinset, buttonWidthi,
+				buttonHeighti, REST_BUTTON_TEXT, MainGame.input) {
 			@Override
 			public void onClick() {
 				handleResponseSelect(MainGame.EVENT_MODE, 2);
 			}
 		};
-		for (int i = 1; i <= 7 ; i+=2){
-			if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i) != null){
-				if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i).getType().hasWater()) {
+		for (int i = 1; i <= 7; i += 2) {
+			if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i) != null) {
+				if (MainGame.input.getPlayerMovementHandler()
+						.getNeighborTile(i).getType().hasWater()) {
 					isNextToWater = true;
 				}
 			}
 		}
-		if (isNextToWater){
-			collectWaterButton = new Button(0, verticalinset + (3*buttonheighti), 
-					buttonwidth, buttonheighti, COLLECT_WATER_BUTTON_TEXT, MainGame.input){
+		if (isNextToWater) {
+			collectWaterButton = new Button(
+					(int) (0.75 * gameframe.windowWidth)
+					+ (int) (0.5 * (partyPanelWidth - buttonWidthi)),
+					gameframe.windowHeight
+					- (int) (partyPanelHeight + (2 * spaceri) + buttonHeighti),
+					buttonWidthi, buttonHeighti, COLLECT_WATER_BUTTON_TEXT,
+					MainGame.input) {
 				@Override
 				public void onClick() {
 					handleResponseSelect(MainGame.EVENT_MODE, 3);
 				}
 			};
-		}
-		else {
+		} else {
 			collectWaterButton = null;
 			// collectWaterButton = new Button(0, verticalinset +
 			// (3*buttonheighti),
@@ -103,19 +133,20 @@ public class StartDayDrawer {
 
 	// currently, just close the menu.
 	public void handleResponseSelect(Integer mode, int startDayChoice) {
-		if (startDayChoice == 0) {
-			MainGame.closeStartDay(MainGame.MOVEMENT_MODE, 0);
-		} else if (startDayChoice == 1) {
-			MainGame.closeStartDay(MainGame.EVENT_MODE, 1);
-		} else if (startDayChoice == 2) {
-			MainGame.closeStartDay(MainGame.EVENT_MODE, 2);
-		} else if (startDayChoice == 3){
-			MainGame.closeStartDay(MainGame.EVENT_MODE, 3);
-		}
+		// if (startDayChoice == 0) {
+		// MainGame.closeStartDay(MainGame.MOVEMENT_MODE, 0);
+		// } else if (startDayChoice == 1) {
+		// MainGame.closeStartDay(MainGame.EVENT_MODE, 1);
+		// } else if (startDayChoice == 2) {
+		// MainGame.closeStartDay(MainGame.EVENT_MODE, 2);
+		// } else if (startDayChoice == 3) {
+		// MainGame.closeStartDay(MainGame.EVENT_MODE, 3);
+		// }
+		MainGame.closeStartDay(mode, startDayChoice);
 	}
 
 	public void draw(Graphics g) {
-		textbox.draw(g);
+		// textbox.draw(g);
 		moveButton.draw(g);
 		investigateButton.draw(g);
 		restButton.draw(g);
@@ -125,7 +156,7 @@ public class StartDayDrawer {
 	}
 
 	public void update() {
-		textbox.update();
+		// textbox.update();
 		moveButton.update();
 		investigateButton.update();
 		restButton.update();
@@ -136,7 +167,9 @@ public class StartDayDrawer {
 
 	public void destroyer() {
 		ArrayList<Integer> temp = new ArrayList<Integer>();
-		temp.add(MainGame.START_DAY_MODE); temp.add(MainGame.MOVEMENT_MODE); temp.add(MainGame.EVENT_MODE);
+		temp.add(MainGame.START_DAY_MODE);
+		temp.add(MainGame.MOVEMENT_MODE);
+		temp.add(MainGame.EVENT_MODE);
 		moveButton.removeInputManager(MainGame.input, temp);
 		investigateButton.removeInputManager(MainGame.input, temp);
 		restButton.removeInputManager(MainGame.input, temp);

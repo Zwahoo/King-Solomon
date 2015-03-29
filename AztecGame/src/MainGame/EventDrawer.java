@@ -71,7 +71,7 @@ public class EventDrawer {
 	double resultTextboxHMult = .49;
 	double exitButtonWMult = .21;
 	double exitButtonHMult = .05;
-	double spacer = .02;				//standard spacing between most parts of event menu
+	double spacer = .015; // standard spacing between most parts of event menu
 	double sideSpacer = .1;				//vertical spacing between edge of window and event menu (left and right side)
 
 	int buttonHeight;
@@ -273,7 +273,7 @@ public class EventDrawer {
 		buttonHeight = partyInfoHeight/6;	//divide by six because we want space between buttons to sum to size of a 6th button
 		buttonSpace = buttonHeight/4;		//divide by four because four spaces between all buttons
 
-		int totalHeight = (int) ((gameframe.windowHeight * spacer) + MainGame.statBarHeight);
+		int totalHeight = (int) ((gameframe.windowHeight * spacer));
 
 		imageX = (int) (gameframe.windowWidth * sideSpacer);
 		imageY = totalHeight;
@@ -331,7 +331,9 @@ public class EventDrawer {
 
 		for(PartyMember member : presMembers) {
 			String key = member.getName();
-			if(!advice.containsKey(key)) key = member.getType();
+			if(!advice.containsKey(key)) {
+				key = member.getType();
+			}
 			if (advice.containsKey(key)) {
 				currAdvice = advice.get(key);
 				if (currAdvice.charAt(0) == 'U') {
