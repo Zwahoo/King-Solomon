@@ -5,6 +5,10 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import MainGame.InputManager;
 
@@ -16,17 +20,35 @@ public class ImageButton extends Button {
 	Color hoverImgCol = new Color(100, 100, 100);
 	Color pressImgCol = new Color(200, 200, 200);
 
-	public ImageButton(Image img, int x, int y, int width, int height, InputManager inputManager) {
+	public ImageButton(String imgFilePath, int x, int y, int width, int height, InputManager inputManager) {
 		super(x, y, width, height, "", inputManager);
-		this.img = img;
+		File f = new File(imgFilePath);
+		try {
+			img = ImageIO.read(f);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	public ImageButton(Image img, Point loc, Point size, InputManager inputManager) {
+	public ImageButton(String imgFilePath, Point loc, Point size, InputManager inputManager) {
 		super(loc, size, "", inputManager);
-		this.img = img;
+		File f = new File(imgFilePath);
+		try {
+			img = ImageIO.read(f);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	public ImageButton(Image img, Rectangle rect, InputManager inputManager) {
+	public ImageButton(String imgFilePath, Rectangle rect, InputManager inputManager) {
 		super(rect, "", inputManager);
-		this.img = img;
+		File f = new File(imgFilePath);
+		try {
+			img = ImageIO.read(f);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
