@@ -6,16 +6,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.HashMap;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 
 /**
@@ -27,8 +20,8 @@ public class gameframe extends JFrame {
 
 	public static boolean DEBUG = true;
 	boolean doSetup = false;
-	
-	
+
+
 	private boolean isRunning = true;
 	public static Insets insets;
 	private BufferedImage backBuffer;
@@ -38,22 +31,22 @@ public class gameframe extends JFrame {
 	private MainGame mainGame;
 	private IntroSequence introSeq;
 	private boolean runIntroSequence = true;
-	
+
 	public static int topinset = 22;
 	public static int bottominset = 0;
 	public static int leftinset = 0;
 	public static int rightinset = 0;
-	
+
 	public Sound sound;
 
 	// frame graphics
 	Graphics g = null;
 	// buffered image which will be drawn to frame (but is first applied to "g")
 	Graphics bbg = null;
-	
+
 	private HashMap<String, Integer> gentStats = PartyMemberStats.AVERAGE_ABE_STATS;
 	private HashMap<String, PartyMember> party = PartyMemberStats.defaultParty;
-	
+
 	// MAIN
 	public static void main(String[] args) throws IOException {
 		gameframe game = new gameframe();
@@ -71,32 +64,34 @@ public class gameframe extends JFrame {
 	public void run() throws IOException {
 		boolean go = true;
 
-		this.initialize(); // initializes things which need initializing before
-							// the game can run.
-		
+		initialize(); // initializes things which need initializing before
+		// the game can run.
+
 		sound = new Sound("assets/sounds/KingSolomonsOverworldTheme.wav", true);
-		
+
 		while (go){
 			if(doSetup) {
-				if(!sound.isPlaying) sound = new Sound("assets/sounds/KingSolomonsOverworldTheme.wav", true);
-				this.initializeIntroSequence(); // initializes things which need initializing before
-									// the game can run
-					
+				if(!sound.isPlaying) {
+					sound = new Sound("assets/sounds/KingSolomonsOverworldTheme.wav", true);
+				}
+				initializeIntroSequence(); // initializes things which need initializing before
+				// the game can run
+
 				// initially draws everything
 				draw();
 				// loop which handles fps
 				while (runIntroSequence) {
 					// time
 					long time = System.currentTimeMillis();
-		
+
 					update();
 					draw();
-					
+
 					runIntroSequence = !introSeq.finished;
-					
+
 					// runs an update 30 times a second
 					time = (1000 / fps) - (System.currentTimeMillis() - time);
-		
+
 					// what the heck is even going on here man I mean seriously
 					// Somethin' 'bout a thread runnin' fer the frame I 'reckon
 					// It's limiting the framerate to fps... I think.
@@ -107,31 +102,31 @@ public class gameframe extends JFrame {
 						}
 					}
 				}
-				
+
 				gentStats = introSeq.gentStats;
 				party = introSeq.party;
-				
+
 				IntroSequence.removeInputManager();
 				introSeq = null;
-				
+
 				isRunning = true;
 			}
 			//Runs the main game
-			this.initializeMainGame();
-			
+			initializeMainGame();
+
 			// initially draws everything
 			draw();
 			// loop which handles fps
 			while (isRunning) {
 				// time
 				long time = System.currentTimeMillis();
-	
+
 				update();
 				draw();
-	
+
 				// runs an update 30 times a second
 				time = (1000 / fps) - (System.currentTimeMillis() - time);
-	
+
 				// what the heck is even going on here man I mean seriously
 				// Somethin' 'bout a thread runnin' fer the frame I 'reckon
 				// It's limiting the framerate to fps... I think.
@@ -144,11 +139,11 @@ public class gameframe extends JFrame {
 
 			}
 		}
-		
+
 
 		setVisible(false);
 	}
-	
+
 	public void returnGameToMenu() {
 		IntroSequence.input = null;
 		doSetup = true;
@@ -159,7 +154,7 @@ public class gameframe extends JFrame {
 		}
 		mainGame = null;
 	}
-	
+
 	private void initializeMainGame() throws IOException {
 		mainGame = new MainGame(this, windowWidth, windowHeight, gentStats, party);
 	}
@@ -174,7 +169,7 @@ public class gameframe extends JFrame {
 	 * @throws IOException
 	 */
 	void initialize() throws IOException {
-			
+
 		// offsets the frame to account for the top bar, border, etc.
 		insets = getInsets();
 		insets.set(topinset, leftinset, bottominset, rightinset);
@@ -201,7 +196,7 @@ public class gameframe extends JFrame {
 		//System.out.println("what's up"); // CHECKPOINT
 
 		//System.out.println("hello?????????????????????????????"); // hi
-		
+
 	}
 
 	/**
@@ -214,8 +209,11 @@ public class gameframe extends JFrame {
 	// "move,"
 	// "check map," and "menu" mode
 	void update() {
-		if(mainGame != null) mainGame.update();
-		else if(introSeq != null) introSeq.update();
+		if(mainGame != null) {
+			mainGame.update();
+		} else if(introSeq != null) {
+			introSeq.update();
+		}
 	}
 
 	/**
@@ -227,18 +225,23 @@ public class gameframe extends JFrame {
 		bbg.setColor(Color.BLACK);
 		// background height and width
 		bbg.fillRect(0, 0, windowWidth, windowHeight);
-		
-		if(mainGame != null) mainGame.draw(bbg);
-		else if(introSeq != null) introSeq.draw(bbg);
-		
+
+		if(mainGame != null) {
+			mainGame.draw(bbg);
+		} else if(introSeq != null) {
+			introSeq.draw(bbg);
+		}
+
 		// actually draws the images and stuff on screen
 		g.drawImage(backBuffer, insets.left, insets.top, this);
 	}
-	
-	
+
+
+	@Override
 	public int getWidth() {
 		return windowWidth;
 	}
+	@Override
 	public int getHeight(){
 		return windowHeight;
 	}
