@@ -20,8 +20,8 @@ public class Button extends InputListener {
 	int curMode = MODE_NORMAL;
 
 	private String myText; //Text on the button.
-	private Rectangle2D myRect; //Location and size of the button
-	private int borderSize = 2; //Size of the button's border
+	protected Rectangle2D myRect; //Location and size of the button
+	protected int borderSize = 2; //Size of the button's border
 	private boolean mouseOnButton = false; //Is the mouse currently hovering over the button?
 	private Font myFont; //Font used in the button's text
 
