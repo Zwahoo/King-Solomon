@@ -20,7 +20,7 @@ public class GentlemanStatView {
 	public int total;
 	int x, y;
 	
-	public int height = 50;
+	public int height = 40;
 	public int nameWidth = 200;
 	public int numBoxWidth = 50;
 	
@@ -34,6 +34,8 @@ public class GentlemanStatView {
 		this.primaryMod = primaryMod;
 		this.secondaryMod = secondaryMod;
 		this.total = this.defaultVal + this.primaryMod + this.secondaryMod;
+		this.x = x;
+		this.y = y;
 		this.input = input;
 		
 		setupTextboxes();
