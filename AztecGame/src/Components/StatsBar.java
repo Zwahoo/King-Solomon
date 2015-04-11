@@ -38,10 +38,10 @@ public class StatsBar extends Textbox {
 	}
 
 	public StatsBar(String str, int x, int y, int width, int height, InputManager input) {
-		super(str, x, y - (int)(height*1.38), (int)(width*0.75), height, input);
-		tbWidth = (int)(width * 0.75);
+		super(str, x, y - (int)(height*1.38), (int)(width), height, input);
+		tbWidth = (int)(width);
 		partyHeight = 3*height;
-		partyWidth = width - tbWidth - 2;
+		partyWidth = (int)(width*0.25);
 		SetFont(new Font("Arial", Font.PLAIN, 16));
 		vTextBuffer -= 6;
 
