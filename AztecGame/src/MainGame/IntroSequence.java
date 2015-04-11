@@ -5,6 +5,8 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.util.HashMap;
 
+import IntroSequence2.*;
+
 /**
  * The intro sequence displays one intro scene after another,
  * starting with the title screen, finishing with party selection.
@@ -23,6 +25,7 @@ public class IntroSequence {
 	//The current scene being shown.
 	private DrawScreen currentScreen;
 	//The three different scene options.
+	private GentlemanEditScreen gentEditScreen;
 	private StartScreen startScreen;
 	private StatSelectScreen statSelect;
 	private PartySelectScreen partySelect;
@@ -62,8 +65,10 @@ public class IntroSequence {
 	public void launchNextState() {
 		//Start Screen Completed.
 		if(stateNum == 0) {
-			statSelect = new StatSelectScreen();
-			currentScreen = statSelect;
+			//statSelect = new StatSelectScreen();
+			//currentScreen = statSelect;
+			gentEditScreen = new GentlemanEditScreen();
+			currentScreen = gentEditScreen;
 			startScreen.finish();
 		}
 		//Stat Select Screen Completed.

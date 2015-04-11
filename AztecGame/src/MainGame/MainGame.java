@@ -62,8 +62,9 @@ public class MainGame {
 
 
 	public static final boolean DISCO_MODE = false;
-	
-//github.com/Zwahoo/King-Solomon.git
+	public static final boolean TEST_MODE = false;
+
+	//github.com/Zwahoo/King-Solomon.git
 	//-----------------------------------------
 
 
@@ -80,7 +81,7 @@ public class MainGame {
 
 	Rectangle drawRect;
 
-	StatsBar statsBar;
+	static StatsBar statsBar;
 	int statBarWidth;
 	static int statBarHeight;
 
@@ -158,7 +159,11 @@ public class MainGame {
 		loadEvents();
 
 		//Create map
-		map = new Map("assets/Map.png", this);
+		if (TEST_MODE) {
+			map = new Map("assets/testingMap.png", this);
+		} else {
+			map = new Map("assets/Map.png", this);
+		}
 		//map = new Map(10, 10, this);
 		// Creates the player
 		player1 = new Player(map);
@@ -180,8 +185,9 @@ public class MainGame {
 
 		//Set up the stat bar
 		statBarWidth = frame.getWidth();
-		statBarHeight = (int) ((gameframe.windowHeight)*.05);
+		statBarHeight = (int) (((gameframe.windowHeight)*.06) + (gameframe.windowWidth * 0.02));
 		statsBar = new StatsBar(getStatsBarString(), statBarWidth, statBarHeight, input); // create stats bar
+
 
 		// preloads images used for drawing dem sweet sweet grayfixs
 		preloadTileImages();
@@ -461,9 +467,11 @@ public class MainGame {
 	 * @return A string of stats followed by their values
 	 */
 	private static String getStatsBarString() {
-		String retVal = "";
+		String retVal = "\n    ";
 		for( String s : stats.keySet()) {
-			retVal += s + ": " + stats.get(s) + " | ";
+			if(!s.equals("Pack Animals")) {
+				retVal += s + ": " + stats.get(s) + "     ";
+			}
 		}
 		retVal = retVal.substring(0, retVal.length() - 3); //Remove the last bar.
 		return retVal;
@@ -477,12 +485,13 @@ public class MainGame {
 	{
 		incPartyStat(FOOD_KEY, -1 * party.size());
 		incPartyStat(STAMINA_KEY, -3);
-		
+
 		boolean isNextToWater = false;
 		for (int i = 1; i <= 7 ; i+=2){
 			if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i) != null){
-				if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i).getType().hasWater)
+				if (MainGame.input.getPlayerMovementHandler().getNeighborTile(i).getType().hasWater) {
 					isNextToWater = true;
+				}
 			}
 		}
 		if (!isNextToWater){
@@ -739,6 +748,7 @@ public class MainGame {
 			e = newEvent(e.getEventType());
 		}
 		setCurrentMode(EVENT_MODE);
+		statsBar.hidePartyPanel();
 		eventDrawer = new EventDrawer(e, presMembers, toSelect);
 		finalEvent = isFinalEvent;
 	}
@@ -845,6 +855,7 @@ public class MainGame {
 		//System.out.println("Closing Time");
 		eventDrawer.destroyer();
 		setCurrentMode(START_DAY_MODE);
+		statsBar.showPartyPanel();
 		eventDrawer = null;
 		startDayDrawer = new StartDayDrawer();
 
