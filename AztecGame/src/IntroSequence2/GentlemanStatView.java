@@ -22,17 +22,21 @@ public class GentlemanStatView {
 	
 	public int height = 40;
 	public int nameWidth = 200;
-	public int numBoxWidth = 50;
+	public int numBoxWidth = 70;
+	public int xSpacer = 5;
 	
 	public GentlemanStatView(String statName, int defaultVal, int x, int y, InputManager input) {
-		this(statName, defaultVal, 0, 0, x, y, input);
+		this(statName, defaultVal, 0, 0, x, y, 40, input);
 	}
-	
 	public GentlemanStatView(String statName, int defaultVal, int primaryMod, int secondaryMod, int x, int y, InputManager input) {
+		this(statName, defaultVal, 0, 0, x, y, 40, input);
+	}
+	public GentlemanStatView(String statName, int defaultVal, int primaryMod, int secondaryMod, int x, int y, int height, InputManager input) {
 		this.statName = statName;
 		this.defaultVal = defaultVal;
 		this.primaryMod = primaryMod;
 		this.secondaryMod = secondaryMod;
+		this.height = height;
 		this.total = this.defaultVal + this.primaryMod + this.secondaryMod;
 		this.x = x;
 		this.y = y;
@@ -44,14 +48,14 @@ public class GentlemanStatView {
 	private void setupTextboxes() {
 		int xPos = x;
 		nameText = new Textbox(statName, xPos, y, nameWidth, height, input);
-		xPos += nameWidth;
+		xPos += nameWidth + xSpacer;
 		defaultText = new Textbox(defaultVal + "", xPos, y, numBoxWidth, height, input);
-		xPos += numBoxWidth;
-		primaryText = new Textbox(defaultVal + "", xPos, y, numBoxWidth, height, input);
-		xPos += numBoxWidth;
-		secondaryText = new Textbox(defaultVal + "", xPos, y, numBoxWidth, height, input);
-		xPos += numBoxWidth;
-		totalText = new Textbox(defaultVal + "", xPos, y, numBoxWidth, height, input);
+		xPos += numBoxWidth + xSpacer;
+		primaryText = new Textbox(primaryMod + "", xPos, y, numBoxWidth, height, input);
+		xPos += numBoxWidth + xSpacer;
+		secondaryText = new Textbox(secondaryMod + "", xPos, y, numBoxWidth, height, input);
+		xPos += numBoxWidth + xSpacer;
+		totalText = new Textbox(total + "", xPos, y, numBoxWidth, height, input);
 	}
 	
 	public void update() {
