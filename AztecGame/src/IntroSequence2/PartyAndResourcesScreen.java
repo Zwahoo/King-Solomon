@@ -2,12 +2,14 @@ package IntroSequence2;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Components.Button;
 import Components.Textbox;
 import MainGame.DrawScreen;
 import MainGame.IntroSequence;
 import MainGame.MainGame;
+import MainGame.PartyMember;
 import MainGame.gameframe;
 
 public class PartyAndResourcesScreen implements DrawScreen {
@@ -18,32 +20,54 @@ public class PartyAndResourcesScreen implements DrawScreen {
 	private Button beginButton;
 
 	private ArrayList<Textbox> partyList;
-	private ArrayList<Textbox> supplies;
 
-	private ArrayList<Button> plusButtons;
-	private ArrayList<Button> minusButtons;
+	private HashMap<String, Textbox> supplyMap;
+
+	private ArrayList<String> cannotBuyList;
+
+	private HashMap<String, Integer> buyAmtMap;
+
+	private HashMap<String, Button> plusButtonMap;
+	private HashMap<String, Button> minusButtonMap;
 
 	private boolean finished = false;
 
 	private int hireCounter = 0;
 
-	private int maxPartySize = 8;
+	private int supplyCost = 5;
+	private int partyMemberCost = 10;
 
-	private int initialPartyVSpacer = 100;
+	private HashMap<String, PartyMember> selectedMembers = new HashMap<>();
+
+	private int maxPartySize = 7;
+
+	private int initialPartyVSpacer = 150;
 
 	private int partyVSpacer = 20;
-	private int partyTHeight = 50;
+	private int partyTHeight = 60;
 	private int partyTWidth = 200;
 
 	private int suppliesVSpacer = 20;
 	private int suppliesHSpacer = 10;
-	private int suppliesTHeight = 50;
+	private int suppliesTHeight = 60;
 	private int suppliesTWidth = 150;
 
-	private int suppliesBHeight = suppliesTHeight;
+	private int suppliesBHeight = suppliesTHeight / 2;
 	private int suppliesBWidth = suppliesBHeight;
 
+	int beginWidth = 200;
+	int beginHeight = 40;
+	int beginX = gameframe.windowWidth - beginWidth - 40;
+	int beginY = gameframe.windowHeight - beginHeight - 40;
+
 	public PartyAndResourcesScreen() {
+		partyList = new ArrayList<>();
+		plusButtonMap = new HashMap<>();
+		minusButtonMap = new HashMap<>();
+		supplyMap = new HashMap<>();
+		buyAmtMap = new HashMap<>();
+		initCannotBuyList();
+		initBuyAmtMap();
 		initializeButtons();
 		initializeTextboxes();
 	}
@@ -51,18 +75,25 @@ public class PartyAndResourcesScreen implements DrawScreen {
 	@Override
 	public boolean update() {
 		valuableAmt.update();
+		valuableAmt.setText("Valuables: " + MainGame.getStats().get(MainGame.VALUABLES_KEY));
 		hireButton.update();
-		beginButton.update();
+		if (selectedMembers.values().size() == 0) {
+			beginButton.disable();
+			beginButton.update();
+		} else {
+			beginButton.enable();
+			beginButton.update();
+		}
 		for (Textbox t : partyList) {
 			t.update();
 		}
-		for (Textbox t : supplies) {
+		for (Textbox t : supplyMap.values()) {
 			t.update();
 		}
-		for (Button b : plusButtons) {
+		for (Button b : plusButtonMap.values()) {
 			b.update();
 		}
-		for (Button b : minusButtons) {
+		for (Button b : minusButtonMap.values()) {
 			b.update();
 		}
 		return finished;
@@ -76,13 +107,13 @@ public class PartyAndResourcesScreen implements DrawScreen {
 		for (Textbox t : partyList) {
 			t.draw(g);
 		}
-		for (Textbox t : supplies) {
+		for (Textbox t : supplyMap.values()) {
 			t.draw(g);
 		}
-		for (Button b : plusButtons) {
+		for (Button b : plusButtonMap.values()) {
 			b.draw(g);
 		}
-		for (Button b : minusButtons) {
+		for (Button b : minusButtonMap.values()) {
 			b.draw(g);
 		}
 	}
@@ -95,22 +126,23 @@ public class PartyAndResourcesScreen implements DrawScreen {
 
 		IntroSequence.input.removeInputListener(hireButton, modesList);
 		IntroSequence.input.removeInputListener(beginButton, modesList);
-		for(Button btn : plusButtons) {
+		for(Button btn : plusButtonMap.values()) {
 			IntroSequence.input.removeInputListener(btn, modesList);
 		}
-		for(Button btn : minusButtons) {
+		for(Button btn : minusButtonMap.values()) {
 			IntroSequence.input.removeInputListener(btn, modesList);
 		}
 	}
 
 	private void initializeButtons() {
-		hireButton = new Button(50, gameframe.windowHeight - 150, 50, 100, "Hire", IntroSequence.input){
+
+		hireButton = new Button(50, beginY, beginWidth, beginHeight, "Hire", IntroSequence.input){
 			@Override
 			public void onClick() {
 
 			}
 		};
-		beginButton = new Button(gameframe.windowWidth - 150, gameframe.windowHeight - 150, 50, 100, "Begin", IntroSequence.input){
+		beginButton = new Button(beginX, beginY, beginWidth, beginHeight, "Begin", IntroSequence.input){
 			@Override
 			public void onClick() {
 				finished = true;
@@ -118,22 +150,77 @@ public class PartyAndResourcesScreen implements DrawScreen {
 		};
 		int j = 0;
 		for (String e : MainGame.getStats().keySet()) {
-			plusButtons.add(new Button(gameframe.windowWidth - (initialPartyVSpacer + (2 * suppliesBWidth) + suppliesHSpacer), initialPartyVSpacer + (j * partyVSpacer) + (j * partyTHeight) + suppliesVSpacer, suppliesBWidth, suppliesBHeight, "+", IntroSequence.input));
-			minusButtons.add(new Button(gameframe.windowWidth - (initialPartyVSpacer + suppliesBWidth), initialPartyVSpacer + (j * partyVSpacer) + (j * partyTHeight) + suppliesVSpacer, j, j, "-", IntroSequence.input));
-			j++;
+			if (!cannotBuyList.contains(e)){
+				plusButtonMap.put(e, new Button(gameframe.windowWidth - (initialPartyVSpacer + (2 * suppliesBWidth) + suppliesHSpacer), initialPartyVSpacer + (suppliesTHeight / 4) + (j * suppliesVSpacer) + (j * partyTHeight), suppliesBWidth, suppliesBHeight, "+", IntroSequence.input) {
+					@Override
+					public void onClick() {
+						changeStat(this, true);
+
+					}
+				});
+				minusButtonMap.put(e, new Button(gameframe.windowWidth - (initialPartyVSpacer + suppliesBWidth), initialPartyVSpacer + (suppliesTHeight / 4) + (j * suppliesVSpacer) + (j * partyTHeight), suppliesBWidth, suppliesBHeight, "-", IntroSequence.input) {
+					@Override
+					public void onClick() {
+						changeStat(this, false);
+					}
+				});
+				j++;
+			}
+		}
+	}
+
+	private void changeStat(Button b, boolean plus) {
+		if (plus && (MainGame.getStats().get(MainGame.VALUABLES_KEY) > 0)) {
+			for (String s : plusButtonMap.keySet()) {
+				if (plusButtonMap.get(s).equals(b)) {
+					if (MainGame.incPartyStat(s, buyAmtMap.get(s))) {
+						MainGame.incPartyStat(MainGame.VALUABLES_KEY, -supplyCost);
+					}
+					supplyMap.get(s).setText(s + ": " + MainGame.getStats().get(s) + "\nCost: " + supplyCost);
+				}
+			}
+		} else {
+			for (String s : minusButtonMap.keySet()) {
+				if (minusButtonMap.get(s).equals(b)) {
+					if (MainGame.incPartyStat(s, -buyAmtMap.get(s))) {
+						MainGame.incPartyStat(MainGame.VALUABLES_KEY, supplyCost);
+					}
+					supplyMap.get(s).setText(s + ": " + MainGame.getStats().get(s) + "\nCost: " + supplyCost);
+				}
+			}
 		}
 	}
 
 	private void initializeTextboxes() {
-		valuableAmt = new Textbox("Valuables: " + MainGame.getStats().get(MainGame.VALUABLES_KEY), 50, 50, 50, 150, IntroSequence.input);
+		valuableAmt = new Textbox("Valuables: " + MainGame.getStats().get(MainGame.VALUABLES_KEY), 50, 20, 150, 50, IntroSequence.input);
 		for (int i = 0; i < maxPartySize; i++) {
-			partyList.add(new Textbox("-------------------", initialPartyVSpacer, initialPartyVSpacer + (i * partyVSpacer) + (i * partyTHeight), partyTWidth, partyTHeight, IntroSequence.input));
+			partyList.add(new Textbox("Hire Party Member\nCost: " + partyMemberCost, initialPartyVSpacer, initialPartyVSpacer + (i * partyVSpacer) + (i * partyTHeight), partyTWidth, partyTHeight, IntroSequence.input));
 		}
 		int j = 0;
 		for (String e : MainGame.getStats().keySet()) {
-			supplies.add(new Textbox(e + ": " + MainGame.getStats().get(e), gameframe.windowWidth - (initialPartyVSpacer + suppliesTWidth + (2 * suppliesVSpacer) + (2 * suppliesBWidth)), initialPartyVSpacer + (j * suppliesTHeight) + (j * suppliesVSpacer), suppliesTWidth, suppliesTHeight, IntroSequence.input));
-			j++;
+			if (!cannotBuyList.contains(e)){
+				supplyMap.put(e, new Textbox(e + ": " + MainGame.getStats().get(e) + "\nCost: " + supplyCost, gameframe.windowWidth - (initialPartyVSpacer + suppliesTWidth + (2 * suppliesVSpacer) + (2 * suppliesBWidth)), initialPartyVSpacer + (j * suppliesTHeight) + (j * suppliesVSpacer), suppliesTWidth, suppliesTHeight, IntroSequence.input));
+				j++;
+			}
 		}
+	}
+
+	private void initCannotBuyList() {
+		cannotBuyList = new ArrayList<>();
+		cannotBuyList.add(MainGame.VALUABLES_KEY);
+		cannotBuyList.add(MainGame.MORALE_KEY);
+		cannotBuyList.add(MainGame.STAMINA_KEY);
+	}
+
+	private void initBuyAmtMap() {
+		buyAmtMap.put(MainGame.FOOD_KEY, 10);
+		buyAmtMap.put(MainGame.WATER_KEY, 10);
+		buyAmtMap.put(MainGame.AMMO_KEY, 20);
+		buyAmtMap.put(MainGame.MEDICINE_KEY, 5);
+	}
+
+	public HashMap<String, PartyMember> getSelectedParty() {
+		return selectedMembers;
 	}
 
 }
