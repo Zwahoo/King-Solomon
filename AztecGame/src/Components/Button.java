@@ -282,4 +282,8 @@ public class Button extends InputListener {
 			disable();
 		}
 	}
+	
+	public void setFontColor(Color col) {
+		this.fontCol = col;
+	}
 }
