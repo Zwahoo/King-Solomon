@@ -5,14 +5,11 @@ package MainGame;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Insets;
-import java.awt.TextArea;
-import java.awt.TextField;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 /**
  * Main class for the game
@@ -22,7 +19,8 @@ public class gameframe extends JFrame {
 
 
 	public static boolean DEBUG = true;
-	boolean doSetup = true;
+	
+	public static boolean doSetup = false;
 
 
 	private boolean isRunning = true;

@@ -258,16 +258,26 @@ public class MainGame {
 	/**
 	 * Set initial party stats
 	 */
-	private void initStats() {
+	private static void initStats() {
 		stats = new LinkedHashMap<String, Integer>();
-		setPartyStat(MORALE_KEY, 100);
-		setPartyStat(STAMINA_KEY, 100);
-		setPartyStat(FOOD_KEY, 60);
-		setPartyStat(WATER_KEY, 60);
-		setPartyStat(AMMO_KEY, 100);
-		setPartyStat(MEDICINE_KEY, 10);
-		setPartyStat(VALUABLES_KEY, 20);
-		setPartyStat(PACK_ANIMALS_KEY, 0);
+		if (gameframe.doSetup) {
+			setPartyStat(MORALE_KEY, 100);
+			setPartyStat(STAMINA_KEY, 100);
+			setPartyStat(FOOD_KEY, 0);
+			setPartyStat(WATER_KEY, 0);
+			setPartyStat(AMMO_KEY, 0);
+			setPartyStat(MEDICINE_KEY, 0);
+			setPartyStat(VALUABLES_KEY, 100);
+		}
+		else {
+			setPartyStat(MORALE_KEY, 100);
+			setPartyStat(STAMINA_KEY, 100);
+			setPartyStat(FOOD_KEY, 60);
+			setPartyStat(WATER_KEY, 60);
+			setPartyStat(AMMO_KEY, 100);
+			setPartyStat(MEDICINE_KEY, 20);
+			setPartyStat(VALUABLES_KEY, 20);
+		}
 	}
 
 	/**
@@ -521,12 +531,12 @@ public class MainGame {
 	 * @param statName Stat to set
 	 * @param val The value to which to set the stat
 	 */
-	public static void incPartyStat(String statName, int val) {
+	public static boolean incPartyStat(String statName, int val) {
 		if(!stats.containsKey(statName)) {
 			System.out.println("Couldn't find stat " + statName + " to increment!");
-			return;
+			return false;
 		}
-		setPartyStat(statName, stats.get(statName) + val);
+		return setPartyStat(statName, stats.get(statName) + val);
 	}
 
 
@@ -1033,8 +1043,13 @@ public class MainGame {
 	 */
 	@SuppressWarnings("unchecked")
 	public static HashMap<String, Integer> getStats() {
-		//Returns a clone, so the stats can't be modified using the get method.
-		return (LinkedHashMap<String, Integer>) stats.clone();
+		if (stats != null) {
+			//Returns a clone, so the stats can't be modified using the get method.
+			return (LinkedHashMap<String, Integer>) stats.clone();
+		} else {
+			initStats();
+			return (LinkedHashMap<String, Integer>) stats.clone();
+		}
 	}
 
 
@@ -1059,16 +1074,21 @@ public class MainGame {
 	 * @param statName The stat to set.
 	 * @param val The value to which to set the stat.
 	 */
-	public static void setPartyStat(String statName, int val) {
+	public static boolean setPartyStat(String statName, int val) {
 		if (statName.equalsIgnoreCase("Morale")){
 			stats.put(statName, val);
+			statsChanged = true;
+			return true;
 		}else if (val < 0){
 			stats.put(statName, 0); //No negative stats, defaults to 0
+			statsChanged = true;
+			return false;
 		}
 		else {
 			stats.put(statName, val);
+			statsChanged = true;
+			return true;
 		}
-		statsChanged = true;
 	}
 
 	/**
