@@ -15,7 +15,7 @@ public class GentlemanStatView {
 	
 	InputManager input;
 	
-	String statName;
+	public String statName;
 	int defaultVal, primaryMod, secondaryMod;
 	public int total;
 	int x, y;
@@ -23,7 +23,8 @@ public class GentlemanStatView {
 	public int height = 40;
 	public int nameWidth = 200;
 	public int numBoxWidth = 70;
-	public int xSpacer = 5;
+	public int xSpacer = 10;
+	public boolean isNumeric = true;
 	
 	public GentlemanStatView(String statName, int defaultVal, int x, int y, InputManager input) {
 		this(statName, defaultVal, 0, 0, x, y, 40, input);
@@ -99,5 +100,8 @@ public class GentlemanStatView {
 		primaryText.setText(primaryMod + "");
 		secondaryText.setText(secondaryMod + "");
 		totalText.setText(total + "");
+	}
+	public int getTotalWidth() {
+		return this.nameWidth + this.xSpacer * 4 + this.numBoxWidth * 4;
 	}
 }

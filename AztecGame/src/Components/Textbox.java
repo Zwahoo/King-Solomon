@@ -195,6 +195,14 @@ public class Textbox {
 		}
 	}
 	
+	public void setTextColor(Color col) {
+		this.textCol = col;
+	}
+	
+	public void setBackColor(Color col) {
+		this.backCol = col;
+	}
+	
 	public boolean getVisibility() {
 		return visible;
 	}

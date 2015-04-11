@@ -21,8 +21,7 @@ public final class PartyMemberStats {
 		TOREFACTOR_STATS.put(PartyMember.KNOWLEDGE_KEY, 10);
 	}
 	 */
-
-
+	
 	public static final HashMap<String, String> STAT_DESCRIPTIONS;
 	static
 	{
