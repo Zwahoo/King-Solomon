@@ -260,13 +260,24 @@ public class MainGame {
 	 */
 	private static void initStats() {
 		stats = new LinkedHashMap<String, Integer>();
-		setPartyStat(MORALE_KEY, 100);
-		setPartyStat(STAMINA_KEY, 100);
-		setPartyStat(FOOD_KEY, 0);
-		setPartyStat(WATER_KEY, 0);
-		setPartyStat(AMMO_KEY, 0);
-		setPartyStat(MEDICINE_KEY, 0);
-		setPartyStat(VALUABLES_KEY, 100);
+		if (gameframe.doSetup) {
+			setPartyStat(MORALE_KEY, 100);
+			setPartyStat(STAMINA_KEY, 100);
+			setPartyStat(FOOD_KEY, 0);
+			setPartyStat(WATER_KEY, 0);
+			setPartyStat(AMMO_KEY, 0);
+			setPartyStat(MEDICINE_KEY, 0);
+			setPartyStat(VALUABLES_KEY, 100);
+		}
+		else {
+			setPartyStat(MORALE_KEY, 100);
+			setPartyStat(STAMINA_KEY, 100);
+			setPartyStat(FOOD_KEY, 60);
+			setPartyStat(WATER_KEY, 60);
+			setPartyStat(AMMO_KEY, 100);
+			setPartyStat(MEDICINE_KEY, 20);
+			setPartyStat(VALUABLES_KEY, 20);
+		}
 	}
 
 	/**
