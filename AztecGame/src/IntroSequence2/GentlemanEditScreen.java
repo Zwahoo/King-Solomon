@@ -103,11 +103,11 @@ public class GentlemanEditScreen implements DrawScreen {
 	}
 	
 	private void initPrimaryBtns() {
-		
+		primaryButtons = new ArrayList<ImageButton>();
 	}
 	
 	private void initSecondaryBtns() {
-		
+		secondaryButtons = new ArrayList<ImageButton>();
 	}
 	
 }
