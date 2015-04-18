@@ -38,11 +38,11 @@ public class GentlemanEditScreen implements DrawScreen {
 	
 	public String gentlemanName;
 	
-	int primaryImgBtnX = gameframe.windowWidth - 240;
-	int imgButtonY = 140;
+	int primaryImgBtnX = gameframe.windowWidth - 230;
+	int imgButtonY = 120;
 	int imgButtonWidth = 50;
 	int imgButtonHeight = 50;
-	int secondaryX = gameframe.windowWidth - imgButtonWidth - 40;
+	int secondaryX = gameframe.windowWidth - imgButtonWidth - 50;
 	int imgBtnYSpacer = 21;
 	
 	int continueWidth = 200;
@@ -51,14 +51,14 @@ public class GentlemanEditScreen implements DrawScreen {
 	int continueY = gameframe.windowHeight - continueHeight - 40;
 
 	int statViewX = 50;
-	int statViewY = 140;
+	int statViewY = 110;
 	int statYSpacer = 20;
 	
 	int profHobbyTextHeight = 40;
 	int profHobbyTextWidth;
 	//int hobbyTextY = gameframe.windowHeight - profHobbyTextHeight - 40;
 	//int profTextY = hobbyTextY - profHobbyTextHeight - 10;
-	int profTextY = 600;
+	int profTextY = 580;
 	int hobbyTextY = profTextY + profHobbyTextHeight + 10;
 		
 	String professionKey = "None";
@@ -184,15 +184,7 @@ public class GentlemanEditScreen implements DrawScreen {
 		primaryButtons = new ArrayList<ImageButton>();
 		
 		//Loop unraveling... that's a thing
-		ImageButton noneBtn = new ImageButton(ProfessionHobbyStats.IMAGE_FILE_PATHS.get(ProfessionHobbyStats.noneKey),
-				primaryImgBtnX, yPos, imgButtonWidth, imgButtonHeight, IntroSequence.input) {
-			public void onClick() {
-				loadProfession(ProfessionHobbyStats.noneKey);
-			}
-		};
-		yPos += imgButtonHeight + this.imgBtnYSpacer;
-		primaryButtons.add(noneBtn);
-
+		
 		ImageButton gunBtn = new ImageButton(ProfessionHobbyStats.IMAGE_FILE_PATHS.get(ProfessionHobbyStats.gunsmithKey),
 				primaryImgBtnX, yPos, imgButtonWidth, imgButtonHeight, IntroSequence.input) {
 			public void onClick() {
@@ -256,10 +248,95 @@ public class GentlemanEditScreen implements DrawScreen {
 		yPos += imgButtonHeight + this.imgBtnYSpacer;
 		primaryButtons.add(sabBtn);
 		
+		ImageButton noneBtn = new ImageButton(ProfessionHobbyStats.IMAGE_FILE_PATHS.get(ProfessionHobbyStats.noneKey),
+				primaryImgBtnX, yPos, imgButtonWidth, imgButtonHeight, IntroSequence.input) {
+			public void onClick() {
+				loadProfession(ProfessionHobbyStats.noneKey);
+			}
+		};
+		yPos += imgButtonHeight + this.imgBtnYSpacer;
+		primaryButtons.add(noneBtn);
+
 	}
 	
 	private void initSecondaryBtns() {
+		int yPos = imgButtonY;
+		
 		secondaryButtons = new ArrayList<ImageButton>();
+		
+		ImageButton histBtn = new ImageButton(ProfessionHobbyStats.IMAGE_FILE_PATHS.get(ProfessionHobbyStats.historianKey),
+				secondaryX, yPos, imgButtonWidth, imgButtonHeight, IntroSequence.input) {
+			public void onClick() {
+				loadHobby(ProfessionHobbyStats.historianKey);
+			}
+		};
+		yPos += imgButtonHeight + this.imgBtnYSpacer;
+		secondaryButtons.add(histBtn);
+		
+		ImageButton soialiteBtn = new ImageButton(ProfessionHobbyStats.IMAGE_FILE_PATHS.get(ProfessionHobbyStats.socialiteKey),
+				secondaryX, yPos, imgButtonWidth, imgButtonHeight, IntroSequence.input) {
+			public void onClick() {
+				loadHobby(ProfessionHobbyStats.socialiteKey);
+			}
+		};
+		yPos += imgButtonHeight + this.imgBtnYSpacer;
+		secondaryButtons.add(soialiteBtn);
+		
+		ImageButton sportsBtn = new ImageButton(ProfessionHobbyStats.IMAGE_FILE_PATHS.get(ProfessionHobbyStats.sportsKey),
+				secondaryX, yPos, imgButtonWidth, imgButtonHeight, IntroSequence.input) {
+			public void onClick() {
+				loadHobby(ProfessionHobbyStats.sportsKey);
+			}
+		};
+		yPos += imgButtonHeight + this.imgBtnYSpacer;
+		secondaryButtons.add(sportsBtn);
+		
+		ImageButton birdBtn = new ImageButton(ProfessionHobbyStats.IMAGE_FILE_PATHS.get(ProfessionHobbyStats.birdWatchingKey),
+				secondaryX, yPos, imgButtonWidth, imgButtonHeight, IntroSequence.input) {
+			public void onClick() {
+				loadHobby(ProfessionHobbyStats.birdWatchingKey);
+			}
+		};
+		yPos += imgButtonHeight + this.imgBtnYSpacer;
+		secondaryButtons.add(birdBtn);
+		
+		ImageButton shootBtn = new ImageButton(ProfessionHobbyStats.IMAGE_FILE_PATHS.get(ProfessionHobbyStats.shootingKey),
+				secondaryX, yPos, imgButtonWidth, imgButtonHeight, IntroSequence.input) {
+			public void onClick() {
+				loadHobby(ProfessionHobbyStats.shootingKey);
+			}
+		};
+		yPos += imgButtonHeight + this.imgBtnYSpacer;
+		secondaryButtons.add(shootBtn);
+		
+		ImageButton writeBtn = new ImageButton(ProfessionHobbyStats.IMAGE_FILE_PATHS.get(ProfessionHobbyStats.writingKey),
+				secondaryX, yPos, imgButtonWidth, imgButtonHeight, IntroSequence.input) {
+			public void onClick() {
+				loadHobby(ProfessionHobbyStats.writingKey);
+			}
+		};
+		yPos += imgButtonHeight + this.imgBtnYSpacer;
+		secondaryButtons.add(writeBtn);
+		
+		ImageButton wrestleBtn = new ImageButton(ProfessionHobbyStats.IMAGE_FILE_PATHS.get(ProfessionHobbyStats.wrestlerKey),
+				secondaryX, yPos, imgButtonWidth, imgButtonHeight, IntroSequence.input) {
+			public void onClick() {
+				loadHobby(ProfessionHobbyStats.wrestlerKey);
+			}
+		};
+		yPos += imgButtonHeight + this.imgBtnYSpacer;
+		secondaryButtons.add(wrestleBtn);
+		
+
+		ImageButton noneBtn = new ImageButton(ProfessionHobbyStats.IMAGE_FILE_PATHS.get(ProfessionHobbyStats.noneKey),
+				secondaryX, yPos, imgButtonWidth, imgButtonHeight, IntroSequence.input) {
+			public void onClick() {
+				loadHobby(ProfessionHobbyStats.noneKey);
+			}
+		};
+		yPos += imgButtonHeight + this.imgBtnYSpacer;
+		secondaryButtons.add(noneBtn);
+
 	}
 	
 	public void loadProfession(String prof) {
@@ -275,6 +352,23 @@ public class GentlemanEditScreen implements DrawScreen {
 			} else {
 				view.setPrimary(0);
 				view.primaryText.setBackColor(normTBColor);
+			}
+		}
+	}
+	
+	public void loadHobby(String hob) {
+		this.hobbyKey = hob;
+		this.hobbyText.setText("Hobby: " + this.hobbyKey);
+		ArrayList<String> stats = ProfessionHobbyStats.HOBBY_STATS.get(hob);
+		
+		for(GentlemanStatView view : statViewList) {
+			if(!view.isNumeric) continue;
+			if(stats.contains(view.statName)) {
+				view.setSecondary(5);
+				view.secondaryText.setBackColor(new Color(39, 164, 123));
+			} else {
+				view.setSecondary(0);
+				view.secondaryText.setBackColor(normTBColor);
 			}
 		}
 	}

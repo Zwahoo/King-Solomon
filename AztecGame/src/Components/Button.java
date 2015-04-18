@@ -36,9 +36,9 @@ public class Button extends InputListener {
 	Color pressBorEnabled = new Color(0, 0, 0); //Border color for press mode
 	Color fontColEnabled = new Color(0, 0, 0); //Color of the text
 
-	Color normColDisabled = new Color(20, 20, 20); //Back color for normal mode
-	Color hoverColDisabled = new Color(20, 20, 20); //Back color for hover mode
-	Color pressColDisabled = new Color(20, 20, 20); //Back color for press mode
+	Color normColDisabled = new Color(60, 60, 60); //Back color for normal mode
+	Color hoverColDisabled = new Color(60, 60, 60); //Back color for hover mode
+	Color pressColDisabled = new Color(60, 60, 60); //Back color for press mode
 	Color normBorDisabled = new Color(0, 0, 0); //Border color for normal mode
 	Color hoverBorDisabled = new Color(0, 0, 0); //Border color for hover mode
 	Color pressBorDisabled = new Color(0, 0, 0); //Border color for press mode
