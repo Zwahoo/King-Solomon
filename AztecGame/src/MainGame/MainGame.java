@@ -129,6 +129,7 @@ public class MainGame {
 		finalEvent = false;
 		kickedMemberThisTurn = false;
 		dayCounter = 1;
+		initStats();
 	}
 
 	public static void removeInputManager() {
@@ -259,7 +260,9 @@ public class MainGame {
 	 * Set initial party stats
 	 */
 	private static void initStats() {
-		stats = new LinkedHashMap<String, Integer>();
+		if (stats == null) {
+			stats = new LinkedHashMap<String, Integer>();
+		}
 		if (gameframe.doSetup) {
 			setPartyStat(MORALE_KEY, 100);
 			setPartyStat(STAMINA_KEY, 100);
@@ -970,8 +973,11 @@ public class MainGame {
 			{
 				continue; //Morale may be negative
 			}
-			if((resourceKeys[i] == MainGame.PACK_ANIMALS_KEY)) continue; //No pack animals
-			
+			if((resourceKeys[i] == MainGame.PACK_ANIMALS_KEY))
+			{
+				continue; //No pack animals
+			}
+
 			if (stats.get(resourceKeys[i]) < resourceCosts.get(i)){
 				costsMet = false;
 			}
