@@ -2,6 +2,12 @@ package Components;
 
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import MainGame.InputManager;
 import MainGame.MainGame;
@@ -25,6 +31,9 @@ public class StatsBar extends Textbox {
 	int expandButtonSize = 25;
 	int tbWidth;
 	public int partyWidth;
+	
+	ArrayList<Image> statImgs = new ArrayList<Image>();
+	ArrayList<Integer> statImgLocs = new ArrayList<Integer>();
 
 	public int partyHeight;
 
@@ -37,6 +46,7 @@ public class StatsBar extends Textbox {
 
 	public StatsBar(String str, int x, int y, int width, int height, InputManager input) {
 		super(str, x, y - (int)(height*1.38), (int)(width), height, input);
+		initIcons();
 		tbWidth = (int)(width);
 		partyHeight = 3*height;
 		partyWidth = (int)(width*0.25);
@@ -57,6 +67,35 @@ public class StatsBar extends Textbox {
 				showHideExpandPanel();
 			}
 		};
+	}
+	
+	private void initIcons() {
+		try {
+			Image ammoIcon = ImageIO.read(new File("assets/Icons/ammon icon.png"));
+			Image foodIcon = ImageIO.read(new File("assets/Icons/food icon.png"));
+			Image morIcon = ImageIO.read(new File("assets/Icons/morale icon.png"));
+			Image stamIcon = ImageIO.read(new File("assets/Icons/stamina icon.png"));
+			Image valIcon = ImageIO.read(new File("assets/Icons/valuables icon.png"));
+			Image waterIcon = ImageIO.read(new File("assets/Icons/water icon.png"));
+			
+			statImgs.add(morIcon);
+			statImgs.add(stamIcon);
+			statImgs.add(foodIcon);
+			statImgs.add(waterIcon);
+			statImgs.add(ammoIcon);
+			//statImgs.add(medIcon);
+			statImgs.add(valIcon);
+			
+			statImgLocs.add(45);
+			statImgLocs.add(160);
+			statImgLocs.add(275);
+			statImgLocs.add(390);
+			statImgLocs.add(505);
+			//statImgLocs.add(620);
+			statImgLocs.add(735);
+		} catch(IOException e) {
+			System.out.println("Failed to load resource icon images...");
+		}
 	}
 
 	private String getPartyText() {
@@ -134,6 +173,9 @@ public class StatsBar extends Textbox {
 		expandButton.draw(g);
 		if(expandPanel != null) {
 			expandPanel.draw(g);
+		}
+		for(int i=0; i<statImgs.size(); i++) {
+			g.drawImage(statImgs.get(i), statImgLocs.get(i), 723, 30, 30, null);
 		}
 	}
 }
