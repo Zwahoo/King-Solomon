@@ -7,7 +7,7 @@ import MainGame.PartyMember;
 
 public class ResourcesAndPartyHolder implements DrawScreen {
 
-	private boolean finished;
+	public static boolean finished;
 
 	static PartyAndResourcesScreen resScr;
 	static PartyHireScreen hireScr;
@@ -24,9 +24,13 @@ public class ResourcesAndPartyHolder implements DrawScreen {
 	@Override
 	public boolean update() {
 		if (drawRes) {
-			if(resScr != null) resScr.update();
+			if(resScr != null) {
+				resScr.update();
+			}
 		} else {
-			if(hireScr != null) hireScr.update();
+			if(hireScr != null) {
+				hireScr.update();
+			}
 		}
 		return finished;
 	}
@@ -34,9 +38,13 @@ public class ResourcesAndPartyHolder implements DrawScreen {
 	@Override
 	public void draw(Graphics g) {
 		if (drawRes) {
-			if(resScr != null) resScr.draw(g);
+			if(resScr != null) {
+				resScr.draw(g);
+			}
 		} else {
-			if(hireScr != null) hireScr.draw(g);
+			if(hireScr != null) {
+				hireScr.draw(g);
+			}
 		}
 	}
 
@@ -47,7 +55,9 @@ public class ResourcesAndPartyHolder implements DrawScreen {
 
 	public static void switchToResources(PartyMember pMember) {
 		if (pMember == null) {
-			resScr.removePartyMember(currPartyID);
+			if (resScr.getSelectedPartyMember(currPartyID) != null) {
+				resScr.removePartyMember(currPartyID);
+			}
 		} else {
 			resScr.addPartyMember(pMember, currPartyID);
 		}

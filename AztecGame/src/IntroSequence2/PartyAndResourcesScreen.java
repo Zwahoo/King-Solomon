@@ -15,12 +15,14 @@ import MainGame.gameframe;
 public class PartyAndResourcesScreen implements DrawScreen {
 
 	private Textbox valuableAmt;
+	private int valuables = 100;
 
 	private Button beginButton;
 
 	private ArrayList<Button> partyButtons;
 
-	private HashMap<String, Textbox> supplyMap;
+	private HashMap<String, Textbox> supplyTextboxMap;
+	private HashMap<String, Integer> supplyMap;
 
 	private ArrayList<String> cannotBuyList;
 
@@ -67,8 +69,10 @@ public class PartyAndResourcesScreen implements DrawScreen {
 		partyButtons = new ArrayList<>();
 		plusButtonMap = new HashMap<>();
 		minusButtonMap = new HashMap<>();
+		supplyTextboxMap = new HashMap<>();
 		supplyMap = new HashMap<>();
 		buyAmtMap = new HashMap<>();
+		initSupplyBases();
 		initCannotBuyList();
 		initBuyAmtMap();
 		initializeButtons();
@@ -79,7 +83,7 @@ public class PartyAndResourcesScreen implements DrawScreen {
 	@Override
 	public boolean update() {
 		valuableAmt.update();
-		valuableAmt.setText("Valuables: " + MainGame.getStats().get(MainGame.VALUABLES_KEY));
+		valuableAmt.setText("Valuables: " + valuables);
 		if (selectedMembers.values().size() == 0) {
 			beginButton.disable();
 			beginButton.update();
@@ -93,7 +97,7 @@ public class PartyAndResourcesScreen implements DrawScreen {
 		for (Button b : partyButtons) {
 			b.update();
 		}
-		for (Textbox t : supplyMap.values()) {
+		for (Textbox t : supplyTextboxMap.values()) {
 			t.update();
 		}
 		for (Button b : plusButtonMap.values()) {
@@ -115,7 +119,7 @@ public class PartyAndResourcesScreen implements DrawScreen {
 		for (Button b : partyButtons) {
 			b.draw(g);
 		}
-		for (Textbox t : supplyMap.values()) {
+		for (Textbox t : supplyTextboxMap.values()) {
 			t.draw(g);
 		}
 		for (Button b : plusButtonMap.values()) {
@@ -149,16 +153,22 @@ public class PartyAndResourcesScreen implements DrawScreen {
 			partyButtons.add(new Button(initialPartyVSpacer, initialPartyVSpacer + (i * partyVSpacer) + (i * partyTHeight), partyTWidth, partyTHeight, "Hire Party Member\nCost: " + partyMemberCost, IntroSequence.input){
 				@Override
 				public void onClick() {
-					//TODO ADD PARTY HIRING STUFF HERE
 					int partyID = partyButtons.indexOf(this);
-					ResourcesAndPartyHolder.switchToHire(partyID);
+					if (valuables > 0){
+						if (tempMembers.get(partyID) == null) {
+							valuables -= partyMemberCost;
+						}
+						ResourcesAndPartyHolder.switchToHire(partyID);
+					} else if (tempMembers.get(partyID) != null) {
+						ResourcesAndPartyHolder.switchToHire(partyID);
+					}
 				}
 			});
 		}
 		beginButton = new Button(beginX, beginY, beginWidth, beginHeight, "Begin", IntroSequence.input){
 			@Override
 			public void onClick() {
-				finished = true;
+				ResourcesAndPartyHolder.finished = true;
 			}
 		};
 		int j = 0;
@@ -183,33 +193,31 @@ public class PartyAndResourcesScreen implements DrawScreen {
 	}
 
 	private void changeStat(Button b, boolean plus) {
-		if (plus && (MainGame.getStats().get(MainGame.VALUABLES_KEY) > 0)) {
+		if (plus && (valuables > 0)) {
 			for (String s : plusButtonMap.keySet()) {
 				if (plusButtonMap.get(s).equals(b)) {
-					if (MainGame.incPartyStat(s, buyAmtMap.get(s))) {
-						MainGame.incPartyStat(MainGame.VALUABLES_KEY, -supplyCost);
-					}
-					supplyMap.get(s).setText(s + ": " + MainGame.getStats().get(s) + "\nCost: " + supplyCost);
+					supplyMap.put(s, supplyMap.get(s) + buyAmtMap.get(s));
+					valuables -= supplyCost;
+					supplyTextboxMap.get(s).setText(s + ": " + supplyMap.get(s) + "\nCost: " + supplyCost);
 				}
 			}
 		} else {
 			for (String s : minusButtonMap.keySet()) {
 				if (minusButtonMap.get(s).equals(b)) {
-					if (MainGame.incPartyStat(s, -buyAmtMap.get(s))) {
-						MainGame.incPartyStat(MainGame.VALUABLES_KEY, supplyCost);
-					}
-					supplyMap.get(s).setText(s + ": " + MainGame.getStats().get(s) + "\nCost: " + supplyCost);
+					supplyMap.put(s, supplyMap.get(s) - buyAmtMap.get(s));
+					valuables += supplyCost;
+					supplyTextboxMap.get(s).setText(s + ": " + supplyMap.get(s) + "\nCost: " + supplyCost);
 				}
 			}
 		}
 	}
 
 	private void initializeTextboxes() {
-		valuableAmt = new Textbox("Valuables: " + MainGame.getStats().get(MainGame.VALUABLES_KEY), 50, 20, 150, 50, IntroSequence.input);
+		valuableAmt = new Textbox("Valuables: " + valuables, 50, 20, 150, 50, IntroSequence.input);
 		int j = 0;
 		for (String e : MainGame.getStats().keySet()) {
 			if (!cannotBuyList.contains(e)){
-				supplyMap.put(e, new Textbox(e + ": " + MainGame.getStats().get(e) + "\nCost: " + supplyCost, gameframe.windowWidth - (initialPartyVSpacer + suppliesTWidth + (2 * suppliesVSpacer) + (2 * suppliesBWidth)), initialPartyVSpacer + (j * suppliesTHeight) + (j * suppliesVSpacer), suppliesTWidth, suppliesTHeight, IntroSequence.input));
+				supplyTextboxMap.put(e, new Textbox(e + ": " + supplyMap.get(e) + "\nCost: " + supplyCost, gameframe.windowWidth - (initialPartyVSpacer + suppliesTWidth + (2 * suppliesVSpacer) + (2 * suppliesBWidth)), initialPartyVSpacer + (j * suppliesTHeight) + (j * suppliesVSpacer), suppliesTWidth, suppliesTHeight, IntroSequence.input));
 				j++;
 			}
 		}
@@ -235,12 +243,19 @@ public class PartyAndResourcesScreen implements DrawScreen {
 		}
 	}
 
+	private void initSupplyBases() {
+		supplyMap.put(MainGame.FOOD_KEY, 10);
+		supplyMap.put(MainGame.WATER_KEY, 10);
+		supplyMap.put(MainGame.AMMO_KEY, 20);
+		supplyMap.put(MainGame.MEDICINE_KEY, 5);
+	}
+
 	public void addPartyMember(PartyMember pMember, int partyID) {
 		if (tempMembers.get(partyID) != null) {
 			selectedMembers.remove(tempMembers.get(partyID).getName());
 		}
 		tempMembers.set(partyID, pMember);
-		partyButtons.get(partyID).setText(pMember.getName() + "\nCost: " + partyMemberCost);
+		partyButtons.get(partyID).setText(pMember.getName() + "\n" + pMember.getType() + "\nCost: " + partyMemberCost);
 		selectedMembers.put(pMember.getName(), pMember);
 	}
 
@@ -280,7 +295,19 @@ public class PartyAndResourcesScreen implements DrawScreen {
 
 	public void removePartyMember(int partyID) {
 		selectedMembers.remove(tempMembers.get(partyID).getName());
-		tempMembers.remove(partyID);
+		tempMembers.set(partyID, null);
 		partyButtons.get(partyID).setText("Fired!\nCost: " + partyMemberCost);
-	}	
+		valuables += partyMemberCost;
+	}
+
+	public HashMap<String, Integer> createStatsMap() {
+		HashMap<String, Integer> resources = new HashMap<>();
+		resources.put(MainGame.MORALE_KEY, 100);
+		resources.put(MainGame.STAMINA_KEY, 100);
+		resources.put(MainGame.VALUABLES_KEY, valuables);
+		for (String s : supplyMap.keySet()) {
+			resources.put(s, supplyMap.get(s));
+		}
+		return resources;
+	}
 }

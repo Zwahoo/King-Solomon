@@ -129,7 +129,6 @@ public class MainGame {
 		finalEvent = false;
 		kickedMemberThisTurn = false;
 		dayCounter = 1;
-		initStats();
 	}
 
 	public static void removeInputManager() {
@@ -140,7 +139,7 @@ public class MainGame {
 	}
 
 	//Starts the game, takes in the window frame, width, and height.
-	public MainGame(gameframe frame, int width, int height, HashMap<String, Integer> gentStats, HashMap<String, PartyMember> theParty) throws IOException {
+	public MainGame(gameframe frame, int width, int height, HashMap<String, Integer> gentStats, HashMap<String, PartyMember> theParty, HashMap<String, Integer> resources) throws IOException {
 
 		resetAllVals();
 
@@ -181,7 +180,7 @@ public class MainGame {
 		input = new InputManager(frame, this);
 
 		//Sets the stats of the party
-		initStats();
+		initStats(resources);
 
 
 		//Set up the stat bar
@@ -259,18 +258,18 @@ public class MainGame {
 	/**
 	 * Set initial party stats
 	 */
-	private static void initStats() {
+	private static void initStats(HashMap<String, Integer> resources) {
 		if (stats == null) {
 			stats = new LinkedHashMap<String, Integer>();
 		}
 		if (gameframe.doSetup) {
-			setPartyStat(MORALE_KEY, 100);
-			setPartyStat(STAMINA_KEY, 100);
-			setPartyStat(FOOD_KEY, 0);
-			setPartyStat(WATER_KEY, 0);
-			setPartyStat(AMMO_KEY, 0);
-			setPartyStat(MEDICINE_KEY, 0);
-			setPartyStat(VALUABLES_KEY, 100);
+			setPartyStat(MORALE_KEY, resources.get(MORALE_KEY));
+			setPartyStat(STAMINA_KEY, resources.get(STAMINA_KEY));
+			setPartyStat(FOOD_KEY, resources.get(FOOD_KEY));
+			setPartyStat(WATER_KEY, resources.get(WATER_KEY));
+			setPartyStat(AMMO_KEY, resources.get(AMMO_KEY));
+			setPartyStat(MEDICINE_KEY, resources.get(MEDICINE_KEY));
+			setPartyStat(VALUABLES_KEY, resources.get(VALUABLES_KEY));
 		}
 		else {
 			setPartyStat(MORALE_KEY, 100);
@@ -1055,7 +1054,7 @@ public class MainGame {
 			//Returns a clone, so the stats can't be modified using the get method.
 			return (LinkedHashMap<String, Integer>) stats.clone();
 		} else {
-			initStats();
+			initStats(PartyMemberStats.baseResources);
 			return (LinkedHashMap<String, Integer>) stats.clone();
 		}
 	}

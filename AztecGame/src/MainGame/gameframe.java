@@ -47,6 +47,7 @@ public class gameframe extends JFrame {
 
 	private HashMap<String, Integer> gentStats = PartyMemberStats.AVERAGE_ABE_STATS;
 	private HashMap<String, PartyMember> party = PartyMemberStats.defaultParty;
+	private HashMap<String, Integer> resources = new HashMap<>();
 
 	// MAIN
 	public static void main(String[] args) throws IOException {
@@ -106,6 +107,7 @@ public class gameframe extends JFrame {
 
 				gentStats = introSeq.gentStats;
 				party = introSeq.party;
+				resources = introSeq.resources;
 
 				IntroSequence.removeInputManager();
 				introSeq = null;
@@ -157,7 +159,7 @@ public class gameframe extends JFrame {
 	}
 
 	private void initializeMainGame() throws IOException {
-		mainGame = new MainGame(this, windowWidth, windowHeight, gentStats, party);
+		mainGame = new MainGame(this, windowWidth, windowHeight, gentStats, party, resources);
 	}
 
 	private void initializeIntroSequence() {
