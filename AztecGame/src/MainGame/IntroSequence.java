@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import java.util.HashMap;
 
 import IntroSequence2.GentlemanEditScreen;
-import IntroSequence2.PartyAndResourcesScreen;
+import IntroSequence2.ResourcesAndPartyHolder;
 
 /**
  * The intro sequence displays one intro scene after another,
@@ -28,7 +28,7 @@ public class IntroSequence {
 	//The three different scene options.
 	private GentlemanEditScreen gentEditScreen;
 	private StartScreen startScreen;
-	private PartyAndResourcesScreen partySelect;
+	private ResourcesAndPartyHolder partySelect;
 
 	//The background color for scenes with no background of their own.
 	Color bkgColor = Color.GRAY;
@@ -72,13 +72,13 @@ public class IntroSequence {
 		//Stat Select Screen Completed.
 		else if(stateNum == 1) {
 			gentStats = gentEditScreen.getGentStats();
-			partySelect = new PartyAndResourcesScreen();
+			partySelect = new ResourcesAndPartyHolder();
 			currentScreen = partySelect;
 			//statSelect.finish();
 		}
 		//Party Select Screen Completed.
 		else if (stateNum == 2) {
-			party = partySelect.getSelectedParty();
+			party = partySelect.getResScr().getSelectedParty();
 			partySelect.finish();
 			finished = true;
 		}
