@@ -35,6 +35,12 @@ public class PartyHireScreen implements DrawScreen {
 	int finishX = gameframe.windowWidth - finishWidth - 40;
 	int finishY = gameframe.windowHeight - finishHeight - 40;
 	
+	Button fireButton;
+	int fireWidth = 200;
+	int fireHeight = 40;
+	int fireX = 50;
+	int fireY = gameframe.windowHeight - finishHeight - 40;
+	
 	HashMap<String, Integer> stats = PartyMemberStats.HAPPY_HUNTER_STATS;
 	
 	String memberClass = PartyMemberStats.hunterStr;
@@ -75,6 +81,13 @@ public class PartyHireScreen implements DrawScreen {
 				ResourcesAndPartyHolder.switchToResources(getCreatedMember());
 			}
 		};
+		
+		fireButton = new Button(fireX, fireY, fireWidth, fireHeight, "Fire", IntroSequence.input){
+			@Override
+			public void onClick() {
+				ResourcesAndPartyHolder.switchToResources(null);
+			}
+		};
 	}
 	
 	public String getStatBoxText() {
@@ -90,6 +103,7 @@ public class PartyHireScreen implements DrawScreen {
 		nameButton.update();
 		statBox.update();
 		finishButton.update();
+		fireButton.update();
 		return false;
 	}
 
@@ -98,6 +112,7 @@ public class PartyHireScreen implements DrawScreen {
 		nameButton.draw(g);
 		statBox.draw(g);
 		finishButton.draw(g);
+		fireButton.draw(g);
 	}
 
 	@Override
@@ -107,6 +122,7 @@ public class PartyHireScreen implements DrawScreen {
 		
 		IntroSequence.input.removeInputListener(nameButton, modesList);
 		IntroSequence.input.removeInputListener(finishButton, modesList);
+		IntroSequence.input.removeInputListener(fireButton, modesList);
 	}
 	
 	public PartyMember getCreatedMember() {
