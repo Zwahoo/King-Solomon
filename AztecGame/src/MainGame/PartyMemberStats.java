@@ -244,4 +244,14 @@ public final class PartyMemberStats {
 	public static String missStr = "Missionary";
 	public static String expStr = "Explorer";
 	public static String guideStr = "Guide";
+	
+	public static final HashMap<String, HashMap<String, Integer>> classStats = new HashMap<String, HashMap<String, Integer>>();
+	static {
+		classStats.put(hunterStr, HAPPY_HUNTER_STATS);
+		classStats.put(mercStr, MERRY_MERCENARY_STATS);
+		classStats.put(natStr, NIFTY_NATURALIST_STATS);
+		classStats.put(missStr, MARVELOUS_MISSIONARY_STATS);
+		classStats.put(expStr, EXUBERANT_EXPLORER_STATS);
+		classStats.put(guideStr, GIDDY_GUIDE_STATS);
+	}
 }

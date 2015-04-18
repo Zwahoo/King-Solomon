@@ -29,6 +29,12 @@ public class PartyHireScreen implements DrawScreen {
 	int statBoxWidth = 300;
 	int statBoxHeight = 400;
 	
+	Textbox classBox;
+	int classBoxX = 50;
+	int classBoxY = statBoxY + statBoxHeight + 10;
+	int classBoxWidth = statBoxWidth;
+	int classBoxHeight = 50;
+	
 	Button finishButton;
 	int finishWidth = 200;
 	int finishHeight = 40;
@@ -41,10 +47,15 @@ public class PartyHireScreen implements DrawScreen {
 	int fireX = 50;
 	int fireY = gameframe.windowHeight - finishHeight - 40;
 	
+	ArrayList<Button> classButtons;
+	int classBtnWidth = 200;
+	int classBtnHeight = 40;
+	int classBtnX = gameframe.windowWidth - classBtnWidth - 40;
+	int classBtnStartY = statBoxY;
+	int classBtnYSpacer = 25;
+	
 	HashMap<String, Integer> stats = PartyMemberStats.HAPPY_HUNTER_STATS;
-	
 	String memberClass = PartyMemberStats.hunterStr;
-	
 	String memberImage = "assets/Portraits/ExplorerImage.png";
 	
 	public PartyHireScreen(PartyMember memberToLoad) {
@@ -57,7 +68,10 @@ public class PartyHireScreen implements DrawScreen {
 			nameTextColor = Color.black;
 		}
 		
+		initClassButtons();
+		
 		statBox = new Textbox(getStatBoxText(), statBoxX, statBoxY, statBoxWidth, statBoxHeight, IntroSequence.input);
+		classBox = new Textbox("Class: " + memberClass, classBoxX, classBoxY, classBoxWidth, classBoxHeight, IntroSequence.input);
 		
 		nameButton = new Button(nameBtnX, nameBtnY, nameBtnWidth, nameBtnHeight, memberName, IntroSequence.input) {
 			@Override
@@ -90,6 +104,78 @@ public class PartyHireScreen implements DrawScreen {
 		};
 	}
 	
+	public void initClassButtons() {
+		classButtons = new ArrayList<Button>();
+		
+		int yPos = classBtnStartY;
+		
+		Button curBtn = new Button(classBtnX, yPos, classBtnWidth, classBtnHeight, PartyMemberStats.hunterStr, IntroSequence.input) {
+			@Override
+			public void onClick() {
+				setClass(PartyMemberStats.hunterStr);
+			}
+		};
+		yPos += curBtn.getHeight() + classBtnYSpacer;
+		classButtons.add(curBtn);
+		
+		
+		curBtn = new Button(classBtnX, yPos, classBtnWidth, classBtnHeight, PartyMemberStats.expStr, IntroSequence.input) {
+			@Override
+			public void onClick() {
+				setClass(PartyMemberStats.expStr);
+			}
+		};
+		yPos += curBtn.getHeight() + classBtnYSpacer;
+		classButtons.add(curBtn);
+		
+		
+		curBtn = new Button(classBtnX, yPos, classBtnWidth, classBtnHeight, PartyMemberStats.missStr, IntroSequence.input) {
+			@Override
+			public void onClick() {
+				setClass(PartyMemberStats.missStr);
+			}
+		};
+		yPos += curBtn.getHeight() + classBtnYSpacer;
+		classButtons.add(curBtn);
+		
+		
+		curBtn = new Button(classBtnX, yPos, classBtnWidth, classBtnHeight, PartyMemberStats.guideStr, IntroSequence.input) {
+			@Override
+			public void onClick() {
+				setClass(PartyMemberStats.guideStr);
+			}
+		};
+		yPos += curBtn.getHeight() + classBtnYSpacer;
+		classButtons.add(curBtn);
+		
+		
+		curBtn = new Button(classBtnX, yPos, classBtnWidth, classBtnHeight, PartyMemberStats.natStr, IntroSequence.input) {
+			@Override
+			public void onClick() {
+				setClass(PartyMemberStats.natStr);
+			}
+		};
+		yPos += curBtn.getHeight() + classBtnYSpacer;
+		classButtons.add(curBtn);
+		
+		
+		curBtn = new Button(classBtnX, yPos, classBtnWidth, classBtnHeight, PartyMemberStats.mercStr, IntroSequence.input) {
+			@Override
+			public void onClick() {
+				setClass(PartyMemberStats.mercStr);
+			}
+		};
+		yPos += curBtn.getHeight() + classBtnYSpacer;
+		classButtons.add(curBtn);
+	}
+	
+	public void setClass(String cls) {
+		stats = PartyMemberStats.classStats.get(cls);
+		memberClass = cls;		
+		statBox.setText(getStatBoxText());
+		classBox.setText("Class: " + memberClass);
+	}
+	
 	public String getStatBoxText() {
 		String toRet = "Member's Stats:\n\n";
 		for(String stat : stats.keySet()) {
@@ -104,6 +190,10 @@ public class PartyHireScreen implements DrawScreen {
 		statBox.update();
 		finishButton.update();
 		fireButton.update();
+		classBox.update();
+		for(Button classBtn : classButtons) {
+			classBtn.update();
+		}
 		return false;
 	}
 
@@ -113,6 +203,10 @@ public class PartyHireScreen implements DrawScreen {
 		statBox.draw(g);
 		finishButton.draw(g);
 		fireButton.draw(g);
+		classBox.draw(g);
+		for(Button classBtn : classButtons) {
+			classBtn.draw(g);
+		}
 	}
 
 	@Override
@@ -123,6 +217,10 @@ public class PartyHireScreen implements DrawScreen {
 		IntroSequence.input.removeInputListener(nameButton, modesList);
 		IntroSequence.input.removeInputListener(finishButton, modesList);
 		IntroSequence.input.removeInputListener(fireButton, modesList);
+		for(Button classBtn : classButtons) {
+			IntroSequence.input.removeInputListener(classBtn, modesList);
+		}
+		
 	}
 	
 	public PartyMember getCreatedMember() {
