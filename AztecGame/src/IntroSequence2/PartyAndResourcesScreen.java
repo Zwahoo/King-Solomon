@@ -248,4 +248,31 @@ public class PartyAndResourcesScreen implements DrawScreen {
 		return tempMembers.get(index);
 	}
 
+	public void disableAllButtons() {
+		beginButton.disable();
+		for (Button b : partyButtons) {
+			b.disable();
+		}
+		for (Button b : plusButtonMap.values()) {
+			b.disable();
+		}
+		for (Button b : minusButtonMap.values()) {
+			b.disable();
+		}
+	}
+
+	public void enableAllButtons() {
+		beginButton.enable();
+		for (Button b : partyButtons) {
+			b.enable();
+		}
+		for (Button b : plusButtonMap.values()) {
+			b.enable();
+		}
+		for (Button b : minusButtonMap.values()) {
+			b.enable();
+		}
+	}
+
+
 }
