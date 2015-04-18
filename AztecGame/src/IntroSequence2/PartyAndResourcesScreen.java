@@ -36,11 +36,12 @@ public class PartyAndResourcesScreen implements DrawScreen {
 
 	private int supplyCost = 5;
 	private int partyMemberCost = 10;
+	private int maxPartySize = 7;
 
 	private HashMap<String, PartyMember> selectedMembers = new HashMap<>();
-	private ArrayList<PartyMember> tempMembers = new ArrayList<>();
+	private ArrayList<PartyMember> tempMembers = new ArrayList<>(maxPartySize);
 
-	private int maxPartySize = 7;
+
 
 	private int initialPartyVSpacer = 150;
 
@@ -72,6 +73,7 @@ public class PartyAndResourcesScreen implements DrawScreen {
 		initBuyAmtMap();
 		initializeButtons();
 		initializeTextboxes();
+		initTempMembers();
 	}
 
 	@Override
@@ -149,7 +151,7 @@ public class PartyAndResourcesScreen implements DrawScreen {
 				public void onClick() {
 					//TODO ADD PARTY HIRING STUFF HERE
 					int partyID = partyButtons.indexOf(this);
-					switchToHire(partyID);
+					ResourcesAndPartyHolder.switchToHire(partyID);
 				}
 			});
 		}
@@ -227,16 +229,18 @@ public class PartyAndResourcesScreen implements DrawScreen {
 		buyAmtMap.put(MainGame.MEDICINE_KEY, 5);
 	}
 
+	private void initTempMembers() {
+		for(int i = 0; i < maxPartySize; i++) {
+			tempMembers.add(null);
+		}
+	}
+
 	public HashMap<String, PartyMember> getSelectedParty() {
 		return selectedMembers;
 	}
 
-	public void switchToResources() {
-
-	}
-
-	public void switchToHire(int partyID) {
-
+	public PartyMember getSelectedPartyMember(int index) {
+		return tempMembers.get(index);
 	}
 
 }

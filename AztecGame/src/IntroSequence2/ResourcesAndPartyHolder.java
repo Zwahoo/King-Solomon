@@ -6,26 +6,49 @@ import MainGame.DrawScreen;
 
 public class ResourcesAndPartyHolder implements DrawScreen {
 
-	PartyAndResourcesScreen resScr;
+	private boolean finished;
 
-	public boolean drawRes;
+	static PartyAndResourcesScreen resScr;
+	static PartyHireScreen hireScr;
+
+	public static boolean drawRes;
+
+	public ResourcesAndPartyHolder() {
+		resScr = new PartyAndResourcesScreen();
+		drawRes = true;
+	}
 
 	@Override
 	public boolean update() {
-		// TODO Auto-generated method stub
-		return false;
+		if (drawRes) {
+			resScr.update();
+		} else {
+			hireScr.update();
+		}
+		return finished;
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-
+		if (drawRes) {
+			resScr.draw(g);
+		} else {
+			hireScr.draw(g);
+		}
 	}
 
 	@Override
 	public void finish() {
-		// TODO Auto-generated method stub
+		resScr.finish();
+	}
 
+	public static void switchToHire(int partyID) {
+		drawRes = false;
+		hireScr = new PartyHireScreen(resScr.getSelectedPartyMember(partyID));
+	}
+
+	public PartyAndResourcesScreen getResScr() {
+		return resScr;
 	}
 
 }
