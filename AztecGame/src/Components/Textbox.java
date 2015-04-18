@@ -172,12 +172,16 @@ public class Textbox {
 	//Draw all the things!
 	public void draw(Graphics g) {
 		//Draw border
-		g.setColor(borderCol);
-		g.fillRect(drawRect.x, drawRect.y, drawRect.width, drawRect.height);
+		if(borderCol != null) {
+			g.setColor(borderCol);
+			g.fillRect(drawRect.x, drawRect.y, drawRect.width, drawRect.height);
+		}
 		
 		//Draw backdrop
-		g.setColor(backCol);
-		g.fillRect(textSpaceRect.x, textSpaceRect.y, textSpaceRect.width, textSpaceRect.height);
+		if(backCol != null) {
+			g.setColor(backCol);
+			g.fillRect(textSpaceRect.x, textSpaceRect.y, textSpaceRect.width, textSpaceRect.height);
+		}
 		
 		//Draw Text
 		g.setFont(myFont);
@@ -219,5 +223,9 @@ public class Textbox {
 	public void updateView() {
 		calculateFullHeight();
 		checkNeedScroll();
+	}
+	public void makeLabel() {
+		this.backCol = null;
+		this.borderCol = null;
 	}
 }

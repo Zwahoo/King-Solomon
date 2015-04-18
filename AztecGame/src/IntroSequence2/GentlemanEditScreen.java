@@ -43,7 +43,7 @@ public class GentlemanEditScreen implements DrawScreen {
 	int imgButtonWidth = 50;
 	int imgButtonHeight = 50;
 	int secondaryX = gameframe.windowWidth - imgButtonWidth - 40;
-	int imgBtnYSpacer = 20;
+	int imgBtnYSpacer = 21;
 	
 	int continueWidth = 200;
 	int continueHeight = 40;
@@ -56,9 +56,11 @@ public class GentlemanEditScreen implements DrawScreen {
 	
 	int profHobbyTextHeight = 40;
 	int profHobbyTextWidth;
-	int hobbyTextY = gameframe.windowHeight - profHobbyTextHeight - 40;
-	int profTextY = hobbyTextY - profHobbyTextHeight - 10;
-	
+	//int hobbyTextY = gameframe.windowHeight - profHobbyTextHeight - 40;
+	//int profTextY = hobbyTextY - profHobbyTextHeight - 10;
+	int profTextY = 600;
+	int hobbyTextY = profTextY + profHobbyTextHeight + 10;
+		
 	String professionKey = "None";
 	String hobbyKey = "None";
 	
@@ -72,7 +74,7 @@ public class GentlemanEditScreen implements DrawScreen {
 		profHobbyTextWidth = statViewList.get(0).getTotalWidth();
 		
 		profText = new Textbox("Profession: " + professionKey, statViewX, profTextY, profHobbyTextWidth, profHobbyTextHeight, IntroSequence.input);
-		hobbyText = new Textbox("Profession: " + hobbyKey, statViewX, hobbyTextY, profHobbyTextWidth, profHobbyTextHeight, IntroSequence.input);
+		hobbyText = new Textbox("Hobby: " + hobbyKey, statViewX, hobbyTextY, profHobbyTextWidth, profHobbyTextHeight, IntroSequence.input);
 		
 		
 		continueButton = new Button(continueX, continueY, continueWidth, continueHeight, "Continue", IntroSequence.input){
@@ -151,14 +153,22 @@ public class GentlemanEditScreen implements DrawScreen {
 
 		int yPos = statViewY;
 
-		GentlemanStatView label = new GentlemanStatView("Stat", 0, 0, 0, statViewX, yPos, 40, IntroSequence.input);
+		GentlemanStatView label = new GentlemanStatView("Stat", 0, 0, 0, statViewX, yPos, 35, IntroSequence.input);
 		label.isNumeric = false;
+		
 		label.defaultText.setText("Base");
 		label.primaryText.setText("Primary");
 		label.secondaryText.setText("Hobby");
 		label.totalText.setText("Total");
+		label.nameText.makeLabel();
+		label.defaultText.makeLabel();
+		label.primaryText.makeLabel();
+		label.secondaryText.makeLabel();
+		label.totalText.makeLabel();
+		
+		
 		statViewList.add(label);
-		yPos += label.height + statYSpacer;		
+		yPos += label.height + statYSpacer - 20;		
 		for(String stat : defaultStats.keySet()) {
 			if(stat.equals(PartyMember.LOYALTY_KEY)) continue;
 			
