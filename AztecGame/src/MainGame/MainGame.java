@@ -970,6 +970,8 @@ public class MainGame {
 			{
 				continue; //Morale may be negative
 			}
+			if((resourceKeys[i] == MainGame.PACK_ANIMALS_KEY)) continue; //No pack animals
+			
 			if (stats.get(resourceKeys[i]) < resourceCosts.get(i)){
 				costsMet = false;
 			}
