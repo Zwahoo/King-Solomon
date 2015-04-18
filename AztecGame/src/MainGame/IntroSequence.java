@@ -28,7 +28,6 @@ public class IntroSequence {
 	//The three different scene options.
 	private GentlemanEditScreen gentEditScreen;
 	private StartScreen startScreen;
-	private StatSelectScreen statSelect;
 	private PartyAndResourcesScreen partySelect;
 
 	//The background color for scenes with no background of their own.
@@ -66,15 +65,13 @@ public class IntroSequence {
 	public void launchNextState() {
 		//Start Screen Completed.
 		if(stateNum == 0) {
-			//statSelect = new StatSelectScreen();
-			//currentScreen = statSelect;
 			gentEditScreen = new GentlemanEditScreen();
 			currentScreen = gentEditScreen;
 			startScreen.finish();
 		}
 		//Stat Select Screen Completed.
 		else if(stateNum == 1) {
-			//gentStats = statSelect.getGentStats();
+			gentStats = gentEditScreen.getGentStats();
 			partySelect = new PartyAndResourcesScreen();
 			currentScreen = partySelect;
 			//statSelect.finish();

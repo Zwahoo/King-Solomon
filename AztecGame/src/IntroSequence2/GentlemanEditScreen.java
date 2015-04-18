@@ -372,5 +372,13 @@ public class GentlemanEditScreen implements DrawScreen {
 			}
 		}
 	}
+
+	public HashMap<String, Integer> getGentStats() {
+		HashMap<String, Integer> ret = new HashMap<String, Integer>();
+		for(GentlemanStatView view : statViewList) {
+			ret.put(view.statName, view.total);
+		}
+		return ret;
+	}
 	
 }
