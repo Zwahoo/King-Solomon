@@ -24,9 +24,9 @@ public class ResourcesAndPartyHolder implements DrawScreen {
 	@Override
 	public boolean update() {
 		if (drawRes) {
-			resScr.update();
+			if(resScr != null) resScr.update();
 		} else {
-			hireScr.update();
+			if(hireScr != null) hireScr.update();
 		}
 		return finished;
 	}
@@ -34,9 +34,9 @@ public class ResourcesAndPartyHolder implements DrawScreen {
 	@Override
 	public void draw(Graphics g) {
 		if (drawRes) {
-			resScr.draw(g);
+			if(resScr != null) resScr.draw(g);
 		} else {
-			hireScr.draw(g);
+			if(hireScr != null) hireScr.draw(g);
 		}
 	}
 

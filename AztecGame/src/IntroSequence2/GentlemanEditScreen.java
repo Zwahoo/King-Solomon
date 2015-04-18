@@ -86,6 +86,9 @@ public class GentlemanEditScreen implements DrawScreen {
 		nameButton = new Button(statViewX, 50, 200, 40, gentlemanName, IntroSequence.input) {
 			public void onClick() {
 				gentlemanName = JOptionPane.showInputDialog("Please Enter a Name:", gentlemanName);
+				if(gentlemanName == null) {
+					return;
+				}
 				while(gentlemanName.length() > 26) {
 					gentlemanName = JOptionPane.showInputDialog("Sorry! That name is too long.\nPlease Enter Another Name:");
 				}
@@ -137,6 +140,7 @@ public class GentlemanEditScreen implements DrawScreen {
 		modesList.add(-1);
 		
 		IntroSequence.input.removeInputListener(continueButton, modesList);
+		IntroSequence.input.removeInputListener(nameButton, modesList);
 		for(ImageButton btn : primaryButtons) {
 			IntroSequence.input.removeInputListener(btn, modesList);
 		}
