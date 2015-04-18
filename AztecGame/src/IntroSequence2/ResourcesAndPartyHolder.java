@@ -47,12 +47,14 @@ public class ResourcesAndPartyHolder implements DrawScreen {
 
 	public static void switchToResources(PartyMember pMember) {
 		resScr.addPartyMemberToTemp(pMember, currPartyID);
-		hireScr.finish();
+		resScr.enableAllButtons();
 		drawRes = true;
+		hireScr.finish();
 		hireScr = null;
 	}
 
 	public static void switchToHire(int partyID) {
+		resScr.disableAllButtons();
 		drawRes = false;
 		hireScr = new PartyHireScreen(resScr.getSelectedPartyMember(partyID));
 		currPartyID = partyID;

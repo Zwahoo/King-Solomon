@@ -42,10 +42,13 @@ public class PartyHireScreen implements DrawScreen {
 	String memberImage = "assets/Portraits/ExplorerImage.png";
 	
 	public PartyHireScreen(PartyMember memberToLoad) {
+		Color nameTextColor = Color.red;
+		
 		if(memberToLoad != null) {
 			memberName = memberToLoad.getName();
 			memberClass = memberToLoad.getType();
 			stats = memberToLoad.getStats();
+			nameTextColor = Color.black;
 		}
 		
 		statBox = new Textbox(getStatBoxText(), statBoxX, statBoxY, statBoxWidth, statBoxHeight, IntroSequence.input);
@@ -64,7 +67,7 @@ public class PartyHireScreen implements DrawScreen {
 				nameButton.setFontColor(Color.black);
 			}
 		};
-		nameButton.setFontColor(Color.red);
+		nameButton.setFontColor(nameTextColor);
 		
 		finishButton = new Button(finishX, finishY, finishWidth, finishHeight, "Finish", IntroSequence.input){
 			@Override
