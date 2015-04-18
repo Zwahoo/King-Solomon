@@ -41,7 +41,8 @@ public class PartyHireScreen implements DrawScreen {
 	int finishX = gameframe.windowWidth - finishWidth - 40;
 	int finishY = gameframe.windowHeight - finishHeight - 40;
 	
-	Button fireButton;
+	Button fireCancelButton;
+	String fireText = "Cancel";
 	int fireWidth = 200;
 	int fireHeight = 40;
 	int fireX = 50;
@@ -65,6 +66,7 @@ public class PartyHireScreen implements DrawScreen {
 			memberName = memberToLoad.getName();
 			memberClass = memberToLoad.getType();
 			stats = memberToLoad.getStats();
+			fireText = "Fire";
 			nameTextColor = Color.black;
 		}
 		
@@ -96,7 +98,7 @@ public class PartyHireScreen implements DrawScreen {
 			}
 		};
 		
-		fireButton = new Button(fireX, fireY, fireWidth, fireHeight, "Fire", IntroSequence.input){
+		fireCancelButton = new Button(fireX, fireY, fireWidth, fireHeight, fireText, IntroSequence.input){
 			@Override
 			public void onClick() {
 				ResourcesAndPartyHolder.switchToResources(null);
@@ -189,7 +191,7 @@ public class PartyHireScreen implements DrawScreen {
 		nameButton.update();
 		statBox.update();
 		finishButton.update();
-		fireButton.update();
+		fireCancelButton.update();
 		classBox.update();
 		for(Button classBtn : classButtons) {
 			classBtn.update();
@@ -202,7 +204,7 @@ public class PartyHireScreen implements DrawScreen {
 		nameButton.draw(g);
 		statBox.draw(g);
 		finishButton.draw(g);
-		fireButton.draw(g);
+		fireCancelButton.draw(g);
 		classBox.draw(g);
 		for(Button classBtn : classButtons) {
 			classBtn.draw(g);
@@ -216,7 +218,7 @@ public class PartyHireScreen implements DrawScreen {
 		
 		IntroSequence.input.removeInputListener(nameButton, modesList);
 		IntroSequence.input.removeInputListener(finishButton, modesList);
-		IntroSequence.input.removeInputListener(fireButton, modesList);
+		IntroSequence.input.removeInputListener(fireCancelButton, modesList);
 		for(Button classBtn : classButtons) {
 			IntroSequence.input.removeInputListener(classBtn, modesList);
 		}
