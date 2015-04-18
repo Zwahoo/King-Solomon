@@ -23,8 +23,6 @@ public class StatsBar extends Textbox {
 	String expandedText = "-";
 	String collapsedText = "+";
 	int expandButtonSize = 25;
-	int expandButtonLeftBuffer = 5;
-	int expandButtonUpBuffer = 5;
 	int tbWidth;
 	public int partyWidth;
 
@@ -50,10 +48,9 @@ public class StatsBar extends Textbox {
 		partyMembersTextbox = new Textbox(getPartyText(), partyX, partyY, partyWidth, partyHeight, input);
 
 
-		expandButtonSize = height / 2;
-		expandButtonUpBuffer = height / 4;
-		int buttonX = (x+width)-expandButtonSize-expandButtonLeftBuffer;
-		int buttonY = (y + height) - (expandButtonSize/2);
+		expandButtonSize = 25;
+		int buttonX = (width - expandButtonSize - 10);
+		int buttonY = (partyY + 5);
 		expandButton = new Button(buttonX, buttonY, expandButtonSize, expandButtonSize, collapsedText, input) {
 			@Override 
 			public void onClick() {
@@ -80,7 +77,7 @@ public class StatsBar extends Textbox {
 	}
 
 	public void showExpandPanel() {
-		expandPanel = new PartyExpandPanel(x + width, y + height);
+		expandPanel = new PartyExpandPanel(980, 100);
 		expandButton.setText(expandedText);
 	}
 
@@ -131,10 +128,10 @@ public class StatsBar extends Textbox {
 	@Override
 	public void draw(Graphics g) {
 		super.draw(g);
-		expandButton.draw(g);
 		if (partyMembersTextbox != null) {
 			partyMembersTextbox.draw(g);
 		}
+		expandButton.draw(g);
 		if(expandPanel != null) {
 			expandPanel.draw(g);
 		}
