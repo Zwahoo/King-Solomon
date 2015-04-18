@@ -40,6 +40,7 @@ public class IntroSequence {
 	public HashMap<String, Integer> gentStats = PartyMemberStats.AVERAGE_ABE_STATS;
 	//Chosen Party.
 	public HashMap<String, PartyMember> party = new HashMap<String, PartyMember>();
+	public HashMap<String, Integer> resources = new HashMap<>();
 
 	/**
 	 * Initializes the intro sequence and launches first scene.
@@ -80,6 +81,7 @@ public class IntroSequence {
 		//Party Select Screen Completed.
 		else if (stateNum == 2) {
 			party = partySelect.getResScr().getSelectedParty();
+			resources = partySelect.getResScr().createStatsMap();
 			partySelect.finish();
 			finished = true;
 		}

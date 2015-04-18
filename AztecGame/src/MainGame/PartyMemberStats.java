@@ -21,7 +21,7 @@ public final class PartyMemberStats {
 		TOREFACTOR_STATS.put(PartyMember.KNOWLEDGE_KEY, 10);
 	}
 	 */
-	
+
 	public static final HashMap<String, String> STAT_DESCRIPTIONS;
 	static
 	{
@@ -221,7 +221,7 @@ public final class PartyMemberStats {
 				"Guides are comfortable in their home environment and have rounded stats.",
 				"assets/Portraits/GuideImage.png", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
 	}
-	
+
 	public static final HashMap<String, PartyMember> defaultParty = new HashMap<String, PartyMember>();
 	static {
 		defaultParty.put("Kevin", new PartyMember("Kevin", "Hunter", 100,
@@ -237,14 +237,14 @@ public final class PartyMemberStats {
 		defaultParty.put("Nick", new PartyMember("Nick", "Guide", 100,
 				"Hs a terrible sense of direction. Why is he a guide again?", "assets/Portraits/MemberImage.png", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
 	}
-	
+
 	public static String hunterStr = "Hunter";
 	public static String mercStr = "Mercenary";
 	public static String natStr = "Naturalist";
 	public static String missStr = "Missionary";
 	public static String expStr = "Explorer";
 	public static String guideStr = "Guide";
-	
+
 	public static final HashMap<String, HashMap<String, Integer>> classStats = new HashMap<String, HashMap<String, Integer>>();
 	static {
 		classStats.put(hunterStr, HAPPY_HUNTER_STATS);
@@ -253,5 +253,16 @@ public final class PartyMemberStats {
 		classStats.put(missStr, MARVELOUS_MISSIONARY_STATS);
 		classStats.put(expStr, EXUBERANT_EXPLORER_STATS);
 		classStats.put(guideStr, GIDDY_GUIDE_STATS);
+	}
+
+	public static final HashMap<String, Integer> baseResources = new HashMap<>();
+	static {
+		baseResources.put(MainGame.MORALE_KEY, 100);
+		baseResources.put(MainGame.STAMINA_KEY, 100);
+		baseResources.put(MainGame.FOOD_KEY, 60);
+		baseResources.put(MainGame.WATER_KEY, 60);
+		baseResources.put(MainGame.AMMO_KEY, 100);
+		baseResources.put(MainGame.MEDICINE_KEY, 20);
+		baseResources.put(MainGame.VALUABLES_KEY, 20);
 	}
 }
