@@ -16,10 +16,9 @@ public class PartyAndResourcesScreen implements DrawScreen {
 
 	private Textbox valuableAmt;
 
-	private Button hireButton;
 	private Button beginButton;
 
-	private ArrayList<Textbox> partyList;
+	private ArrayList<Button> partyButtons;
 
 	private HashMap<String, Textbox> supplyMap;
 
@@ -32,7 +31,8 @@ public class PartyAndResourcesScreen implements DrawScreen {
 
 	private boolean finished = false;
 
-	private int hireCounter = 0;
+	//private int hireCounter = 0;
+	// Probably don't need this but I'll keep it anyways for teh lolz
 
 	private int supplyCost = 5;
 	private int partyMemberCost = 10;
@@ -61,7 +61,8 @@ public class PartyAndResourcesScreen implements DrawScreen {
 	int beginY = gameframe.windowHeight - beginHeight - 40;
 
 	public PartyAndResourcesScreen() {
-		partyList = new ArrayList<>();
+		//partyList = new ArrayList<>();
+		partyButtons = new ArrayList<>();
 		plusButtonMap = new HashMap<>();
 		minusButtonMap = new HashMap<>();
 		supplyMap = new HashMap<>();
@@ -76,7 +77,6 @@ public class PartyAndResourcesScreen implements DrawScreen {
 	public boolean update() {
 		valuableAmt.update();
 		valuableAmt.setText("Valuables: " + MainGame.getStats().get(MainGame.VALUABLES_KEY));
-		hireButton.update();
 		if (selectedMembers.values().size() == 0) {
 			beginButton.disable();
 			beginButton.update();
@@ -84,8 +84,11 @@ public class PartyAndResourcesScreen implements DrawScreen {
 			beginButton.enable();
 			beginButton.update();
 		}
-		for (Textbox t : partyList) {
+		/*for (Textbox t : partyList) {
 			t.update();
+		}*/
+		for (Button b : partyButtons) {
+			b.update();
 		}
 		for (Textbox t : supplyMap.values()) {
 			t.update();
@@ -102,10 +105,12 @@ public class PartyAndResourcesScreen implements DrawScreen {
 	@Override
 	public void draw(Graphics g) {
 		valuableAmt.draw(g);
-		hireButton.draw(g);
 		beginButton.draw(g);
-		for (Textbox t : partyList) {
+		/*for (Textbox t : partyList) {
 			t.draw(g);
+		}*/
+		for (Button b : partyButtons) {
+			b.draw(g);
 		}
 		for (Textbox t : supplyMap.values()) {
 			t.draw(g);
@@ -120,12 +125,13 @@ public class PartyAndResourcesScreen implements DrawScreen {
 
 	@Override
 	public void finish() {
-		// TODO Auto-generated method stub
 		ArrayList<Integer> modesList = new ArrayList<Integer>();
 		modesList.add(-1);
 
-		IntroSequence.input.removeInputListener(hireButton, modesList);
 		IntroSequence.input.removeInputListener(beginButton, modesList);
+		for (Button b : partyButtons) {
+			IntroSequence.input.removeInputListener(b, modesList);
+		}
 		for(Button btn : plusButtonMap.values()) {
 			IntroSequence.input.removeInputListener(btn, modesList);
 		}
@@ -135,13 +141,15 @@ public class PartyAndResourcesScreen implements DrawScreen {
 	}
 
 	private void initializeButtons() {
-
-		hireButton = new Button(50, beginY, beginWidth, beginHeight, "Hire", IntroSequence.input){
-			@Override
-			public void onClick() {
-
-			}
-		};
+		for (int i = 0; i < maxPartySize; i++) {
+			//partyList.add(new Textbox("Hire Party Member\nCost: " + partyMemberCost, initialPartyVSpacer, initialPartyVSpacer + (i * partyVSpacer) + (i * partyTHeight), partyTWidth, partyTHeight, IntroSequence.input));
+			partyButtons.add(new Button(initialPartyVSpacer, initialPartyVSpacer + (i * partyVSpacer) + (i * partyTHeight), partyTWidth, partyTHeight, "Hire Party Member\nCost: " + partyMemberCost, IntroSequence.input){
+				@Override
+				public void onClick() {
+					//TODO ADD PARTY HIRING STUFF HERE
+				}
+			});
+		}
 		beginButton = new Button(beginX, beginY, beginWidth, beginHeight, "Begin", IntroSequence.input){
 			@Override
 			public void onClick() {
@@ -193,9 +201,6 @@ public class PartyAndResourcesScreen implements DrawScreen {
 
 	private void initializeTextboxes() {
 		valuableAmt = new Textbox("Valuables: " + MainGame.getStats().get(MainGame.VALUABLES_KEY), 50, 20, 150, 50, IntroSequence.input);
-		for (int i = 0; i < maxPartySize; i++) {
-			partyList.add(new Textbox("Hire Party Member\nCost: " + partyMemberCost, initialPartyVSpacer, initialPartyVSpacer + (i * partyVSpacer) + (i * partyTHeight), partyTWidth, partyTHeight, IntroSequence.input));
-		}
 		int j = 0;
 		for (String e : MainGame.getStats().keySet()) {
 			if (!cannotBuyList.contains(e)){
