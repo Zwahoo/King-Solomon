@@ -237,7 +237,7 @@ public class PartyAndResourcesScreen implements DrawScreen {
 
 	public void addPartyMemberToTemp(PartyMember pMember, int partyID) {
 		tempMembers.set(partyID, pMember);
-		partyButtons.get(partyID).setText(pMember.getName() + "\n Cost: " + partyMemberCost);
+		partyButtons.get(partyID).setText(pMember.getName() + "\nCost: " + partyMemberCost);
 	}
 
 	public HashMap<String, PartyMember> getSelectedParty() {

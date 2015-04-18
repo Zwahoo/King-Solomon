@@ -14,6 +14,8 @@ public class ResourcesAndPartyHolder implements DrawScreen {
 
 	public static boolean drawRes;
 
+	public static int currPartyID;
+
 	public ResourcesAndPartyHolder() {
 		resScr = new PartyAndResourcesScreen();
 		drawRes = true;
@@ -43,15 +45,17 @@ public class ResourcesAndPartyHolder implements DrawScreen {
 		resScr.finish();
 	}
 
-	public static void switchToResources(PartyMember pMember, int partyID) {
-		resScr.addPartyMemberToTemp(pMember, partyID);
+	public static void switchToResources(PartyMember pMember) {
+		resScr.addPartyMemberToTemp(pMember, currPartyID);
 		drawRes = true;
+		hireScr.finish();
 		hireScr = null;
 	}
 
 	public static void switchToHire(int partyID) {
 		drawRes = false;
 		hireScr = new PartyHireScreen(resScr.getSelectedPartyMember(partyID));
+		currPartyID = partyID;
 	}
 
 	public PartyAndResourcesScreen getResScr() {
