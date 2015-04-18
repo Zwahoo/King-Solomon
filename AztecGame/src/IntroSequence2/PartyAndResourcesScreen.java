@@ -235,9 +235,13 @@ public class PartyAndResourcesScreen implements DrawScreen {
 		}
 	}
 
-	public void addPartyMemberToTemp(PartyMember pMember, int partyID) {
+	public void addPartyMember(PartyMember pMember, int partyID) {
+		if (tempMembers.get(partyID) != null) {
+			selectedMembers.remove(tempMembers.get(partyID).getName());
+		}
 		tempMembers.set(partyID, pMember);
 		partyButtons.get(partyID).setText(pMember.getName() + "\nCost: " + partyMemberCost);
+		selectedMembers.put(pMember.getName(), pMember);
 	}
 
 	public HashMap<String, PartyMember> getSelectedParty() {
@@ -274,5 +278,9 @@ public class PartyAndResourcesScreen implements DrawScreen {
 		}
 	}
 
-
+	public void removePartyMember(int partyID) {
+		selectedMembers.remove(tempMembers.get(partyID).getName());
+		tempMembers.remove(partyID);
+		partyButtons.get(partyID).setText("Fired!\nCost: " + partyMemberCost);
+	}	
 }

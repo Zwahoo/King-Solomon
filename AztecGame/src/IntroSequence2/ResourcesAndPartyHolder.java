@@ -46,7 +46,11 @@ public class ResourcesAndPartyHolder implements DrawScreen {
 	}
 
 	public static void switchToResources(PartyMember pMember) {
-		resScr.addPartyMemberToTemp(pMember, currPartyID);
+		if (pMember == null) {
+			resScr.removePartyMember(currPartyID);
+		} else {
+			resScr.addPartyMember(pMember, currPartyID);
+		}
 		resScr.enableAllButtons();
 		drawRes = true;
 		hireScr.finish();
