@@ -72,6 +72,7 @@ public class IntroSequence {
 		//Stat Select Screen Completed.
 		else if(stateNum == 1) {
 			gentStats = gentEditScreen.getGentStats();
+			gentEditScreen.finish();
 			partySelect = new ResourcesAndPartyHolder();
 			currentScreen = partySelect;
 			//statSelect.finish();
