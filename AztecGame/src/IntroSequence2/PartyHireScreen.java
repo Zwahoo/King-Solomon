@@ -48,6 +48,8 @@ public class PartyHireScreen implements DrawScreen {
 			stats = memberToLoad.getStats();
 		}
 		
+		statBox = new Textbox(getStatBoxText(), statBoxX, statBoxY, statBoxWidth, statBoxHeight, IntroSequence.input);
+		
 		nameButton = new Button(nameBtnX, nameBtnY, nameBtnWidth, nameBtnHeight, memberName, IntroSequence.input) {
 			public void onClick() {
 				memberName = JOptionPane.showInputDialog("Please Enter a Name:", memberName);
@@ -59,8 +61,22 @@ public class PartyHireScreen implements DrawScreen {
 			}
 		};
 		nameButton.setFontColor(Color.red);
+		
+		finishButton = new Button(finishX, finishY, finishWidth, finishHeight, "Finish", IntroSequence.input){
+			@Override
+			public void onClick() {
+				//ResourcesAndPartyHolder.switchToResources(getCreatedMember(), 0);
+			}
+		};
 	}
 	
+	public String getStatBoxText() {
+		String toRet = "";
+		for(String stat : stats.keySet()) {
+			toRet += (stat + ": " + stats.get(stat) + "\n");
+		}
+		return toRet;
+	}
 	
 	@Override
 	public boolean update() {
