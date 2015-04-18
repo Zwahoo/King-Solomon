@@ -3,6 +3,7 @@ package IntroSequence2;
 import java.awt.Graphics;
 
 import MainGame.DrawScreen;
+import MainGame.PartyMember;
 
 public class ResourcesAndPartyHolder implements DrawScreen {
 
@@ -40,6 +41,12 @@ public class ResourcesAndPartyHolder implements DrawScreen {
 	@Override
 	public void finish() {
 		resScr.finish();
+	}
+
+	public static void switchToResources(PartyMember pMember, int partyID) {
+		resScr.addPartyMemberToTemp(pMember, partyID);
+		drawRes = true;
+		hireScr = null;
 	}
 
 	public static void switchToHire(int partyID) {
