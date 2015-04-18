@@ -98,6 +98,9 @@ public class PartyMember {
 			stats.put(key, val);
 		}
 	}
+	public HashMap<String, Integer> getStats() {
+		return stats;
+	}
 	public String getName() {
 		return name;
 	}
