@@ -38,6 +38,7 @@ public class PartyAndResourcesScreen implements DrawScreen {
 	private int partyMemberCost = 10;
 
 	private HashMap<String, PartyMember> selectedMembers = new HashMap<>();
+	private ArrayList<PartyMember> tempMembers = new ArrayList<>();
 
 	private int maxPartySize = 7;
 
@@ -147,6 +148,8 @@ public class PartyAndResourcesScreen implements DrawScreen {
 				@Override
 				public void onClick() {
 					//TODO ADD PARTY HIRING STUFF HERE
+					int partyID = partyButtons.indexOf(this);
+					switchToHire(partyID);
 				}
 			});
 		}
@@ -226,6 +229,14 @@ public class PartyAndResourcesScreen implements DrawScreen {
 
 	public HashMap<String, PartyMember> getSelectedParty() {
 		return selectedMembers;
+	}
+
+	public void switchToResources() {
+
+	}
+
+	public void switchToHire(int partyID) {
+
 	}
 
 }
