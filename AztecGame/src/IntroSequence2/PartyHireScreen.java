@@ -2,6 +2,7 @@ package IntroSequence2;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JOptionPane;
@@ -10,6 +11,8 @@ import Components.*;
 import MainGame.DrawScreen;
 import MainGame.IntroSequence;
 import MainGame.PartyMember;
+import MainGame.PartyMemberStats;
+import MainGame.gameframe;
 
 public class PartyHireScreen implements DrawScreen {
 	
@@ -26,15 +29,22 @@ public class PartyHireScreen implements DrawScreen {
 	int statBoxWidth = 400;
 	int statBoxHeight = 600;
 	
+	Button finishButton;
+	int finishWidth = 200;
+	int finishHeight = 40;
+	int finishX = gameframe.windowWidth - finishWidth - 40;
+	int finishY = gameframe.windowHeight - finishHeight - 40;
+	
 	HashMap<String, Integer> stats = new HashMap<String, Integer>();
 	
-	String memberClass = "";
+	String memberClass = PartyMemberStats.hunterStr;
 	
 	String memberImage = "assets/Portraits/ExplorerImage.png";
-		
+	
 	public PartyHireScreen(PartyMember memberToLoad) {
 		if(memberToLoad != null) {
 			memberName = memberToLoad.getName();
+			memberClass = memberToLoad.getType();
 			stats = memberToLoad.getStats();
 		}
 		
@@ -54,20 +64,26 @@ public class PartyHireScreen implements DrawScreen {
 	
 	@Override
 	public boolean update() {
-		// TODO Auto-generated method stub
+		nameButton.update();
+		statBox.update();
+		finishButton.update();
 		return false;
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		
+		nameButton.draw(g);
+		statBox.draw(g);
+		finishButton.draw(g);
 	}
 
 	@Override
 	public void finish() {
-		// TODO Auto-generated method stub
+		ArrayList<Integer> modesList = new ArrayList<Integer>();
+		modesList.add(-1);
 		
+		IntroSequence.input.removeInputListener(nameButton, modesList);
+		IntroSequence.input.removeInputListener(finishButton, modesList);
 	}
 	
 	public PartyMember getCreatedMember() {

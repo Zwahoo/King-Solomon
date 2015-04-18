@@ -237,4 +237,11 @@ public final class PartyMemberStats {
 		defaultParty.put("Nick", new PartyMember("Nick", "Guide", 100,
 				"Hs a terrible sense of direction. Why is he a guide again?", "assets/Portraits/MemberImage.png", PartyMemberStats.EXUBERANT_EXPLORER_STATS));
 	}
+	
+	public static String hunterStr = "Hunter";
+	public static String mercStr = "Mercenary";
+	public static String natStr = "Naturalist";
+	public static String missStr = "Missionary";
+	public static String expStr = "Explorer";
+	public static String guideStr = "Guide";
 }

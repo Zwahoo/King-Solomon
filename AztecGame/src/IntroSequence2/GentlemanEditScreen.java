@@ -133,7 +133,6 @@ public class GentlemanEditScreen implements DrawScreen {
 
 	@Override
 	public void finish() {
-		// TODO Auto-generated method stub
 		ArrayList<Integer> modesList = new ArrayList<Integer>();
 		modesList.add(-1);
 		
