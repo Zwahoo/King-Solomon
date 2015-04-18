@@ -300,6 +300,10 @@ public class PartyAndResourcesScreen implements DrawScreen {
 		valuables += partyMemberCost;
 	}
 
+	public void cancelPartyMember() {
+		valuables += partyMemberCost;
+	}
+
 	public HashMap<String, Integer> createStatsMap() {
 		HashMap<String, Integer> resources = new HashMap<>();
 		resources.put(MainGame.MORALE_KEY, 100);

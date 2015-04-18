@@ -57,6 +57,8 @@ public class ResourcesAndPartyHolder implements DrawScreen {
 		if (pMember == null) {
 			if (resScr.getSelectedPartyMember(currPartyID) != null) {
 				resScr.removePartyMember(currPartyID);
+			} else {
+				resScr.cancelPartyMember();
 			}
 		} else {
 			resScr.addPartyMember(pMember, currPartyID);
