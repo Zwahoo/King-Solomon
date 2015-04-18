@@ -482,7 +482,8 @@ public class MainGame {
 		String retVal = "\n    ";
 		for( String s : stats.keySet()) {
 			if(!s.equals("Pack Animals")) {
-				retVal += s + ": " + stats.get(s) + "     ";
+				//retVal += s + ": " + stats.get(s) + "     ";
+				retVal += "       : " + stats.get(s) + "            ";
 			}
 		}
 		retVal = retVal.substring(0, retVal.length() - 3); //Remove the last bar.

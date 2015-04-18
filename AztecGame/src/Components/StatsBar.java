@@ -77,22 +77,22 @@ public class StatsBar extends Textbox {
 			Image stamIcon = ImageIO.read(new File("assets/Icons/stamina icon.png"));
 			Image valIcon = ImageIO.read(new File("assets/Icons/valuables icon.png"));
 			Image waterIcon = ImageIO.read(new File("assets/Icons/water icon.png"));
+			Image medIcon = ImageIO.read(new File("assets/Icons/medicine icon.png"));
 			
 			statImgs.add(morIcon);
 			statImgs.add(stamIcon);
 			statImgs.add(foodIcon);
 			statImgs.add(waterIcon);
 			statImgs.add(ammoIcon);
-			//statImgs.add(medIcon);
+			statImgs.add(medIcon);
 			statImgs.add(valIcon);
 			
-			statImgLocs.add(45);
-			statImgLocs.add(160);
-			statImgLocs.add(275);
-			statImgLocs.add(390);
-			statImgLocs.add(505);
-			//statImgLocs.add(620);
-			statImgLocs.add(735);
+			int pos = 20;
+			int incAmt = 106;
+			for(int i = 0; i < statImgs.size(); i++) {
+				statImgLocs.add(pos);
+				pos += incAmt;
+			}
 		} catch(IOException e) {
 			System.out.println("Failed to load resource icon images...");
 		}
