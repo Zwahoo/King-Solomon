@@ -14,7 +14,7 @@ import MainGame.*;
 public class PartyExpandPanel {
 	
 	Rectangle myRect;
-	int rightX, upperY;
+	int rightX, lowerY;
 	public int numCols = 0;
 	public int numRows = 0;
 	private int numPartyMembers;
@@ -32,7 +32,7 @@ public class PartyExpandPanel {
 	int memberInfoPanelVertSep = 40;
 	int lineHeight;
 	
-	public PartyExpandPanel(int rightX, int upperY) {
+	public PartyExpandPanel(int rightX, int lowerY) {
 		
 		if(MainGame.DISCO_MODE) {
 			int backR = 50 + (int)(Math.random()*205);
@@ -43,7 +43,7 @@ public class PartyExpandPanel {
 		}
 		
 		this.rightX = rightX;
-		this.upperY = upperY;
+		this.lowerY = lowerY;
 		setRowsAndCols();
 		memberNameFont = new Font("Georgia", Font.BOLD, 14);
 		memberGeneralFont = new Font("Georgia", Font.PLAIN, 12);
@@ -56,7 +56,7 @@ public class PartyExpandPanel {
 		numRows = (int) Math.floor(Math.sqrt(numPartyMembers));
 		numCols = (int) Math.ceil((double)numPartyMembers/(double)numRows);
 		
-		myRect = new Rectangle(rightX - calcWidth(), upperY, calcWidth(), calcHeight());	
+		myRect = new Rectangle(rightX - calcWidth(), lowerY - calcHeight(), calcWidth(), calcHeight());	
 	}
 	
 	private int calcWidth() {

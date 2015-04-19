@@ -3,6 +3,7 @@ package Components;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ public class StatsBar extends Textbox {
 	Button expandButton;
 	String expandedText = "-";
 	String collapsedText = "+";
+	int normExpandButtonX;
+	int normExpandButtonY;
 	int expandButtonSize = 25;
 	int tbWidth;
 	public int partyWidth;
@@ -59,9 +62,9 @@ public class StatsBar extends Textbox {
 
 
 		expandButtonSize = 25;
-		int buttonX = (width - expandButtonSize - 10);
-		int buttonY = (partyY + 5);
-		expandButton = new Button(buttonX, buttonY, expandButtonSize, expandButtonSize, collapsedText, input) {
+		normExpandButtonX = (width - expandButtonSize - 10);
+		normExpandButtonY = (partyY + 5);
+		expandButton = new Button(normExpandButtonX, normExpandButtonY, expandButtonSize, expandButtonSize, collapsedText, input) {
 			@Override 
 			public void onClick() {
 				showHideExpandPanel();
@@ -88,7 +91,7 @@ public class StatsBar extends Textbox {
 			statImgs.add(valIcon);
 			
 			int pos = 20;
-			int incAmt = 106;
+			int incAmt = 107;
 			for(int i = 0; i < statImgs.size(); i++) {
 				statImgLocs.add(pos);
 				pos += incAmt;
@@ -116,7 +119,13 @@ public class StatsBar extends Textbox {
 	}
 
 	public void showExpandPanel() {
-		expandPanel = new PartyExpandPanel(980, 100);
+		int createX = 980;
+		int createY = this.drawRect.y;
+		if(partyMembersTextbox != null) {
+			createX = partyMembersTextbox.drawRect.x + partyMembersTextbox.drawRect.width;
+			createY = partyMembersTextbox.drawRect.y;
+		} 
+		expandPanel = new PartyExpandPanel(createX, createY);
 		expandButton.setText(expandedText);
 	}
 
@@ -146,9 +155,15 @@ public class StatsBar extends Textbox {
 		int partyY = gameframe.windowHeight - (int) (partyHeight * 1.125);
 		partyMembersTextbox = new Textbox(getPartyText(), partyX, partyY,
 				partyWidth, partyHeight, input);
+		
+		expandButton.setLocation(new Point(normExpandButtonX, normExpandButtonY));
 	}
 
 	public void hidePartyPanel() {
+		int buttonX = normExpandButtonX;
+		int buttonY = this.drawRect.y + 10;
+		expandButton.setLocation(new Point(buttonX, buttonY));
+		
 		partyMembersTextbox = null;
 	}
 

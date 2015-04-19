@@ -139,13 +139,13 @@ public class MainGame {
 	}
 
 	//Starts the game, takes in the window frame, width, and height.
-	public MainGame(gameframe frame, int width, int height, HashMap<String, Integer> gentStats, HashMap<String, PartyMember> theParty, HashMap<String, Integer> resources) throws IOException {
+	public MainGame(gameframe frame, int width, int height, HashMap<String, Integer> gentStats, String gentName, HashMap<String, PartyMember> theParty, HashMap<String, Integer> resources) throws IOException {
 
 		resetAllVals();
 
 		bkgImg = ImageIO.read(new File("assets/BkgImg.png"));
 
-		PartyMember gentleman = new PartyMember("The Gentleman", "Gentleman", 0, "Quite.", "assets/Portraits/MemberImage.png", gentStats);
+		PartyMember gentleman = new PartyMember(gentName, "Gentleman", 0, "Quite.", "assets/Portraits/MemberImage.png", gentStats);
 		gentleman.setGentleman(true);
 		addPartyMemberToParty(gentleman);
 		for(PartyMember member: theParty.values()) {
@@ -483,7 +483,7 @@ public class MainGame {
 		for( String s : stats.keySet()) {
 			if(!s.equals("Pack Animals")) {
 				//retVal += s + ": " + stats.get(s) + "     ";
-				retVal += "       : " + stats.get(s) + "            ";
+				retVal += "       : " + String.format("%3d", stats.get(s)) + "            ";
 			}
 		}
 		retVal = retVal.substring(0, retVal.length() - 3); //Remove the last bar.

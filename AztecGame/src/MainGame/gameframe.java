@@ -20,7 +20,7 @@ public class gameframe extends JFrame {
 
 	public static boolean DEBUG = true;
 
-	public static boolean doSetup = false;
+	public static boolean doSetup = true;
 
 
 	private boolean isRunning = true;
@@ -46,6 +46,7 @@ public class gameframe extends JFrame {
 	Graphics bbg = null;
 
 	private HashMap<String, Integer> gentStats = PartyMemberStats.AVERAGE_ABE_STATS;
+	private String gentName = "The Gentleman";
 	private HashMap<String, PartyMember> party = PartyMemberStats.defaultParty;
 	private HashMap<String, Integer> resources = new HashMap<>();
 
@@ -106,6 +107,7 @@ public class gameframe extends JFrame {
 				}
 
 				gentStats = introSeq.gentStats;
+				gentName = introSeq.gentName;
 				party = introSeq.party;
 				resources = introSeq.resources;
 
@@ -159,7 +161,7 @@ public class gameframe extends JFrame {
 	}
 
 	private void initializeMainGame() throws IOException {
-		mainGame = new MainGame(this, windowWidth, windowHeight, gentStats, party, resources);
+		mainGame = new MainGame(this, windowWidth, windowHeight, gentStats, gentName, party, resources);
 	}
 
 	private void initializeIntroSequence() {

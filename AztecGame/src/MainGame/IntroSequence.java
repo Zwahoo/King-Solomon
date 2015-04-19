@@ -38,6 +38,7 @@ public class IntroSequence {
 
 	//The stats chosen for the gentleman.
 	public HashMap<String, Integer> gentStats = PartyMemberStats.AVERAGE_ABE_STATS;
+	public String gentName = "The Gentleman";
 	//Chosen Party.
 	public HashMap<String, PartyMember> party = new HashMap<String, PartyMember>();
 	public HashMap<String, Integer> resources = new HashMap<>();
@@ -73,6 +74,7 @@ public class IntroSequence {
 		//Stat Select Screen Completed.
 		else if(stateNum == 1) {
 			gentStats = gentEditScreen.getGentStats();
+			gentName = gentEditScreen.gentlemanName;
 			gentEditScreen.finish();
 			partySelect = new ResourcesAndPartyHolder();
 			currentScreen = partySelect;
