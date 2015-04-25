@@ -332,9 +332,13 @@ public class MainGame {
 
 	//Draw any drawable objects in the game world.
 	public void draw(Graphics g) {
-
+		
+		g.fillRect(0, 0, gameframe.windowWidth, gameframe.windowHeight);
+		
 		if(bkgImg != null) {
-			g.drawImage(bkgImg, 0, 0, gameframe.windowWidth, gameframe.windowHeight, null);
+			int xImgPos = -(view.getLocation().x - view.getxMax());
+			int yImgPos = -(view.getLocation().y - view.getyMin());
+			g.drawImage(bkgImg, 0, 0, gameframe.windowWidth, gameframe.windowHeight, xImgPos, yImgPos, xImgPos + gameframe.windowWidth, yImgPos + gameframe.windowHeight, null);
 		}
 
 		// Draw map
