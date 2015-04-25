@@ -143,7 +143,7 @@ public class MainGame {
 
 		resetAllVals();
 
-		bkgImg = ImageIO.read(new File("assets/BkgImg.png"));
+		bkgImg = ImageIO.read(new File("assets/TmpBkg.png"));
 
 		PartyMember gentleman = new PartyMember(gentName, "Gentleman", 0, "Quite.", "assets/Portraits/MemberImage.png", gentStats);
 		gentleman.setGentleman(true);
