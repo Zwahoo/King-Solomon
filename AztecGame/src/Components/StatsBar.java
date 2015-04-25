@@ -2,6 +2,13 @@ package Components;
 
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Point;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import MainGame.InputManager;
 import MainGame.MainGame;
@@ -22,9 +29,14 @@ public class StatsBar extends Textbox {
 	Button expandButton;
 	String expandedText = "-";
 	String collapsedText = "+";
+	int normExpandButtonX;
+	int normExpandButtonY;
 	int expandButtonSize = 25;
 	int tbWidth;
 	public int partyWidth;
+	
+	ArrayList<Image> statImgs = new ArrayList<Image>();
+	ArrayList<Integer> statImgLocs = new ArrayList<Integer>();
 
 	public int partyHeight;
 
@@ -37,6 +49,7 @@ public class StatsBar extends Textbox {
 
 	public StatsBar(String str, int x, int y, int width, int height, InputManager input) {
 		super(str, x, y - (int)(height*1.38), (int)(width), height, input);
+		initIcons();
 		tbWidth = (int)(width);
 		partyHeight = 3*height;
 		partyWidth = (int)(width*0.25);
@@ -49,14 +62,43 @@ public class StatsBar extends Textbox {
 
 
 		expandButtonSize = 25;
-		int buttonX = (width - expandButtonSize - 10);
-		int buttonY = (partyY + 5);
-		expandButton = new Button(buttonX, buttonY, expandButtonSize, expandButtonSize, collapsedText, input) {
+		normExpandButtonX = (width - expandButtonSize - 10);
+		normExpandButtonY = (partyY + 5);
+		expandButton = new Button(normExpandButtonX, normExpandButtonY, expandButtonSize, expandButtonSize, collapsedText, input) {
 			@Override 
 			public void onClick() {
 				showHideExpandPanel();
 			}
 		};
+	}
+	
+	private void initIcons() {
+		try {
+			Image ammoIcon = ImageIO.read(new File("assets/Icons/ammon icon.png"));
+			Image foodIcon = ImageIO.read(new File("assets/Icons/food icon.png"));
+			Image morIcon = ImageIO.read(new File("assets/Icons/morale icon.png"));
+			Image stamIcon = ImageIO.read(new File("assets/Icons/stamina icon.png"));
+			Image valIcon = ImageIO.read(new File("assets/Icons/valuables icon.png"));
+			Image waterIcon = ImageIO.read(new File("assets/Icons/water icon.png"));
+			Image medIcon = ImageIO.read(new File("assets/Icons/medicine icon.png"));
+			
+			statImgs.add(morIcon);
+			statImgs.add(stamIcon);
+			statImgs.add(foodIcon);
+			statImgs.add(waterIcon);
+			statImgs.add(ammoIcon);
+			statImgs.add(medIcon);
+			statImgs.add(valIcon);
+			
+			int pos = 20;
+			int incAmt = 107;
+			for(int i = 0; i < statImgs.size(); i++) {
+				statImgLocs.add(pos);
+				pos += incAmt;
+			}
+		} catch(IOException e) {
+			System.out.println("Failed to load resource icon images...");
+		}
 	}
 
 	private String getPartyText() {
@@ -77,7 +119,13 @@ public class StatsBar extends Textbox {
 	}
 
 	public void showExpandPanel() {
-		expandPanel = new PartyExpandPanel(980, 100);
+		int createX = 980;
+		int createY = this.drawRect.y;
+		if(partyMembersTextbox != null) {
+			createX = partyMembersTextbox.drawRect.x + partyMembersTextbox.drawRect.width;
+			createY = partyMembersTextbox.drawRect.y;
+		} 
+		expandPanel = new PartyExpandPanel(createX, createY);
 		expandButton.setText(expandedText);
 	}
 
@@ -107,9 +155,15 @@ public class StatsBar extends Textbox {
 		int partyY = gameframe.windowHeight - (int) (partyHeight * 1.125);
 		partyMembersTextbox = new Textbox(getPartyText(), partyX, partyY,
 				partyWidth, partyHeight, input);
+		
+		expandButton.setLocation(new Point(normExpandButtonX, normExpandButtonY));
 	}
 
 	public void hidePartyPanel() {
+		int buttonX = normExpandButtonX;
+		int buttonY = this.drawRect.y + 10;
+		expandButton.setLocation(new Point(buttonX, buttonY));
+		
 		partyMembersTextbox = null;
 	}
 
@@ -134,6 +188,9 @@ public class StatsBar extends Textbox {
 		expandButton.draw(g);
 		if(expandPanel != null) {
 			expandPanel.draw(g);
+		}
+		for(int i=0; i<statImgs.size(); i++) {
+			g.drawImage(statImgs.get(i), statImgLocs.get(i), 723, 30, 30, null);
 		}
 	}
 }

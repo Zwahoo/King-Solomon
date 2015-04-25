@@ -19,7 +19,7 @@ public class Textbox {
 	int btnHeight = 20; //Height of scroll buttons.
 	int btnBuffer = 1; //Extra space to give buttons on all four sides.
 	
-	Rectangle drawRect; //Rectangle encompassing the text box as it is drawn.
+	public Rectangle drawRect; //Rectangle encompassing the text box as it is drawn.
 	Rectangle textSpaceRect; //The rectangle defining the space in which the text should be drawn in the text box.
 	public int vTextBuffer = 3; //Padding to give on either side of the text as it's drawn in textSpaceRect
 	public int hTextBuffer = 3;
