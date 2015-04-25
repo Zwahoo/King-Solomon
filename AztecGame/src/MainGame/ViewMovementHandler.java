@@ -11,7 +11,7 @@ public class ViewMovementHandler extends InputListener {
 
 	int movSpeed = 20;
 
-	private int xMax, yMax, xMin, yMin;
+
 
 
 	public ViewMovementHandler(View view, InputManager input) {
@@ -23,10 +23,7 @@ public class ViewMovementHandler extends InputListener {
 
 		setInputManager(input, temp);
 
-		xMax = 1250 - view.width;
-		xMin = -4000 + view.width;
-		yMax = -1250 + view.height;
-		yMin = 2000 - view.height;
+
 	}
 
 	@Override
@@ -79,16 +76,16 @@ public class ViewMovementHandler extends InputListener {
 		int xChange = 0;
 		int yChange = 0;
 
-		if(keyIsDown(Controls.VIEW_UP_KEY) && (view.getLocation().y < yMin)) {
+		if(keyIsDown(Controls.VIEW_UP_KEY) && (view.getLocation().y < view.getyMin())) {
 			yChange += movSpeed;
 		}
-		if(keyIsDown(Controls.VIEW_DOWN_KEY) && (view.getLocation().y > yMax)) {
+		if(keyIsDown(Controls.VIEW_DOWN_KEY) && (view.getLocation().y > view.getyMax())) {
 			yChange -= movSpeed;
 		}
-		if(keyIsDown(Controls.VIEW_LEFT_KEY) && (view.getLocation().x < xMax)) {
+		if(keyIsDown(Controls.VIEW_LEFT_KEY) && (view.getLocation().x < view.getxMax())) {
 			xChange += movSpeed;
 		}
-		if(keyIsDown(Controls.VIEW_RIGHT_KEY) && (view.getLocation().x > xMin)) {
+		if(keyIsDown(Controls.VIEW_RIGHT_KEY) && (view.getLocation().x > view.getxMin())) {
 			xChange -= movSpeed;
 		}
 
