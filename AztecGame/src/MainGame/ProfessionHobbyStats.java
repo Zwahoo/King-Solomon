@@ -25,21 +25,21 @@ public final class ProfessionHobbyStats {
 	public static final HashMap<String, String> IMAGE_FILE_PATHS;
 	static {
 		IMAGE_FILE_PATHS = new HashMap<String, String>();
-		IMAGE_FILE_PATHS.put(noneKey, "assets/Portraits/ExplorerImage.png");
-		IMAGE_FILE_PATHS.put(gunsmithKey, "assets/Portraits/ExplorerImage.png");
-		IMAGE_FILE_PATHS.put(fighterKey, "assets/Portraits/ExplorerImage.png");
-		IMAGE_FILE_PATHS.put(ambassadorKey, "assets/Portraits/ExplorerImage.png");
-		IMAGE_FILE_PATHS.put(veteranKey, "assets/Portraits/ExplorerImage.png");
-		IMAGE_FILE_PATHS.put(doctorKey, "assets/Portraits/ExplorerImage.png");
-		IMAGE_FILE_PATHS.put(officerKey, "assets/Portraits/ExplorerImage.png");
-		IMAGE_FILE_PATHS.put(saboteurKey, "assets/Portraits/ExplorerImage.png");
-		IMAGE_FILE_PATHS.put(sportsKey, "assets/Portraits/ExplorerImage.png");
-		IMAGE_FILE_PATHS.put(birdWatchingKey, "assets/Portraits/ExplorerImage.png");
-		IMAGE_FILE_PATHS.put(writingKey, "assets/Portraits/ExplorerImage.png");
-		IMAGE_FILE_PATHS.put(shootingKey, "assets/Portraits/ExplorerImage.png");
-		IMAGE_FILE_PATHS.put(historianKey, "assets/Portraits/ExplorerImage.png");
-		IMAGE_FILE_PATHS.put(socialiteKey, "assets/Portraits/ExplorerImage.png");
-		IMAGE_FILE_PATHS.put(wrestlerKey, "assets/Portraits/ExplorerImage.png");
+		IMAGE_FILE_PATHS.put(noneKey, "assets/Icons/none2.png");
+		IMAGE_FILE_PATHS.put(gunsmithKey, "assets/Icons/gunsmith2.png");
+		IMAGE_FILE_PATHS.put(fighterKey, "assets/Icons/prizefighter2.png");
+		IMAGE_FILE_PATHS.put(ambassadorKey, "assets/Icons/ambassador2.png");
+		IMAGE_FILE_PATHS.put(veteranKey, "assets/Icons/veteran2.png");
+		IMAGE_FILE_PATHS.put(doctorKey, "assets/Icons/doctor2.png");
+		IMAGE_FILE_PATHS.put(officerKey, "assets/Icons/officer2.png");
+		IMAGE_FILE_PATHS.put(saboteurKey, "assets/Icons/saboteur2.png");
+		IMAGE_FILE_PATHS.put(sportsKey, "assets/Icons/sports2.png");
+		IMAGE_FILE_PATHS.put(birdWatchingKey, "assets/Icons/birdwatching2.png");
+		IMAGE_FILE_PATHS.put(writingKey, "assets/Icons/writing2.png");
+		IMAGE_FILE_PATHS.put(shootingKey, "assets/Icons/shooting2.png");
+		IMAGE_FILE_PATHS.put(historianKey, "assets/Icons/historian2.png");
+		IMAGE_FILE_PATHS.put(socialiteKey, "assets/Icons/socialite2.png");
+		IMAGE_FILE_PATHS.put(wrestlerKey, "assets/Icons/wrestler2.png");
 	}
 	
 	public static final ArrayList<String> GUNSMITH_STATS;
