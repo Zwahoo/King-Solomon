@@ -19,6 +19,8 @@ public class ImageButton extends Button {
 	Color normImgCol = new Color(0, 0, 0);
 	Color hoverImgCol = new Color(100, 100, 100);
 	Color pressImgCol = new Color(200, 200, 200);
+	
+	public boolean active = false;
 
 	public ImageButton(String imgFilePath, int x, int y, int width, int height, InputManager inputManager) {
 		super(x, y, width, height, "", inputManager);
@@ -60,6 +62,11 @@ public class ImageButton extends Button {
 		//Draw the Backdrop
 		g.setColor(bkgCol);
 		g.drawImage(img, getX() + borderSize, getY() + borderSize, getWidth() - (2 * borderSize), getHeight() - (2 * borderSize), null);
+		
+		if(active) {
+			g.setColor(new Color(0, 10, 5, 100));
+			g.fillRect(getX(), getY(), getWidth(), getHeight());
+		}
 	}
 
 	@Override
