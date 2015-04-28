@@ -445,6 +445,7 @@ public class GentlemanEditScreen implements DrawScreen {
 	public HashMap<String, Integer> getGentStats() {
 		HashMap<String, Integer> ret = new HashMap<String, Integer>();
 		for(GentlemanStatView view : statViewList) {
+			if(!view.isNumeric) continue;
 			ret.put(view.statName, view.total);
 		}
 		ret.put(PartyMember.LOYALTY_KEY, 0);
