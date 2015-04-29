@@ -19,12 +19,12 @@ public class StartScreen implements DrawScreen {
 	
 	int startWidth = 200;
 	int startHeight = 40;
-	int startX = gameframe.windowWidth - startWidth - 40;
+	int startX = 40;
 	int startY = gameframe.windowHeight - startHeight - 40;
 	
 	public StartScreen() {
 		try {
-			titleImage = ImageIO.read(new File("assets/TitleScreen.png"));
+			titleImage = ImageIO.read(new File("assets/Title Page.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
