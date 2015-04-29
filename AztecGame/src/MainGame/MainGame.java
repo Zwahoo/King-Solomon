@@ -74,7 +74,7 @@ public class MainGame {
 	public static InputManager input; // This registers all the mouse and keyboard
 	private static Integer currentMode = -1;
 	private static gameframe frame;
-	private static boolean finalEvent = false; //Set to true when launching the final event.
+	public static boolean finalEvent = false; //Set to true when launching the final event.
 	private static boolean kickedMemberThisTurn = false;
 
 	BufferedImage bkgImg;
@@ -114,6 +114,8 @@ public class MainGame {
 
 	public static int dayCounter = 1;
 
+	public static EndGameScreen egScr = null;
+
 	//Reverts the event back to something more closely resembling it's start state.
 	public void resetAllVals() {
 		map = null;
@@ -128,6 +130,7 @@ public class MainGame {
 		frame = null;
 		finalEvent = false;
 		kickedMemberThisTurn = false;
+		egScr = null;
 		dayCounter = 1;
 	}
 
@@ -314,45 +317,52 @@ public class MainGame {
 		//Update Input
 		input.update();
 
-		//Update tile overlays
-		updateTileOverlay();
+		if (egScr != null){
+			egScr.update();
+		} else {
+			//Update tile overlays
+			updateTileOverlay();
 
-		//Update stat bar
-		updateStatsBar();
+			//Update stat bar
+			updateStatsBar();
 
-		//Update menu drawers
-		updateMenuDrawers();
+			//Update menu drawers
+			updateMenuDrawers();
 
-		//Boot a member if morale is below their threshold
-		checkMorale();
+			//Boot a member if morale is below their threshold
+			checkMorale();
 
-		//Check lose condiditions
-		checkEndGameConditions();
+			//Check lose condiditions
+			checkEndGameConditions();
+		}
 	}
 
 	//Draw any drawable objects in the game world.
 	public void draw(Graphics g) {
-		
-		g.fillRect(0, 0, gameframe.windowWidth, gameframe.windowHeight);
-		
-		if(bkgImg != null) {
-			int xImgPos = -(view.getLocation().x - view.getxMax());
-			int yImgPos = -(view.getLocation().y - view.getyMin());
-			g.drawImage(bkgImg, 0, 0, gameframe.windowWidth, gameframe.windowHeight, xImgPos, yImgPos, xImgPos + gameframe.windowWidth, yImgPos + gameframe.windowHeight, null);
-		}
+		if (egScr != null) {
+			egScr.draw(g);
+		} else {
+			g.fillRect(0, 0, gameframe.windowWidth, gameframe.windowHeight);
 
-		// Draw map
-		map.draw(g, view, player1);
+			if(bkgImg != null) {
+				int xImgPos = -(view.getLocation().x - view.getxMax());
+				int yImgPos = -(view.getLocation().y - view.getyMin());
+				g.drawImage(bkgImg, 0, 0, gameframe.windowWidth, gameframe.windowHeight, xImgPos, yImgPos, xImgPos + gameframe.windowWidth, yImgPos + gameframe.windowHeight, null);
+			}
 
-		//statsBar.setText(getStatString());
-		if (eventDrawer!=null) {
-			eventDrawer.draw(g);
+			// Draw map
+			map.draw(g, view, player1);
+
+			//statsBar.setText(getStatString());
+			if (eventDrawer!=null) {
+				eventDrawer.draw(g);
+			}
+			//See logic in update() method for when stats bar text gets updates
+			if (startDayDrawer!=null) {
+				startDayDrawer.draw(g);
+			}
+			statsBar.draw(g);
 		}
-		//See logic in update() method for when stats bar text gets updates
-		if (startDayDrawer!=null) {
-			startDayDrawer.draw(g);
-		}
-		statsBar.draw(g);
 	}
 
 
@@ -721,6 +731,12 @@ public class MainGame {
 		}
 	}
 
+	public static void endGame() {
+		int score = 0;
+		//TODO Figure out how to determine the score.
+		egScr = new EndGameScreen(score, player1.getCurrentTile().getType().getName().equals("KingSolomonsMines"));
+	}
+
 	// --------------- LAUNCH EVENT METHODS ---------------
 	/**
 	 * Launch an event with a given set of party members
@@ -877,7 +893,7 @@ public class MainGame {
 		startDayDrawer = new StartDayDrawer();
 
 		if(finalEvent) {
-			frame.returnGameToMenu();
+			endGame();
 		} 
 	}
 

@@ -23,15 +23,15 @@ public class gameframe extends JFrame {
 	public static boolean doSetup = true;
 
 
-	private boolean isRunning = true;
+	private static boolean isRunning = true;
 	public static Insets insets;
 	private BufferedImage backBuffer;
 	private int fps = 30;
 	public static int windowWidth = 1000;
 	public static int windowHeight = 800;
-	private MainGame mainGame;
+	private static MainGame mainGame;
 	private IntroSequence introSeq;
-	private boolean runIntroSequence = true;
+	private static boolean runIntroSequence = true;
 
 	public static int topinset = 22;
 	public static int bottominset = 0;
@@ -149,7 +149,7 @@ public class gameframe extends JFrame {
 		setVisible(false);
 	}
 
-	public void returnGameToMenu() {
+	public static void returnGameToMenu() {
 		IntroSequence.input = null;
 		doSetup = true;
 		runIntroSequence = true;
