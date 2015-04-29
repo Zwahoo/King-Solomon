@@ -255,6 +255,14 @@ public class PartyAndResourcesScreen implements DrawScreen {
 			selectedMembers.remove(tempMembers.get(partyID).getName());
 		}
 		tempMembers.set(partyID, pMember);
+		
+		int num = 0;
+		String origName = pMember.getName();
+		while(selectedMembers.containsKey(pMember.getName())) {
+			num++;
+			pMember.setName(origName + " " + num);
+		}
+		
 		partyButtons.get(partyID).setText(pMember.getName() + "\n" + pMember.getType() + "\nCost: " + partyMemberCost);
 		selectedMembers.put(pMember.getName(), pMember);
 	}
