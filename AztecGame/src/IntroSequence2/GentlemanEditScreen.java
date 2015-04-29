@@ -36,9 +36,9 @@ public class GentlemanEditScreen implements DrawScreen {
 	public String gentlemanName;
 
 	int primaryImgBtnX = gameframe.windowWidth - 230;
-	int imgButtonY = 120;
-	int imgButtonWidth = 50;
-	int imgButtonHeight = 50;
+	int imgButtonY = 60;
+	int imgButtonWidth = 55;
+	int imgButtonHeight = 55;
 	int secondaryX = gameframe.windowWidth - imgButtonWidth - 50;
 	int imgBtnYSpacer = 21;
 
@@ -194,6 +194,8 @@ public class GentlemanEditScreen implements DrawScreen {
 			@Override
 			public void onClick() {
 				loadProfession(ProfessionHobbyStats.gunsmithKey);
+				deactivateAllPrimeButtons();
+				this.active = true;
 			}
 		};
 		yPos += imgButtonHeight + imgBtnYSpacer;
@@ -204,6 +206,8 @@ public class GentlemanEditScreen implements DrawScreen {
 			@Override
 			public void onClick() {
 				loadProfession(ProfessionHobbyStats.fighterKey);
+				deactivateAllPrimeButtons();
+				this.active = true;
 			}
 		};
 		yPos += imgButtonHeight + imgBtnYSpacer;
@@ -214,6 +218,8 @@ public class GentlemanEditScreen implements DrawScreen {
 			@Override
 			public void onClick() {
 				loadProfession(ProfessionHobbyStats.ambassadorKey);
+				deactivateAllPrimeButtons();
+				this.active = true;
 			}
 		};
 		yPos += imgButtonHeight + imgBtnYSpacer;
@@ -224,6 +230,8 @@ public class GentlemanEditScreen implements DrawScreen {
 			@Override
 			public void onClick() {
 				loadProfession(ProfessionHobbyStats.veteranKey);
+				deactivateAllPrimeButtons();
+				this.active = true;
 			}
 		};
 		yPos += imgButtonHeight + imgBtnYSpacer;
@@ -234,6 +242,8 @@ public class GentlemanEditScreen implements DrawScreen {
 			@Override
 			public void onClick() {
 				loadProfession(ProfessionHobbyStats.doctorKey);
+				deactivateAllPrimeButtons();
+				this.active = true;
 			}
 		};
 		yPos += imgButtonHeight + imgBtnYSpacer;
@@ -244,6 +254,8 @@ public class GentlemanEditScreen implements DrawScreen {
 			@Override
 			public void onClick() {
 				loadProfession(ProfessionHobbyStats.officerKey);
+				deactivateAllPrimeButtons();
+				this.active = true;
 			}
 		};
 		yPos += imgButtonHeight + imgBtnYSpacer;
@@ -254,6 +266,8 @@ public class GentlemanEditScreen implements DrawScreen {
 			@Override
 			public void onClick() {
 				loadProfession(ProfessionHobbyStats.saboteurKey);
+				deactivateAllPrimeButtons();
+				this.active = true;
 			}
 		};
 		yPos += imgButtonHeight + imgBtnYSpacer;
@@ -264,9 +278,12 @@ public class GentlemanEditScreen implements DrawScreen {
 			@Override
 			public void onClick() {
 				loadProfession(ProfessionHobbyStats.noneKey);
+				deactivateAllPrimeButtons();
+				this.active = true;
 			}
 		};
 		yPos += imgButtonHeight + imgBtnYSpacer;
+		noneBtn.active = true;
 		primaryButtons.add(noneBtn);
 
 	}
@@ -281,6 +298,8 @@ public class GentlemanEditScreen implements DrawScreen {
 			@Override
 			public void onClick() {
 				loadHobby(ProfessionHobbyStats.historianKey);
+				deactivateAllSecondButtons();
+				this.active = true;
 			}
 		};
 		yPos += imgButtonHeight + imgBtnYSpacer;
@@ -291,6 +310,8 @@ public class GentlemanEditScreen implements DrawScreen {
 			@Override
 			public void onClick() {
 				loadHobby(ProfessionHobbyStats.socialiteKey);
+				deactivateAllSecondButtons();
+				this.active = true;
 			}
 		};
 		yPos += imgButtonHeight + imgBtnYSpacer;
@@ -301,6 +322,8 @@ public class GentlemanEditScreen implements DrawScreen {
 			@Override
 			public void onClick() {
 				loadHobby(ProfessionHobbyStats.sportsKey);
+				deactivateAllSecondButtons();
+				this.active = true;
 			}
 		};
 		yPos += imgButtonHeight + imgBtnYSpacer;
@@ -311,6 +334,8 @@ public class GentlemanEditScreen implements DrawScreen {
 			@Override
 			public void onClick() {
 				loadHobby(ProfessionHobbyStats.birdWatchingKey);
+				deactivateAllSecondButtons();
+				this.active = true;
 			}
 		};
 		yPos += imgButtonHeight + imgBtnYSpacer;
@@ -321,6 +346,8 @@ public class GentlemanEditScreen implements DrawScreen {
 			@Override
 			public void onClick() {
 				loadHobby(ProfessionHobbyStats.shootingKey);
+				deactivateAllSecondButtons();
+				this.active = true;
 			}
 		};
 		yPos += imgButtonHeight + imgBtnYSpacer;
@@ -331,6 +358,8 @@ public class GentlemanEditScreen implements DrawScreen {
 			@Override
 			public void onClick() {
 				loadHobby(ProfessionHobbyStats.writingKey);
+				deactivateAllSecondButtons();
+				this.active = true;
 			}
 		};
 		yPos += imgButtonHeight + imgBtnYSpacer;
@@ -341,6 +370,8 @@ public class GentlemanEditScreen implements DrawScreen {
 			@Override
 			public void onClick() {
 				loadHobby(ProfessionHobbyStats.wrestlerKey);
+				deactivateAllSecondButtons();
+				this.active = true;
 			}
 		};
 		yPos += imgButtonHeight + imgBtnYSpacer;
@@ -352,9 +383,12 @@ public class GentlemanEditScreen implements DrawScreen {
 			@Override
 			public void onClick() {
 				loadHobby(ProfessionHobbyStats.noneKey);
+				deactivateAllSecondButtons();
+				this.active = true;
 			}
 		};
 		yPos += imgButtonHeight + imgBtnYSpacer;
+		noneBtn.active = true;
 		secondaryButtons.add(noneBtn);
 
 	}
@@ -397,9 +431,21 @@ public class GentlemanEditScreen implements DrawScreen {
 		}
 	}
 
+	public void deactivateAllPrimeButtons() {
+		for(ImageButton btn : this.primaryButtons) {
+			btn.active = false;
+		}
+	}
+	
+	public void deactivateAllSecondButtons() {
+		for(ImageButton btn : this.secondaryButtons) {
+			btn.active = false;
+		}
+	}
 	public HashMap<String, Integer> getGentStats() {
 		HashMap<String, Integer> ret = new HashMap<String, Integer>();
 		for(GentlemanStatView view : statViewList) {
+			if(!view.isNumeric) continue;
 			ret.put(view.statName, view.total);
 		}
 		ret.put(PartyMember.LOYALTY_KEY, 0);
